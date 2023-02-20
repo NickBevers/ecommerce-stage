@@ -37,6 +37,7 @@ const submit = () => {
           <TextInput
             id="firstname"
             type="text"
+            name="firstname"
             class="mt-1 block w-full"
             v-model="form.firstname"
             required
@@ -51,6 +52,7 @@ const submit = () => {
           <InputLabel for="lastname" value="Lastname" />
           <TextInput
             id="lastname"
+            name="lastname"
             type="text"
             class="mt-1 block w-full"
             v-model="form.lastname"
@@ -71,6 +73,7 @@ const submit = () => {
           id="email"
           type="email"
           class="mt-1 block w-full"
+          name="email"
           v-model="form.email"
           required
           autocomplete="name"
@@ -86,6 +89,7 @@ const submit = () => {
         <TextInput
           id="password"
           type="password"
+          name="password"
           class="mt-1 block w-full"
           v-model="form.password"
           required
@@ -102,6 +106,7 @@ const submit = () => {
         <TextInput
           id="password_confirmation"
           type="password"
+          name="password_confirmation"
           class="mt-1 block w-full"
           v-model="form.password_confirmation"
           required
