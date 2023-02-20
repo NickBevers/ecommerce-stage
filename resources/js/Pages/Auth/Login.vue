@@ -89,8 +89,6 @@ const submit = () => {
           Log in
         </PrimaryButton>
       </div>
-
-      <!-- no account yet button to signup -->
       <div
         class="flex items-center justify-start my-4 text-sm font-medium text-gray-600 dark:text-white0"
       >
