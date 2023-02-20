@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('password');
             $table->string('reset_password_token')->nullable();
             $table->string('phone')->nullable();
-            $table->string('bank_account');
+            $table->string('bank_account')->nullable();
             $table->string('address')->nullable();
             $table->string('user_type')->default('user');
             $table->rememberToken();

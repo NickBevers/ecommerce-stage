@@ -13,8 +13,9 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
 use Inertia\Inertia;
 use Inertia\Response;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class RegisteredUserController extends Controller
+class RegisteredUserController extends Authenticatable
 {
     /**
      * Display the registration view.
