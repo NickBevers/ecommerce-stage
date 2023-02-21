@@ -64,17 +64,19 @@ class UsersController extends Controller
         return redirect()->route('users.index');
     }
 
-    public function updatePassword(Request $request, User $user)
+    public function updateBankAccount(Request $request, User $user)
     {
         $request->validate([
-            'password' => 'required',
+            'bank_account' => 'required',
         ]);
 
-        $user->password = $request->password;
+        $user->bank_account = $request->bank_account;
         $user->save();
 
         return redirect()->route('users.index');
     }
+
+
 
     public function destroy(User $user)
     {

@@ -6,6 +6,8 @@ use Illuminate\Auth\Passwords\CanResetPassword;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
@@ -63,13 +65,18 @@ class User extends Authenticatable implements CanResetPasswordContract
         return $this->hasMany(Order::class);
     }
 
-    public function cart(): \Illuminate\Database\Eloquent\Relations\HasOne
+    public function cart(): HasOne
     {
         return $this->hasOne(Cart::class);
     }
 
-    public function whishlist(): \Illuminate\Database\Eloquent\Relations\HasOne
+    public function whishlist(): HasOne
     {
         return $this->hasOne(Whishlist::class);
+    }
+
+    public function shippingAddress(): HasMany
+    {
+        return $this->hasMany(ShippingAddress::class);
     }
 }
