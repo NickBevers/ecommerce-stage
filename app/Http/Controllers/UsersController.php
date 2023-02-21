@@ -12,6 +12,8 @@ class UsersController extends Controller
 {
     public function index()
     {
+        $users = User::all();
+        return $users;
     }
 
     public function create()
@@ -39,7 +41,7 @@ class UsersController extends Controller
 
     public function show(User $user)
     {
-        User::find($user->id);
+        return User::findOrFail($user->id);
     }
 
     public function edit(User $user)
@@ -48,18 +50,16 @@ class UsersController extends Controller
 
     public function update(Request $request, User $user)
     {
+
+//        return "It Works";
+
         $request->validate([
             'firstname' => 'required',
             'lastname' => 'required',
             'email' => 'required|unique:App\Models\User,email',
-            'password' => 'required',
         ]);
 
-        $user->firstname = $request->firstname;
-        $user->lastname = $request->lastname;
-        $user->email = $request->email;
-        $user->password = $request->password;
-        $user->save();
+        $user->update($request->all());
 
         return redirect()->route('users.index');
     }

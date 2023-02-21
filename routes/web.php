@@ -45,12 +45,12 @@ Route::patch('/users/{user}', [UsersController::class, 'update'])->name('users.u
 Route::patch('/users/{user}/bank', [UsersController::class, 'updateBankAccount'])->name('users.updateBankAccount');
 Route::delete('/users/{user}', [UsersController::class, 'destroy'])->name('users.destroy');
 
-Route::get('/shipping-addresses', [ShippingAddressesController::class, 'index'])->name('shipping-addresses.index');
-Route::post('/shipping-addresses', [ShippingAddressesController::class, 'store'])->name('shipping-addresses.store');
-Route::get('/shipping-addresses/{shippingAddress}', [ShippingAddressesController::class, 'show'])->name('shipping-addresses.show');
-Route::get('/shipping-addresses/{shippingAddress}/edit', [ShippingAddressesController::class, 'edit'])->name('shipping-addresses.edit');
-Route::patch('/shipping-addresses/{shippingAddress}', [ShippingAddressesController::class, 'update'])->name('shipping-addresses.update');
-Route::delete('/shipping-addresses/{shippingAddress}', [ShippingAddressesController::class, 'destroy'])->name('shipping-addresses.destroy');
+Route::get('/shipping-addresses', [ShippingAddressesController::class, 'index'])->name('shipping.index');
+Route::post('/shipping-addresses', [ShippingAddressesController::class, 'store'])->name('shipping.store');
+Route::get('/shipping-addresses/{shippingAddress}', [ShippingAddressesController::class, 'show'])->name('shipping.show');
+Route::get('/shipping-addresses/{shippingAddress}/edit', [ShippingAddressesController::class, 'edit'])->name('shipping.edit');
+Route::patch('/shipping-addresses/{shippingAddress}', [ShippingAddressesController::class, 'update'])->name('shipping.update');
+Route::delete('/shipping-addresses/{shippingAddress}', [ShippingAddressesController::class, 'destroy'])->name('shipping.destroy');
 
 
 
