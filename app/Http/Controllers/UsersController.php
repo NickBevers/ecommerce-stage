@@ -51,14 +51,19 @@ class UsersController extends Controller
         $request->validate([
             'firstname' => 'required',
             'lastname' => 'required',
-            'email' => 'required|unique:App\Models\User,email',
-            'password' => 'required',
+            'email' => 'required|email',
+            'password' => 'required|string|min:8',
         ]);
+
+        $hashedPassword = User::where('id', $user->id)->first()->password;
+
+        if (!password_verify($request->password, $hashedPassword)) {
+            return redirect()->back()->with('error', 'Password is incorrect');
+        }
 
         $user->firstname = $request->firstname;
         $user->lastname = $request->lastname;
         $user->email = $request->email;
-        $user->password = $request->password;
         $user->save();
 
         return redirect()->route('users.index');

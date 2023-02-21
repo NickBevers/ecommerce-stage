@@ -13,7 +13,8 @@ const props = defineProps({
 const user = usePage().props.auth.user;
 
 const form = useForm({
-    name: user.name,
+    firstname: user.firstname,
+    lastname: user.lastname,
     email: user.email,
 });
 </script>
@@ -29,20 +30,37 @@ const form = useForm({
         </header>
 
         <form @submit.prevent="form.patch(route('profile.update'))" class="mt-6 space-y-6">
-            <div>
-                <InputLabel for="name" value="Name" />
+            <div class="flex justify-between gap-6">
+                <div class="w-2/4">  
+                <InputLabel for="firstname" value="Firstname" />
 
-                <TextInput
-                    id="name"
-                    type="text"
-                    class="mt-1 block w-full"
-                    v-model="form.name"
-                    required
-                    autofocus
-                    autocomplete="name"
-                />
+                    <TextInput
+                        id="firstname"
+                        type="text"
+                        class="mt-1 block w-full"
+                        v-model="form.firstname"
+                        required
+                        autofocus
+                        autocomplete="firstname"
+                    />
 
-                <InputError class="mt-2" :message="form.errors.name" />
+                <InputError class="mt-2" :message="form.errors.firstname" />
+            </div>
+            <div class="w-2/4">  
+                <InputLabel for="lastname" value="Lastname" />
+
+                    <TextInput
+                        id="lastname"
+                        type="text"
+                        class="mt-1 block w-full"
+                        v-model="form.lastname"
+                        required
+                        autofocus
+                        autocomplete="lastname"
+                    />
+
+                <InputError class="mt-2" :message="form.errors.lastname" />
+            </div>
             </div>
 
             <div>
