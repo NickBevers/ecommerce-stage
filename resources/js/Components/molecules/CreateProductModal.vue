@@ -4,16 +4,6 @@ import { onMounted, ref } from 'vue';
 
 const showModal = ref(false);
 
-
-
-const handleClick = (e) => {
- console.log(showModal.value);
-}
-
-onMounted(() => {
-    document.addEventListener('click', handleClick);
-});
-
 </script>
 <template>
     <!-- Modal toggle -->
@@ -26,7 +16,7 @@ onMounted(() => {
 </div>
 
 <!-- Main modal -->
-<div v-if="showModal" id="defaultModal" tabindex="-1" aria-hidden="true" class=" absolute  z-50 justify-center items-center w-2/3 md:inset-0 h-modal md:h-full">
+<div v-if="showModal" id="defaultModal" tabindex="-1" aria-hidden="true" class="flex justify-center absolute top-0 left-0 w-full h-screen bg-opacity-60 bg-gray-700 py-20">
     <div class="relative p-4 w-full max-w-2xl h-full md:h-auto">
         <!-- Modal content -->
         <div class="relative p-4 bg-white rounded-lg shadow dark:bg-gray-800 sm:p-5">
