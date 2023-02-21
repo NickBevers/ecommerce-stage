@@ -51,13 +51,18 @@ class UsersController extends Controller
     public function update(Request $request, User $user)
     {
 
-//        return "It Works";
-
         $request->validate([
             'firstname' => 'required',
             'lastname' => 'required',
             'email' => 'required|unique:App\Models\User,email',
+            'password' => 'required|string|min:8', // at least 1 lowercase, 1 uppercase, 1 number
         ]);
+
+        // Check password with hashed database password
+        $hashedPassword = User::where('id', $user->id)->first()->password;
+        if (!password_verify($request->password, $hashedPassword)) {
+            return redirect()->back()->with('error', 'Password is incorrect');
+        }
 
         $user->update($request->all());
 
