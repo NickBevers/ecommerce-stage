@@ -6,6 +6,7 @@ use Illuminate\Auth\Passwords\CanResetPassword;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -60,9 +61,14 @@ class User extends Authenticatable implements CanResetPasswordContract
 	|--------------------------------------------------------------------------
 	*/
 
-    public function orders(): \Illuminate\Database\Eloquent\Relations\HasMany
+    public function orders(): HasMany
     {
         return $this->hasMany(Order::class);
+    }
+
+    public function productReturns(): HasMany
+    {
+        return $this->hasMany(ProductReturn::class);
     }
 
     public function cart(): HasOne
@@ -70,13 +76,25 @@ class User extends Authenticatable implements CanResetPasswordContract
         return $this->hasOne(Cart::class);
     }
 
-    public function whishlist(): HasOne
+    public function addresses(): BelongsToMany
     {
-        return $this->hasOne(Whishlist::class);
+        return $this->belongsToMany(Address::class);
     }
 
-    public function shippingAddress(): HasMany
+    public function reviews(): HasMany
     {
-        return $this->hasMany(ShippingAddress::class);
+        return $this->hasMany(Review::class);
     }
+
+    public function wishlist(): HasOne
+    {
+        return $this->hasOne(Wishlist::class);
+    }
+
+    public function paymentOptions(): HasMany
+    {
+        return $this->hasMany(PaymentOption::class);
+    }
+
+
 }

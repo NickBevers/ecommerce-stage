@@ -4,7 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 
-class WhishlistSeeder extends Seeder
+class WishlistSeeder extends Seeder
 {
     public function run(): void
     {

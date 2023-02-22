@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
@@ -22,23 +23,24 @@ class Order extends Model
         'images' => 'array',
     ];
 
-    public function user(): HasOne
+    /*
+	|--------------------------------------------------------------------------
+	| RELATIONS
+	|--------------------------------------------------------------------------
+	*/
+
+    public function user():  BelongsTo
     {
-        return $this->hasOne(User::class);
+        return $this->belongsTo(User::class);
     }
 
-    public function shippingAddress(): HasOne
+    public function addresses(): HasOne
     {
         return $this->hasOne(Address::class);
     }
 
-    public function billingAddress(): HasOne
+    public function productOrder(): HasMany
     {
-        return $this->hasOne(Address::class);
-    }
-
-    public function products(): HasMany
-    {
-        return $this->hasMany(Product::class);
+        return $this->hasMany(ProductOrder::class);
     }
 }

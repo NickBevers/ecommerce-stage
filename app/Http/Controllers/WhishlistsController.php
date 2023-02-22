@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Whishlist;
+use App\Models\Wishlist;
 use Illuminate\Http\Request;
 
 class WhishlistsController extends Controller
@@ -20,19 +20,19 @@ class WhishlistsController extends Controller
     {
     }
 
-    public function show(Whishlist $whishlist)
+    public function show(Wishlist $whishlist)
     {
     }
 
-    public function edit(Whishlist $whishlist)
+    public function edit(Wishlist $whishlist)
     {
     }
 
-    public function update(Request $request, Whishlist $whishlist)
+    public function update(Request $request, Wishlist $whishlist)
     {
     }
 
-    public function destroy(Whishlist $whishlist)
+    public function destroy(Wishlist $whishlist)
     {
     }
 }

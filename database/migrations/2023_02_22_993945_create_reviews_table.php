@@ -17,7 +17,6 @@ return new class extends Migration {
             $table->boolean('approved')->default(false);
             $table->integer('useful_count')->default(0);
             $table->timestamps();
-            $table->timestamp('deleted_at')->nullable();
         });
     }
 

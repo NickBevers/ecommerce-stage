@@ -23,8 +23,8 @@ return new class extends Migration {
             $table->json('images');
             $table->String('sku');
             $table->integer('product_number');
-            $table->boolean('is_promotion');
-            $table->boolean('is_active');
+            $table->boolean('is_promotion')->default(false);
+            $table->boolean('is_active')->default(true);
             $table->foreignId('seller_id')->nullable()->references('id')->on('users');
         });
     }

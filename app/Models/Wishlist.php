@@ -3,20 +3,20 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Relations\HasOne;
 
-class Variation extends Model
+class Wishlist extends Model
 {
     protected $fillable = [
-        'attribute_id',
-        'type',
+        'user_id',
+        'products',
+        'modified_at',
     ];
 
     protected $casts = [
-        'created_at' => 'datetime',
-        'updated_at' => 'datetime',
+        'products' => 'array',
     ];
 
     /*
@@ -25,13 +25,13 @@ class Variation extends Model
     |--------------------------------------------------------------------------
     */
 
-    public function attributes(): HasOne
+    public function user(): BelongsTo
     {
-        return $this->hasOne(Attribute::class);
+        return $this->belongsTo(User::class);
     }
 
-    public function productVariations(): BelongsToMany
+    public function product(): HasMany
     {
-        return $this->belongsToMany(ProductVariation::class);
+        return $this->hasMany(Product::class);
     }
 }
