@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Schema;
 return new class extends Migration {
     public function up(): void
     {
-        Schema::create('returns', function (Blueprint $table) {
+        Schema::create('product_returns', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained();
             $table->foreignId('order_id')->constrained();
@@ -22,6 +22,6 @@ return new class extends Migration {
 
     public function down(): void
     {
-        Schema::dropIfExists('returns');
+        Schema::dropIfExists('product_returns');
     }
 };

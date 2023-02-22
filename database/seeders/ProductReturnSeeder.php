@@ -4,10 +4,10 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 
-class ReturnSeeder extends Seeder
+class ProductReturnSeeder extends Seeder
 {
     public function run(): void
     {
-        
+
     }
 }
