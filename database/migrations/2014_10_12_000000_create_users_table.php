@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('phone')->nullable();
             $table->string('bank_account')->nullable();
             $table->string('address')->nullable();
+            $table->json('payment_option')->nullable();
             $table->string('user_type')->default('user');
             $table->rememberToken();
             $table->timestamps();
