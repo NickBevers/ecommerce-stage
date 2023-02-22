@@ -15,7 +15,7 @@ return new class extends Migration {
             $table->integer('price');
             $table->integer('stock');
             $table->foreignId('category_id')->nullable()->references('id')->on('categories');
-            $table->foreignId('promo_id')->nullable()->references('id')->on('promos');
+            $table->json('promos')->nullable();
             $table->timestamp('created_at');
             $table->timestamp('modified_at');
             $table->timestamp('deleted_at');
