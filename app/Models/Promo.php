@@ -5,16 +5,14 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class Review extends Model
+class Promo extends Model
 {
-protected $fillable = [
-        'user_id',
+    protected $fillable = [
         'product_id',
-        'score',
-        'title',
-        'body',
-        'approved',
-        'useful_count',
+        'new_price',
+        'start_at',
+        'end_at',
+        'extra_info',
     ];
 
     protected $casts = [
@@ -28,12 +26,7 @@ protected $fillable = [
     |--------------------------------------------------------------------------
     */
 
-    public function user(): BelongsTo
-    {
-        return $this->belongsTo(User::class);
-    }
-
-    public function product(): BelongsTo
+    public function products(): BelongsTo
     {
         return $this->belongsTo(Product::class);
     }

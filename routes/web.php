@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ShippingAddressesController;
 use App\Http\Controllers\UsersController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -49,7 +50,16 @@ Route::post('/users', [UsersController::class, 'store'])->name('users.store');
 Route::get('/users/{user}', [UsersController::class, 'show'])->name('users.show');
 Route::get('/users/{user}/edit', [UsersController::class, 'edit'])->name('users.edit');
 Route::patch('/users/{user}', [UsersController::class, 'update'])->name('users.update');
+Route::patch('/users/{user}/bank', [UsersController::class, 'updateBankAccount'])->name('users.updateBankAccount');
 Route::delete('/users/{user}', [UsersController::class, 'destroy'])->name('users.destroy');
+
+Route::get('/shipping-addresses', [ShippingAddressesController::class, 'index'])->name('shipping.index');
+Route::post('/shipping-addresses', [ShippingAddressesController::class, 'store'])->name('shipping.store');
+Route::get('/shipping-addresses/{shippingAddress}', [ShippingAddressesController::class, 'show'])->name('shipping.show');
+Route::get('/shipping-addresses/{shippingAddress}/edit', [ShippingAddressesController::class, 'edit'])->name('shipping.edit');
+Route::patch('/shipping-addresses/{shippingAddress}', [ShippingAddressesController::class, 'update'])->name('shipping.update');
+Route::delete('/shipping-addresses/{shippingAddress}', [ShippingAddressesController::class, 'destroy'])->name('shipping.destroy');
+
 
 
 

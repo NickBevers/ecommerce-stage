@@ -5,16 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class Review extends Model
+class ProductVariation extends Model
 {
-protected $fillable = [
-        'user_id',
+    protected $fillable = [
         'product_id',
-        'score',
-        'title',
-        'body',
-        'approved',
-        'useful_count',
+        'variation_id',
+        'value',
     ];
 
     protected $casts = [
@@ -28,13 +24,13 @@ protected $fillable = [
     |--------------------------------------------------------------------------
     */
 
-    public function user(): BelongsTo
-    {
-        return $this->belongsTo(User::class);
-    }
-
     public function product(): BelongsTo
     {
         return $this->belongsTo(Product::class);
+    }
+
+    public function attribute(): BelongsTo
+    {
+        return $this->belongsTo(Attribute::class);
     }
 }

@@ -4,22 +4,19 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class Review extends Model
+class Wishlist extends Model
 {
-protected $fillable = [
+    protected $fillable = [
         'user_id',
-        'product_id',
-        'score',
-        'title',
-        'body',
-        'approved',
-        'useful_count',
+        'products',
+        'modified_at',
     ];
 
     protected $casts = [
-        'created_at' => 'datetime',
-        'updated_at' => 'datetime',
+        'products' => 'array',
     ];
 
     /*
@@ -33,8 +30,8 @@ protected $fillable = [
         return $this->belongsTo(User::class);
     }
 
-    public function product(): BelongsTo
+    public function product(): HasMany
     {
-        return $this->belongsTo(Product::class);
+        return $this->hasMany(Product::class);
     }
 }

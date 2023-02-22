@@ -12,6 +12,8 @@ class UsersController extends Controller
 {
     public function index()
     {
+        $users = User::all();
+        return $users;
     }
 
     public function create()
@@ -39,7 +41,7 @@ class UsersController extends Controller
 
     public function show(User $user)
     {
-        User::find($user->id);
+        return User::findOrFail($user->id);
     }
 
     public function edit(User $user)
@@ -48,6 +50,7 @@ class UsersController extends Controller
 
     public function update(Request $request, User $user)
     {
+
         $request->validate([
             'firstname' => 'required',
             'lastname' => 'required',
@@ -64,22 +67,25 @@ class UsersController extends Controller
         $user->firstname = $request->firstname;
         $user->lastname = $request->lastname;
         $user->email = $request->email;
-        $user->save();
-
-        return redirect()->route('users.index');
-    }
-
-    public function updatePassword(Request $request, User $user)
-    {
-        $request->validate([
-            'password' => 'required',
-        ]);
-
         $user->password = $request->password;
         $user->save();
 
         return redirect()->route('users.index');
     }
+
+    public function updateBankAccount(Request $request, User $user)
+    {
+        $request->validate([
+            'bank_account' => 'required',
+        ]);
+
+        $user->bank_account = $request->bank_account;
+        $user->save();
+
+        return redirect()->route('users.index');
+    }
+
+
 
     public function destroy(User $user)
     {

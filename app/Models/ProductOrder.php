@@ -4,22 +4,22 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
-class Review extends Model
+class ProductOrder extends Model
 {
 protected $fillable = [
-        'user_id',
         'product_id',
-        'score',
-        'title',
-        'body',
-        'approved',
-        'useful_count',
+        'order_id',
+        'quantity',
+        'price',
+        'attributes',
     ];
 
     protected $casts = [
         'created_at' => 'datetime',
         'updated_at' => 'datetime',
+        'attributes' => 'array',
     ];
 
     /*
@@ -28,13 +28,13 @@ protected $fillable = [
     |--------------------------------------------------------------------------
     */
 
-    public function user(): BelongsTo
-    {
-        return $this->belongsTo(User::class);
-    }
-
     public function product(): BelongsTo
     {
-        return $this->belongsTo(Product::class);
+        return $this->BelongsTo(Product::class);
+    }
+
+    public function order(): BelongsTo
+    {
+        return $this->BelongsTo(Order::class);
     }
 }
