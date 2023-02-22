@@ -9,7 +9,7 @@ class OrdersController extends Controller
 {
     public function index()
     {
-
+        return Order::all();
     }
 
     public function create()
