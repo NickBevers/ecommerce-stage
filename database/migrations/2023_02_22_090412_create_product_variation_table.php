@@ -9,9 +9,11 @@ return new class extends Migration {
     {
         Schema::create('product_variation', function (Blueprint $table) {
             $table->id();
-
-            
-
+            $table->foreignId('variation_id')->constrained();
+            $table->foreignId('product_id')->constrained();
+            $table->integer('price');
+            $table->integer('amount')->default(1);
+            $table->String('sku');
             $table->timestamps();
         });
     }
