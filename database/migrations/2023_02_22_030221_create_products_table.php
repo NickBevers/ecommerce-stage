@@ -14,7 +14,7 @@ return new class extends Migration {
             $table->String('audience');
             $table->integer('price');
             $table->integer('stock');
-            $table->foreignId('category_id')->nullable()->references('id')->on('categories');
+            $table->foreignId('category_id')->references('id')->on('categories');
             $table->json('promos')->nullable();
             $table->String('extra_info');
             $table->json('images');

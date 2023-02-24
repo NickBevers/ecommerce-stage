@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\Product;
 use App\Models\ProductImage;
+use App\Models\SubCategory;
 use http\Url;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -14,9 +16,10 @@ class ProductsController extends Controller
     public function index()
     {
         $products = Product::all();
-        return Inertia::render('products/index', [
-            'products' => $products
-        ]);
+//        return Inertia::render('products/index', [
+//            'products' => $products
+//        ]);
+        return $products;
     }
 
     public function create()
@@ -24,8 +27,14 @@ class ProductsController extends Controller
         return Inertia::render('products/create');
     }
 
+    public function addOne()
+    {
+        return "Works";
+    }
+
     public function store(Request $request)
     {
+
         // validate the request
         $request->validate([
             'title' => 'required|string|max:255',
@@ -33,8 +42,10 @@ class ProductsController extends Controller
             'audience' => 'required|string|max:255',
             'stock' => 'required|numeric',
             'price' => 'required|numeric',
+            'category' => 'required|string|max:255',
             'extra_info' => 'required|string|max:500',
             'sku' => 'required|string|max:255',
+            'product_number' => 'required',
 //            'files' => 'array|required',
 //            'files.*' => 'required|mimetypes:image/jpg,image/jpeg,image/bmp'
         ]);
@@ -51,6 +62,8 @@ class ProductsController extends Controller
             }
         }
 
+        $categoryId = SubCategory::where('label', $request->category)->first()->id;
+
         // create a new product
         $product = new Product();
         $product->title = $request->title;
@@ -58,9 +71,10 @@ class ProductsController extends Controller
         $product->audience = $request->audience;
         $product->price = $request->price;
         $product->stock = $request->stock;
-        $product->category_id = $request->category_id;
+        $product->category_id = $categoryId;
         $product->extra_info = $request->extra_info;
         $product->sku = $request->sku;
+        $product->product_number = $request->product_number;
 
         $request->has('is_promotion') ? $product->is_promotion = true :  $product->is_promotion = false;
         $request->has('is_active') ? $product->is_active = false : $product->is_active = true;
@@ -76,7 +90,8 @@ class ProductsController extends Controller
             }
         }
 
-        return redirect()->route('products.index');
+//        return redirect()->route('products.index');
+        return $product;
     }
 
     public function show(Product $product)
@@ -103,5 +118,6 @@ class ProductsController extends Controller
 
     public function destroy(Product $product)
     {
+        $product->delete();
     }
 }
