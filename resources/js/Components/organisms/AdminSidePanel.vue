@@ -33,9 +33,6 @@ function getInitials(firstName, lastName) {
   return firstInitial + lastInitial;
 }
 
-onMounted(() => {
-  console.log(props.user);
-});
 </script>
 <template>
   <aside class="w-64 h-full" aria-label="Sidenav">
