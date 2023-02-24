@@ -118,14 +118,12 @@ function handleDrop(event) {
         if (fileSize > 5) {
           error.value = `${file.name} exceeds the 5MB file size limit.`;
         }
-
     }
- 
 }
 
 function submit() {
 
-    form.product_number = form.title.split(" ").join("-") + "-" + Math.floor(Math.random() * 1000000);
+    form.product_number = Math.floor(Math.random() * 1000000);
     console.log(form.product_number, form.title);
 
     console.log(form)
