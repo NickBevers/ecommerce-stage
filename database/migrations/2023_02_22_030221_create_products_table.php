@@ -16,9 +16,6 @@ return new class extends Migration {
             $table->integer('stock');
             $table->foreignId('category_id')->nullable()->references('id')->on('categories');
             $table->json('promos')->nullable();
-            $table->timestamp('created_at');
-            $table->timestamp('modified_at');
-            $table->timestamp('deleted_at');
             $table->String('extra_info');
             $table->json('images');
             $table->String('sku');
@@ -26,6 +23,7 @@ return new class extends Migration {
             $table->boolean('is_promotion')->default(false);
             $table->boolean('is_active')->default(true);
             $table->foreignId('seller_id')->nullable()->references('id')->on('users');
+            $table->timestamps();
         });
     }
 

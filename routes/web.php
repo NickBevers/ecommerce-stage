@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ProductsController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ShippingAddressesController;
 use App\Http\Controllers\UsersController;
@@ -38,6 +39,16 @@ Route::get('/overview', function () {
 Route::get('/products', function () {
     return Inertia::render('Dashboard/Products');
 })->middleware(['auth', 'verified'])->name('products');
+
+
+Route::get('/products/all', [ProductsController::class, 'index'])->name('products.getAll');
+Route::post('/products', [ProductsController::class, 'store'])->name('products.store');
+Route::get('/products/create', [ProductsController::class, 'create'])->name('products.create');
+Route::get('/products/{product}', [ProductsController::class, 'show'])->name('products.show');
+Route::get('/products/{product}/edit', [ProductsController::class, 'edit'])->name('products.edit');
+Route::patch('/products/{product}', [ProductsController::class, 'update'])->name('products.update');
+Route::delete('/products/{product}', [ProductsController::class, 'destroy'])->name('products.destroy');
+
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

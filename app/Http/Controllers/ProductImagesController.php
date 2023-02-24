@@ -13,10 +13,18 @@ class ProductImagesController extends Controller
 
     public function create()
     {
+
     }
 
-    public function store(Request $request)
+    public function store(String $image, $id)
     {
+        $productImage = new ProductImage();
+        $productImage->product_id = $id;
+        $productImage->image_type = 'main';
+        $productImage->image_link = $image;
+        $productImage->image_public_id = `/images/${$image}`;
+        $productImage->alt = 'ProductImage';
+        $productImage->save();
     }
 
     public function show(ProductImage $productImage)

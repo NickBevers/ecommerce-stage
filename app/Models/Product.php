@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -9,6 +10,9 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Product extends Model
 {
+
+    use HasFactory;
+
     protected $fillable = [
         'title',
         'description',
@@ -27,9 +31,8 @@ class Product extends Model
 
     protected $casts = [
         'created_at' => 'datetime',
-        'modified_at' => 'datetime',
-        'deleted_at' => 'datetime',
-        'images' => 'json',
+        'updated_at' => 'datetime',
+        'images' => 'array',
         'promos' => 'array',
     ];
 
