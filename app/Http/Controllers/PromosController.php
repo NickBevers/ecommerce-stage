@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Product;
 use App\Models\Promo;
 use Illuminate\Http\Request;
 
@@ -18,6 +19,7 @@ class PromosController extends Controller
 
     public function store(Request $request)
     {
+        ProductsController::setPromotionStatus($request->id);
     }
 
     public function show(Promo $promo)

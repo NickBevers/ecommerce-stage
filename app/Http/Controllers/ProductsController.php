@@ -101,6 +101,30 @@ class ProductsController extends Controller
         ]);
     }
 
+    public function getStatus(Product $product)
+    {
+        return $product->is_active;
+    }
+
+    public function setStatus(Product $product)
+    {
+        $product->is_active = !$product->is_active;
+        $product->save();
+        return $product->is_active;
+    }
+
+    public function getPromotionStatus(Product $product)
+    {
+        return $product->is_promotion;
+    }
+
+    public function setPromotionStatus(Product $product)
+    {
+        $product->is_promotion = !$product->is_promotion;
+        $product->save();
+        return $product->is_promotion;
+    }
+
     public function edit(Product $product)
     {
         $productDetails = Product::find($product->id);
