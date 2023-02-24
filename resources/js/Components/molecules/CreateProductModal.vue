@@ -152,7 +152,7 @@ function submit() {
 
     <!-- Main modal -->
     <div v-if="showModal" id="defaultModal" tabindex="-1" aria-hidden="true"
-        class="flex overflow-auto justify-center absolute top-0 left-0 w-full h-screen bg-opacity-60 bg-gray-700 py-5"
+        class="flex overflow-auto justify-center absolute top-0 left-0 z-10 w-full h-screen bg-opacity-60 bg-gray-700 py-5"
         @click.self="showModal = !showModal">
         <div class="relative p-4 w-full max-w-2xl h-full md:h-auto">
             <!-- Modal content -->
