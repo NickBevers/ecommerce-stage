@@ -6,15 +6,20 @@ import TextInput from "@/Components/atoms/TextInput.vue";
 import InputError from "@/Components/atoms/InputError.vue";
 import { useForm, usePage } from "@inertiajs/vue3";
 
+
 const showModal = ref(false);
 
 const form = useForm({
     title: "",
     description: "",
     price: "",
-    quantity: "",
+    audience: "",
+    stock: "",
+    sku: "",
     head_category: "",
-    sub_category: "",
+    category: "",
+    extra_info: "",
+    product_number: "",
     image: "",
 });
 
@@ -64,9 +69,6 @@ function handleDragEnter(event) {
 
   // Add "dragging" class to label
   isDragging.value = true;
-
-
-  console.log('Drag enter')
 }
 
 function handleDragOver(event) {
@@ -92,14 +94,19 @@ function handleDrop(event) {
   // Remove "dragging" class from label
   isDragging.value = false;
 
-  // Get the files that were dropped
   files = event.dataTransfer.files;
 
   if(!files){ 
     error.value = 'No file found';
   }
 
-  for (let i = 0; i < files.length; i++) {
+  if(files.length > 10){
+        error.value = 'You can only upload 10 images at a time';
+  }
+
+  //check if error is empty
+   
+        for (let i = 0; i < files.length; i++) {
         const file = files[i];
         const fileType = file.type.split('/')[1];
         const fileSize = file.size / 1024 / 1024;
@@ -111,12 +118,28 @@ function handleDrop(event) {
         if (fileSize > 5) {
           error.value = `${file.name} exceeds the 5MB file size limit.`;
         }
-  }
+
+    }
+ 
 }
 
+function submit() {
 
+    form.product_number = form.title.split(" ").join("-") + "-" + Math.floor(Math.random() * 1000000);
+    console.log(form.product_number, form.title);
 
-
+    console.log(form)
+    form.post(route("products.store"), {
+        preserveScroll: true,
+        onSuccess: () => {
+            showModal.value = false;
+        },
+        //print errors
+        onError: (errors) => {
+            console.log(errors);
+        },
+    });
+}
 
 </script>
 <template>
@@ -153,7 +176,7 @@ function handleDrop(event) {
                     </button>
                 </div>
                 <!-- Modal body -->
-                <form action="#">
+                <form @submit.prevent="submit">
                     <div class="grid gap-4 mb-4 sm:grid-cols-2">
                         <div>
                             <InputLabel for="title">Title</InputLabel>
@@ -163,19 +186,23 @@ function handleDrop(event) {
                         </div>
                         <div>
                             <InputLabel for="price">Price</InputLabel>
-                            <TextInput type="number" name="price" id="price" placeholder="$999" required min="1">
+                            <TextInput type="number" name="price" id="price" placeholder="$999" required min="1"  v-model="form.price">
                             </TextInput>
                         </div>
                         <div class="sm:col-span-2">
                             <InputLabel for="description">Description</InputLabel>
                             <textarea id="description" rows="4" maxlength="500"
+                                required
                                 class="resize-none block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                placeholder="Write product description here"></textarea>
+                                placeholder="Write product description here"  v-model="form.description"></textarea>
                         </div>
                         <div>
                             <InputLabel for="audience">Audience</InputLabel>
                             <select id="audience"
+                                 v-model="form.audience"
+                                 required
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
+                                <option value="" disabled selected>Select Audience</option>
                                 <option value="male">Male</option>
                                 <option value="female">Female</option>
                                 <option value="children">Children</option>
@@ -183,12 +210,13 @@ function handleDrop(event) {
                         </div>
                         <div>
                             <InputLabel for="stock">Stock</InputLabel>
-                            <TextInput type="number" name="stock" id="stock" placeholder="99" required min="1">
+                            <TextInput type="number" name="stock" id="stock" placeholder="99" required min="1" v-model="form.stock">
                             </TextInput>
                         </div>
                         <div>
                             <InputLabel for="head_category">Head Category</InputLabel>
                             <select id="head_category" v-model="form.head_category" @change="handleCategory"
+                                required
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
                                 <option value="" disabled selected>Select Head Category</option>
                                 <option v-for="headCategory in headCategories" :key="headCategory.id"
@@ -198,12 +226,14 @@ function handleDrop(event) {
                             </select>
                         </div>
                         <div v-if="showSubCategory">
-                            <InputLabel for="sub_category">Sub Category</InputLabel>
-                            <select id="sub_category" @change="resetDropdown"
+                            <InputLabel for="category">Sub Category</InputLabel>
+                            <select id="category" @change="resetDropdown"
+                            required
+                            v-model="form.category"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
                                 <option value="" disabled selected>Select subCategory</option>
                                 <option v-for="subCategory in categoriesSelection" :key="subCategory.id"
-                                    :value="subCategory.id">
+                                    :value="subCategory.name">
                                     {{ subCategory.name }}
                                 </option>
                             </select>
@@ -214,13 +244,15 @@ function handleDrop(event) {
                         <div>
    
                             <InputLabel for="stock">SKU</InputLabel>
-                            <TextInput maxlength="16" type="text" name="stock" id="stock" placeholder="99" required min="1">
+                            <TextInput maxlength="16" type="text" v-model="form.sku" name="stock" id="stock" placeholder="99" required min="1">
                             </TextInput>
                      
                         </div>
                         <div class="sm:col-span-2">
-                            <InputLabel for="description">Extra Info</InputLabel>
-                            <textarea id="description" rows="4" maxlength="500"
+                            <InputLabel for="extra_info">Extra Info</InputLabel>
+                            <textarea id="extra_info" rows="4" maxlength="500"
+                                required
+                                v-model="form.extra_info"
                                 class="block resize-none p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                 placeholder="Write extra details the client should know about the product here"></textarea>
                         </div>
@@ -248,10 +280,11 @@ function handleDrop(event) {
                                         <span v-for="file in files" :key="file.name" class="mt-2 text-xs text-gray-500 dark:text-gray-400">{{ file.name }}, </span>
                                     </div>
                                 </div>
-                                <input id="dropzone-file" type="file" class="hidden" ref="fileInput" multiple />  
+                                <input id="dropzone-file" name="images" class="opacity-0 absolute" type="file" ref="fileInput" multiple required/>  
                             </label>
 
                         </div>
+                        <input type="hidden" name="product_number" v-model="form.product_number">
                     </div>
                     <PrimaryButton type="submit" class="max-w-max inline-flex items-center text-center">
                         <svg class="mr-1 -ml-1 w-6 h-6" fill="currentColor" viewBox="0 0 20 20"
