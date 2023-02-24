@@ -15,6 +15,16 @@ class ProductsController extends Controller
 {
     public function index()
     {
+        $title = request()->input('title');
+        $audience = request()->input('audience');
+        $category = request()->input('category');
+        $is_active = request()->input('is_active');
+        $is_promotion = request()->input('is_promotion');
+        $color = request()->input('color');
+        $size = request()->input('size');
+        $price = request()->input('price');
+        
+
         $products = Product::all();
 //        return Inertia::render('products/index', [
 //            'products' => $products
