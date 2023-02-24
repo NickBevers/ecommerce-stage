@@ -3,6 +3,7 @@ import PrimaryButton from "@/Components/atoms/PrimaryButton.vue";
 import { onMounted, ref, reactive } from "vue";
 import InputLabel from "@/Components/atoms/InputLabel.vue";
 import TextInput from "@/Components/atoms/TextInput.vue";
+import InputError from "@/Components/atoms/InputError.vue";
 import { useForm, usePage } from "@inertiajs/vue3";
 
 const showModal = ref(false);
@@ -51,9 +52,67 @@ function handleCategory() {
     );
 }
 
-//make dropzone-file input so user can drag and drop files
 
-const dropzone = ref(null);
+const isDragging = ref(false);
+const error = ref('');
+let files = reactive([]);
+
+function handleDragEnter(event) {
+  error.value = '';
+  // Prevent default behavior
+  event.preventDefault();
+
+  // Add "dragging" class to label
+  isDragging.value = true;
+
+
+  console.log('Drag enter')
+}
+
+function handleDragOver(event) {
+  // Prevent default behavior
+  event.preventDefault();
+
+  // Add "dragging" class to label
+  isDragging.value = true;
+}
+
+function handleDragLeave(event) {
+  // Prevent default behavior
+  event.preventDefault();
+
+  // Remove "dragging" class from label
+  isDragging.value = false;
+}
+
+function handleDrop(event) {
+  // Prevent default behavior
+  event.preventDefault();
+
+  // Remove "dragging" class from label
+  isDragging.value = false;
+
+  // Get the files that were dropped
+  files = event.dataTransfer.files;
+
+  if(!files){ 
+    error.value = 'No file found';
+  }
+
+  for (let i = 0; i < files.length; i++) {
+        const file = files[i];
+        const fileType = file.type.split('/')[1];
+        const fileSize = file.size / 1024 / 1024;
+
+        if (fileType !== 'jpeg' && fileType !== 'webp' && fileType !== 'png' && fileType !== 'jpg') {
+          error.value = `${file.name} is not a valid image file.`;
+        }
+
+        if (fileSize > 5) {
+          error.value = `${file.name} exceeds the 5MB file size limit.`;
+        }
+  }
+}
 
 
 
@@ -166,11 +225,11 @@ const dropzone = ref(null);
                                 placeholder="Write extra details the client should know about the product here"></textarea>
                         </div>
                         <InputLabel for="dropzone-file">Product Image</InputLabel>
-                        <div class="sm:col-span-2 flex items-center justify-center w-full" @dragenter.prevent
-                            @dragover.prevent @dragleave.prevent @drop.prevent="handleDrop">
+                        <div class="sm:col-span-2 flex items-center justify-center w-full" @dragenter.prevent="handleDragEnter"
+                        @dragover.prevent="handleDragOver" @dragleave.prevent="handleDragLeave" @drop.prevent="handleDrop">
                             <label for="dropzone-file"
-                                class="flex flex-col items-center justify-center w-full h-40 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600"
-                                :class="{ 'border-blue-500': isDragging }">
+                            :class="{ 'border-gray-500': isDragging }"
+                                class="flex flex-col items-center justify-center w-full border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
                                 <div class="flex flex-col items-center justify-center pt-5 pb-6">
                                     <svg aria-hidden="true" class="w-10 h-10 mb-3 text-gray-400" fill="none"
                                         stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -182,11 +241,16 @@ const dropzone = ref(null);
                                         <span class="font-semibold">Click to upload</span> or drag and drop
                                     </p>
                                     <p class="text-xs text-gray-500 dark:text-gray-400">
-                                        SVG, PNG, JPG or GIF (MAX. 800x400px)
+                                        PNG, JPG or WEBP (MAX. 5MB)
                                     </p>
+                                    <InputError for="dropzone-file" class="mt-2" :message="error"/>
+                                    <div class="text-center px-8 pt-4">
+                                        <span v-for="file in files" :key="file.name" class="mt-2 text-xs text-gray-500 dark:text-gray-400">{{ file.name }}, </span>
+                                    </div>
                                 </div>
-                                <input id="dropzone-file" type="file" class="hidden" ref="fileInput" multiple />
+                                <input id="dropzone-file" type="file" class="hidden" ref="fileInput" multiple />  
                             </label>
+
                         </div>
                     </div>
                     <PrimaryButton type="submit" class="max-w-max inline-flex items-center text-center">
