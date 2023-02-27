@@ -127,7 +127,12 @@ function handleDrop(event) {
 }
 
 function submit() {
-    form.patch(route("products.update", props.product.id));
+    form.patch(route("products.update", props.product.id)),{
+        onSuccess: () => {
+            showModal.value = false;
+            window.location.reload();
+        },
+    };
 }
 
 </script>

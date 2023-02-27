@@ -20,12 +20,38 @@ const totalPages = computed(() => {
     return Math.ceil(state.products.length / state.itemsPerPage);
 });
 
+// const pages = computed(() => {
+//     const pagesArray = [];
+//     for (let i = 1; i <= totalPages.value; i++) {
+//         pagesArray.push(i);
+//     }
+//     return pagesArray;
+// });
+
 const pages = computed(() => {
-    const pagesArray = [];
-    for (let i = 1; i <= totalPages.value; i++) {
-        pagesArray.push(i);
-    }
-    return pagesArray;
+  const pagesArray = [];
+  const maxPagesToShow = 3;
+
+  let startPage = Math.max(state.currentPage - Math.floor(maxPagesToShow / 2), 1);
+  let endPage = Math.min(startPage + maxPagesToShow - 1, totalPages.value);
+
+  if (endPage - startPage < maxPagesToShow - 1) {
+    startPage = Math.max(endPage - maxPagesToShow + 1, 1);
+  }
+
+  for (let i = startPage; i <= endPage; i++) {
+    pagesArray.push(i);
+  }
+
+  if (pagesArray[0] !== 1) {
+    pagesArray.unshift(1);
+  }
+
+  if (pagesArray[pagesArray.length - 1] !== totalPages.value) {
+    pagesArray.push(totalPages.value);
+  }
+
+  return pagesArray;
 });
 
 onMounted(() => {
@@ -135,13 +161,7 @@ function goToPage(page) {
                     <span class="text-sm font-normal text-gray-500 dark:text-gray-400">
                         Showing
                         <span class="font-semibold text-gray-900 dark:text-white">
-                            {{
-                                ((state.currentPage - 1) * state.itemsPerPage + 1) 
-                                + 
-                                (state.products.length > (state.currentPage * state.itemsPerPage) 
-                                ? state.currentPage - 1 
-                                : (state.products.length % state.itemsPerPage) - 1)
-                            }}-{{ state.products.length }}
+                            {{ state.itemsPerPage * (state.currentPage - 1) + 1 }}-{{ state.currentPage * state.itemsPerPage }}
                         </span>
                         
                         of
@@ -158,12 +178,21 @@ function goToPage(page) {
                                         clip-rule="evenodd" />
                                 </svg></button>
                         </li>
-                        <li v-for="page in pages" :key="page" :class="{ active: state.currentPage === page }">
+                        <!-- <li v-for="page in pages" :key="page" :class="{ active: state.currentPage === page }">
                             <button
                             :class="{ 'bg-primary-50 border-primary-300 hover:bg-primary-100 hover:text-primary-700': state.currentPage === page }"
                                 class="flex items-center justify-center px-3 py-2 text-sm leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
                                 @click="goToPage(page)">{{ page }}</button>
-                        </li>
+                        </li> -->
+                     
+                        <template v-for="page in pages" :key="page">
+                            <li :class="{ active: state.currentPage === page }">
+                            <button :class="{ 'bg-primary-50 border-primary-300 hover:bg-primary-100 hover:text-primary-700': state.currentPage === page }"
+                                    class="flex items-center justify-center px-3 py-2 text-sm leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+                                    @click="goToPage(page)">{{ page }}</button>
+                            </li>
+                        </template>
+               
                         <li :class="{ disabled: state.currentPage === totalPages }">
                             <button
                                 class="flex items-center justify-center h-full py-1.5 px-3 leading-tight text-gray-500 bg-white rounded-r-lg border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
