@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Variation;
+use App\Models\ColorVariation;
 use Illuminate\Http\Request;
 
 class VariationsController extends Controller
@@ -20,19 +20,19 @@ class VariationsController extends Controller
     {
     }
 
-    public function show(Variation $variation)
+    public function show(ColorVariation $variation)
     {
     }
 
-    public function edit(Variation $variation)
+    public function edit(ColorVariation $variation)
     {
     }
 
-    public function update(Request $request, Variation $variation)
+    public function update(Request $request, ColorVariation $variation)
     {
     }
 
-    public function destroy(Variation $variation)
+    public function destroy(ColorVariation $variation)
     {
     }
 }
