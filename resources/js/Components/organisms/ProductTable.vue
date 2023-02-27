@@ -1,5 +1,6 @@
 <script setup>
 import CreateProductModal from '@/Components/molecules/CreateProductModal.vue';
+import UpdateProductModal from '@/Components/molecules/UpdateProductModal.vue';
 import { onMounted, reactive, computed, ref } from 'vue';
 import moment from 'moment';
 
@@ -31,11 +32,13 @@ onMounted(() => {
     fetch('/products/all')
         .then(response => response.json())
         .then(data => {
+            data.sort((a, b) => {
+                return new Date(b.updated_at) - new Date(a.updated_at);
+            });
             state.products = data;
             state.products.forEach((product) => {
                 product.updated_at = moment(product.updated_at).fromNow();
             });
-            console.log(state.products);
         })
         .catch(error => console.error(error));
 });
@@ -60,11 +63,10 @@ function goToPage(page) {
                     <span class="dark:text-white">$88.4k</span>
                 </h5>
             </div>
-
             <CreateProductModal />
         </div>
         <div class="mx-auto max-w-screen-2xl">
-            <div class="relative overflow-hidden bg-white shadow-md dark:bg-gray-800 sm:rounded-lg">
+            <div class=" overflow-hidden bg-white shadow-md dark:bg-gray-800 sm:rounded-lg">
                 <div class="overflow-x-auto">
                     <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                         <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
@@ -76,11 +78,13 @@ function goToPage(page) {
                                 <th scope="col" class="px-4 py-3">Sales</th>
                                 <th scope="col" class="px-4 py-3">Revenue</th>
                                 <th scope="col" class="px-4 py-3">Last Update</th>
+                                <th scope="col" class="px-4 py-3">Action</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr class="border-b dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-700"
-                                v-for="product in displayedProducts" :key="product.id">
+                     
+                            <tr class="border-b dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-700" v-for="product in displayedProducts" :key="product.id">
+                             
                                 <th scope="row"
                                     class="flex items-center px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                     <img src="https://flowbite.s3.amazonaws.com/blocks/application-ui/products/imac-front-image.png"
@@ -90,7 +94,8 @@ function goToPage(page) {
                                 <td class="px-4 py-2">
                                     <span
                                         class="bg-primary-100 text-primary-800 text-xs font-medium px-2 py-0.5 rounded dark:bg-primary-900 dark:text-primary-300">Desktop
-                                        PC</span>
+                                        PC
+                                    </span>
                                 </td>
                                 <td class="px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                     <div class="flex items-center">
@@ -117,7 +122,11 @@ function goToPage(page) {
                                 <td class="px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                     {{ product.updated_at }}
                                 </td>
+                                <td class="px-4 py-2">
+                                  <UpdateProductModal :product="product" />
+                                </td>
                             </tr>
+                    
                         </tbody>
                     </table>
                 </div>
@@ -126,8 +135,15 @@ function goToPage(page) {
                     <span class="text-sm font-normal text-gray-500 dark:text-gray-400">
                         Showing
                         <span class="font-semibold text-gray-900 dark:text-white">
-                            {{ (state.currentPage - 1) * perPage + 1 }}
+                            {{
+                                ((state.currentPage - 1) * state.itemsPerPage + 1) 
+                                + 
+                                (state.products.length > (state.currentPage * state.itemsPerPage) 
+                                ? state.currentPage - 1 
+                                : (state.products.length % state.itemsPerPage) - 1)
+                            }}-{{ state.products.length }}
                         </span>
+                        
                         of
                         <span class="font-semibold text-gray-900 dark:text-white">{{ state.products.length }}</span>
                     </span>
@@ -148,7 +164,7 @@ function goToPage(page) {
                                 class="flex items-center justify-center px-3 py-2 text-sm leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
                                 @click="goToPage(page)">{{ page }}</button>
                         </li>
-                        <li :class="{ disabled: currentPage === totalPages }">
+                        <li :class="{ disabled: state.currentPage === totalPages }">
                             <button
                                 class="flex items-center justify-center h-full py-1.5 px-3 leading-tight text-gray-500 bg-white rounded-r-lg border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
                                 @click="goToPage(state.currentPage + 1)"> <svg class="w-5 h-5" aria-hidden="true"
