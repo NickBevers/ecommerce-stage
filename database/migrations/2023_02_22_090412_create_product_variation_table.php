@@ -9,11 +9,13 @@ return new class extends Migration {
     {
         Schema::create('product_variation', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('variation_id')->constrained();
+            $table->foreignId('color_variation_id')->constrained();
             $table->foreignId('product_id')->constrained();
             $table->integer('price');
             $table->integer('amount')->default(1);
-            $table->String('sku');
+            $table->String('variation_number');
+            $table->json('sizes');
+            $table->boolean('in_stock')->default(true);
             $table->timestamps();
         });
     }

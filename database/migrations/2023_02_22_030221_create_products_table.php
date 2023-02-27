@@ -12,14 +12,11 @@ return new class extends Migration {
             $table->String('title');
             $table->String('description');
             $table->String('audience');
-            $table->integer('price');
-            $table->integer('stock');
             $table->foreignId('category_id')->references('id')->on('categories');
             $table->json('promos')->nullable();
             $table->String('extra_info');
-            $table->json('images');
             $table->String('sku');
-            $table->integer('product_number');
+            $table->json('images');
             $table->boolean('is_promotion')->default(false);
             $table->boolean('is_active')->default(true);
             $table->foreignId('seller_id')->nullable()->references('id')->on('users');

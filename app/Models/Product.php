@@ -17,12 +17,9 @@ class Product extends Model
         'title',
         'description',
         'audience',
-        'price',
-        'stock',
         'category_id',
         'promos',
         'extra_info',
-        'images',
         'sku',
         'is_promotion',
         'is_active',
@@ -32,7 +29,6 @@ class Product extends Model
     protected $casts = [
         'created_at' => 'datetime',
         'updated_at' => 'datetime',
-        'images' => 'array',
         'promos' => 'array',
     ];
 
