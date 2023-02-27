@@ -1,6 +1,7 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import CreateProductModal from '@/Components/molecules/CreateProductModal.vue';
+import ProductTable from '@/Components/organisms/ProductTable.vue';
 import { Head } from '@inertiajs/vue3';
 </script>
 <template>
@@ -11,11 +12,8 @@ import { Head } from '@inertiajs/vue3';
         </template>
 
         <div>
-            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                <CreateProductModal />
-                <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                    <div class="p-6 text-gray-900">Products</div>
-                </div>
+            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8"> 
+                <ProductTable />
             </div>
         </div>
     </AuthenticatedLayout>

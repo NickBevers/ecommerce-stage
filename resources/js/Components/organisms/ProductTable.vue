@@ -1,28 +1,50 @@
 <script setup>
 import CreateProductModal from '@/Components/molecules/CreateProductModal.vue';
-import { onMounted, reactive } from 'vue';
+import { onMounted, reactive, computed, ref } from 'vue';
 import moment from 'moment';
 
 const state = reactive({
-  products: [],
+    products: [],
+    currentPage: 1,
+    itemsPerPage: 10,
+});
+
+const displayedProducts = computed(() => {
+    const startIndex = (state.currentPage - 1) * state.itemsPerPage;
+    const endIndex = startIndex + state.itemsPerPage;
+    return state.products.slice(startIndex, endIndex);
+});
+
+const totalPages = computed(() => {
+    return Math.ceil(state.products.length / state.itemsPerPage);
+});
+
+const pages = computed(() => {
+    const pagesArray = [];
+    for (let i = 1; i <= totalPages.value; i++) {
+        pagesArray.push(i);
+    }
+    return pagesArray;
 });
 
 onMounted(() => {
-      fetch('/products/all')
+    fetch('/products/all')
         .then(response => response.json())
-        .then(data => {        
-          state.products = data;
-
-          //convert the state.products.updated_at to a simple time using Just Now or 1 hour ago etc
+        .then(data => {
+            state.products = data;
             state.products.forEach((product) => {
                 product.updated_at = moment(product.updated_at).fromNow();
             });
-          
-
-          console.log(state.products);
+            console.log(state.products);
         })
         .catch(error => console.error(error));
 });
+
+function goToPage(page) {
+    if (page >= 1 && page <= totalPages.value) {
+        state.currentPage = page;
+    }
+}
 
 </script>
 <template>
@@ -30,15 +52,15 @@ onMounted(() => {
         <div class="flex justify-between items-center">
             <div class="flex flex-row gap-5">
                 <h5>
-                <span class="text-gray-500">All Products: </span>
-                <span class="dark:text-white">{{ state.products.length }}</span>
-            </h5>
-            <h5>
-                <span class="text-gray-500">Total sales:</span>
-                <span class="dark:text-white">$88.4k</span>
-            </h5>
+                    <span class="text-gray-500">All Products: </span>
+                    <span class="dark:text-white">{{ state.products.length }}</span>
+                </h5>
+                <h5>
+                    <span class="text-gray-500">Total sales:</span>
+                    <span class="dark:text-white">$88.4k</span>
+                </h5>
             </div>
-         
+
             <CreateProductModal />
         </div>
         <div class="mx-auto max-w-screen-2xl">
@@ -57,7 +79,8 @@ onMounted(() => {
                             </tr>
                         </thead>
                         <tbody>
-                            <tr class="border-b dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-700" v-for="product in state.products" :key="state.products.id">
+                            <tr class="border-b dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-700"
+                                v-for="product in displayedProducts" :key="product.id">
                                 <th scope="row"
                                     class="flex items-center px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                     <img src="https://flowbite.s3.amazonaws.com/blocks/application-ui/products/imac-front-image.png"
@@ -91,66 +114,51 @@ onMounted(() => {
                                     </div>
                                 </td>
                                 <td class="px-4 py-2">$3.2M</td>
-                                <td class="px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{product.updated_at}}
+                                <td class="px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                    {{ product.updated_at }}
                                 </td>
                             </tr>
-                    </tbody>
-                </table>
-            </div>
-            <nav class="flex flex-col items-start justify-between p-4 space-y-3 md:flex-row md:items-center md:space-y-0"
-                aria-label="Table navigation">
-                <span class="text-sm font-normal text-gray-500 dark:text-gray-400">
-                    Showing
-                    <span class="font-semibold text-gray-900 dark:text-white">1-10</span>
-                    of
-                    <span class="font-semibold text-gray-900 dark:text-white">{{state.products.length}}</span>
-                </span>
-                <ul class="inline-flex items-stretch -space-x-px">
-                    <li>
-                        <a href="#"
-                            class="flex items-center justify-center h-full py-1.5 px-3 ml-0 text-gray-500 bg-white rounded-l-lg border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
-                            <span class="sr-only">Previous</span>
-                            <svg class="w-5 h-5" aria-hidden="true" fill="currentColor" viewbox="0 0 20 20"
-                                xmlns="http://www.w3.org/2000/svg">
-                                <path fill-rule="evenodd"
-                                    d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z"
-                                    clip-rule="evenodd" />
-                            </svg>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#"
-                            class="flex items-center justify-center px-3 py-2 text-sm leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">1</a>
-                    </li>
-                    <li>
-                        <a href="#"
-                            class="flex items-center justify-center px-3 py-2 text-sm leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">2</a>
-                    </li>
-                    <li>
-                        <a href="#" aria-current="page"
-                            class="z-10 flex items-center justify-center px-3 py-2 text-sm leading-tight border text-primary-600 bg-primary-50 border-primary-300 hover:bg-primary-100 hover:text-primary-700 dark:border-gray-700 dark:bg-gray-700 dark:text-white">3</a>
-                    </li>
-                    <li>
-                        <a href="#"
-                            class="flex items-center justify-center px-3 py-2 text-sm leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">...</a>
-                    </li>
-                    <li>
-                        <a href="#"
-                            class="flex items-center justify-center px-3 py-2 text-sm leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">100</a>
-                    </li>
-                    <li>
-                        <a href="#"
-                            class="flex items-center justify-center h-full py-1.5 px-3 leading-tight text-gray-500 bg-white rounded-r-lg border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
-                            <span class="sr-only">Next</span>
-                            <svg class="w-5 h-5" aria-hidden="true" fill="currentColor" viewbox="0 0 20 20"
-                                xmlns="http://www.w3.org/2000/svg">
-                                <path fill-rule="evenodd"
-                                    d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
-                                    clip-rule="evenodd" />
-                            </svg>
-                        </a>
-                    </li>
-                </ul>
+                        </tbody>
+                    </table>
+                </div>
+                <nav class="flex flex-col items-start justify-between p-4 space-y-3 md:flex-row md:items-center md:space-y-0"
+                    aria-label="Table navigation">
+                    <span class="text-sm font-normal text-gray-500 dark:text-gray-400">
+                        Showing
+                        <span class="font-semibold text-gray-900 dark:text-white">
+                            {{ (state.currentPage - 1) * perPage + 1 }}
+                        </span>
+                        of
+                        <span class="font-semibold text-gray-900 dark:text-white">{{ state.products.length }}</span>
+                    </span>
+                    <ul class="inline-flex items-stretch -space-x-px">
+                        <li :class="{ disabled: state.currentPage === 1 }">
+                            <button
+                                class="flex items-center justify-center h-full py-1.5 px-3 ml-0 text-gray-500 bg-white rounded-l-lg border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+                                @click="goToPage(state.currentPage - 1)"> <svg class="w-5 h-5" aria-hidden="true"
+                                    fill="currentColor" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd"
+                                        d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z"
+                                        clip-rule="evenodd" />
+                                </svg></button>
+                        </li>
+                        <li v-for="page in pages" :key="page" :class="{ active: state.currentPage === page }">
+                            <button
+                            :class="{ 'bg-primary-50 border-primary-300 hover:bg-primary-100 hover:text-primary-700': state.currentPage === page }"
+                                class="flex items-center justify-center px-3 py-2 text-sm leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+                                @click="goToPage(page)">{{ page }}</button>
+                        </li>
+                        <li :class="{ disabled: currentPage === totalPages }">
+                            <button
+                                class="flex items-center justify-center h-full py-1.5 px-3 leading-tight text-gray-500 bg-white rounded-r-lg border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+                                @click="goToPage(state.currentPage + 1)"> <svg class="w-5 h-5" aria-hidden="true"
+                                    fill="currentColor" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd"
+                                        d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+                                        clip-rule="evenodd" />
+                                </svg></button>
+                        </li>
+                    </ul>
             </nav>
         </div>
     </div>
