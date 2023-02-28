@@ -125,7 +125,8 @@ function goToPage(page) {
                                     class="flex items-center px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                     <img src="https://flowbite.s3.amazonaws.com/blocks/application-ui/products/imac-front-image.png"
                                         alt="iMac Front Image" class="w-auto h-8 mr-3">
-                                    {{ product.title }}
+                                    {{ product.product.title }}
+              
                                 </th>
                                 <td class="px-4 py-2">
                                     <span
@@ -136,7 +137,7 @@ function goToPage(page) {
                                 <td class="px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                     <div class="flex items-center">
                                         <div class="inline-block w-4 h-4 mr-2 bg-red-700 rounded-full"></div>
-                                        {{ product.stock }}
+                                        {{ product.amount }}
                                     </div>
                                 </td>
                                 <td class="px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white">
