@@ -48,7 +48,7 @@ Route::get('/accessories', [ProductVariationController::class, 'showAccessories'
 Route::get('/promos', [ProductVariationController::class, 'showPromos'])->name('promos');
 
 
-Route::get('/filter', [ProductVariationController::class, 'index'])->name('products.getAll');
+Route::get('/products/all', [ProductVariationController::class, 'index'])->name('products.getAll');
 Route::post('/products', [ProductsController::class, 'store'])->name('products.store');
 Route::get('/products/create', [ProductsController::class, 'create'])->name('products.create');
 Route::get('/products/{product}', [ProductsController::class, 'show'])->name('products.show');
