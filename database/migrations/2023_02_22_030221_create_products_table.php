@@ -16,10 +16,11 @@ return new class extends Migration {
             $table->json('promos')->nullable();
             $table->String('extra_info');
             $table->String('sku');
-            $table->json('images');
             $table->boolean('is_promotion')->default(false);
             $table->boolean('is_active')->default(true);
             $table->foreignId('seller_id')->nullable()->references('id')->on('users');
+            $table->foreignId('brand_id')->references('id')->on('brands');
+            $table->foreignId('material_id')->references('id')->on('materials');
             $table->timestamps();
         });
     }

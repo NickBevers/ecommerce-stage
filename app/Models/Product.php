@@ -23,6 +23,7 @@ class Product extends Model
         'sku',
         'is_promotion',
         'is_active',
+        'brand_id',
 
     ];
 
@@ -71,5 +72,15 @@ class Product extends Model
     public function cart(): BelongsToMany
     {
         return $this->belongsToMany(Cart::class);
+    }
+
+    public function brand(): HasOne
+    {
+        return $this->hasOne(Brand::class);
+    }
+
+    public function material(): HasOne
+    {
+        return $this->hasOne(Material::class);
     }
 }

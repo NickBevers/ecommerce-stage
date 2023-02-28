@@ -2,8 +2,6 @@
 
 namespace Database\Seeders;
 
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
-use App\Models\SubCategory;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -18,6 +16,7 @@ class DatabaseSeeder extends Seeder
             SubCategorySeeder::class,
             ColorVariationSeeder::class,
             ProductSeeder::class,
+            ProductVariationSeeder::class,
         ]);
     }
 }

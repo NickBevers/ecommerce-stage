@@ -28,9 +28,9 @@ class ProductVariationFactory extends Factory
             ],
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
-            'product_id' => Product::factory()->create()->id,
+            'product_id' => $this->faker->randomElement(Product::all()->pluck('id')->toArray()),
             'in_stock' => '1',
-            'images' => [ 1 ],
+            'images' => "[1]",
         ];
     }
 }
