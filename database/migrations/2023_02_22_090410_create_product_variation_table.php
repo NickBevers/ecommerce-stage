@@ -16,6 +16,7 @@ return new class extends Migration {
             $table->String('variation_number');
             $table->json('sizes');
             $table->boolean('in_stock')->default(true);
+            $table->json('images');
             $table->timestamps();
         });
     }
