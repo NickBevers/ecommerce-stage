@@ -112,7 +112,7 @@ class ProductVariationController extends Controller
         $brand = $request->input('brand');
         $brands = Brand::where('name', 'like', '%' . $brand . '%')->get()->pluck('id')->toArray();
         Debugbar::debug($brands);
-        return view('test') ;
+//        return view('test') ;
     }
 
     public function create()
