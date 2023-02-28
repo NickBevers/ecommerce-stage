@@ -27,7 +27,7 @@ class ProductVariationController extends Controller
         $brand = $request->input('brand');
         $material = $request->input('material');
 
-        $products = ProductVariation::where('in_stock', true)
+        return ProductVariation::where('in_stock', true)
             ->when($title, function ($query, $title) {
                 return $query->where('title', 'like', '%' . $title . '%');
             })
@@ -73,9 +73,8 @@ class ProductVariationController extends Controller
                     $query->where('material_id', $material);
                 })->with('product');
             })
-
+            ->with('product')
             ->get();
-        return $products;
 
 //        return Inertia::render('products/index', [
 //            'products' => $products
