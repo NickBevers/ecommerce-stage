@@ -17,22 +17,19 @@ class Product extends Model
         'title',
         'description',
         'audience',
-        'price',
-        'stock',
         'category_id',
         'promos',
         'extra_info',
-        'images',
         'sku',
         'is_promotion',
         'is_active',
+        'brand_id',
 
     ];
 
     protected $casts = [
         'created_at' => 'datetime',
         'updated_at' => 'datetime',
-        'images' => 'array',
         'promos' => 'array',
     ];
 
@@ -75,5 +72,15 @@ class Product extends Model
     public function cart(): BelongsToMany
     {
         return $this->belongsToMany(Cart::class);
+    }
+
+    public function brand(): HasOne
+    {
+        return $this->hasOne(Brand::class);
+    }
+
+    public function material(): HasOne
+    {
+        return $this->hasOne(Material::class);
     }
 }

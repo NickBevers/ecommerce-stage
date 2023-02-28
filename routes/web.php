@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProductsController;
+use App\Http\Controllers\ProductVariationController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ShippingAddressesController;
 use App\Http\Controllers\UsersController;
@@ -41,7 +42,13 @@ Route::get('/products', function () {
 })->middleware(['auth', 'verified'])->name('products');
 
 
-Route::get('/products/all', [ProductsController::class, 'index'])->name('products.getAll');
+Route::get('/shoes', [ProductVariationController::class, 'showShoes'])->name('shoes');
+Route::get('/clothing', [ProductVariationController::class, 'showClothing'])->name('clothing');
+Route::get('/accessories', [ProductVariationController::class, 'showAccessories'])->name('accessories');
+Route::get('/promos', [ProductVariationController::class, 'showPromos'])->name('promos');
+
+
+Route::get('/filter', [ProductVariationController::class, 'index'])->name('products.getAll');
 Route::post('/products', [ProductsController::class, 'store'])->name('products.store');
 Route::get('/products/create', [ProductsController::class, 'create'])->name('products.create');
 Route::get('/products/{product}', [ProductsController::class, 'show'])->name('products.show');
