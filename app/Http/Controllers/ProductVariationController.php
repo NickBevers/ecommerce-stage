@@ -5,9 +5,11 @@ namespace App\Http\Controllers;
 use App\Models\Brand;
 use App\Models\Category;
 use App\Models\ColorVariation;
+use App\Models\Material;
 use App\Models\Product;
 use App\Models\ProductVariation;
 use App\Models\SubCategory;
+use Barryvdh\Debugbar\Facades\Debugbar;
 use Illuminate\Http\Request;
 
 class ProductVariationController extends Controller
@@ -23,8 +25,9 @@ class ProductVariationController extends Controller
         $priceMin = $request->input('priceMin');
         $priceMax = $request->input('priceMax');
         $brand = $request->input('brand');
+        $material = $request->input('material');
 
-        return ProductVariation::where('in_stock', true)
+        $products = ProductVariation::where('in_stock', true)
             ->when($title, function ($query, $title) {
                 return $query->where('title', 'like', '%' . $title . '%');
             })
@@ -60,15 +63,25 @@ class ProductVariationController extends Controller
                 return $query->where('price', '<=', $priceMax);
             })
             ->when($brand, function ($query, $brand) {
-                // get the brand id from the brands table
-//                return $query->where('brand_id', Brand::where('name', $brand)->first()->id);
+                $brands = Brand::where('name', 'like', '%' . $brand . '%')->get()->pluck('id')->toArray();
+                return $query->whereHas('product', function ($query) use ($brands) {
+                    $query->whereIn('brand_id', $brands);
+                })->with('product');
             })
+            ->when($material, function ($query, $material) {
+                return $query->whereHas('product', function ($query) use ($material) {
+                    $query->where('material_id', $material);
+                })->with('product');
+            })
+
             ->get();
+        return $products;
 
 //        return Inertia::render('products/index', [
 //            'products' => $products
 //        ]);
     }
+
 
     public function showShoes(Request $request)
     {
@@ -92,6 +105,14 @@ class ProductVariationController extends Controller
     {
         $request->merge(['is_promotion' => true]);
         return $this->index($request);
+    }
+
+    public function testFunc(Request $request)
+    {
+        $brand = $request->input('brand');
+        $brands = Brand::where('name', 'like', '%' . $brand . '%')->get()->pluck('id')->toArray();
+        Debugbar::debug($brands);
+        return view('test') ;
     }
 
     public function create()
