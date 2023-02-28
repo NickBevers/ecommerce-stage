@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Attribute;
+use App\Models\Brand;
 use App\Models\Category;
 use App\Models\Product;
 use App\Models\ProductImage;
+use App\Models\ProductVariation;
 use App\Models\SubCategory;
-use http\Url;
+use App\Models\ColorVariation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
@@ -15,11 +18,8 @@ class ProductsController extends Controller
 {
     public function index()
     {
-        $products = Product::all();
-//        return Inertia::render('products/index', [
-//            'products' => $products
-//        ]);
-        return $products;
+        return Product::all();
+
     }
 
     public function create()
@@ -27,7 +27,7 @@ class ProductsController extends Controller
         return Inertia::render('products/create');
     }
 
-    public function addOne()
+    public function testFunction()
     {
         return "Works";
     }
@@ -40,12 +40,8 @@ class ProductsController extends Controller
             'title' => 'required|string|max:255',
             'description' => 'required|string|max:255',
             'audience' => 'required|string|max:255',
-            'stock' => 'required|numeric',
-            'price' => 'required|numeric',
             'category' => 'required|string|max:255',
             'extra_info' => 'required|string|max:500',
-            'sku' => 'required|string|max:255',
-            'product_number' => 'required',
 //            'files' => 'array|required',
 //            'files.*' => 'required|mimetypes:image/jpg,image/jpeg,image/bmp'
         ]);
@@ -69,12 +65,8 @@ class ProductsController extends Controller
         $product->title = $request->title;
         $product->description = $request->description;
         $product->audience = $request->audience;
-        $product->price = $request->price;
-        $product->stock = $request->stock;
         $product->category_id = $categoryId;
         $product->extra_info = $request->extra_info;
-        $product->sku = $request->sku;
-        $product->product_number = $request->product_number;
 
         $request->has('is_promotion') ? $product->is_promotion = true :  $product->is_promotion = false;
         $request->has('is_active') ? $product->is_active = false : $product->is_active = true;
@@ -137,7 +129,7 @@ class ProductsController extends Controller
     public function update(Request $request, Product $product)
     {
         $productToUpdate = Product::find($product->id);
-        $productToUpdate->insert($request->all());
+        $productToUpdate->update($request->all());
     }
 
     public function destroy(Product $product)

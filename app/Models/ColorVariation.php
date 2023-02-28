@@ -2,16 +2,19 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
-class Variation extends Model
+class ColorVariation extends Model
 {
+
+    use HasFactory;
+
     protected $fillable = [
-        'attribute_id',
-        'type',
+        'value',
     ];
 
     protected $casts = [
@@ -24,13 +27,7 @@ class Variation extends Model
     | RELATIONS
     |--------------------------------------------------------------------------
     */
-
-    public function attributes(): HasOne
-    {
-        return $this->hasOne(Attribute::class);
-    }
-
-    public function productVariations(): BelongsToMany
+    public function productVariation(): BelongsToMany
     {
         return $this->belongsToMany(ProductVariation::class);
     }
