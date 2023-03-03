@@ -15,7 +15,6 @@ class SkuController extends Controller
             'skus' => Sku::with('attributeValues')
                 ->with('product')
                 ->orderBy('sku')
-                ->limit(10)
                 ->paginate(10),
             'attributeValues' => AttributeValue::all(),
         ]);
