@@ -42,7 +42,7 @@ Route::get('/products', function () {
     return Inertia::render('Dashboard/Products');
 })->middleware(['auth', 'verified'])->name('products');
 
-Route::get('/test', [SkuController::class, 'testFunc'])->name('test');
+Route::get('/test', [SkuController::class, 'index'])->name('test');
 
 Route::get('/shoes', [ProductVariationsController::class, 'showShoes'])->name('shoes');
 Route::get('/clothing', [ProductVariationsController::class, 'showClothing'])->name('clothing');

@@ -2,14 +2,25 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\AttributeValue;
 use App\Models\Sku;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
 
 class SkuController extends Controller
 {
     public function index()
     {
-        
+        return Inertia::render('Test/Index', [
+            'skus' => Sku::with('attributeValues')
+                ->with('product')
+                ->orderBy('sku')
+                ->limit(10)
+                ->paginate(10),
+            'attributeValues' => AttributeValue::all(),
+        ]);
+        // get all sku's with their attribute values sorted by sku
+
     }
 
     public function create()
@@ -24,12 +35,6 @@ class SkuController extends Controller
                 $query->where('attribute_type_id', 3);
             })
             ->get();
-
-
-//        $sku = Sku::find(1)
-//            ->attributeValues()
-//            ->get();
-//        return $sku;
     }
 
     public function store(Request $request)
