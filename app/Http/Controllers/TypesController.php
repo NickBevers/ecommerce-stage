@@ -2,14 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Material;
+use App\Models\AttributeType;
 use Illuminate\Http\Request;
 
-class MaterialsController extends Controller
+class TypesController extends Controller
 {
     public function index()
     {
-        
+
     }
 
     public function create()
@@ -20,19 +20,19 @@ class MaterialsController extends Controller
     {
     }
 
-    public function show(Material $material)
+    public function show(AttributeType $type)
     {
     }
 
-    public function edit(Material $material)
+    public function edit(AttributeType $type)
     {
     }
 
-    public function update(Request $request, Material $material)
+    public function update(Request $request, AttributeType $type)
     {
     }
 
-    public function destroy(Material $material)
+    public function destroy(AttributeType $type)
     {
     }
 }

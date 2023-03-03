@@ -12,8 +12,7 @@ class Category extends Model
     use HasFactory;
 
     protected $fillable = [
-        'label',
-        'value',
+        'name',
     ];
 
     /*

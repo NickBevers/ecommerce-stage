@@ -7,15 +7,15 @@ use Illuminate\Support\Facades\Schema;
 return new class extends Migration {
     public function up(): void
     {
-        Schema::create('color_variations', function (Blueprint $table) {
+        Schema::create('attribute_types', function (Blueprint $table) {
             $table->id();
-            $table->string('value');
+            $table->string('name');
             $table->timestamps();
         });
     }
 
     public function down(): void
     {
-        Schema::dropIfExists('variations');
+        Schema::dropIfExists('attribute_types');
     }
 };

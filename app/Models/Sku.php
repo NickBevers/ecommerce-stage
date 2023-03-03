@@ -5,31 +5,25 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
-class ProductVariation extends Model
+class Sku extends Model
 {
 
     use HasFactory;
 
-    protected $table = 'product_variation';
+    protected $table = 'skus';
 
     protected $fillable = [
-        'color_variation_id',
+        'sku',
         'product_id',
-        'price',
         'amount',
-        'variation_number',
-        'images',
-        'sizes',
-        'in_stock'
     ];
 
     protected $casts = [
         'created_at' => 'datetime',
         'updated_at' => 'datetime',
-        'sizes' => 'array',
-        'images' => 'array',
     ];
 
     /*
@@ -38,13 +32,13 @@ class ProductVariation extends Model
     |--------------------------------------------------------------------------
     */
 
-    public function colorVariation(): HasOne
-    {
-        return $this->HasOne(ColorVariation::class);
-    }
-
     public function product(): BelongsTo
     {
         return $this->belongsTo(Product::class);
+    }
+
+    public function attributeValues(): BelongsToMany
+    {
+        return $this->belongsToMany(AttributeValue::class, 'attribute_value_sku', 'sku_id', 'attribute_value_id');
     }
 }
