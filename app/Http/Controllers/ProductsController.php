@@ -17,7 +17,13 @@ class ProductsController extends Controller
 {
     public function index()
     {
-        return Product::all();
+        return Inertia::render('Dashboard/Products', [
+            'skus' => Sku::with('attributeValues')
+                ->with('product')
+                ->orderBy('sku')
+                ->paginate(10),
+            'attributeValues' => AttributeValue::all(),
+        ]);
 
     }
 
