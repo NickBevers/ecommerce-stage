@@ -1,12 +1,12 @@
 <script setup>
 import { ref } from 'vue';
-import ApplicationLogo from '@/Components/atoms/ApplicationLogo.vue';
-import Dropdown from '@/Components/molecules/Dropdown.vue';
-import DropdownLink from '@/Components/atoms/DropdownLink.vue';
-import NavLink from '@/Components/atoms/NavLink.vue';
-import ResponsiveNavLink from '@/Components/atoms/ResponsiveNavLink.vue';
+import ApplicationLogo from '@/Components/Customer/Atoms/ApplicationLogo.vue';
+import Dropdown from '@/Components/Admin/Molecules/Dropdown.vue';
+import DropdownLink from '@/Components/Admin/Atoms/DropdownLink.vue';
+import NavLink from '@/Components/Admin/Atoms/NavLink.vue';
+import ResponsiveNavLink from '@/Components/Admin/Atoms/ResponsiveNavLink.vue';
 import { Link } from '@inertiajs/vue3';
-import AdminSidePanel from '@/Components/organisms/AdminSidePanel.vue';
+import AdminSidePanel from '@/Components/Admin/Organisms/AdminSidePanel.vue';
 
 const showingNavigationDropdown = ref(false);
 </script>

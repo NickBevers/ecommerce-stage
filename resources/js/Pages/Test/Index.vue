@@ -1,6 +1,6 @@
 <script setup>
 import Pagination from '@/Components/Pagination.vue'
-import SkuTable from "@/Components/organisms/SkuTable.vue";
+import SkuTable from "@/Components/Admin/Organisms/SkuTable.vue";
 import { defineProps } from 'vue'
 
 const props = defineProps({

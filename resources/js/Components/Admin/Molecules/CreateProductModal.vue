@@ -1,34 +1,27 @@
 <script setup>
-import PrimaryButton from "@/Components/atoms/PrimaryButton.vue";
+import PrimaryButton from "@/Components/Admin/Atoms/PrimaryButton.vue";
 import { onMounted, ref, reactive } from "vue";
-import InputLabel from "@/Components/atoms/InputLabel.vue";
-import TextInput from "@/Components/atoms/TextInput.vue";
-import InputError from "@/Components/atoms/InputError.vue";
+import InputLabel from "@/Components/Admin/Atoms/InputLabel.vue";
+import TextInput from "@/Components/Admin/Atoms/TextInput.vue";
+import InputError from "@/Components/Admin/Atoms/InputError.vue";
 import { useForm, usePage } from "@inertiajs/vue3";
 
 
 const showModal = ref(false);
 
 const form = useForm({
-    title: props.product.title,
-    description: props.product.description,
-    price: props.product.price,
-    audience: props.product.audience,
-    stock: props.product.stock,
-    sku: props.product.sku,
-    category_id: "",
-    extra_info: props.product.extra_info,
-    product_number: props.product.product_number,
+    title: "",
+    description: "",
+    price: "",
+    audience: "",
+    stock: "",
+    sku: "",
+    head_category: "",
+    category: "",
+    extra_info: "",
+    product_number: "",
+    image: "",
 });
-
-const props = defineProps({
-    product: {
-        type: Object,
-        required: true,
-    },
-});
-
-
 
 const headCategories = reactive([]);
 const subCategories = reactive([]);
@@ -110,6 +103,8 @@ function handleDrop(event) {
   if(files.length > 10){
         error.value = 'You can only upload 10 images at a time';
   }
+
+  //check if error is empty
    
         for (let i = 0; i < files.length; i++) {
         const file = files[i];
@@ -127,22 +122,31 @@ function handleDrop(event) {
 }
 
 function submit() {
-    form.patch(route("products.update", props.product.id)),{
+
+    form.product_number = Math.floor(Math.random() * 1000000);
+    console.log(form.product_number, form.title);
+
+    console.log(form)
+    form.post(route("products.store"), {
+        preserveScroll: true,
         onSuccess: () => {
             showModal.value = false;
-            window.location.reload();
         },
-    };
+        //print errors
+        onError: (errors) => {
+            console.log(errors);
+        },
+    });
 }
 
 </script>
 <template>
     <!-- Modal toggle -->
-    <div class="flex justify-start">
-        <div class="flex justify-start">
-            <a id="defaultModalButton" type="button" @click="showModal = !showModal" class="font-medium text-blue-600 dark:text-blue-500 hover:underline cursor-pointer">
-                Edit
-            </a>
+    <div class="flex justify-end">
+        <div class="flex justify-start py-6">
+            <PrimaryButton id="defaultModalButton" type="button" @click="showModal = !showModal">
+                Add Product
+            </PrimaryButton>
         </div>
     </div>
 
@@ -156,7 +160,7 @@ function submit() {
                 <!-- Modal header -->
                 <div class="flex justify-between items-center pb-4 mb-4 rounded-t border-b sm:mb-5 dark:border-gray-600">
                     <h3 class="text-lg font-semibold text-gray-900 dark:text-white">
-                        Edit Product
+                        Add Product
                     </h3>
 
                     <button @click="showModal = !showModal"
@@ -223,11 +227,11 @@ function submit() {
                             <InputLabel for="category">Sub Category</InputLabel>
                             <select id="category" @change="resetDropdown"
                             required
-                            v-model="form.category_id"
+                            v-model="form.category"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
                                 <option value="" disabled selected>Select subCategory</option>
                                 <option v-for="subCategory in categoriesSelection" :key="subCategory.id"
-                                    :value="subCategory.id">
+                                    :value="subCategory.name">
                                     {{ subCategory.name }}
                                 </option>
                             </select>

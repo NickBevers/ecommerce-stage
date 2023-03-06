@@ -1,7 +1,7 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
-import CreateProductModal from '@/Components/molecules/CreateProductModal.vue';
-import ProductTable from '@/Components/organisms/ProductTable.vue';
+import CreateProductModal from '@/Components/Admin/Molecules/CreateProductModal.vue';
+import ProductTable from '@/Components/Admin/Organisms/ProductTable.vue';
 import { defineProps, onMounted } from 'vue'
 import Pagination from '@/Components/Pagination.vue'
 import { Head } from '@inertiajs/vue3';
