@@ -20,7 +20,7 @@ import { Bars3CenterLeftIcon, ChartPieIcon, Bars4Icon, ClockIcon, HomeIcon, XMar
 import { ChevronRightIcon, ChevronUpDownIcon, ShoppingBagIcon, EllipsisVerticalIcon, MagnifyingGlassIcon } from '@heroicons/vue/20/solid'
 
 const navigation = [
-  { name: 'Overview', href: '/dashboard', icon: ChartPieIcon, current: true },
+  { name: 'Overview', href: '/dashboard', icon: ChartPieIcon, current: false },
   { name: 'Products', href: '/products', icon: ShoppingBagIcon , current: false },
 ]
 
@@ -53,6 +53,15 @@ function getInitials(firstName, lastName) {
   const lastInitial = lastName.charAt(0).toUpperCase();
   return firstInitial + lastInitial;
 }
+
+onMounted(() => {
+  navigation.forEach((item) => {
+    if (item.href === window.location.pathname) {
+      item.current = true;
+    }
+  });
+});
+
 
 </script>
 <template>
@@ -139,10 +148,10 @@ function getInitials(firstName, lastName) {
         <!-- Navigation -->
         <nav class="mt-6 px-3">
           <div class="space-y-1">
-            <a v-for="item in navigation" :key="item.name" :href="item.href" :class="[item.current ? 'bg-gray-200 text-gray-900' : 'text-gray-700 hover:bg-gray-50 hover:text-gray-900', 'group flex items-center rounded-md px-2 py-2 text-sm font-medium']" :aria-current="item.current ? 'page' : undefined">
+            <Link v-for="item in navigation" :key="item.name" :href="item.href" :class="[item.current ? 'bg-gray-200 text-gray-900' : 'text-gray-700 hover:bg-gray-50 hover:text-gray-900', 'group flex items-center rounded-md px-2 py-2 text-sm font-medium']" :aria-current="item.current ? 'page' : undefined">
               <component :is="item.icon" :class="[item.current ? 'text-gray-500' : 'text-gray-400 group-hover:text-gray-500', 'mr-3 h-6 w-6 flex-shrink-0']" aria-hidden="true" />
               {{ item.name }}
-            </a>
+            </Link>
           </div>
         </nav>
       </div>
