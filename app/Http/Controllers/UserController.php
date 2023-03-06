@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 
 
-class UsersController extends Controller
+class UserController extends Controller
 {
     public function index()
     {

@@ -1,16 +1,15 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
+use App\Models\AttributeValue;
 use App\Models\Sku;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
 
 class SkuController extends Controller
 {
-    public function index()
-    {
-        
-    }
 
     public function create()
     {
@@ -33,10 +32,6 @@ class SkuController extends Controller
     }
 
     public function store(Request $request)
-    {
-    }
-
-    public function show(Sku $sku)
     {
     }
 

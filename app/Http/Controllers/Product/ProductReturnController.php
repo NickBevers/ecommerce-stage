@@ -1,19 +1,16 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Product;
 
+use App\Http\Controllers\Controller;
 use App\Models\ProductReturn;
 use Illuminate\Http\Request;
 
-class ProductReturnsController extends Controller
+class ProductReturnController extends Controller
 {
     public function index()
     {
-
-    }
-
-    public function create()
-    {
+        return ProductReturn::all();
     }
 
     public function store(Request $request)

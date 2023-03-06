@@ -1,12 +1,13 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
-use App\Models\Product;
+use App\Http\Controllers\Controller;
+use App\Http\Controllers\Product\ProductController;
 use App\Models\Promo;
 use Illuminate\Http\Request;
 
-class PromosController extends Controller
+class PromoController extends Controller
 {
     public function index()
     {
@@ -19,7 +20,7 @@ class PromosController extends Controller
 
     public function store(Request $request)
     {
-        ProductsController::setPromotionStatus($request->id);
+        ProductController::setPromotionStatus($request->id);
     }
 
     public function show(Promo $promo)

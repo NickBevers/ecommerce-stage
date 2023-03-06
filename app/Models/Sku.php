@@ -19,6 +19,7 @@ class Sku extends Model
         'sku',
         'product_id',
         'amount',
+        'price',
     ];
 
     protected $casts = [

@@ -1,11 +1,13 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Customer;
 
+use App\Http\Controllers\Controller;
 use App\Models\Order;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
 
-class OrdersController extends Controller
+class OrderController extends Controller
 {
     public function index()
     {
@@ -43,13 +45,12 @@ class OrdersController extends Controller
 
     public function edit(Order $order)
     {
+        Inertia::render('Orders/Edit', [
+            'order' => $order,
+        ]);
     }
 
     public function update(Request $request, Order $order)
-    {
-    }
-
-    public function destroy(Order $order)
     {
     }
 }

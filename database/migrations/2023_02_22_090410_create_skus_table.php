@@ -12,6 +12,7 @@ return new class extends Migration {
             $table->string('sku');
             $table->foreignId('product_id')->constrained();
             $table->integer('amount');
+            $table->float('price');
             $table->timestamps();
         });
     }

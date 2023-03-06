@@ -11,7 +11,7 @@ use Barryvdh\Debugbar\Facades\Debugbar;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
-class ProductVariationsController extends Controller
+class ProductVariationController extends Controller
 {
     public function index(Request $request)
     {
@@ -116,29 +116,5 @@ class ProductVariationsController extends Controller
 //        return Inertia::render('products/index', [
 //            'products' => $brands
 //        ]);
-    }
-
-    public function create()
-    {
-    }
-
-    public function store(Request $request)
-    {
-    }
-
-    public function show(Sku $productVariation)
-    {
-    }
-
-    public function edit(Sku $productVariation)
-    {
-    }
-
-    public function update(Request $request, Sku $productVariation)
-    {
-    }
-
-    public function destroy(Sku $productVariation)
-    {
     }
 }
