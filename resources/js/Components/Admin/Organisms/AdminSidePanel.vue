@@ -2,8 +2,29 @@
 import { computed, onMounted } from "vue";
 import SecondaryButton from "@/Components/Admin/Atoms/SecondaryButton.vue";
 import PrimaryButton from "@/Components/Admin/Atoms/PrimaryButton.vue";
+import ApplicationLogo from "@/Components/Customer/Atoms/ApplicationLogo.vue";
 import NavLink from "@/Components/Admin/Atoms/NavLink.vue";
 import { Link } from "@inertiajs/vue3";
+import { ref } from 'vue'
+import {
+  Dialog,
+  DialogPanel,
+  Menu,
+  MenuButton,
+  MenuItem,
+  MenuItems,
+  TransitionChild,
+  TransitionRoot,
+} from '@headlessui/vue'
+import { Bars3CenterLeftIcon, ChartPieIcon, Bars4Icon, ClockIcon, HomeIcon, XMarkIcon } from '@heroicons/vue/24/outline'
+import { ChevronRightIcon, ChevronUpDownIcon, ShoppingBagIcon, EllipsisVerticalIcon, MagnifyingGlassIcon } from '@heroicons/vue/20/solid'
+
+const navigation = [
+  { name: 'Overview', href: '/dashboard', icon: ChartPieIcon, current: true },
+  { name: 'Products', href: '/products', icon: ShoppingBagIcon , current: false },
+]
+
+const sidebarOpen = ref(false)
 
 const props = defineProps({
   user: {
@@ -35,89 +56,133 @@ function getInitials(firstName, lastName) {
 
 </script>
 <template>
-  <aside class="w-64 h-full" aria-label="Sidenav">
-    <div
-      class="overflow-y-auto py-5 px-3 h-full bg-white border-r border-gray-200 dark:bg-gray-800 dark:border-gray-700"
-    >
-      <ul
-        class="pb-5 space-y-2 border-b text-center border-gray-200 dark:border-gray-700"
-      >
-        <li>
-          <div
-            class="relative inline-flex items-center justify-center w-20 h-20 overflow-hidden bg-gray-100 rounded-full dark:bg-gray-600"
-          >
-            <span
-              class="font-medium text-2xl text-gray-600 dark:text-gray-300"
-              >{{ initial }}</span
-            >
-          </div>
-        </li>
-        <li>
-          <h2 class="font-medium text-m text-gray-600 dark:text-gray-300">
-            {{ firstname }}&nbsp;{{ lastname }}
-          </h2>
-        </li>
-        <li>
-          <h3 class="font-medium text-sm text-gray-600 dark:text-gray-300">
-            {{ user.email }}
-          </h3>
-        </li>
-        <li class="flex gap-1 justify-center">
-          <Link
-            :href="route('profile.edit')"
-            class="py-2.5 px-5 mr-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
-          >
-            Profile
-          </Link>
+  <TransitionRoot as="template" :show="sidebarOpen">
+      <Dialog as="div" class="relative z-40 lg:hidden" @close="sidebarOpen = false">
+        <TransitionChild as="template" enter="transition-opacity ease-linear duration-300" enter-from="opacity-0" enter-to="opacity-100" leave="transition-opacity ease-linear duration-300" leave-from="opacity-100" leave-to="opacity-0">
+          <div class="fixed inset-0 bg-gray-600 bg-opacity-75" />
+        </TransitionChild>
 
-          <Link
-            :href="route('logout')"
-            method="post"
-            as="button"
-            class="py-2.5 px-5 mr-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
-          >
-            Logout
-          </Link>
-        </li>
-      </ul>
-      <ul>
-        <li>
-            <NavLink
-            :href="route('overview')"
-            :active="route().current('overview')"
-          >
-            <svg
-              aria-hidden="true"
-              class="w-6 h-6 text-gray-400 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
-              fill="currentColor"
-              viewBox="0 0 20 20"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path d="M2 10a8 8 0 018-8v8h8a8 8 0 11-16 0z"></path>
-              <path d="M12 2.252A8.014 8.014 0 0117.748 8H12V2.252z"></path>
-            </svg>
-            <span class="ml-3">Overview</span>
-          </NavLink>
-        </li>
-        <li>
-            <NavLink
-            :href="route('products.index')"
-            :active="route().current('products.index')"
-          >
-            <svg
-              aria-hidden="true"
-              class="w-6 h-6 text-gray-400 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
-              fill="currentColor"
-              viewBox="0 0 20 20"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-            <path d="M5.223 2.25c-.497 0-.974.198-1.325.55l-1.3 1.298A3.75 3.75 0 007.5 9.75c.627.47 1.406.75 2.25.75.844 0 1.624-.28 2.25-.75.626.47 1.406.75 2.25.75.844 0 1.623-.28 2.25-.75a3.75 3.75 0 004.902-5.652l-1.3-1.299a1.875 1.875 0 00-1.325-.549H5.223z"></path>
-            <path clip-rule="evenodd" fill-rule="evenodd" d="M3 20.25v-8.755c1.42.674 3.08.673 4.5 0A5.234 5.234 0 009.75 12c.804 0 1.568-.182 2.25-.506a5.234 5.234 0 002.25.506c.804 0 1.567-.182 2.25-.506 1.42.674 3.08.675 4.5.001v8.755h.75a.75.75 0 010 1.5H2.25a.75.75 0 010-1.5H3zm3-6a.75.75 0 01.75-.75h3a.75.75 0 01.75.75v3a.75.75 0 01-.75.75h-3a.75.75 0 01-.75-.75v-3zm8.25-.75a.75.75 0 00-.75.75v5.25c0 .414.336.75.75.75h3a.75.75 0 00.75-.75v-5.25a.75.75 0 00-.75-.75h-3z"></path>
-            </svg>
-            <span class="ml-3">Products</span>
-          </NavLink>
-        </li>
-      </ul>
+        <div class="fixed inset-0 z-40 flex">
+          <TransitionChild as="template" enter="transition ease-in-out duration-300 transform" enter-from="-translate-x-full" enter-to="translate-x-0" leave="transition ease-in-out duration-300 transform" leave-from="translate-x-0" leave-to="-translate-x-full">
+            <DialogPanel class="relative flex w-full max-w-xs flex-1 flex-col bg-white pt-5 pb-4">
+              <TransitionChild as="template" enter="ease-in-out duration-300" enter-from="opacity-0" enter-to="opacity-100" leave="ease-in-out duration-300" leave-from="opacity-100" leave-to="opacity-0">
+                <div class="absolute top-0 right-0 -mr-12 pt-2">
+                  <button type="button" class="ml-1 flex h-10 w-10 items-center justify-center rounded-full focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white" @click="sidebarOpen = false">
+                    <span class="sr-only">Close sidebar</span>
+                    <XMarkIcon class="h-6 w-6 text-white" aria-hidden="true" />
+                  </button>
+                </div>
+              </TransitionChild>
+              <div class="flex flex-shrink-0 items-center px-4">
+                <Link to="/">
+                  <ApplicationLogo class="h-8 w-auto" />
+                </Link>
+              </div>
+            </DialogPanel>
+          </TransitionChild>
+          <div class="w-14 flex-shrink-0" aria-hidden="true">
+            <!-- Dummy element to force sidebar to shrink to fit close icon -->
+          </div>
+        </div>
+      </Dialog>
+    </TransitionRoot>
+
+    <!-- Static sidebar for desktop -->
+    <div class="hidden lg:fixed lg:inset-y-0 lg:flex lg:w-64 lg:flex-col lg:border-r lg:border-gray-200 lg:bg-gray-100 lg:pt-5 lg:pb-4">
+      <div class="flex flex-shrink-0 items-center px-6">
+       <Link to="/">
+        <ApplicationLogo class="h-8 w-auto" />
+      </Link>
+      </div>
+      <!-- Sidebar component, swap this element with another sidebar if you like -->
+      <div class="mt-5 flex h-0 flex-1 flex-col overflow-y-auto pt-1">
+        <!-- User account dropdown -->
+        <Menu as="div" class="relative inline-block px-3 text-left">
+          <div>
+            <MenuButton class="group w-full rounded-md bg-gray-100 px-3.5 py-2 text-left text-sm font-medium text-gray-700 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-gray-100">
+              <span class="flex w-full items-center justify-between">
+                <span class="flex min-w-0 items-center justify-between space-x-3">
+                  <div class="relative inline-flex items-center justify-center w-10 h-10 overflow-hidden bg-gray-300 rounded-full dark:bg-gray-600">
+            <span
+              class="font-medium text-xl text-gray-600">{{ initial }}</span>
+          </div>
+                  <span class="flex min-w-0 flex-1 flex-col">
+                    <span class="truncate text-sm font-medium text-gray-900">{{ firstname }} {{ lastname }}</span>
+                    <span class="truncate text-sm text-gray-500">{{ props.user.email }}</span>
+                  </span>
+                </span>
+                <ChevronUpDownIcon class="h-5 w-5 flex-shrink-0 text-gray-400 group-hover:text-gray-500" aria-hidden="true" />
+              </span>
+            </MenuButton>
+          </div>
+          <transition enter-active-class="transition ease-out duration-100" enter-from-class="transform opacity-0 scale-95" enter-to-class="transform opacity-100 scale-100" leave-active-class="transition ease-in duration-75" leave-from-class="transform opacity-100 scale-100" leave-to-class="transform opacity-0 scale-95">
+            <MenuItems class="absolute right-0 left-0 z-10 mx-3 mt-1 origin-top divide-y divide-gray-200 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+              <div class="py-1">
+                <MenuItem v-slot="{ active }">
+                  <a :class="[active ? 'bg-gray-100 text-gray-900' : 'text-gray-700', 'block px-4 py-2 text-sm']" :href="route('profile.edit')" >Profile</a>
+                </MenuItem>
+              </div>
+              <div class="py-1">
+                <Link
+                  :href="route('logout')"
+                  method="post"
+                  as="button"
+                  class="hover:bg-gray-100 hover:text-gray-900 w-full text-left"
+                  :class="[active ? 'bg-gray-100 text-gray-900' : 'text-gray-700', 'block px-4 py-2 text-sm']"
+                >
+                  Logout
+                </Link>
+              </div>
+            </MenuItems>
+          </transition>
+        </Menu>
+        <!-- Navigation -->
+        <nav class="mt-6 px-3">
+          <div class="space-y-1">
+            <a v-for="item in navigation" :key="item.name" :href="item.href" :class="[item.current ? 'bg-gray-200 text-gray-900' : 'text-gray-700 hover:bg-gray-50 hover:text-gray-900', 'group flex items-center rounded-md px-2 py-2 text-sm font-medium']" :aria-current="item.current ? 'page' : undefined">
+              <component :is="item.icon" :class="[item.current ? 'text-gray-500' : 'text-gray-400 group-hover:text-gray-500', 'mr-3 h-6 w-6 flex-shrink-0']" aria-hidden="true" />
+              {{ item.name }}
+            </a>
+          </div>
+        </nav>
+      </div>
     </div>
-  </aside>
+    <!-- Main column -->
+    <div class="flex flex-col lg:pl-64">
+      <!-- Search header -->
+      <div class="sticky top-0 z-10 flex h-16 flex-shrink-0 border-b border-gray-200 bg-white lg:hidden">
+        <button type="button" class="border-r border-gray-200 px-4 text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-500 lg:hidden" @click="sidebarOpen = true">
+          <span class="sr-only">Open sidebar</span>
+          <Bars3CenterLeftIcon class="h-6 w-6" aria-hidden="true" />
+        </button>
+        <div class="flex flex-1 justify-between px-4 sm:px-6 lg:px-8">
+          <div class="flex items-center">
+            <!-- Profile dropdown -->
+            <Menu as="div" class="relative ml-3">
+              <div>
+                <MenuButton class="flex max-w-xs items-center rounded-full bg-white text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
+                  <span class="sr-only">Open user menu</span>
+                  <img class="h-8 w-8 rounded-full" src="https://images.unsplash.com/photo-1502685104226-ee32379fefbe?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="" />
+                </MenuButton>
+              </div>
+              <transition enter-active-class="transition ease-out duration-100" enter-from-class="transform opacity-0 scale-95" enter-to-class="transform opacity-100 scale-100" leave-active-class="transition ease-in duration-75" leave-from-class="transform opacity-100 scale-100" leave-to-class="transform opacity-0 scale-95">
+                <MenuItems class="absolute right-0 z-10 mt-2 w-48 origin-top-right divide-y divide-gray-200 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                  <div class="py-1">
+                    <MenuItem v-slot="{ active }">
+                      <a href="#" :class="[active ? 'bg-gray-100 text-gray-900' : 'text-gray-700', 'block px-4 py-2 text-sm']">View profile</a>
+                    </MenuItem>
+                  </div>
+                  <div class="py-1">
+                    <MenuItem v-slot="{ active }">
+                      <a :href="route('logout')" method="POST" as="button" :class="[active ? 'bg-gray-100 text-gray-900' : 'text-gray-700', 'block px-4 py-2 text-sm']">Logout</a>
+                    </MenuItem>
+                  </div>
+                </MenuItems>
+              </transition>
+            </Menu>
+          </div>
+        </div>
+      </div>
+    </div>
+    
 </template>
