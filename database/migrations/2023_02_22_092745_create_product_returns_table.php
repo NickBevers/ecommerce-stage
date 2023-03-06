@@ -11,7 +11,7 @@ return new class extends Migration {
             $table->id();
             $table->foreignId('user_id')->constrained();
             $table->foreignId('order_id')->constrained();
-            $table->foreignId('product_id')->constrained();
+            $table->foreignId('sku_id')->constrained();
             $table->String('reason');
             $table->String('status');
             $table->String('tracking_number')->nullable();

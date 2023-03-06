@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Category;
 use App\Models\SubCategory;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Carbon;
@@ -13,9 +14,8 @@ class SubCategoryFactory extends Factory
     public function definition(): array
     {
         return [
-            'category_id' => $this->faker->NumberBetween(1, 10),
-            'label' => $this->faker->word(),
-            'value' => $this->faker->word(),
+            'category_id' => Category::get()->random()->id,
+            'name' => $this->faker->word(),
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
         ];

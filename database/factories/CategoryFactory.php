@@ -10,8 +10,7 @@ class CategoryFactory extends Factory
     public function definition(): array
     {
         return [
-            'label' => $this->faker->word(),
-            'value' => $this->faker->word(),
+            'name' => $this->faker->word(),
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
         ];

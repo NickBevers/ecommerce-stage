@@ -2,7 +2,17 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import CreateProductModal from '@/Components/molecules/CreateProductModal.vue';
 import ProductTable from '@/Components/organisms/ProductTable.vue';
+import { defineProps, onMounted } from 'vue'
+import Pagination from '@/Components/Pagination.vue'
 import { Head } from '@inertiajs/vue3';
+const props = defineProps({
+    skus: Object,
+});
+
+onMounted(() => {
+    console.log('Products page mounted');
+    console.log(props.skus)
+});
 </script>
 <template>
     <Head title="Products" />
@@ -13,7 +23,8 @@ import { Head } from '@inertiajs/vue3';
 
         <div>
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8"> 
-                <ProductTable />
+                <ProductTable :skus="skus.data"/>
+                <Pagination class="mt-6" :links="skus.links" />
             </div>
         </div>
     </AuthenticatedLayout>

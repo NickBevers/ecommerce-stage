@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\HasOneThrough;
 
 class Product extends Model
 {
@@ -17,12 +18,10 @@ class Product extends Model
         'title',
         'description',
         'audience',
-        'category_id',
-        'promos',
+        'sub_category_id',
         'extra_info',
-        'sku',
-        'is_promotion',
         'is_active',
+        'user_id',
         'brand_id',
 
     ];
@@ -30,7 +29,6 @@ class Product extends Model
     protected $casts = [
         'created_at' => 'datetime',
         'updated_at' => 'datetime',
-        'promos' => 'array',
     ];
 
     /*
@@ -39,39 +37,14 @@ class Product extends Model
     |--------------------------------------------------------------------------
     */
 
-    public function category(): HasOne
-    {
-        return $this->hasOne(Category::class);
-    }
-
     public function subCategory(): HasOne
     {
         return $this->hasOne(SubCategory::class);
     }
 
-    public function productOrder(): HasMany
+    public function category(): HasOneThrough
     {
-        return $this->hasMany(ProductOrder::class);
-    }
-
-    public function productVariation(): HasMany
-    {
-        return $this->hasMany(ProductVariation::class);
-    }
-
-    public function promo(): HasMany
-    {
-        return $this->hasMany(Promo::class);
-    }
-
-    public function wishlist(): BelongsToMany
-    {
-        return $this->belongsToMany(Wishlist::class);
-    }
-
-    public function cart(): BelongsToMany
-    {
-        return $this->belongsToMany(Cart::class);
+        return $this->hasOneThrough(Category::class, SubCategory::class);
     }
 
     public function brand(): HasOne
@@ -79,8 +52,8 @@ class Product extends Model
         return $this->hasOne(Brand::class);
     }
 
-    public function material(): HasOne
+    public function skus(): HasMany
     {
-        return $this->hasOne(Material::class);
+        return $this->hasMany(Sku::class);
     }
 }

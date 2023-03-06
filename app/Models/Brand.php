@@ -24,8 +24,8 @@ class Brand extends Model
     |--------------------------------------------------------------------------
     */
 
-    public function product(): BelongsTo
+    public function product(): BelongsToMany
     {
-        return $this->belongsTo(Product::class);
+        return $this->belongsToMany(Product::class);
     }
 }

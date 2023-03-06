@@ -12,15 +12,11 @@ return new class extends Migration {
             $table->String('title');
             $table->String('description');
             $table->String('audience');
-            $table->foreignId('category_id')->references('id')->on('categories');
-            $table->json('promos')->nullable();
+            $table->foreignId('sub_category_id')->constrained();
             $table->String('extra_info');
-            $table->String('sku');
-            $table->boolean('is_promotion')->default(false);
             $table->boolean('is_active')->default(true);
-            $table->foreignId('seller_id')->nullable()->references('id')->on('users');
-            $table->foreignId('brand_id')->references('id')->on('brands');
-            $table->foreignId('material_id')->references('id')->on('materials');
+            $table->foreignId('user_id')->default(1)->constrained()->onDelete('cascade');
+            $table->foreignId('brand_id')->default(1)->constrained()->onDelete('cascade');
             $table->timestamps();
         });
     }

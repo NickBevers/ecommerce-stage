@@ -10,10 +10,11 @@ class ProductReturn extends Model
 {
     protected $fillable = [
         'user_id',
-        'product_id',
+        'sku_id',
         'order_id',
         'reason',
         'status',
+        'tracking_number',
         'received_at',
     ];
 
@@ -29,9 +30,9 @@ class ProductReturn extends Model
     |--------------------------------------------------------------------------
     */
 
-    public function product(): BelongsTo
+    public function sku(): BelongsTo
     {
-        return $this->belongsTo(Product::class);
+        return $this->belongsTo(Sku::class);
     }
 
     public function order(): BelongsTo
