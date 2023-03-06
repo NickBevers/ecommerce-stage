@@ -24,7 +24,6 @@ class ProductsController extends Controller
                 ->paginate(10),
             'attributeValues' => AttributeValue::all(),
         ]);
-
     }
 
     public function create()
@@ -39,7 +38,6 @@ class ProductsController extends Controller
 
     public function store(Request $request)
     {
-
         // validate the request
         $request->validate([
             'title' => 'required|string|max:255',
@@ -56,7 +54,7 @@ class ProductsController extends Controller
         if ($request->hasFile('images')) {
             $images = $request->file('images');
             foreach ($images as $image) {
-                $randomName = now().rand(1,500);
+                $randomName = now().rand(1, 500);
                 $filename = $randomName.$image->getClientOriginalName();
                 Storage::move($filename, 'public/images/' . $filename);
                 $imageArray[] = $filename;
@@ -73,7 +71,7 @@ class ProductsController extends Controller
         $product->category_id = $categoryId;
         $product->extra_info = $request->extra_info;
 
-        $request->has('is_promotion') ? $product->is_promotion = true :  $product->is_promotion = false;
+        $request->has('is_promotion') ? $product->is_promotion = true : $product->is_promotion = false;
         $request->has('is_active') ? $product->is_active = false : $product->is_active = true;
 
         $product->images = json_encode($imageArray);
@@ -81,7 +79,7 @@ class ProductsController extends Controller
         $productId = $product->id;
 
 
-        if ($request->hasFile('images')){
+        if ($request->hasFile('images')) {
             foreach ($imageArray as $image) {
                 ProductImagesController::store($image, $productId);
             }
@@ -136,3 +134,4 @@ class ProductsController extends Controller
         $productToUpdate = Product::find($product->id);
         $productToUpdate->update($request->all());
     }
+}
