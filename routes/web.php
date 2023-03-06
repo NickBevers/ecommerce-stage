@@ -45,8 +45,7 @@ Route::get('/products', function () {
     return Inertia::render('Dashboard/Products');
 })->middleware(['auth', 'verified'])->name('products');
 
-// Test Route
-Route::get('/test/{brand}', [\App\Http\Controllers\Customer\BrandController::class, 'show'])->name('test');
+Route::get('/test', [SkuController::class, 'index'])->name('test');
 
 // Get specific products
 Route::get('/shoes', [ProductVariationController::class, 'showShoes'])->name('shoes');
