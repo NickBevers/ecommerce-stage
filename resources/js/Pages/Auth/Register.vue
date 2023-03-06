@@ -5,7 +5,7 @@ import InputLabel from "@/Components/Admin/Atoms/InputLabel.vue";
 import PrimaryButton from "@/Components/Admin/Atoms/PrimaryButton.vue";
 import TextInput from "@/Components/Admin/Atoms/TextInput.vue";
 import { Head, Link, useForm } from "@inertiajs/vue3";
-
+import ApplicationLogo from "@/Components/Customer/Atoms/ApplicationLogo.vue";
 const form = useForm({
   firstname: "",
   lastname: "",
@@ -24,118 +24,129 @@ const submit = () => {
 
 <template>
   <GuestLayout>
-    <Head title="Register" />
-    <h1
-      class="text-xl mb-8 mt-4 font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white"
-    >
-      Create an account
-    </h1>
-    <form @submit.prevent="submit">
-      <div class="flex w-full justify-between">
+    <Head title="Log in" />
+  <div class="flex min-h-screen">
+    <div class="flex flex-1 flex-col justify-center py-12 px-4 sm:px-6 lg:flex-none lg:px-20 xl:px-24 w-1/2">
+      <div class="mx-auto w-full max-w-sm lg:w-96">
         <div>
-          <InputLabel for="firstname" value="Firstname" />
-          <TextInput
-            id="firstname"
-            type="text"
-            name="firstname"
-            class="mt-1 block w-full"
-            v-model="form.firstname"
-            required
-            autofocus
-            autocomplete="firstname"
-            placeholder="John"
-          />
-
-          <InputError class="mt-2" :message="form.errors.firstname" />
+          <Link href="/">
+          <ApplicationLogo class="h-12 w-auto" />
+          </Link>
+          <h2 class="mt-6 text-3xl font-bold tracking-tight text-gray-900">Create an account</h2>
         </div>
-        <div>
-          <InputLabel for="lastname" value="Lastname" />
-          <TextInput
-            id="lastname"
-            name="lastname"
-            type="text"
-            class="mt-1 block w-full"
-            v-model="form.lastname"
-            required
-            autofocus
-            autocomplete="lastname"
-            placeholder="Green"
-          />
 
-          <InputError class="mt-2" :message="form.errors.lastname" />
+        <div class="mt-8">
+          <div class="mt-6">
+            <form @submit.prevent="submit" class="space-y-6">
+              <div class="flex w-full justify-between">
+              <div>
+                <InputLabel for="firstname" value="Firstname" />
+                <div>
+                  <TextInput
+                    id="firstname"
+                    type="text"
+                    name="firstname"
+                    class="mt-1 block w-full"
+                    v-model="form.firstname"
+                    required
+                    autofocus
+                    autocomplete="firstname"
+                    placeholder="John"
+                  />
+                  <InputError class="mt-2" :message="form.errors.firstname" />
+                </div>
+              </div>
+              <div class="space-y-1">
+                <InputLabel for="lastname" value="Lastname" />
+                <div class="mt-2">
+                  <TextInput
+                    id="lastname"
+                    name="lastname"
+                    type="text"
+                    class="mt-1 block w-full"
+                    v-model="form.lastname"
+                    required
+                    autofocus
+                    autocomplete="lastname"
+                    placeholder="Green"
+                  />
+                  <InputError class="mt-2" :message="form.errors.lastname" />
+                </div>
+                </div>
+              </div>
+              <div class="mt-4">
+              <InputLabel for="email" value="Email" />
+
+              <TextInput
+                id="email"
+                type="email"
+                class="mt-1 block w-full"
+                name="email"
+                v-model="form.email"
+                required
+                autocomplete="name"
+                placeholder="user@mail.com"
+              />
+
+              <InputError class="mt-2" :message="form.errors.email" />
+            </div>
+              <div class="space-y-1">
+                <InputLabel for="password" value="Password" />
+                <div class="mt-2">
+                  <TextInput
+                    id="password"
+                    type="password"
+                    name="password"
+                    class="mt-1 block w-full"
+                    v-model="form.password"
+                    required
+                    autocomplete="new-password"
+                    placeholder="••••••••"
+                  />
+                  <InputError class="mt-2" :message="form.errors.password" />
+                </div>
+              </div>
+              <div class="space-y-1">
+                <InputLabel for="password_confirmation" value="Confirm Password" />
+                <div class="mt-2">
+                  <TextInput
+                    id="password_confirmation"
+                    type="password"
+                    name="password_confirmation"
+                    class="mt-1 block w-full"
+                    v-model="form.password_confirmation"
+                    required
+                    autocomplete="new-password"
+                    placeholder="••••••••"
+                  />
+
+                  <InputError class="mt-2" :message="form.errors.password_confirmation" />
+                </div>
+              </div>
+              <div>
+                <PrimaryButton
+                :class="{ 'opacity-25': form.processing }"
+                :disabled="form.processing"
+                class="w-full"
+                >
+                Sign up
+              </PrimaryButton>
+              </div>
+
+              <div class="flex items-center justify-between">
+                <div class="text-sm">
+                  Already registered? 
+                  <Link :href="route('login')" class="font-medium text-indigo-600 hover:text-indigo-500">Sign in</Link>
+                </div>
+              </div>
+            </form>
+          </div>
         </div>
       </div>
-
-      <div class="mt-4">
-        <InputLabel for="email" value="Email" />
-
-        <TextInput
-          id="email"
-          type="email"
-          class="mt-1 block w-full"
-          name="email"
-          v-model="form.email"
-          required
-          autocomplete="name"
-          placeholder="user@mail.com"
-        />
-
-        <InputError class="mt-2" :message="form.errors.email" />
-      </div>
-
-      <div class="mt-4">
-        <InputLabel for="password" value="Password" />
-
-        <TextInput
-          id="password"
-          type="password"
-          name="password"
-          class="mt-1 block w-full"
-          v-model="form.password"
-          required
-          autocomplete="new-password"
-          placeholder="••••••••"
-        />
-
-        <InputError class="mt-2" :message="form.errors.password" />
-      </div>
-
-      <div class="mt-4">
-        <InputLabel for="password_confirmation" value="Confirm Password" />
-
-        <TextInput
-          id="password_confirmation"
-          type="password"
-          name="password_confirmation"
-          class="mt-1 block w-full"
-          v-model="form.password_confirmation"
-          required
-          autocomplete="new-password"
-          placeholder="••••••••"
-        />
-
-        <InputError class="mt-2" :message="form.errors.password_confirmation" />
-      </div>
-
-      <div class="flex items-center justify-end mt-4">
-        <PrimaryButton
-          :class="{ 'opacity-25': form.processing }"
-          :disabled="form.processing"
-        >
-          Register
-        </PrimaryButton>
-      </div>
-      <div
-        class="flex items-center justify-start my-4 text-sm font-medium text-gray-600 dark:text-white0"
-      >
-        <span>Already registered?&nbsp;</span>
-        <Link
-          :href="route('login')"
-          class="text-sm font-medium text-primary-600 hover:underline dark:text-primary-500"
-        >
-          Login
-        </Link>
-      </div>
-    </form>
-  </GuestLayout>
+    </div>
+    <div class="relative hidden w-0 flex-1 lg:block">
+      <img class="absolute inset-0 h-full w-full object-cover object-center" src="https://images.unsplash.com/photo-1633103110606-070511de45ee?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80" alt="" />
+    </div>
+  </div>
+</GuestLayout>
 </template>
