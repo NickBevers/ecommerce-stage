@@ -17,9 +17,9 @@ onMounted(() => {
 
 
 function getBgClass(amount) {
-    if (amount >= 100) {
+    if (amount >= 50) {
       return 'bg-green-500';
-    } else if (amount >= 50) {
+    } else if (amount >= 25) {
       return 'bg-yellow-500';
     } else {
       return 'bg-red-500';
