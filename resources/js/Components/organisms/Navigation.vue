@@ -19,6 +19,7 @@ import {
     Bars3Icon,
     QuestionMarkCircleIcon,
     XMarkIcon,
+    HeartIcon,
 } from '@heroicons/vue/24/outline'
 
 const navigation = {
@@ -313,9 +314,19 @@ const showSubMenu = ref(false);
                                 </a>
                                 <a href="#"
                                     class="hidden text-sm font-medium text-gray-700 hover:text-gray-800 lg:block">Help</a>
-
+                                <!-- Wish -->
+                                <div class="flow-root lg:ml-8">
+                                    <a href="#" class="group -m-2 flex items-center p-2">
+                                        <HeartIcon
+                                            class="h-6 w-6 flex-shrink-0 text-gray-400 group-hover:text-gray-500"
+                                            aria-hidden="true" />
+                                        <span
+                                            class="ml-2 text-sm font-medium text-gray-700 group-hover:text-gray-800">0</span>
+                                        <span class="sr-only">items in wishlist, view wishlist</span>
+                                    </a>
+                                </div>
                                 <!-- Cart -->
-                                <div class="ml-4 flow-root lg:ml-8">
+                                <div class="ml-4 flow-root">
                                     <a href="#" class="group -m-2 flex items-center p-2">
                                         <ShoppingBagIcon
                                             class="h-6 w-6 flex-shrink-0 text-gray-400 group-hover:text-gray-500"
