@@ -2,7 +2,7 @@
 
 use App\Http\Controllers\Customer\AddressController;
 use App\Http\Controllers\Product\ProductController;
-use App\Http\Controllers\Product\SkuController as ShopSkuController;
+use App\Http\Controllers\Product\SkuController as ProductSkuController;
 use App\Http\Controllers\ProductVariationController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
@@ -45,7 +45,8 @@ Route::get('/products', function () {
     return Inertia::render('Dashboard/Products');
 })->middleware(['auth', 'verified'])->name('products');
 
-Route::get('/test', [SkuController::class, 'index'])->name('test');
+// Test Route
+Route::get('/test', [ProductSkuController::class, 'index'])->name('test');
 
 // Get specific products
 Route::get('/shoes', [ProductVariationController::class, 'showShoes'])->name('shoes');
@@ -54,7 +55,7 @@ Route::get('/accessories', [ProductVariationController::class, 'showAccessories'
 Route::get('/promos', [ProductVariationController::class, 'showPromos'])->name('promos');
 
 // Product Routes
-Route::get('/products/all', [ShopSkuController::class, 'index'])->name('products.getAll');
+Route::get('/products/all', [ProductSkuController::class, 'index'])->name('products.getAll');
 Route::post('/products', [ProductController::class, 'store'])->name('products.store');
 Route::get('/products/create', [ProductController::class, 'create'])->name('products.create');
 Route::get('/products/{product}', [ProductController::class, 'show'])->name('products.show');
