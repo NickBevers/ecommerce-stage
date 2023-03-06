@@ -38,9 +38,7 @@ Route::get('/overview', function () {
     return Inertia::render('Dashboard/Overview');
 })->middleware(['auth', 'verified'])->name('overview');
 
-Route::get('/products', function () {
-    return Inertia::render('Dashboard/Products');
-})->middleware(['auth', 'verified'])->name('products');
+Route::get('/products', [ProductsController::class, 'index'])->name('products.index');
 
 Route::get('/test', [SkuController::class, 'index'])->name('test');
 

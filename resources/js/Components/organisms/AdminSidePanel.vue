@@ -101,8 +101,8 @@ function getInitials(firstName, lastName) {
         </li>
         <li>
             <NavLink
-            :href="route('products')"
-            :active="route().current('products')"
+            :href="route('products.index')"
+            :active="route().current('products.index')"
           >
             <svg
               aria-hidden="true"
