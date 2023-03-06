@@ -1,7 +1,96 @@
 <script setup>
 import ApplicationLogo from '@/Components/atoms/ApplicationLogo.vue';
-import { ref, onMounted} from 'vue';
+import { ref, onMounted } from 'vue';
 import { Link } from '@inertiajs/vue3';
+import { Popover, PopoverButton, PopoverGroup, PopoverPanel } from '@headlessui/vue'
+import { MagnifyingGlassIcon, ShoppingBagIcon } from '@heroicons/vue/24/outline'
+import {
+    Dialog,
+    DialogPanel,
+    Tab,
+    TabGroup,
+    TabList,
+    TabPanel,
+    TabPanels,
+    TransitionChild,
+    TransitionRoot,
+} from '@headlessui/vue'
+import {
+    Bars3Icon,
+    QuestionMarkCircleIcon,
+    XMarkIcon,
+} from '@heroicons/vue/24/outline'
+
+const navigation = {
+    categories: [
+        {
+            name: 'Women',
+            featured: [
+                {
+                    name: 'New Arrivals',
+                    href: '#',
+                    imageSrc: 'https://tailwindui.com/img/ecommerce-images/mega-menu-category-01.jpg',
+                    imageAlt: 'Models sitting back to back, wearing Basic Tee in black and bone.',
+                },
+                {
+                    name: 'Basic Tees',
+                    href: '#',
+                    imageSrc: 'https://tailwindui.com/img/ecommerce-images/mega-menu-category-02.jpg',
+                    imageAlt: 'Close up of Basic Tee fall bundle with off-white, ochre, olive, and black tees.',
+                },
+                {
+                    name: 'Accessories',
+                    href: '#',
+                    imageSrc: 'https://tailwindui.com/img/ecommerce-images/mega-menu-category-03.jpg',
+                    imageAlt: 'Model wearing minimalist watch with black wristband and white watch face.',
+                },
+                {
+                    name: 'Carry',
+                    href: '#',
+                    imageSrc: 'https://tailwindui.com/img/ecommerce-images/mega-menu-category-04.jpg',
+                    imageAlt: 'Model opening tan leather long wallet with credit card pockets and cash pouch.',
+                },
+            ],
+        },
+        {
+            name: 'Men',
+            featured: [
+                {
+                    name: 'New Arrivals',
+                    href: '#',
+                    imageSrc: 'https://tailwindui.com/img/ecommerce-images/mega-menu-01-men-category-01.jpg',
+                    imageAlt: 'Hats and sweaters on wood shelves next to various colors of t-shirts on hangers.',
+                },
+                {
+                    name: 'Basic Tees',
+                    href: '#',
+                    imageSrc: 'https://tailwindui.com/img/ecommerce-images/mega-menu-01-men-category-02.jpg',
+                    imageAlt: 'Model wearing light heather gray t-shirt.',
+                },
+                {
+                    name: 'Accessories',
+                    href: '#',
+                    imageSrc: 'https://tailwindui.com/img/ecommerce-images/mega-menu-01-men-category-03.jpg',
+                    imageAlt:
+                        'Grey 6-panel baseball hat with black brim, black mountain graphic on front, and light heather gray body.',
+                },
+                {
+                    name: 'Carry',
+                    href: '#',
+                    imageSrc: 'https://tailwindui.com/img/ecommerce-images/mega-menu-01-men-category-04.jpg',
+                    imageAlt: 'Model putting folded cash into slim card holder olive leather wallet with hand stitching.',
+                },
+            ],
+        },
+    ],
+    pages: [
+        { name: 'Company', href: '#' },
+        { name: 'Stores', href: '#' },
+    ],
+}
+
+
+const open = ref(false)
 
 defineProps({
     canLogin: Boolean,
@@ -12,113 +101,235 @@ defineProps({
 
 const showSubMenu = ref(false);
 
-function showMenu(type) {
-    if (type === 'show') {
-        showSubMenu.value = true;
-    } else {
-        showSubMenu.value = false;
-    }
-}
+
 </script>
 <template>
-    
-<nav  @mouseleave="showMenu('hide')"  class="bg-white w-full z-20 border-gray-200 dark:border-gray-600 absolute top-0 left-0 dark:bg-gray-900">
-    <div class="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl px-4 md:px-6 py-2.5 relative">
-        <a href="https://flowbite.com" class="flex items-center">
-            <ApplicationLogo class="w-8 h-8 mr-2" />
-            <span class="self-center text-xl font-semibold whitespace-nowrap dark:text-white">Logo Name</span>
-        </a>
-        <button @click="showSubMenu!=showSubMenu" type="button" class="inline-flex items-center p-2 ml-1 text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600" aria-controls="mega-menu-full" aria-expanded="false">
-                <span class="sr-only">Open main menu</span>
-                <svg class="w-6 h-6" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clip-rule="evenodd"></path></svg>
-        </button>
-        <div  @mouseenter="showMenu('hide')" class="items-center justify-between hidden w-full md:flex md:w-auto md:order-3">
-            <ul class="flex flex-row gap-4">
-                <li><svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></li>
-                <li><svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></li>
-                <li><svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg></li>
-                <li><svg fill="#000000" class="w-6 h-6" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M15.71,12.71a6,6,0,1,0-7.42,0,10,10,0,0,0-6.22,8.18,1,1,0,0,0,2,.22,8,8,0,0,1,15.9,0,1,1,0,0,0,1,.89h.11a1,1,0,0,0,.88-1.1A10,10,0,0,0,15.71,12.71ZM12,12a4,4,0,1,1,4-4A4,4,0,0,1,12,12Z"/></svg></li>
-            </ul>
-        </div>
-        <div id="mega-menu-full" class="items-center justify-between hidden w-full md:flex md:w-auto md:order-1">
-            <ul class="flex flex-col p-4 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
-                <li @mouseenter="showMenu('show')">
-                    <button   id="mega-menu-full-dropdown-button" class="flex items-center justify-between w-full py-2 pl-3 pr-4 font-medium text-gray-700 rounded md:w-auto hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-600 md:p-0 dark:text-gray-400 md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-blue-500 md:dark:hover:bg-transparent dark:border-gray-700">Clothing <svg class="w-5 h-5 ml-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg></button>
-                </li>
-                <li>
-                    <a href="#" class="block py-2 pl-3 pr-4 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-blue-500 md:dark:hover:bg-transparent dark:border-gray-700">Marketplace</a>
-                </li>
-                <li>
-                    <a href="#" class="block py-2 pl-3 pr-4 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-blue-500 md:dark:hover:bg-transparent dark:border-gray-700">Resources</a>
-                </li>
-                <li>
-                    <a href="#" class="block py-2 pl-3 pr-4 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-blue-500 md:dark:hover:bg-transparent dark:border-gray-700">Contact</a>
-                </li>
-                
-            </ul>
-            
-        </div>
-        <div v-if="canLogin" class="p-6 text-right md:order-1 flex flex-col p-4 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
-            <Link v-if="$page.props.auth.user" :href="route('dashboard')"
-                class="block py-2 pl-3 pr-4 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-blue-500 md:dark:hover:bg-transparent dark:border-gray-700">
-            Dashboard</Link>
+    <div class="bg-white absolute top-0 left-0 z-20 w-full">
+        <!-- Mobile menu -->
+        <TransitionRoot as="template" :show="open">
+            <Dialog as="div" class="relative z-40 lg:hidden" @close="open = false">
+                <TransitionChild as="template" enter="transition-opacity ease-linear duration-300" enter-from="opacity-0"
+                    enter-to="opacity-100" leave="transition-opacity ease-linear duration-300" leave-from="opacity-100"
+                    leave-to="opacity-0">
+                    <div class="fixed inset-0 bg-black bg-opacity-25" />
+                </TransitionChild>
 
-        <template v-else>
-            <Link :href="route('login')"
-                class="block py-2 pl-3 pr-4 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-blue-500 md:dark:hover:bg-transparent dark:border-gray-700">
-            Log in</Link>
+                <div class="fixed inset-0 z-40 flex">
+                    <TransitionChild as="template" enter="transition ease-in-out duration-300 transform"
+                        enter-from="-translate-x-full" enter-to="translate-x-0"
+                        leave="transition ease-in-out duration-300 transform" leave-from="translate-x-0"
+                        leave-to="-translate-x-full">
+                        <DialogPanel
+                            class="relative flex w-full max-w-xs flex-col overflow-y-auto bg-white pb-12 shadow-xl">
+                            <div class="flex px-4 pt-5 pb-2">
+                                <button type="button"
+                                    class="-m-2 inline-flex items-center justify-center rounded-md p-2 text-gray-400"
+                                    @click="open = false">
+                                    <span class="sr-only">Close menu</span>
+                                    <XMarkIcon class="h-6 w-6" aria-hidden="true" />
+                                </button>
+                            </div>
 
-            <Link v-if="canRegister" :href="route('register')"
-                class="block py-2 pl-3 pr-4 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-blue-500 md:dark:hover:bg-transparent dark:border-gray-700">
-            Register</Link>
-        </template>
-    </div>
-    </div>
- 
-    <div id="mega-menu-full-dropdown"  v-if="showSubMenu" class="-mt-1 border-gray-200 shadow-sm bg-gray-50 md:bg-white border-y dark:bg-gray-800 dark:border-gray-600">
-        <div class="grid max-w-screen-xl px-4 py-5 mx-auto text-gray-900 dark:text-white sm:grid-cols-2 md:px-6">
-            <ul>
-                <li>
-                    <a href="#" class="block p-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700">
-                        <div class="font-semibold">Online Stores</div>
-                        <span class="text-sm font-light text-gray-500 dark:text-gray-400">Connect with third-party tools that you're already using.</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="#" class="block p-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700">
-                        <div class="font-semibold">Segmentation</div>
-                        <span class="text-sm font-light text-gray-500 dark:text-gray-400">Connect with third-party tools that you're already using.</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="#" class="block p-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700">
-                        <div class="font-semibold">Marketing CRM</div>
-                        <span class="text-sm font-light text-gray-500 dark:text-gray-400">Connect with third-party tools that you're already using.</span>
-                    </a>
-                </li>
-            </ul>
-            <ul>
-                <li>
-                    <a href="#" class="block p-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700">
-                        <div class="font-semibold">Online Stores</div>
-                        <span class="text-sm font-light text-gray-500 dark:text-gray-400">Connect with third-party tools that you're already using.</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="#" class="block p-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700">
-                        <div class="font-semibold">Segmentation</div>
-                        <span class="text-sm font-light text-gray-500 dark:text-gray-400">Connect with third-party tools that you're already using.</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="#" class="block p-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700">
-                        <div class="font-semibold">Marketing CRM</div>
-                        <span class="text-sm font-light text-gray-500 dark:text-gray-400">Connect with third-party tools that you're already using.</span>
-                    </a>
-                </li>
-            </ul>
-        </div>
-    </div>
-</nav>
+                            <!-- Links -->
+                            <TabGroup as="div" class="mt-2">
+                                <div class="border-b border-gray-200">
+                                    <TabList class="-mb-px flex space-x-8 px-4">
+                                        <Tab as="template" v-for="category in navigation.categories" :key="category.name"
+                                            v-slot="{ selected }">
+                                            <button
+                                                :class="[selected ? 'border-indigo-600 text-indigo-600' : 'border-transparent text-gray-900', 'flex-1 whitespace-nowrap border-b-2 py-4 px-1 text-base font-medium']">{{
+                                                    category.name }}</button>
+                                        </Tab>
+                                    </TabList>
+                                </div>
+                                <TabPanels as="template">
+                                    <TabPanel v-for="category in navigation.categories" :key="category.name"
+                                        class="space-y-12 px-4 py-6">
+                                        <div class="grid grid-cols-2 gap-x-4 gap-y-10">
+                                            <div v-for="item in category.featured" :key="item.name" class="group relative">
+                                                <div
+                                                    class="aspect-w-1 aspect-h-1 overflow-hidden rounded-md bg-gray-100 group-hover:opacity-75">
+                                                    <img :src="item.imageSrc" :alt="item.imageAlt"
+                                                        class="object-cover object-center" />
+                                                </div>
+                                                <a :href="item.href" class="mt-6 block text-sm font-medium text-gray-900">
+                                                    <span class="absolute inset-0 z-10" aria-hidden="true" />
+                                                    {{ item.name }}
+                                                </a>
+                                                <p aria-hidden="true" class="mt-1 text-sm text-gray-500">Shop now</p>
+                                            </div>
+                                        </div>
+                                    </TabPanel>
+                                </TabPanels>
+                            </TabGroup>
 
-</template>
+                            <div class="space-y-6 border-t border-gray-200 py-6 px-4">
+                                <div v-for="page in navigation.pages" :key="page.name" class="flow-root">
+                                    <a :href="page.href" class="-m-2 block p-2 font-medium text-gray-900">{{ page.name
+                                    }}</a>
+                                </div>
+                            </div>
+
+                            <div class="space-y-6 border-t border-gray-200 py-6 px-4">
+                                <div class="flow-root">
+                                    <a href="#" class="-m-2 block p-2 font-medium text-gray-900">Create an account</a>
+                                </div>
+                                <div class="flow-root">
+                                    <a href="#" class="-m-2 block p-2 font-medium text-gray-900">Sign in</a>
+                                </div>
+                            </div>
+                        </DialogPanel>
+                    </TransitionChild>
+                </div>
+            </Dialog>
+        </TransitionRoot>
+
+        <header class="relative">
+            <nav aria-label="Top">
+                <!-- Top navigation -->
+                <div class="bg-gray-900">
+                    <div class="mx-auto flex h-10 max-w-7xl items-center justify-end px-4 sm:px-6 lg:px-8">
+                        <div class="flex items-center space-x-6">
+                            <div v-if="canLogin">
+                                <Link v-if="$page.props.auth.user" :href="route('dashboard')"
+                                    class="text-sm font-medium text-white hover:text-gray-100">
+                                Dashboard</Link>
+                                <template v-else>
+                                    <Link v-if="canRegister" :href="route('register')"
+                                        class="text-sm font-medium mr-4 text-white hover:text-gray-100">
+                                    Create an account</Link>
+                                    <Link :href="route('login')" class="text-sm  font-medium text-white hover:text-gray-100">
+                                    Sign in</Link>
+                                </template>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Secondary navigation -->
+                <div class="bg-white">
+                    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+                        <div class="flex h-16 items-center justify-between">
+                            <!-- Logo (lg+) -->
+                            <div class="hidden lg:flex lg:flex-1 lg:items-center">
+                                <ApplicationLogo class="block h-8 w-auto" />
+                            </div>
+
+                            <div class="hidden h-full lg:flex">
+                                <!-- Flyout menus -->
+                                <PopoverGroup class="inset-x-0 bottom-0 px-4">
+                                    <div class="flex h-full justify-center space-x-8">
+                                        <Popover v-for="category in navigation.categories" :key="category.name" class="flex"
+                                            v-slot="{ open }">
+                                            <div class="relative flex">
+                                                <PopoverButton
+                                                    :class="[open ? 'text-indigo-600' : 'text-gray-700 hover:text-gray-800', 'relative flex items-center justify-center text-sm font-medium transition-colors duration-200 ease-out']">
+                                                    {{ category.name }}
+                                                    <span
+                                                        :class="[open ? 'bg-indigo-600' : '', 'absolute inset-x-0 -bottom-px z-20 h-0.5 transition duration-200 ease-out']"
+                                                        aria-hidden="true" />
+                                                </PopoverButton>
+                                            </div>
+
+                                            <transition enter-active-class="transition ease-out duration-200"
+                                                enter-from-class="opacity-0" enter-to-class="opacity-100"
+                                                leave-active-class="transition ease-in duration-150"
+                                                leave-from-class="opacity-100" leave-to-class="opacity-0">
+                                                <PopoverPanel
+                                                    class="absolute inset-x-0 top-full z-10 bg-white text-sm text-gray-500">
+                                                    <!-- Presentational element used to render the bottom shadow, if we put the shadow on the actual panel it pokes out the top, so we use this shorter element to hide the top of the shadow -->
+                                                    <div class="absolute inset-0 top-1/2 bg-white shadow"
+                                                        aria-hidden="true" />
+                                                    <!-- Fake border when menu is open -->
+                                                    <div class="absolute inset-0 top-0 mx-auto h-px max-w-7xl px-8"
+                                                        aria-hidden="true">
+                                                        <div
+                                                            :class="[open ? 'bg-gray-200' : 'bg-transparent', 'h-px w-full transition-colors duration-200 ease-out']" />
+                                                    </div>
+
+                                                    <div class="relative">
+                                                        <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+                                                            <div class="grid grid-cols-4 gap-y-10 gap-x-8 py-16">
+                                                                <div v-for="item in category.featured" :key="item.name"
+                                                                class="group relative">
+                                                                <div
+                                                                    class="aspect-w-1 aspect-h-1 overflow-hidden rounded-md bg-gray-100 group-hover:opacity-75">
+                                                                    <img :src="item.imageSrc" :alt="item.imageAlt"
+                                                                        class="object-cover object-center" />
+                                                                </div>
+                                                                <a :href="item.href"
+                                                                    class="mt-4 block font-medium text-gray-900">
+                                                                    <span class="absolute inset-0 z-10"
+                                                                        aria-hidden="true" />
+                                                                    {{ item.name }}
+                                                                </a>
+                                                                <p aria-hidden="true" class="mt-1">Shop now</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </PopoverPanel>
+                                        </transition>
+                                    </Popover>
+
+                                    <a v-for="page in navigation.pages" :key="page.name" :href="page.href"
+                                        class="flex items-center text-sm font-medium text-gray-700 hover:text-gray-800">{{
+                                        page.name }}</a>
+                                </div>
+                            </PopoverGroup>
+                        </div>
+
+                        <!-- Mobile menu and search (lg-) -->
+                        <div class="flex flex-1 items-center lg:hidden">
+                            <button type="button" class="-ml-2 rounded-md bg-white p-2 text-gray-400"
+                                @click="open = true">
+                                <span class="sr-only">Open menu</span>
+                                <Bars3Icon class="h-6 w-6" aria-hidden="true" />
+                            </button>
+
+                            <!-- Search -->
+                            <a href="#" class="ml-2 p-2 text-gray-400 hover:text-gray-500">
+                                <span class="sr-only">Search</span>
+                                <MagnifyingGlassIcon class="h-6 w-6" aria-hidden="true" />
+                            </a>
+                        </div>
+
+                        <!-- Logo (lg-) -->
+                        <a href="#" class="lg:hidden">
+                            <span class="sr-only">Your Company</span>
+                            <img src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600" alt=""
+                                class="h-8 w-auto" />
+                        </a>
+
+                        <div class="flex flex-1 items-center justify-end">
+                            <a href="#"
+                                class="hidden text-sm font-medium text-gray-700 hover:text-gray-800 lg:block">Search</a>
+
+                            <div class="flex items-center lg:ml-8">
+                                <!-- Help -->
+                                <a href="#" class="p-2 text-gray-400 hover:text-gray-500 lg:hidden">
+                                    <span class="sr-only">Help</span>
+                                    <QuestionMarkCircleIcon class="h-6 w-6" aria-hidden="true" />
+                                </a>
+                                <a href="#"
+                                    class="hidden text-sm font-medium text-gray-700 hover:text-gray-800 lg:block">Help</a>
+
+                                <!-- Cart -->
+                                <div class="ml-4 flow-root lg:ml-8">
+                                    <a href="#" class="group -m-2 flex items-center p-2">
+                                        <ShoppingBagIcon
+                                            class="h-6 w-6 flex-shrink-0 text-gray-400 group-hover:text-gray-500"
+                                            aria-hidden="true" />
+                                        <span
+                                            class="ml-2 text-sm font-medium text-gray-700 group-hover:text-gray-800">0</span>
+                                        <span class="sr-only">items in cart, view bag</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+</div></template>
