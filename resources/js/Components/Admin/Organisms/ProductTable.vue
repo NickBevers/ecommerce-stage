@@ -1,10 +1,12 @@
 <script setup>
 import CreateProductModal from '@/Components/Admin/Molecules/CreateProductModal.vue';
-import { defineProps, onMounted } from 'vue';
+import Pagination from '@/Components/Admin/Molecules/Pagination.vue'
+import { defineProps, onMounted, computed } from 'vue';
 import moment from 'moment';
 
 const props = defineProps({
     skus: Array,
+    links: Array,
 });
 
 onMounted(() => {
@@ -12,66 +14,80 @@ onMounted(() => {
         sku.updated_at = moment(sku.updated_at).fromNow();
     });
 });
+
+
+function getBgClass(amount) {
+    if (amount >= 100) {
+      return 'bg-green-500';
+    } else if (amount >= 50) {
+      return 'bg-yellow-500';
+    } else {
+      return 'bg-red-500';
+    }
+}
+
 </script>
 <template>
-    <section>
-        <div class="flex justify-between items-center">
-            <div class="flex flex-row gap-5">
-                <h5>
-                    <span class="text-gray-500">All Products: </span>
-                    <span class="dark:text-white">{{ skus.length }}</span>
-                </h5>
-                <h5>
-                    <span class="text-gray-500">Total sales:</span>
-                    <span class="dark:text-white">$88.4k</span>
-                </h5>
-            </div>
-
-            <CreateProductModal />
+    <section class="my-8">
+        <div class="overflow-hidden rounded-lg bg-white shadow">
+        <div class="px-4 py-5 sm:p-6">
+    <div class="sm:flex sm:items-center">
+      <div class="sm:flex-auto">
+        <h1 class="text-base font-semibold leading-6 text-gray-900">Products</h1>
+      </div>
+      <div class="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
+        <button type="button" class="block rounded-md bg-indigo-600 py-2 px-3 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Add user</button>
+      </div>
+    </div>
+    <div class="mt-8 flow-root">
+      <div class="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8">
+        <div class="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
+          <table class="min-w-full divide-y divide-gray-300">
+            <thead>
+              <tr>
+                <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-0">Name</th>
+                <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Category</th>
+                <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Stock</th>
+                <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Price</th>
+                <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Action</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-gray-200 bg-white">
+              <tr v-for="product in skus" :key="product.id">
+                <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm sm:pl-0">
+                  <div class="flex items-center">
+                    <div class="h-10 w-10 flex-shrink-0">
+                      <img src="https://flowbite.s3.amazonaws.com/blocks/application-ui/products/imac-front-image.png" alt="iMac Front Image" class="h-10 w-10 rounded-m">
+                    </div>
+                    <div class="ml-4">
+                      <div class="font-medium text-gray-900">{{ product.product.title }}</div>
+                    </div>
+                  </div>
+                </td>
+                <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                  <div class="inline-flex rounded-full bg-blue-100 px-2 text-xs font-semibold leading-5 text-blue-800">{{ product.product.sub_category_id }}</div>
+             
+                </td>
+                <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                    <span class="inline-flex rounded-full px-2 text-xs font-semibold leading-5 text-white" :class="getBgClass(product.amount)">{{product.amount}}</span>
+                </td>
+                <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">$23</td>
+                <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-left text-sm font-medium sm:pr-0">
+                  <a href="#" class="text-indigo-600 hover:text-indigo-900"
+                    >Edit<span class="sr-only">, {{ product.id }}</span></a
+                  >
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="mt-6">
+            <Pagination class="mt-6" :links="props.links" />
         </div>
-        <div class="mx-auto max-w-screen-2xl">
-            <div class="relative overflow-hidden bg-white shadow-md dark:bg-gray-800 sm:rounded-lg">
-                <div class="overflow-x-auto">
-                    <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-                        <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-                            <tr>
-                                <th scope="col" class="px-4 py-3">Product</th>
-                                <th scope="col" class="px-4 py-3">Category</th>
-                                <th scope="col" class="px-4 py-3">Stock</th>
-                                <th scope="col" class="px-4 py-3">Price</th>
-                                <th scope="col" class="px-4 py-3">Last Update</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr class="border-b dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-700"
-                                v-for="product in skus" :key="product">
-                                <th scope="row"
-                                    class="flex items-center px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                    <img src="https://flowbite.s3.amazonaws.com/blocks/application-ui/products/imac-front-image.png"
-                                        alt="iMac Front Image" class="w-auto h-8 mr-3">
-                                    {{ product.product.title }}
-                                </th>
-                                <td class="px-4 py-2">
-                                    <span
-                                        class="bg-primary-100 text-primary-800 text-xs font-medium px-2 py-0.5 rounded dark:bg-primary-900 dark:text-primary-300">
-                                        {{ product.product.sub_category_id }}
-                                    </span>
-                                </td>
-                                <td class="px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                    <div class="flex items-center">
-                                        <div class="inline-block w-4 h-4 mr-2 bg-red-700 rounded-full"></div>
-                                        {{ product.amount }}
-                                    </div>
-                                </td>
-                                <td class="px-4 py-2">$23</td>
-                                <td class="px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                    {{ product.updated_at }}
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
         </div>
+      </div>
+ 
+    </div>
+  </div>
+</div>
     </section>
 </template>
