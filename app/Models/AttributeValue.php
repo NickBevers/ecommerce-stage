@@ -2,20 +2,24 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Mockery\Matcher\Any;
 
-class SubCategory extends Model
+class AttributeValue extends Model
 {
-    use HasFactory;
-
     protected $fillable = [
         'name',
-        'category_id',
+        'attribute_type_id'
     ];
+
+    protected $casts = [
+        'created_at' => 'datetime',
+        'updated_at' => 'datetime',
+    ];
+
 
     /*
     |--------------------------------------------------------------------------
@@ -23,14 +27,13 @@ class SubCategory extends Model
     |--------------------------------------------------------------------------
     */
 
-    public function category(): BelongsTo
+    public function attributeType(): HasOne
     {
-        return $this->belongsTo(Category::class);
+        return $this->hasOne(AttributeType::class);
     }
 
-    public function products(): BelongsToMany
+    public function skus(): BelongsToMany
     {
-        return $this->belongsToMany(Product::class);
+        return $this->belongsToMany(Sku::class, 'attribute_value_sku', 'attribute_value_id', 'sku_id');
     }
-
 }

@@ -4,13 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Models\Brand;
 use App\Models\Category;
-use App\Models\ColorVariation;
-use App\Models\Material;
 use App\Models\Product;
-use App\Models\ProductVariation;
+use App\Models\Sku;
 use App\Models\SubCategory;
 use Barryvdh\Debugbar\Facades\Debugbar;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
 
 class ProductVariationController extends Controller
 {
@@ -27,7 +26,7 @@ class ProductVariationController extends Controller
         $brand = $request->input('brand');
         $material = $request->input('material');
 
-        return ProductVariation::where('in_stock', true)
+        $products = Sku::where('in_stock', true)
             ->when($title, function ($query, $title) {
                 return $query->where('title', 'like', '%' . $title . '%');
             })
@@ -50,7 +49,7 @@ class ProductVariationController extends Controller
                 })->with('product');
             })
             ->when($color, function ($query, $color) {
-                $colorId = ColorVariation::where('value', $color)->first()->id;
+                $colorId = Variation::where('value', $color)->first()->id;
                 return $query->with('product')->where('color_variation_id', $colorId);
             })
             ->when($size, function ($query, $size) {
@@ -75,6 +74,8 @@ class ProductVariationController extends Controller
             })
             ->with('product')
             ->get();
+
+        return $products;
 
 //        return Inertia::render('products/index', [
 //            'products' => $products
@@ -111,30 +112,9 @@ class ProductVariationController extends Controller
         $brand = $request->input('brand');
         $brands = Brand::where('name', 'like', '%' . $brand . '%')->get()->pluck('id')->toArray();
         Debugbar::debug($brands);
-//        return view('test') ;
-    }
 
-    public function create()
-    {
-    }
-
-    public function store(Request $request)
-    {
-    }
-
-    public function show(ProductVariation $productVariation)
-    {
-    }
-
-    public function edit(ProductVariation $productVariation)
-    {
-    }
-
-    public function update(Request $request, ProductVariation $productVariation)
-    {
-    }
-
-    public function destroy(ProductVariation $productVariation)
-    {
+//        return Inertia::render('products/index', [
+//            'products' => $brands
+//        ]);
     }
 }

@@ -8,13 +8,23 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
-class SubCategory extends Model
+class Sku extends Model
 {
+
     use HasFactory;
 
+    protected $table = 'skus';
+
     protected $fillable = [
-        'name',
-        'category_id',
+        'sku',
+        'product_id',
+        'amount',
+        'price',
+    ];
+
+    protected $casts = [
+        'created_at' => 'datetime',
+        'updated_at' => 'datetime',
     ];
 
     /*
@@ -23,14 +33,13 @@ class SubCategory extends Model
     |--------------------------------------------------------------------------
     */
 
-    public function category(): BelongsTo
+    public function product(): BelongsTo
     {
-        return $this->belongsTo(Category::class);
+        return $this->belongsTo(Product::class);
     }
 
-    public function products(): BelongsToMany
+    public function attributeValues(): BelongsToMany
     {
-        return $this->belongsToMany(Product::class);
+        return $this->belongsToMany(AttributeValue::class, 'attribute_value_sku', 'sku_id', 'attribute_value_id');
     }
-
 }
