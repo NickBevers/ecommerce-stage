@@ -3,7 +3,6 @@
 namespace Database\Factories;
 
 use App\Models\Brand;
-use App\Models\Material;
 use App\Models\Product;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Carbon;
@@ -18,17 +17,13 @@ class ProductFactory extends Factory
             'title' => $this->faker->word(),
             'description' => $this->faker->text(),
             'audience' => $this->faker->word(),
-            'category_id' => $this->faker->NumberBetween(1, 10),
-            'promos' => $this->faker->words(),
+            'sub_category_id' => $this->faker->numberBetween(1, 30),
             'extra_info' => $this->faker->word(),
-            'is_promotion' => $this->faker->boolean(),
             'is_active' => $this->faker->boolean(),
-            'sku' => $this->faker->numerify('####-####-####'),
-            'seller_id' => 1,
+            'user_id' => 1,
+            'brand_id' => Brand::all()->random()->id,
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
-            'brand_id' => Brand::all()->random()->id,
-            'material_id' => Material::all()->random()->id,
         ];
     }
 }

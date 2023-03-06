@@ -2,19 +2,17 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Mockery\Matcher\Any;
 
-class ColorVariation extends Model
+class AttributeValue extends Model
 {
-
-    use HasFactory;
-
     protected $fillable = [
-        'value',
+        'name',
+        'attribute_type_id'
     ];
 
     protected $casts = [
@@ -22,13 +20,20 @@ class ColorVariation extends Model
         'updated_at' => 'datetime',
     ];
 
+
     /*
     |--------------------------------------------------------------------------
     | RELATIONS
     |--------------------------------------------------------------------------
     */
-    public function productVariation(): BelongsToMany
+
+    public function attributeType(): HasOne
     {
-        return $this->belongsToMany(ProductVariation::class);
+        return $this->hasOne(AttributeType::class);
+    }
+
+    public function skus(): BelongsToMany
+    {
+        return $this->belongsToMany(Sku::class, 'attribute_value_sku', 'attribute_value_id', 'sku_id');
     }
 }

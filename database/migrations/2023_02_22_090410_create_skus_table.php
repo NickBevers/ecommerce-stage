@@ -7,17 +7,17 @@ use Illuminate\Support\Facades\Schema;
 return new class extends Migration {
     public function up(): void
     {
-        Schema::create('sub_categories', function (Blueprint $table) {
+        Schema::create('skus', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('category_id')->constrained();
-            $table->string('label');
-            $table->string('value');
+            $table->string('sku');
+            $table->foreignId('product_id')->constrained();
+            $table->integer('amount');
             $table->timestamps();
         });
     }
 
     public function down(): void
     {
-        Schema::dropIfExists('sub_categories');
+        Schema::dropIfExists('skus');
     }
 };

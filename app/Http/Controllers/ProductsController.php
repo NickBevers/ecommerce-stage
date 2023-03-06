@@ -2,14 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Attribute;
+use App\Models\AttributeValue;
 use App\Models\Brand;
 use App\Models\Category;
 use App\Models\Product;
 use App\Models\ProductImage;
-use App\Models\ProductVariation;
+use App\Models\Sku;
 use App\Models\SubCategory;
-use App\Models\ColorVariation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
