@@ -10,15 +10,61 @@ use Inertia\Inertia;
 
 class SkuController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        return Inertia::render('Dashboard/Products', [
-            'skus' => Sku::with('attributeValues')
-                ->with('product')
-                ->paginate(10),
-            'attributeValues' => AttributeValue::all(),
-        ]);
+        if ($request->has('size')) {
+            $sizes = explode('.', $request->size);
+        }
+        if ($request->has('color')) {
+            $colors = explode('.', $request->color);
+        }
 
+        // filter the skus by the size with the attribute_value name and the color with the attribute_value name
+        $skus = Sku::with('attributeValues')
+            ->with('product')
+            ->when($sizes, function ($query) use ($sizes) {
+                $query->whereHas('attributeValues', function ($query) use ($sizes) {
+                    $query->whereIn('name', $sizes);
+                });
+            })
+            ->when($colors, function ($query) use ($colors) {
+                $query->whereHas('attributeValues', function ($query) use ($colors) {
+                    $query->whereIn('name', $colors);
+                });
+            })
+            ->paginate(10);
+
+        ray($skus);
+        return $skus;
+    }
+
+    public function filter()
+    {
+        $body = request()->all();
+        $attributes = request()->has('attributes')? request()->input('attributes') : false;
+        $price = request()->has('price')? request()->input('price') : false;
+        $brand = request()->has('brand')? request()->input('brand') : false;
+        ray($brand);
+
+        return Sku::with('attributeValues')
+            ->with('product')
+            ->when($attributes, function ($query) use ($attributes){
+                foreach ($attributes as $attribute) {
+                    $query->whereHas('attributeValues', function ($query) use ($attribute) {
+                        $query->whereIn('name', $attribute);
+                    });
+                }
+            })
+            ->when($price, function ($query) use ($price){
+                $query->where('price', '>=', $price[0])
+                    ->where('price', '<=', $price[1]);
+            })
+            ->when($brand, function ($query) use ($brand){
+                $query->whereHas('product.brand', function ($query) use ($brand) {
+                    $query->where('slug', $brand);
+                });
+            })
+            ->paginate(10);
     }
 
     public function testFunc()

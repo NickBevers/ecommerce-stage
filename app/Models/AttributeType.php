@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class AttributeType extends Model
 {
@@ -23,8 +24,8 @@ class AttributeType extends Model
      * ---------------------------------------------------------------
      */
 
-    public function attributeValues(): BelongsToMany
+    public function attributeValues(): HasMany
     {
-        return $this->belongsToMany(AttributeValue::class);
+        return $this->hasMany(AttributeValue::class);
     }
 }

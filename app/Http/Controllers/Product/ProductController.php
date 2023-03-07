@@ -3,14 +3,22 @@
 namespace App\Http\Controllers\Product;
 
 use App\Http\Controllers\Controller;
+use App\Models\AttributeValue;
 use App\Models\Product;
+use App\Models\Sku;
 use Inertia\Inertia;
 
 class ProductController extends Controller
 {
     public function index()
     {
-        return Product::all();
+        return Inertia::render('Dashboard/Products', [
+            'skus' => Sku::with('attributeValues')
+                ->with('product')
+                ->orderBy('sku')
+                ->paginate(10),
+            'attributeValues' => AttributeValue::all(),
+        ]);
 
     }
 

@@ -3,6 +3,7 @@
 use App\Http\Controllers\Customer\AddressController;
 use App\Http\Controllers\Product\ProductController;
 use App\Http\Controllers\Product\SkuController as ProductSkuController;
+use App\Http\Controllers\Admin\SkuController as AdminSkuController;
 use App\Http\Controllers\ProductVariationController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
@@ -41,10 +42,10 @@ Route::get('/overview', function () {
     return Inertia::render('Dashboard/Overview');
 })->middleware(['auth', 'verified'])->name('overview');
 
-Route::get('/products', [ProductsController::class, 'index'])->name('products.index');
+Route::get('/products', [ProductController::class, 'index'])->name('products.index');
 
 // Test Route
-Route::get('/test', [ProductSkuController::class, 'index'])->name('test');
+Route::get('/test', [ProductSkuController::class, 'filter'])->name('test');
 
 // Get specific products
 Route::get('/shoes', [ProductVariationController::class, 'showShoes'])->name('shoes');
@@ -53,13 +54,16 @@ Route::get('/accessories', [ProductVariationController::class, 'showAccessories'
 Route::get('/promos', [ProductVariationController::class, 'showPromos'])->name('promos');
 
 // Product Routes
-Route::get('/products/all', [ProductSkuController::class, 'index'])->name('products.getAll');
+Route::get('/products', [ProductSkuController::class, 'index'])->name('products.index');
 Route::post('/products', [ProductController::class, 'store'])->name('products.store');
 Route::get('/products/create', [ProductController::class, 'create'])->name('products.create');
 Route::get('/products/{product}', [ProductController::class, 'show'])->name('products.show');
 Route::get('/products/{product}/edit', [ProductController::class, 'edit'])->name('products.edit');
 Route::patch('/products/{product}', [ProductController::class, 'update'])->name('products.update');
 Route::delete('/products/{product}', [ProductController::class, 'destroy'])->name('products.destroy');
+
+// Filter Routes
+Route::post('/filter', [ProductSkuController::class, 'filter'])->withoutMiddleware(\App\Http\Middleware\VerifyCsrfToken::class)->name('products.filter');
 
 // Profile Routes
 Route::middleware('auth')->group(function () {
@@ -85,7 +89,16 @@ Route::get('/shipping-addresses/{shippingAddress}/edit', [AddressController::cla
 Route::patch('/shipping-addresses/{shippingAddress}', [AddressController::class, 'update'])->name('shipping.update');
 Route::delete('/shipping-addresses/{shippingAddress}', [AddressController::class, 'destroy'])->name('shipping.destroy');
 
+Route::middleware('auth')->group(function () {
+    Route::get('/admin/products', [AdminSkuController::class, 'index'])->name('admin.products.index');
+    Route::post('/admin/products', [AdminSkuController::class, 'store'])->name('admin.products.store');
+    Route::get('/admin/products/create', [AdminSkuController::class, 'create'])->name('admin.products.create');
+    Route::get('/admin/products/{product}', [AdminSkuController::class, 'show'])->name('admin.products.show');
+    Route::get('/admin/products/{product}/edit', [AdminSkuController::class, 'edit'])->name('admin.products.edit');
+    Route::patch('/admin/products/{product}', [AdminSkuController::class, 'update'])->name('admin.products.update');
+    Route::delete('/admin/products/{product}', [AdminSkuController::class, 'destroy'])->name('admin.products.destroy');
+});
 
-
+//TODO: make promo routes
 
 require __DIR__.'/auth.php';

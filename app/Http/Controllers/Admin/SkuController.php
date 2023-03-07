@@ -19,8 +19,6 @@ class SkuController extends Controller
                 ->paginate(10),
             'attributeValues' => AttributeValue::all(),
         ]);
-        // get all sku's with their attribute values sorted by sku
-
     }
 
     public function create()
