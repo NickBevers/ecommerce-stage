@@ -34,8 +34,8 @@ Route::get('/', function () {
 
 // Auth Routes
 Route::get('/dashboard', function () {
-    return Inertia::render('Admin/Overview');
-})->middleware(['auth', 'verified'])->name('overview');
+    return Inertia::render('Admin/Dashboard');
+})->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::get('/products', [ProductController::class, 'index'])->name('products.index');
 
