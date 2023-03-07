@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\Admin\AttributeValueController;
+use App\Http\Controllers\Admin\BrandController as AdminBrandController;
 use App\Http\Controllers\Customer\AddressController;
 use App\Http\Controllers\Product\ProductController;
 use App\Http\Controllers\Product\SkuController as ProductSkuController;
@@ -45,7 +47,7 @@ Route::get('/overview', function () {
 Route::get('/products', [ProductController::class, 'index'])->name('products.index');
 
 // Test Route
-Route::get('/test', [ProductSkuController::class, 'filter'])->name('test');
+//Route::get('/test', [ProductSkuController::class, 'filter'])->name('test');
 
 // Get specific products
 Route::get('/shoes', [ProductVariationController::class, 'showShoes'])->name('shoes');
@@ -54,7 +56,7 @@ Route::get('/accessories', [ProductVariationController::class, 'showAccessories'
 Route::get('/promos', [ProductVariationController::class, 'showPromos'])->name('promos');
 
 // Product Routes
-Route::get('/products', [ProductSkuController::class, 'index'])->name('products.index');
+Route::get('/products', [ProductSkuController::class, 'filter'])->name('products.index');
 Route::post('/products', [ProductController::class, 'store'])->name('products.store');
 Route::get('/products/create', [ProductController::class, 'create'])->name('products.create');
 Route::get('/products/{product}', [ProductController::class, 'show'])->name('products.show');
@@ -64,6 +66,11 @@ Route::delete('/products/{product}', [ProductController::class, 'destroy'])->nam
 
 // Filter Routes
 Route::post('/filter', [ProductSkuController::class, 'filter'])->withoutMiddleware(\App\Http\Middleware\VerifyCsrfToken::class)->name('products.filter');
+Route::get('/filter/size', [AttributeValueController::class, 'getSizes'])->name('products.getSizes');
+Route::get('/filter/color', [AttributeValueController::class, 'getColors'])->name('products.getColors');
+Route::get('/filter/material', [AttributeValueController::class, 'getMaterials'])->name('products.getMaterials');
+Route::get('/filter/brand', [AdminBrandController::class, 'getAllBrands'])->name('products.getBrands');
+
 
 // Profile Routes
 Route::middleware('auth')->group(function () {

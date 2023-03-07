@@ -18,6 +18,8 @@ class SkuController extends Controller
                 ->orderBy('sku')
                 ->paginate(10),
             'attributeValues' => AttributeValue::all(),
+            'minPrice' => Sku::min('price'),
+            'maxPrice' => Sku::max('price'),
         ]);
     }
 

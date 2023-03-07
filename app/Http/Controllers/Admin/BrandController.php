@@ -13,6 +13,17 @@ class BrandController extends Controller
 
     }
 
+    public function getAllBrands()
+    {
+        return Brand::all()->map(function ($brand) {
+            return [
+                'id' => $brand->id,
+                'name' => $brand->name,
+                'slug' => $brand->slug,
+            ];
+        });
+    }
+
     public function create()
     {
     }

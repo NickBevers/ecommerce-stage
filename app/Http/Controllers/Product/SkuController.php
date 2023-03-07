@@ -12,20 +12,24 @@ class SkuController extends Controller
 {
     public function index(Request $request)
     {
-        Sku::with('attributeValues')
-        ->with('product')
-            ->paginate(10);
+        return Inertia::render('Products', [
+            'skus' => Sku::with('attributeValues')
+                ->with('product')
+                ->orderBy('sku')
+                ->paginate(48),
+            'attributeValues' => AttributeValue::all(),
+            'minPrice' => Sku::min('price'),
+            'maxPrice' => Sku::max('price'),
+        ]);
     }
 
     public function filter()
     {
-        $body = request()->all();
         $attributes = request()->has('attributes')? request()->input('attributes') : false;
         $price = request()->has('price')? request()->input('price') : false;
         $brand = request()->has('brand')? request()->input('brand') : false;
-        ray($brand);
 
-        return Sku::with('attributeValues')
+        $skus = Sku::with('attributeValues')
             ->with('product')
             ->when($attributes, function ($query) use ($attributes){
                 foreach ($attributes as $attribute) {
@@ -43,7 +47,14 @@ class SkuController extends Controller
                     $query->where('slug', $brand);
                 });
             })
-            ->paginate(10);
+            ->paginate(48);
+
+        // return the skus and min and max price
+        return [
+            'skus' => $skus,
+            'minPrice' => Sku::min('price'),
+            'maxPrice' => Sku::max('price'),
+        ];
     }
 
     public function testFunc()
