@@ -37,6 +37,13 @@ class SkuController extends Controller
 
     public function create()
     {
+        return Inertia::render('Admin/Products/Create', [
+            'sizes' => app(AttributeValueController::class)->getSizes(),
+            'colors' => app(AttributeValueController::class)->getColors(),
+            'materials' => app(AttributeValueController::class)->getMaterials(),
+            'brands' => app(BrandController::class)->getAllBrands(),
+            'categories' => app(CategoryController::class)->getAllCategories(),
+        ]);
     }
 
     public function testFunc()

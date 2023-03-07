@@ -17,7 +17,7 @@ class ProductFactory extends Factory
         return [
             'title' => $this->faker->word(),
             'description' => $this->faker->text(),
-            'audience' => $this->faker->word(),
+            'audience' => $this->faker->randomElement(['Man', 'Women', 'Kids', 'Unisex']),
             'sub_category_id' => SubCategory::all()->random()->id,
             'extra_info' => $this->faker->word(),
             'is_active' => $this->faker->boolean(),
