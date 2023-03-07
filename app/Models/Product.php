@@ -38,14 +38,9 @@ class Product extends Model
     |--------------------------------------------------------------------------
     */
 
-    public function subCategory(): HasOne
+    public function subCategory(): BelongsTo
     {
-        return $this->hasOne(SubCategory::class);
-    }
-
-    public function category(): HasOneThrough
-    {
-        return $this->hasOneThrough(Category::class, SubCategory::class);
+        return $this->belongsTo(SubCategory::class);
     }
 
     public function brand(): BelongsTo

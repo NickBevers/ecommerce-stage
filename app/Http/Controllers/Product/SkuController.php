@@ -23,14 +23,29 @@ class SkuController extends Controller
         ]);
     }
 
-    public function filter()
+    public function filter(Request $request)
     {
+        $category = request()->has('category')? request()->input('category') : false;
+        $promo = request()->has('promo')? request()->input('promo') : false;
         $attributes = request()->has('attributes')? request()->input('attributes') : false;
         $price = request()->has('price')? request()->input('price') : false;
         $brand = request()->has('brand')? request()->input('brand') : false;
+        $sort = request()->has('sort')? request()->input('sort') : 'created_at';
+        $order = request()->has('order')? request()->input('order') : 'asc';
 
         $skus = Sku::with('attributeValues')
             ->with('product')
+            ->when($category, function ($query) use ($category){
+                $query->whereHas('product.subCategory.category', function ($query) use ($category) {
+                    $query->where('name', $category);
+                });
+            })
+            ->when($promo, function ($query) use ($promo){
+                $query->whereHas('promo', function ($query) use ($promo) {
+                    $query->where('start_date', '<=', now())
+                        ->where('end_date', '>=', now());
+                });
+            })
             ->when($attributes, function ($query) use ($attributes){
                 foreach ($attributes as $attribute) {
                     $query->whereHas('attributeValues', function ($query) use ($attribute) {
@@ -47,6 +62,9 @@ class SkuController extends Controller
                     $query->where('slug', $brand);
                 });
             })
+            ->when($sort && $order, function ($query) use ($sort, $order){
+                $query->orderBy($sort, $order);
+            })
             ->paginate(48);
 
         // return the skus and min and max price
@@ -55,6 +73,30 @@ class SkuController extends Controller
             'minPrice' => Sku::min('price'),
             'maxPrice' => Sku::max('price'),
         ];
+    }
+
+    public function showShoes(Request $request)
+    {
+        $request->merge(['category' => "Shoes"]);
+        return $this->filter($request);
+    }
+
+    public function showClothing(Request $request)
+    {
+        $request->merge(['category' => "Clothing"]);
+        return $this->filter($request);
+    }
+
+    public function showAccessories(Request $request)
+    {
+        $request->merge(['category' => "Accessories"]);
+        return $this->filter($request);
+    }
+
+    public function showPromos(Request $request)
+    {
+        $request->merge(['promo' => true]);
+        return $this->filter($request);
     }
 
     public function testFunc()

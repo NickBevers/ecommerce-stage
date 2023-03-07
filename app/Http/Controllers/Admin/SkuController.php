@@ -23,6 +23,18 @@ class SkuController extends Controller
         ]);
     }
 
+    public function search(Request $request)
+    {
+        $searchTerm = $request->input('searchTerm');
+        return Sku::with('attributeValues')
+            ->with('product')
+            -> whereHas('product', function ($query) use ($searchTerm) {
+                $query->where('title', 'like', '%' . $searchTerm . '%');
+            })
+            ->orderBy('sku')
+            ->paginate(10);
+    }
+
     public function create()
     {
     }

@@ -50,10 +50,10 @@ Route::get('/products', [ProductController::class, 'index'])->name('products.ind
 //Route::get('/test', [ProductSkuController::class, 'filter'])->name('test');
 
 // Get specific products
-Route::get('/shoes', [ProductVariationController::class, 'showShoes'])->name('shoes');
-Route::get('/clothing', [ProductVariationController::class, 'showClothing'])->name('clothing');
-Route::get('/accessories', [ProductVariationController::class, 'showAccessories'])->name('accessories');
-Route::get('/promos', [ProductVariationController::class, 'showPromos'])->name('promos');
+Route::get('/products/shoes', [ProductSkuController::class, 'showShoes'])->name('shoes');
+Route::get('/products/clothing', [ProductSkuController::class, 'showClothing'])->name('clothing');
+Route::get('/products/accessories', [ProductSkuController::class, 'showAccessories'])->name('accessories');
+Route::get('/products/promos', [ProductSkuController::class, 'showPromos'])->name('promos');
 
 // Product Routes
 Route::get('/products', [ProductSkuController::class, 'filter'])->name('products.index');
@@ -99,6 +99,7 @@ Route::delete('/shipping-addresses/{shippingAddress}', [AddressController::class
 Route::middleware('auth')->group(function () {
     Route::get('/admin/products', [AdminSkuController::class, 'index'])->name('admin.products.index');
     Route::post('/admin/products', [AdminSkuController::class, 'store'])->name('admin.products.store');
+    Route::post('/admin/products/search', [AdminSkuController::class, 'search'])->name('admin.products.search');
     Route::get('/admin/products/create', [AdminSkuController::class, 'create'])->name('admin.products.create');
     Route::get('/admin/products/{product}', [AdminSkuController::class, 'show'])->name('admin.products.show');
     Route::get('/admin/products/{product}/edit', [AdminSkuController::class, 'edit'])->name('admin.products.edit');

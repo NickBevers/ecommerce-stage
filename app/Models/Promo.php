@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Promo extends Model
 {
@@ -26,8 +27,8 @@ class Promo extends Model
     |--------------------------------------------------------------------------
     */
 
-    public function products(): BelongsTo
+    public function sku(): BelongsTo
     {
-        return $this->belongsTo(Product::class);
+        return $this->belongsTo(Sku::class);
     }
 }
