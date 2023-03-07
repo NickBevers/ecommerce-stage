@@ -22,7 +22,7 @@ const showingNavigationDropdown = ref(false);
             </header>
 
             <!-- Page Content -->
-            <main>
+            <main class="max-lg:mt-12">
                 <slot />
             </main>
         </div>

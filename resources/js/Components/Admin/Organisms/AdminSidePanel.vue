@@ -97,7 +97,7 @@ onMounted(() => {
     </TransitionRoot>
 
     <!-- Static sidebar for desktop -->
-    <div class="hidden lg:fixed lg:inset-y-0 lg:flex lg:w-64 lg:flex-col lg:border-r lg:border-gray-200 lg:bg-gray-100 lg:pt-5 lg:pb-4">
+    <div class="hidden lg:inset-y-0 lg:flex lg:w-64 lg:flex-col lg:border-r lg:border-gray-200 lg:bg-gray-100 lg:pt-5 lg:pb-4">
       <div class="flex flex-shrink-0 items-center px-6">
        <Link to="/">
         <ApplicationLogo class="h-8 w-auto" />
@@ -157,21 +157,25 @@ onMounted(() => {
       </div>
     </div>
     <!-- Main column -->
-    <div class="flex flex-col lg:pl-64">
+    <div class="top-0 left-0 fixed lg:pl-64 w-full">
       <!-- Search header -->
-      <div class="sticky top-0 z-10 flex h-16 flex-shrink-0 border-b border-gray-200 bg-white lg:hidden">
+      <div class="top-0 z-10 relative flex h-16 flex-shrink-0 border-b border-gray-200 bg-white lg:hidden">
         <button type="button" class="border-r border-gray-200 px-4 text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-500 lg:hidden" @click="sidebarOpen = true">
           <span class="sr-only">Open sidebar</span>
           <Bars3CenterLeftIcon class="h-6 w-6" aria-hidden="true" />
         </button>
-        <div class="flex flex-1 justify-between px-4 sm:px-6 lg:px-8">
+        <div class="flex flex-1 justify-end px-4 sm:px-6 lg:px-8">
           <div class="flex items-center">
             <!-- Profile dropdown -->
             <Menu as="div" class="relative ml-3">
               <div>
                 <MenuButton class="flex max-w-xs items-center rounded-full bg-white text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
                   <span class="sr-only">Open user menu</span>
-                  <img class="h-8 w-8 rounded-full" src="https://images.unsplash.com/photo-1502685104226-ee32379fefbe?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="" />
+                  <span class="mr-4 truncate text-sm font-medium text-gray-900">{{firstname}} {{ lastname }}</span>
+                <div class="relative inline-flex items-center justify-center w-8 h-8 overflow-hidden bg-gray-300 rounded-full dark:bg-gray-600">
+                  <span
+                    class="font-medium text-l text-gray-600">{{ initial }}</span>
+                </div>
                 </MenuButton>
               </div>
               <transition enter-active-class="transition ease-out duration-100" enter-from-class="transform opacity-0 scale-95" enter-to-class="transform opacity-100 scale-100" leave-active-class="transition ease-in duration-75" leave-from-class="transform opacity-100 scale-100" leave-to-class="transform opacity-0 scale-95">
