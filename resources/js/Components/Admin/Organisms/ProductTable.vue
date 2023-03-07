@@ -39,7 +39,7 @@ function getBgClass(amount) {
         <button type="button" class="block rounded-md bg-indigo-600 py-2 px-3 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Add Product</button>
       </div>
     </div>
-    <div class="mt-8 flow-root">
+    <div class="mt-4 flow-root">
       <div class="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8">
         <div class="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
           <table class="min-w-full divide-y divide-gray-300">
@@ -54,7 +54,7 @@ function getBgClass(amount) {
             </thead>
             <tbody class="divide-y divide-gray-200 bg-white">
               <tr v-for="product in skus" :key="product.id">
-                <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm sm:pl-0">
+                <td class="whitespace-nowrap py-2 pl-4 pr-3 text-sm sm:pl-0">
                   <div class="flex items-center">
                     <div class="h-10 w-10 flex-shrink-0">
                       <img src="https://flowbite.s3.amazonaws.com/blocks/application-ui/products/imac-front-image.png" alt="iMac Front Image" class="h-10 w-10 rounded-m">
