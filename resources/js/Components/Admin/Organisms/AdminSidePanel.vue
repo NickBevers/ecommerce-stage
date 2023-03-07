@@ -20,8 +20,8 @@ import { Bars3CenterLeftIcon, ChartPieIcon, Bars4Icon, ClockIcon, HomeIcon, XMar
 import { ChevronRightIcon, ChevronUpDownIcon, ShoppingBagIcon, EllipsisVerticalIcon, MagnifyingGlassIcon } from '@heroicons/vue/20/solid'
 
 const navigation = [
-  { name: 'Overview', href: '/dashboard', icon: ChartPieIcon, current: false },
-  { name: 'Products', href: '/products', icon: ShoppingBagIcon , current: false },
+  { name: 'Overview', href: '/admin/dashboard', icon: ChartPieIcon, current: false },
+  { name: 'Products', href: '/admin/products', icon: ShoppingBagIcon , current: false },
 ]
 
 const sidebarOpen = ref(false)

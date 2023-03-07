@@ -34,7 +34,7 @@ Route::get('/', function () {
 
 
 // Auth Routes
-Route::get('/dashboard', function () {
+Route::get('/admin/dashboard', function () {
     return Inertia::render('Admin/Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 

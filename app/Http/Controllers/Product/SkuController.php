@@ -12,30 +12,9 @@ class SkuController extends Controller
 {
     public function index(Request $request)
     {
-        if ($request->has('size')) {
-            $sizes = explode('.', $request->size);
-        }
-        if ($request->has('color')) {
-            $colors = explode('.', $request->color);
-        }
-
-        // filter the skus by the size with the attribute_value name and the color with the attribute_value name
-        $skus = Sku::with('attributeValues')
-            ->with('product')
-            ->when($sizes, function ($query) use ($sizes) {
-                $query->whereHas('attributeValues', function ($query) use ($sizes) {
-                    $query->whereIn('name', $sizes);
-                });
-            })
-            ->when($colors, function ($query) use ($colors) {
-                $query->whereHas('attributeValues', function ($query) use ($colors) {
-                    $query->whereIn('name', $colors);
-                });
-            })
+        Sku::with('attributeValues')
+        ->with('product')
             ->paginate(10);
-
-        ray($skus);
-        return $skus;
     }
 
     public function filter()

@@ -12,7 +12,7 @@ class SkuController extends Controller
 {
     public function index()
     {
-        return Inertia::render('Test/Index', [
+        return Inertia::render('Admin/Products', [
             'skus' => Sku::with('attributeValues')
                 ->with('product')
                 ->orderBy('sku')
