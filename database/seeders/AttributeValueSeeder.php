@@ -23,6 +23,7 @@ class AttributeValueSeeder extends Seeder
             '7XL',
             '8XL',
             'One Size',
+            ''
         ];
 
 

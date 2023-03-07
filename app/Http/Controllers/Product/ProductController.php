@@ -3,9 +3,9 @@
 namespace App\Http\Controllers\Product;
 
 use App\Http\Controllers\Controller;
+use App\Models\AttributeValue;
 use App\Models\Product;
 use App\Models\Sku;
-use App\Models\AttributeValue;
 use Inertia\Inertia;
 
 class ProductController extends Controller

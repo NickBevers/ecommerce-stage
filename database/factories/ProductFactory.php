@@ -4,6 +4,7 @@ namespace Database\Factories;
 
 use App\Models\Brand;
 use App\Models\Product;
+use App\Models\SubCategory;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Carbon;
 
@@ -17,7 +18,7 @@ class ProductFactory extends Factory
             'title' => $this->faker->word(),
             'description' => $this->faker->text(),
             'audience' => $this->faker->word(),
-            'sub_category_id' => $this->faker->numberBetween(1, 30),
+            'sub_category_id' => SubCategory::all()->random()->id,
             'extra_info' => $this->faker->word(),
             'is_active' => $this->faker->boolean(),
             'user_id' => 1,

@@ -27,9 +27,9 @@ class AttributeValue extends Model
     |--------------------------------------------------------------------------
     */
 
-    public function attributeType(): HasOne
+    public function attributeType(): BelongsTo
     {
-        return $this->hasOne(AttributeType::class);
+        return $this->belongsTo(AttributeType::class);
     }
 
     public function skus(): BelongsToMany
