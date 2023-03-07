@@ -72,24 +72,74 @@ class AttributeValueSeeder extends Seeder
 
 
         $colors = [
-            'black',
-            'brown',
-            'beige',
-            'gray',
-            'white',
-            'blue',
-            'petrol',
-            'turquoise',
-            'green',
-            'olive',
-            'yellow',
-            'orange',
-            'red',
-            'pink',
-            'purple',
-            'gold',
-            'silver',
-            'multicolor',
+            [
+                "black",
+                "#000000"
+            ],
+            [
+                "brown",
+                "#a52a2a"
+            ],
+            [
+                "beige",
+                "#f5f5dc"
+            ],
+            [
+                "gray",
+                "#808080"
+            ],
+            [
+                "white",
+                "#ffffff"
+            ],
+            [
+                "blue",
+                "#0000ff"
+            ],
+            [
+                "petrol",
+                "#008080"
+            ],
+            [
+                "turquoise",
+                "#40e0d0"
+            ],
+            [
+                "green",
+                "#008000"
+            ],
+            [
+                "olive",
+                "#808000"
+            ],
+            [
+                "yellow",
+                "#ffff00"
+            ],
+            [
+                "orange",
+                "#ffa500"
+            ],
+            [
+                "red",
+                "#ff0000"
+            ],
+            [
+                "pink",
+                "#ffc0cb"
+            ],
+            [
+                "purple",
+                "#800080"
+            ],
+            [
+                "gold",
+                "#ffd700"
+            ],
+            [
+                "silver",
+                "#c0c0c0"
+            ]
         ];
 
 
@@ -144,8 +194,9 @@ class AttributeValueSeeder extends Seeder
 
         foreach ($colors as $color) {
             AttributeValue::create([
-                'name' => $color,
+                'name' => $color[0],
                 'attribute_type_id' => 2,
+                'colorValue' => $color[1],
             ]);
         }
 
