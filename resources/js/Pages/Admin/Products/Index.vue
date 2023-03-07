@@ -17,7 +17,7 @@ const props = defineProps({
                         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8"> 
                             <div class="sm:flex sm:items-center">
                 <div class="sm:flex-auto">
-                    <h1 class="text-base font-semibold leading-6 text-gray-900">Products</h1>
+                    <h1 class="text-xl font-semibold leading-6 text-gray-900">Products</h1>
                 </div>
                 <div class="sm:mt-0 sm:ml-16 sm:flex-none">
                     <PrimaryButton
