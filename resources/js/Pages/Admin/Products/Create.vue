@@ -224,8 +224,8 @@ const items = [
                                                                     :key="option.value" class="flex items-center">
                                                                     <input :id="`filter-${section.id}-${optionIdx}`"
                                                                         :name="`${section.id}[]`" :value="option.value"
-                                                                        type="checkbox" :checked="option.checked"
-                                                                        class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500" />
+                                                                        type="radio" :checked="option.checked"
+                                                                        class="h-4 w-4 rounded-ld border-gray-300 text-indigo-600 focus:ring-indigo-500" />
                                                                     <label :for="`filter-${section.id}-${optionIdx}`"
                                                                         class="ml-3 whitespace-nowrap pr-6 text-sm font-medium text-gray-900">{{
                                                                             option.label }}</label>
