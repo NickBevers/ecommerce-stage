@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\Admin\AttributeValueController;
 use App\Http\Controllers\Admin\BrandController as AdminBrandController;
+use App\Http\Controllers\Admin\CategoryController as AdminCategoryController;
+use App\Http\Controllers\Admin\SubCategoryController as AdminSubCategoryController;
 use App\Http\Controllers\Customer\AddressController;
 use App\Http\Controllers\Product\ProductController;
 use App\Http\Controllers\Product\SkuController as ProductSkuController;
@@ -105,6 +107,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/admin/products/{product}/edit', [AdminSkuController::class, 'edit'])->name('admin.products.edit');
     Route::patch('/admin/products/{product}', [AdminSkuController::class, 'update'])->name('admin.products.update');
     Route::delete('/admin/products/{product}', [AdminSkuController::class, 'destroy'])->name('admin.products.destroy');
+
+    Route::get('/admin/categories', [AdminCategoryController::class, 'getAllCategories'])->name('admin.categories.getAll');
+    Route::get('/admin/subcategories/{id}', [AdminSubcategoryController::class, 'getSubCategoriesById'])->name('admin.subcategories.getById');
 });
 
 //TODO: make promo routes
