@@ -22,7 +22,7 @@ const props = defineProps({
                 <div class="sm:mt-0 sm:ml-16 sm:flex-none">
                     <PrimaryButton
                     >
-                    <Link href="/products/create" to="/products/create">
+                    <Link href="/admin/products/create" to="/admin/products/create">
                         Add product
                     </Link>
               </PrimaryButton>

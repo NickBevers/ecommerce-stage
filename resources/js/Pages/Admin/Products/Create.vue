@@ -15,35 +15,52 @@ import {
 } from '@headlessui/vue'
 import { ChevronDownIcon } from '@heroicons/vue/20/solid'
 
-const filters = [
-    {
-        id: 'sizes',
-        name: 'Sizes',
-        options: [
-            { value: 'M', label: 'M', checked: false },
-            { value: 'L', label: 'L', checked: false },
-            { value: 'XL', label: 'XL', checked: false },
-            { value: '2XL', label: '2XL', checked: false },
-        ],
-    },
-]
+const props = defineProps({
+    brands: Array,
+    categories: Array,
+    attributeTypes: Array,
+});
+console.log(props)
 
 let checkedFilters = reactive([])
-
-
 function addCheckedFilter(filter, value) {
-  //create an object to store the filter and value
-    const filterObject = {
-        filter: filter,
-        value: value,
-    };
-    //check if filter already exist in checkedFilters
-    const filterExist = checkedFilters.find(
-        (checkedFilter) => checkedFilter.filter === filter
-    );
-
-
+    const index = checkedFilters.findIndex(item => item[filter])
+    if (index === -1) {
+        // Attribute not present in the array
+        checkedFilters.push({ [filter]: [value] })
+    } else {
+        const values = checkedFilters[index][filter] // changed 'value' to 'filter'
+        const valueIndex = values.indexOf(value)
+        if (valueIndex === -1) {
+            // Value not present in the attribute
+            values.push(value)
+        } else {
+            // Value already present in the attribute
+            values.splice(valueIndex, 1)
+        }
+    }
 }
+
+//isChecked
+
+function isChecked(filter, value) {
+  const index = checkedFilters.findIndex(item => item[filter])
+  if (index === -1) {
+    // Attribute not present in the array
+    return false
+  } else {
+    const values = checkedFilters[index].values
+    const valueIndex = values.indexOf(value)
+    if (valueIndex === -1) {
+      // Value not present in the attribute
+      return false
+    } else {
+      // Value already present in the attribute
+      return true
+    }
+  }
+}
+
 
 const form = useForm({
     title: "",
@@ -174,16 +191,16 @@ const items = [
                                 <div class="col-span-6 sm:col-span-3">
                                     <InputLabel for="variation" value="Add-ons" />
                                     <div class="flex flex-row gap-6">
-                                        <div class="flow-root">
+                                        <div class="flow-root" v-for="attribute in props.attributeTypes">
                                             <PopoverGroup class="-mx-4 flex items-center divide-x divide-gray-200">
-                                                <Popover v-for="(section, sectionIdx) in filters" :key="section.name"
+                                                <Popover
                                                     class="relative inline-block px-4">
                                                     <PopoverButton
                                                         class="flex rounded-md bg-white px-3 py-1 mt-4  shadow-2xl ring-1 ring-black ring-opacity-5 focus:outline-none">
-                                                        <span>{{ section.name }}</span>
-                                                        <span v-if="sectionIdx === 0"
+                                                        <span>{{ attribute.name }}</span>
+                                                        <span v-if="attribute.attributeValues.length > 0"
                                                             class="ml-1.5 mt-0.5 rounded bg-gray-200 py-0.5 px-1.5 text-xs font-semibold tabular-nums text-gray-700">
-                                                            {{  section.options.length }}
+                                                            {{ attribute.attributeValues.length }} 
                                                         </span>
                                                         <ChevronDownIcon
                                                             class="-mr-1 ml-1 h-5 w-5 flex-shrink-0 text-gray-400 group-hover:text-gray-500"
@@ -197,19 +214,21 @@ const items = [
                                                         leave-from-class="transform opacity-100 scale-100"
                                                         leave-to-class="transform opacity-0 scale-95">
                                                         <PopoverPanel
-                                                            class="absolute right-0 z-10 mt-2 origin-top-right rounded-md bg-white p-4 shadow-2xl ring-1 ring-black ring-opacity-5 focus:outline-none">
+                                                            class="absolute right-0 z-10 mt-2 origin-top-right rounded-md bg-white p-4 shadow-2xl ring-1 ring-black ring-opacity-5 focus:outline-none
+                                                            max-h-60 overflow-y-auto
+                                                            ">
                                                             <form class="space-y-4">
-                                                                <div v-for="(option, optionIdx) in section.options"
-                                                                    :key="option.value" class="flex items-center">
-                                                                    <input :id="`filter-${section.id}-${optionIdx}`"
-                                                                        :name="`${section.id}[]`" :value="option.value"
-                                                                        type="checkbox" :checked="option.checked"
+                                                                <div v-for="item in attribute.attributeValues"
+                                                                @click.prevent="addCheckedFilter(attribute.name, item.name)"
+                                                                    :key="item.id" class="flex items-center">
+                                                                    <input :id="`filter-${item.id}`"
+                                                                        :name="`${item.id}[]`" :value="item.name"
+                                                                        type="checkbox" :checked="isChecked(attribute.name, item.name)"
                                                                         class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500" 
-                                                                        @click="addCheckedFilter(section.id, option.value)"
                                                                         />
-                                                                    <label :for="`filter-${section.id}-${optionIdx}`"
+                                                                    <label :for="`filter-${item.id}`"
                                                                         class="ml-3 whitespace-nowrap pr-6 text-sm font-medium text-gray-900">{{
-                                                                            option.label }}</label>
+                                                                            item.name }}</label>
                                                                 </div>
                                                             </form>
                                                         </PopoverPanel>
@@ -217,83 +236,7 @@ const items = [
                                                 </Popover>
                                             </PopoverGroup>
                                         </div>
-                                        <div class="flow-root">
-                                            <PopoverGroup class="-mx-4 flex items-center divide-x divide-gray-200">
-                                                <Popover v-for="(section, sectionIdx) in filters" :key="section.name"
-                                                    class="relative inline-block px-4">
-                                                    <PopoverButton
-                                                        class="flex rounded-md bg-white px-3 py-1 mt-4  shadow-2xl ring-1 ring-black ring-opacity-5 focus:outline-none">
-                                                        <span>{{ section.name }}</span>
-                                                        <ChevronDownIcon
-                                                            class="-mr-1 ml-1 h-5 w-5 flex-shrink-0 text-gray-400 group-hover:text-gray-500"
-                                                            aria-hidden="true" />
-                                                    </PopoverButton>
-
-                                                    <transition enter-active-class="transition ease-out duration-100"
-                                                        enter-from-class="transform opacity-0 scale-95"
-                                                        enter-to-class="transform opacity-100 scale-100"
-                                                        leave-active-class="transition ease-in duration-75"
-                                                        leave-from-class="transform opacity-100 scale-100"
-                                                        leave-to-class="transform opacity-0 scale-95">
-                                                        <PopoverPanel
-                                                            class="absolute right-0 z-10 mt-2 origin-top-right rounded-md bg-white p-4 shadow-2xl ring-1 ring-black ring-opacity-5 focus:outline-none">
-                                                            <form class="space-y-4">
-                                                                <div v-for="(option, optionIdx) in section.options"
-                                                                    :key="option.value" class="flex items-center">
-                                                                    <input :id="`filter-${section.id}-${optionIdx}`"
-                                                                        :name="`${section.id}[]`" :value="option.value"
-                                                                        type="radio" :checked="option.checked"
-                                                                        class="h-4 w-4 rounded-ld border-gray-300 text-indigo-600 focus:ring-indigo-500" />
-                                                                    <label :for="`filter-${section.id}-${optionIdx}`"
-                                                                        class="ml-3 whitespace-nowrap pr-6 text-sm font-medium text-gray-900">{{
-                                                                            option.label }}</label>
-                                                                </div>
-                                                            </form>
-                                                        </PopoverPanel>
-                                                    </transition>
-                                                </Popover>
-                                            </PopoverGroup>
-                                        </div>
-                                        <div class="flow-root">
-                                            <PopoverGroup class="-mx-4 flex items-center divide-x divide-gray-200">
-                                                <Popover v-for="(section, sectionIdx) in filters" :key="section.name"
-                                                    class="relative inline-block px-4">
-                                                    <PopoverButton
-                                                        class="flex rounded-md bg-white px-3 py-1 mt-4  shadow-2xl ring-1 ring-black ring-opacity-5 focus:outline-none">
-                                                        <span>{{ section.name }}</span>
-                                                        <span v-if="sectionIdx === 0"
-                                                            class="ml-1.5 mt-0.5 rounded bg-gray-200 py-0.5 px-1.5 text-xs font-semibold tabular-nums text-gray-700">1</span>
-                                                        <ChevronDownIcon
-                                                            class="-mr-1 ml-1 h-5 w-5 flex-shrink-0 text-gray-400 group-hover:text-gray-500"
-                                                            aria-hidden="true" />
-                                                    </PopoverButton>
-
-                                                    <transition enter-active-class="transition ease-out duration-100"
-                                                        enter-from-class="transform opacity-0 scale-95"
-                                                        enter-to-class="transform opacity-100 scale-100"
-                                                        leave-active-class="transition ease-in duration-75"
-                                                        leave-from-class="transform opacity-100 scale-100"
-                                                        leave-to-class="transform opacity-0 scale-95">
-                                                        <PopoverPanel
-                                                            class="absolute right-0 z-10 mt-2 origin-top-right rounded-md bg-white p-4 shadow-2xl ring-1 ring-black ring-opacity-5 focus:outline-none">
-                                                            <form class="space-y-4">
-                                                                <div v-for="(option, optionIdx) in section.options"
-                                                                    :key="option.value" class="flex items-center">
-                                                                    <input :id="`filter-${section.id}-${optionIdx}`"
-                                                                        :name="`${section.id}[]`" :value="option.value"
-                                                                        type="checkbox" :checked="option.checked"
-                                                                        class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500" />
-                                                                    <label :for="`filter-${section.id}-${optionIdx}`"
-                                                                        class="ml-3 whitespace-nowrap pr-6 text-sm font-medium text-gray-900">{{
-                                                                            option.label }}</label>
-                                                                </div>
-                                                            </form>
-                                                        </PopoverPanel>
-                                                    </transition>
-                                                </Popover>
-                                            </PopoverGroup>
-                                        </div>
-                                   
+                                        
                                         <p>Checked Filters: {{ checkedFilters }}</p>
 
                                     </div>
