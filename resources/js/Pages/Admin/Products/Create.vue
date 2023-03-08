@@ -238,11 +238,13 @@ const items = [
                                                                             :name="`${item.id}`" :value="item.name"
                                                                             type="checkbox"
                                                                             @click.self=" addCheckedFilter(attribute.name, item.name)"
+                                                                            :checked="isChecked(attribute.name, item.name)"
                                                                             class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500" 
                                                                             />
                                                                             <input v-else-if="attribute.name==='Color'" :id="`filter-${item.id}`"
                                                                                 :name="`${item.id}`" :value="item.name"
                                                                                 type="radio" 
+                                                                    
                                                                                 class="h-4 w-4 rounded-ld border-gray-300 text-indigo-600" 
                                                                                 />
                                                                                 
