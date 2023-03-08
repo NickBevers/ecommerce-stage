@@ -11,6 +11,11 @@ class AttributeValueController extends Controller
     {
     }
 
+    public function getValuesByType($typeId)
+    {
+        return AttributeValue::where('attribute_type_id', '=', $typeId)->get('name');
+    }
+
     public function getSizes()
     {
         return AttributeValue::all()->where('attribute_type_id', '=', 1)->map(function ($size) {

@@ -2,18 +2,6 @@
 import {onMounted, ref} from 'vue'
 
 const props = defineProps({
-    sizes: {
-        type: Array,
-        required: true
-    },
-    colors: {
-        type: Array,
-        required: true
-    },
-    materials: {
-        type: Array,
-        required: true
-    },
     brands: {
         type: Array,
         required: true
@@ -22,16 +10,18 @@ const props = defineProps({
         type: Array,
         required: true
     },
+    attributeTypes: {
+        type: Array,
+        required: true
+    }
 })
 
 </script>
 <template>
     <pre>
-        {{props.categories}}
-        {{props.sizes}}
-        {{props.colors}}
-        {{props.materials}}
-        {{props.brands}}
+<!--        {{props.categories}}-->
+<!--        {{props.attributeTypes}}-->
+<!--        {{props.brands}}-->
     </pre>
 </template>
 

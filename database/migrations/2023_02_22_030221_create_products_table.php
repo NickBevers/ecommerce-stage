@@ -10,10 +10,10 @@ return new class extends Migration {
         Schema::create('products', function (Blueprint $table) {
             $table->id();
             $table->String('title');
-            $table->String('description');
+            $table->String('description')->nullable();
             $table->String('audience');
             $table->foreignId('sub_category_id')->constrained();
-            $table->String('extra_info');
+            $table->String('extra_info')->nullable();
             $table->boolean('is_active')->default(true);
             $table->foreignId('user_id')->default(1)->constrained()->onDelete('cascade');
             $table->foreignId('brand_id')->default(1)->constrained()->onDelete('cascade');

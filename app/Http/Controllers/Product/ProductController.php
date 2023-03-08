@@ -6,6 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Models\AttributeValue;
 use App\Models\Product;
 use App\Models\Sku;
+use App\Models\SubCategory;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 
 class ProductController extends Controller
@@ -26,12 +29,10 @@ class ProductController extends Controller
         // validate the request
         $request->validate([
             'title' => 'required|string|max:255',
-            'description' => 'required|string|max:255',
             'audience' => 'required|string|max:255',
             'category' => 'required|string|max:255',
-            'extra_info' => 'required|string|max:500',
-//            'files' => 'array|required',
-//            'files.*' => 'required|mimetypes:image/jpg,image/jpeg,image/bmp'
+            'files' => 'array|required',
+            'files.*' => 'required|mimetypes:image/jpg,image/jpeg,image/bmp,image/webp,image/png,image/svg+xml',
         ]);
 
         $imageArray = [];
@@ -66,7 +67,7 @@ class ProductController extends Controller
 
         if ($request->hasFile('images')) {
             foreach ($imageArray as $image) {
-                ProductImagesController::store($image, $productId);
+                ProductImageController::store($image, $productId);
             }
         }
         return $product;

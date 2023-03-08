@@ -13,6 +13,11 @@ class AttributeTypesController extends Controller
 
     }
 
+    public function getAllTypes()
+    {
+        return AttributeType::all();
+    }
+
     public function create()
     {
     }

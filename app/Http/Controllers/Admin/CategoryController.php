@@ -14,11 +14,6 @@ class CategoryController extends Controller
 
     public function getAllCategories()
     {
-        return Category::all()->map(function ($category) {
-            return [
-                'id' => $category->id,
-                'name' => $category->name,
-            ];
-        });
+        return Category::all();
     }
 }

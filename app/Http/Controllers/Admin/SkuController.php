@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Product\ProductController;
 use App\Models\AttributeValue;
 use App\Models\Sku;
 use Illuminate\Http\Request;
@@ -37,12 +38,18 @@ class SkuController extends Controller
 
     public function create()
     {
+        $attributeTypes = app(AttributeTypesController::class)->getAllTypes()->map(function ($attributeType) {
+            $attributeType->attributeValues = app(AttributeValueController::class)->getValuesByType($attributeType->id);
+        });
+
+        $categories = app(CategoryController::class)->getAllCategories()->map(function ($category) {
+            $category->subCategories = app(SubCategoryController::class)->getSubCategoriesById($category->id);
+        });
+
         return Inertia::render('Admin/Products/Create', [
-            'sizes' => app(AttributeValueController::class)->getSizes(),
-            'colors' => app(AttributeValueController::class)->getColors(),
-            'materials' => app(AttributeValueController::class)->getMaterials(),
             'brands' => app(BrandController::class)->getAllBrands(),
-            'categories' => app(CategoryController::class)->getAllCategories(),
+            'categories' => $categories,
+            'attributeTypes' => $attributeTypes,
         ]);
     }
 
