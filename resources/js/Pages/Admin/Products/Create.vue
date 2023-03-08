@@ -1,6 +1,6 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
-import { defineProps, ref } from 'vue'
+import { defineProps, ref, reactive} from 'vue'
 import InputLabel from '@/Components/Admin/Atoms/InputLabel.vue';
 import TextInput from '@/Components/Admin/Atoms/TextInput.vue';
 import PrimaryButton from '@/Components/Admin/Atoms/PrimaryButton.vue';
@@ -28,6 +28,22 @@ const filters = [
     },
 ]
 
+let checkedFilters = reactive([])
+
+
+function addCheckedFilter(filter, value) {
+  //create an object to store the filter and value
+    const filterObject = {
+        filter: filter,
+        value: value,
+    };
+    //check if filter already exist in checkedFilters
+    const filterExist = checkedFilters.find(
+        (checkedFilter) => checkedFilter.filter === filter
+    );
+
+
+}
 
 const form = useForm({
     title: "",
@@ -166,7 +182,9 @@ const items = [
                                                         class="flex rounded-md bg-white px-3 py-1 mt-4  shadow-2xl ring-1 ring-black ring-opacity-5 focus:outline-none">
                                                         <span>{{ section.name }}</span>
                                                         <span v-if="sectionIdx === 0"
-                                                            class="ml-1.5 mt-0.5 rounded bg-gray-200 py-0.5 px-1.5 text-xs font-semibold tabular-nums text-gray-700">1</span>
+                                                            class="ml-1.5 mt-0.5 rounded bg-gray-200 py-0.5 px-1.5 text-xs font-semibold tabular-nums text-gray-700">
+                                                            {{  section.options.length }}
+                                                        </span>
                                                         <ChevronDownIcon
                                                             class="-mr-1 ml-1 h-5 w-5 flex-shrink-0 text-gray-400 group-hover:text-gray-500"
                                                             aria-hidden="true" />
@@ -186,7 +204,9 @@ const items = [
                                                                     <input :id="`filter-${section.id}-${optionIdx}`"
                                                                         :name="`${section.id}[]`" :value="option.value"
                                                                         type="checkbox" :checked="option.checked"
-                                                                        class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500" />
+                                                                        class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500" 
+                                                                        @click="addCheckedFilter(section.id, option.value)"
+                                                                        />
                                                                     <label :for="`filter-${section.id}-${optionIdx}`"
                                                                         class="ml-3 whitespace-nowrap pr-6 text-sm font-medium text-gray-900">{{
                                                                             option.label }}</label>
@@ -204,8 +224,6 @@ const items = [
                                                     <PopoverButton
                                                         class="flex rounded-md bg-white px-3 py-1 mt-4  shadow-2xl ring-1 ring-black ring-opacity-5 focus:outline-none">
                                                         <span>{{ section.name }}</span>
-                                                        <span v-if="sectionIdx === 0"
-                                                            class="ml-1.5 mt-0.5 rounded bg-gray-200 py-0.5 px-1.5 text-xs font-semibold tabular-nums text-gray-700">1</span>
                                                         <ChevronDownIcon
                                                             class="-mr-1 ml-1 h-5 w-5 flex-shrink-0 text-gray-400 group-hover:text-gray-500"
                                                             aria-hidden="true" />
@@ -275,6 +293,9 @@ const items = [
                                                 </Popover>
                                             </PopoverGroup>
                                         </div>
+                                   
+                                        <p>Checked Filters: {{ checkedFilters }}</p>
+
                                     </div>
                                 </div>
 
