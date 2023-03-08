@@ -38,13 +38,15 @@ class SkuController extends Controller
 
     public function create()
     {
-        $attributeTypes = app(AttributeTypesController::class)->getAllTypes()->map(function ($attributeType) {
+        $attributeTypes = app(AttributeTypesController::class)->getAllTypes();
+        foreach ($attributeTypes as $attributeType) {
             $attributeType->attributeValues = app(AttributeValueController::class)->getValuesByType($attributeType->id);
-        });
+        }
 
-        $categories = app(CategoryController::class)->getAllCategories()->map(function ($category) {
+        $categories = app(CategoryController::class)->getAllCategories();
+        foreach ($categories as $category) {
             $category->subCategories = app(SubCategoryController::class)->getSubCategoriesById($category->id);
-        });
+        }
 
         return Inertia::render('Admin/Products/Create', [
             'brands' => app(BrandController::class)->getAllBrands(),
