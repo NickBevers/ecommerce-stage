@@ -21,15 +21,19 @@ const props = defineProps({
     attributeTypes: Array,
 });
 console.log(props)
-
 let checkedFilters = reactive([])
+
 function addCheckedFilter(filter, value) {
     const index = checkedFilters.findIndex(item => item[filter])
     if (index === -1) {
         // Attribute not present in the array
         checkedFilters.push({ [filter]: [value] })
     } else {
-        const values = checkedFilters[index][filter] // changed 'value' to 'filter'
+        const values = checkedFilters[index][filter]
+        if (!values) {
+            // The filter key is present but its value is undefined
+            checkedFilters[index][filter] = []
+        }
         const valueIndex = values.indexOf(value)
         if (valueIndex === -1) {
             // Value not present in the attribute
@@ -39,26 +43,32 @@ function addCheckedFilter(filter, value) {
             values.splice(valueIndex, 1)
         }
     }
+
+    console.log(checkedFilters)
+
 }
 
 //isChecked
-
 function isChecked(filter, value) {
-  const index = checkedFilters.findIndex(item => item[filter])
-  if (index === -1) {
-    // Attribute not present in the array
-    return false
-  } else {
-    const values = checkedFilters[index].values
-    const valueIndex = values.indexOf(value)
-    if (valueIndex === -1) {
-      // Value not present in the attribute
-      return false
+    const index = checkedFilters.findIndex(item => item[filter])
+    if (index === -1) {
+        // Attribute not present in the array
+        return false
     } else {
-      // Value already present in the attribute
-      return true
+        const values = checkedFilters[index][filter]
+        if (!values) {
+            // The filter key is present but its value is undefined
+            return false
+        }
+        const valueIndex = values.indexOf(value)
+        if (valueIndex === -1) {
+            // Value not present in the attribute
+            return false
+        } else {
+            // Value already present in the attribute
+            return true
+        }
     }
-  }
 }
 
 
@@ -219,26 +229,48 @@ const items = [
                                                             ">
                                                             <form class="space-y-4">
                                                                 <div v-for="item in attribute.attributeValues"
-                                                                @click.prevent="addCheckedFilter(attribute.name, item.name)"
-                                                                    :key="item.id" class="flex items-center">
-                                                                    <input :id="`filter-${item.id}`"
-                                                                        :name="`${item.id}[]`" :value="item.name"
-                                                                        type="checkbox" :checked="isChecked(attribute.name, item.name)"
-                                                                        class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500" 
-                                                                        />
-                                                                    <label :for="`filter-${item.id}`"
+                                                                    :key="item.id" class="flex items-center"
+                                                                    
+                                                                    >
+                                                                    
+                                                                 
+                                                                            <input v-if="attribute.name==='Size'" :id="`filter-${item.id}`"
+                                                                            :name="`${item.id}`" :value="item.name"
+                                                                            type="checkbox"
+                                                                            @click.self=" addCheckedFilter(attribute.name, item.name)"
+                                                                            class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500" 
+                                                                            />
+                                                                            <input v-else-if="attribute.name==='Color'" :id="`filter-${item.id}`"
+                                                                                :name="`${item.id}`" :value="item.name"
+                                                                                type="radio" 
+                                                                                class="h-4 w-4 rounded-ld border-gray-300 text-indigo-600" 
+                                                                                />
+                                                                                
+                                                                                <input v-else :id="`filter-${item.id}`"
+                                                                                :name="`${item.id}`" :value="item.name"
+                                                                                
+                                                                                type="radio" :checked="isChecked(attribute.name, item.name)"
+                                                                                class="h-4 w-4 rounded-ld border-gray-300 text-indigo-600 focus:ring-indigo-500" 
+                                                                                />
+                                                                
+                                                                      
+                                                                        
+
+                
+                                                                    <label
+
                                                                         class="ml-3 whitespace-nowrap pr-6 text-sm font-medium text-gray-900">{{
                                                                             item.name }}</label>
                                                                 </div>
+                                                     
                                                             </form>
+                                                     
                                                         </PopoverPanel>
                                                     </transition>
                                                 </Popover>
                                             </PopoverGroup>
                                         </div>
-                                        
-                                        <p>Checked Filters: {{ checkedFilters }}</p>
-
+                                        <p>   Filters: {{ checkedFilters }}</p>
                                     </div>
                                 </div>
 
