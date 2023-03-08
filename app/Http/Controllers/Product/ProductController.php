@@ -15,13 +15,18 @@ class ProductController extends Controller
 {
     public function index()
     {
-        return Inertia::render('Admin/Products', [
+        return Inertia::render('Admin/Products/Index', [
             'skus' => Sku::with('attributeValues')
                 ->with('product')
                 ->orderBy('sku')
                 ->paginate(10),
             'attributeValues' => AttributeValue::all(),
         ]);
+    }
+
+    public function create()
+    {
+        return Inertia::render('Admin/Products/Create');
     }
 
         public function store(Request $request)
