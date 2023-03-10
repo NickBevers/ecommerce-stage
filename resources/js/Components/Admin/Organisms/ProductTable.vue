@@ -29,17 +29,8 @@ function getBgClass(amount) {
 </script>
 <template>
     <section class="my-8">
-        <div class="overflow-hidden rounded-lg bg-white shadow">
-        <div class="px-4 py-5">
-    <div class="sm:flex sm:items-center">
-      <div class="sm:flex-auto">
-        <h1 class="text-base font-semibold leading-6 text-gray-900">Products</h1>
-      </div>
-      <div class="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
-        <button type="button" class="block rounded-md bg-indigo-600 py-2 px-3 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Add Product</button>
-      </div>
-    </div>
-    <div class="mt-4 flow-root">
+        <div class="overflow-hidden px-4 py-5 rounded-lg bg-white shadow">
+    <div class="flow-root">
       <div class="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8">
         <div class="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
           <table class="min-w-full divide-y divide-gray-300">
@@ -87,7 +78,6 @@ function getBgClass(amount) {
       </div>
  
     </div>
-  </div>
 </div>
     </section>
 </template>
