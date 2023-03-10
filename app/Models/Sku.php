@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\MorphToMany;
 
 class Sku extends Model
 {
@@ -38,9 +39,9 @@ class Sku extends Model
         return $this->belongsTo(Product::class);
     }
 
-    public function attributeValues(): BelongsToMany
+    public function attributeValues(): MorphToMany
     {
-        return $this->belongsToMany(AttributeValue::class, 'attribute_value_sku', 'sku_id', 'attribute_value_id');
+        return $this->morphToMany(AttributeValue::class, 'attribute_value');
     }
 
     public function promo(): HasOne

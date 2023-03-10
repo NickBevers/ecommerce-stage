@@ -32,8 +32,8 @@ class AttributeValue extends Model
         return $this->belongsTo(AttributeType::class);
     }
 
-    public function skus(): BelongsToMany
+    public function skus()
     {
-        return $this->belongsToMany(Sku::class, 'attribute_value_sku', 'attribute_value_id', 'sku_id');
+        return $this->morphedByMany(Sku::class, 'attribute_value');
     }
 }

@@ -7,17 +7,16 @@ use Illuminate\Support\Facades\Schema;
 return new class extends Migration {
     public function up(): void
     {
-        Schema::create('attribute_values', function (Blueprint $table) {
+        Schema::create('color_sizes', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->foreignId('attribute_type_id')->nullable()->constrained();
-            $table->string('colorValue')->nullable();
+            $table->foreignId('color_id')->constrained('attribute_values', 'id');
+            $table->foreignId('size_id')->constrained('attribute_values', 'id');
             $table->timestamps();
         });
     }
 
     public function down(): void
     {
-        Schema::dropIfExists('attribute_values');
+        Schema::dropIfExists('color_sizes');
     }
 };
