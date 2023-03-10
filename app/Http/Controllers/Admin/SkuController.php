@@ -47,12 +47,17 @@ class SkuController extends Controller
         foreach ($categories as $category) {
             $category->subCategories = app(SubCategoryController::class)->getSubCategoriesById($category->id);
         }
-
-        return Inertia::render('Admin/Products/Create', [
-            'brands' => app(BrandController::class)->getAllBrands(),
+        return [
+//            'brands' => app(BrandController::class)->getAllBrands(),
             'categories' => $categories,
             'attributeTypes' => $attributeTypes,
-        ]);
+        ];
+
+//        return Inertia::render('Admin/Products/Create', [
+//            'brands' => app(BrandController::class)->getAllBrands(),
+//            'categories' => $categories,
+//            'attributeTypes' => $attributeTypes,
+//        ]);
     }
 
     public function testFunc()

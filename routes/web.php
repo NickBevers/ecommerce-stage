@@ -3,12 +3,12 @@
 use App\Http\Controllers\Admin\AttributeValueController;
 use App\Http\Controllers\Admin\BrandController as AdminBrandController;
 use App\Http\Controllers\Admin\CategoryController as AdminCategoryController;
+use App\Http\Controllers\Admin\PromoController;
 use App\Http\Controllers\Admin\SubCategoryController as AdminSubCategoryController;
 use App\Http\Controllers\Customer\AddressController;
 use App\Http\Controllers\Product\ProductController;
 use App\Http\Controllers\Product\SkuController as ProductSkuController;
 use App\Http\Controllers\Admin\SkuController as AdminSkuController;
-use App\Http\Controllers\ProductVariationController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
 use Illuminate\Foundation\Application;
@@ -113,5 +113,13 @@ Route::middleware('auth')->group(function () {
 });
 
 //TODO: make promo routes
+Route::get('/promos', [PromoController::class, 'index'])->name('promos.index');
+Route::post('/promos', [PromoController::class, 'store'])->name('promos.store');
+Route::get('/promos/create', [PromoController::class, 'create'])->name('promos.create');
+Route::get('/promos/{promo}', [PromoController::class, 'show'])->name('promos.show');
+Route::get('/promos/{promo}/edit', [PromoController::class, 'edit'])->name('promos.edit');
+Route::patch('/promos/{promo}', [PromoController::class, 'update'])->name('promos.update');
+Route::delete('/promos/{promo}', [PromoController::class, 'destroy'])->name('promos.destroy');
+
 
 require __DIR__.'/auth.php';
