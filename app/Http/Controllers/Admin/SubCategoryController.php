@@ -13,22 +13,21 @@ class SubCategoryController extends Controller
 
     public function getSubCategoriesById($id)
     {
-        return SubCategory::all()->where('category_id', '=', $id)->map(function ($category) {
+        return SubCategory::all()->where('category_id', '=', $id)->map(function ($subCategory) {
             return [
-                'id' => $category->id,
-                'name' => $category->name,
-                'slug' => $category->slug,
+                'id' => $subCategory->id,
+                'name' => $subCategory->name,
+                'category_id' => $subCategory->category_id,
             ];
         });
     }
 
     public function getAllSubCategories()
     {
-        return SubCategory::all()->map(function ($category) {
+        return SubCategory::all()->map(function ($subCategory) {
             return [
-                'id' => $category->id,
-                'name' => $category->name,
-                'slug' => $category->slug,
+                'id' => $subCategory->id,
+                'name' => $subCategory->name,
             ];
         });
     }

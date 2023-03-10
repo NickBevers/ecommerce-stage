@@ -55,10 +55,10 @@ class SubCategorySeeder extends Seeder
             '/pants.svg',
         ];
 
-        foreach ($subCategories as $array){
-            foreach ($array as $subCategory) {
+        for ($i = 0; $i < count($subCategories); $i++) {
+            foreach ($subCategories[$i] as $subCategory) {
                 SubCategory::create([
-                    'category_id' => 1,
+                    'category_id' => $i + 1,
                     'name' => $subCategory,
                     'icon' => $icons[array_rand($icons)],
                     'created_at' => Carbon::now(),
