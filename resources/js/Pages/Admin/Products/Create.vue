@@ -1,6 +1,6 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
-import { defineProps, ref, reactive, computed } from 'vue'
+import { defineProps, ref, reactive, computed, onMounted, onBeforeMount } from 'vue'
 import InputLabel from '@/Components/Admin/Atoms/InputLabel.vue';
 import TextInput from '@/Components/Admin/Atoms/TextInput.vue';
 import PrimaryButton from '@/Components/Admin/Atoms/PrimaryButton.vue';
@@ -41,8 +41,6 @@ function addCheckedFilter(filter, value) {
             values.splice(valueIndex, 1)
         }
     }
-
-    console.log(checkedFilters)
 }
 
 function addRadioFilter(filter, value) {
@@ -85,6 +83,7 @@ const form = useForm({
     title: "",
     audience: "Male",
     sub_category_id: "",
+    head_category_id: "",
     description: "",
     variations: {
 
@@ -95,22 +94,25 @@ const audience = reactive(
     ["Male", "Female", "Children", "Unisex"]
 );
 
+let selectedHeadCategoryIndex = ref(0);
 let selectedHeadCategory = ref(0);
-let selectedCategory = ref([]);
-
 
 
 function addVariation() {
  
 }
+onBeforeMount(() => {
+    // selectedHeadCategory.value = 0;
+    // selectedCategory = props.categories[0].subCategories
+    // selectedSubCategory = props.categories[0].subCategories
+});
+onMounted(() => {
+
+});
 
 function updateSubCategories() {
-    selectedCategory = props.categories[selectedHeadCategory.value.id-1].subCategories
-
-    console.log(selectedCategory)
-    
+    selectedHeadCategory.value = selectedHeadCategoryIndex.value.id-1
 }
-
 
 </script>
 <template>
@@ -157,22 +159,19 @@ function updateSubCategories() {
 
                                 </div>
                                 <div class="col-span-2 sm:col-span-2">
-                                    <InputLabel for="head_categories" value="Head Category" />
-                                    <div class="mt-1 flex rounded-md shadow-sm">
-                                        <Dropdown class="w-full" :items="props.categories" v-model="selectedHeadCategory" @click="updateSubCategories">
-                                        </Dropdown>
-                                        <InputError class="mt-2" :message="form.errors.title" />
-                                    </div>
-
+                                <InputLabel for="head_categories" value="Head Category" />
+                                <div class="mt-1 flex rounded-md shadow-sm">
+                                    <Dropdown class="w-full" :items="props.categories" v-model="selectedHeadCategoryIndex" @click="updateSubCategories"/> 
+                                    <InputError class="mt-2" :message="form.errors.title" />
                                 </div>
-                                <div class="col-span-2 sm:col-span-2">
-                                    <InputLabel for="sub_category" value="Title" />
-                                    <div class="mt-1 flex rounded-md shadow-sm">
-                                        <Dropdown class="w-full" :items="props.categories[0].subCategories">
-                                        </Dropdown>
-                                        <InputError class="mt-2" :message="form.errors.title" />
-                                    </div>
+                                </div>
 
+                                <div class="col-span-2 sm:col-span-2">
+                                <InputLabel for="sub_category" value="Sub Category" />
+                                <div class="mt-1 flex rounded-md shadow-sm">
+                                    <Dropdown class="w-full" :items="selectedHeadCategory >= 0 ? props.categories[selectedHeadCategory].subCategories : []"/> 
+                                    <InputError class="mt-2" :message="form.errors.title" />
+                                </div>
                                 </div>
                                 <div class="col-span-2 sm:col-span-2">
                                     <InputLabel for="title" value="Title" />
