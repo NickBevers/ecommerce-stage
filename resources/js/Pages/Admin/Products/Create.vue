@@ -83,25 +83,32 @@ function isChecked(filter, value) {
 
 const form = useForm({
     title: "",
+    audience: "Male",
+    sub_category_id: "",
     description: "",
-    amount: "",
-    sku: "",
-    audience: "",
     variations: {
 
     }
 });
 
-const items = [
-    { name: 'item1', },
-    { name: 'item2', },
-    { name: 'item3', }
-];
+const audience = reactive(
+    ["Male", "Female", "Children", "Unisex"]
+);
+
+let selectedHeadCategory = ref(0);
+let selectedCategory = ref([]);
+
+
 
 function addVariation() {
  
-    console.log(checkedFilters[0])
+}
 
+function updateSubCategories() {
+    selectedCategory = props.categories[selectedHeadCategory.value.id-1].subCategories
+
+    console.log(selectedCategory)
+    
 }
 
 
@@ -120,6 +127,8 @@ function addVariation() {
                     </div>
                 </div>
             </div>
+            <!-- print out the whole form -->
+            <pre>{{ form }}</pre>
             <form class="max-w-7xl mx-auto sm:px-6 lg:px-8 my-5">
                 <div class="bg-white px-4 py-5 shadow sm:rounded-lg mb-4 sm:p-6 ">
                     <div class="md:grid md:grid-cols-3 md:gap-6">
@@ -133,15 +142,33 @@ function addVariation() {
                                 <div class="col-span-2 sm:col-span-2">
                                     <InputLabel for="title" value="Title" />
                                     <div class="mt-2 flex rounded-md shadow-sm">
-                                        <TextInput id="title" type="title" class="mt-1 block w-full pl-3" name="title"
+                                        <TextInput id="title" type="text" class="mt-1 block w-full pl-3" name="title"
                                             v-model="form.title" required autocomplete="title" placeholder="Product " />
                                         <InputError class="mt-2" :message="form.errors.title" />
                                     </div>
                                 </div>
                                 <div class="col-span-2 sm:col-span-2">
-                                    <InputLabel for="title" value="Title" />
+                                    <InputLabel for="audience" value="Audience" />
                                     <div class="mt-1 flex rounded-md shadow-sm">
-                                        <Dropdown class="w-full" :items="items">
+                                        <Dropdown class="w-full" :items="audience" v-model="form.audience">
+                                        </Dropdown>
+                                        <InputError class="mt-2" :message="form.errors.audience" />
+                                    </div>
+
+                                </div>
+                                <div class="col-span-2 sm:col-span-2">
+                                    <InputLabel for="head_categories" value="Head Category" />
+                                    <div class="mt-1 flex rounded-md shadow-sm">
+                                        <Dropdown class="w-full" :items="props.categories" v-model="selectedHeadCategory" @click="updateSubCategories">
+                                        </Dropdown>
+                                        <InputError class="mt-2" :message="form.errors.title" />
+                                    </div>
+
+                                </div>
+                                <div class="col-span-2 sm:col-span-2">
+                                    <InputLabel for="sub_category" value="Title" />
+                                    <div class="mt-1 flex rounded-md shadow-sm">
+                                        <Dropdown class="w-full" :items="props.categories[0].subCategories">
                                         </Dropdown>
                                         <InputError class="mt-2" :message="form.errors.title" />
                                     </div>
@@ -150,16 +177,7 @@ function addVariation() {
                                 <div class="col-span-2 sm:col-span-2">
                                     <InputLabel for="title" value="Title" />
                                     <div class="mt-1 flex rounded-md shadow-sm">
-                                        <Dropdown class="w-full" :items="items">
-                                        </Dropdown>
-                                        <InputError class="mt-2" :message="form.errors.title" />
-                                    </div>
-
-                                </div>
-                                <div class="col-span-2 sm:col-span-2">
-                                    <InputLabel for="title" value="Title" />
-                                    <div class="mt-1 flex rounded-md shadow-sm">
-                                        <Dropdown class="w-full" :items="items">
+                                        <Dropdown class="w-full" :items="audience">
                                         </Dropdown>
                                         <InputError class="mt-2" :message="form.errors.title" />
                                     </div>
@@ -185,8 +203,9 @@ function addVariation() {
                         </div>
                     </div>
                 </div>
-
+         
                 <div class="bg-white px-4 py-5 shadow  mb-4 sm:rounded-lg sm:p-6">
+                    <form>
                     <div class="md:grid md:grid-cols-3 md:gap-6">
                         <div class="md:col-span-1">
                             <h3 class="text-base font-semibold leading-6 text-gray-900">Variations</h3>
@@ -262,11 +281,6 @@ function addVariation() {
                                                                         type="radio"
                                                                         :checked="isChecked(attribute.name, item.name)"
                                                                         class="h-4 w-4 rounded-ld border-gray-300 text-indigo-600 focus:ring-indigo-500" />
-
-
-
-
-
                                                                     <label
                                                                         class="ml-3 whitespace-nowrap pr-6 text-sm font-medium text-gray-900">{{
                                                                             item.name }}</label>
@@ -289,7 +303,7 @@ function addVariation() {
                                 <div class="sm:mt-0">
                                     <div class="-m-1 flex flex-wrap items-center">
                                         <span v-for="(select, key) in checkedFilters" :key="key"
-                                            class="m-1 inline-flex items-center rounded-full border border-gray-200 bg-white py-1.5 pl-3 pr-2 text-sm font-medium text-gray-900">
+                                            class="m-1 inline-flex items-center rounded-lg border border-gray-200 bg-gray-50 py-1.5 pl-3 pr-2 text-sm font-medium text-gray-900">
                                             <span v-if="select.Size !== undefined">Size: {{ select.Size.join(', ') }}</span>
                                             <span v-if="select.Color !== undefined">Color: {{ select.Color.join(', ')}}</span>
                                             <span v-if="select.Material !== undefined">Material: {{ select.Material.join(',') }}</span>
@@ -303,6 +317,7 @@ function addVariation() {
                     <div class="flex justify-end">
                         <PrimaryButton @click.prevent="addVariation()" class="mt-4">Add variation</PrimaryButton>
                     </div>
+                </form>
 
                 </div>
                 <div class="flex justify-end px-4 sm:px-0">
