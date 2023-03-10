@@ -1,9 +1,9 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
-import { defineProps, ref, reactive} from 'vue'
+import { defineProps, ref, reactive, computed} from 'vue'
 import InputLabel from '@/Components/Admin/Atoms/InputLabel.vue';
 import TextInput from '@/Components/Admin/Atoms/TextInput.vue';
-import PrimaryButton from '@/Components/Admin/Atoms/PrimaryButton.vue';
+import SecondaryButton from '@/Components/Admin/Atoms/SecondaryButton.vue';
 import InputError from '@/Components/Admin/Atoms/InputError.vue';
 import { Head, Link, useForm } from '@inertiajs/vue3';
 import Dropdown from '@/Components/Admin/Atoms/Dropdown.vue';
@@ -45,7 +45,18 @@ function addCheckedFilter(filter, value) {
     }
 
     console.log(checkedFilters)
+}
 
+function addRadioFilter(filter, value) {
+    //check if it already has a value
+    const index = checkedFilters.findIndex(item => item[filter])
+    //if it does replace the value
+    if (index !== -1) {
+        checkedFilters[index][filter] = [value]
+    } else {
+        //if it doesn't add it
+        checkedFilters.push({ [filter]: [value] })
+    }
 }
 
 //isChecked
@@ -171,7 +182,7 @@ const items = [
                         </div>
                     </div>
                 </div>
-
+                
                 <div class="bg-white px-4 py-5 shadow  mb-4 sm:rounded-lg sm:p-6">
                     <div class="md:grid md:grid-cols-3 md:gap-6">
                         <div class="md:col-span-1">
@@ -244,13 +255,13 @@ const items = [
                                                                             <input v-else-if="attribute.name==='Color'" :id="`filter-${item.id}`"
                                                                                 :name="`${item.id}`" :value="item.name"
                                                                                 type="radio" 
-                                                                    
+                                                                                @click.self="addRadioFilter(attribute.name, item.name)"
                                                                                 class="h-4 w-4 rounded-ld border-gray-300 text-indigo-600" 
                                                                                 />
                                                                                 
                                                                                 <input v-else :id="`filter-${item.id}`"
                                                                                 :name="`${item.id}`" :value="item.name"
-                                                                                
+                                                                                @click.self="addRadioFilter(attribute.name, item.name)"
                                                                                 type="radio" :checked="isChecked(attribute.name, item.name)"
                                                                                 class="h-4 w-4 rounded-ld border-gray-300 text-indigo-600 focus:ring-indigo-500" 
                                                                                 />
@@ -271,12 +282,23 @@ const items = [
                                                     </transition>
                                                 </Popover>
                                             </PopoverGroup>
-                                        </div>
-                                        <p>   Filters: {{ checkedFilters }}</p>
+                                        </div>     
                                     </div>
+                                    
                                 </div>
 
 
+                            </div>
+                            <div class="mt-6">
+                                <div class="sm:mt-0">
+                                    <div class="-m-1 flex flex-wrap items-center">
+                                        <span v-for="(select, key) in checkedFilters" :key="key" class="m-1 inline-flex items-center rounded-full border border-gray-200 bg-white py-1.5 pl-3 pr-2 text-sm font-medium text-gray-900">
+                                            <span v-if="select.Size !== undefined">Size: {{ select.Size.join(', ') }}</span>
+                                            <span v-if="select.Color !== undefined">Color: {{ select.Color.join(', ') }}</span>
+                                            <span v-if="select.Material !== undefined">Material: {{ select.Material.join(', ') }}</span>
+                                        </span>
+                                    </div>
+                                </div>
                             </div>
                             <div class="mt-6">
                                 <label class="block text-sm font-medium leading-6 text-gray-900">Cover photo</label>
@@ -304,7 +326,7 @@ const items = [
                     </div>
                 </div>
                 <div class="flex justify-end">
-                    <PrimaryButton class="mt-4" type="submit">Add variation</PrimaryButton>
+                    <SecondaryButton class="mt-4" type="submit">Add variation</SecondaryButton>
                 </div>
 
             </div>
