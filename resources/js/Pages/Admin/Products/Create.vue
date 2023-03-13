@@ -180,7 +180,7 @@ function updateSubCategories() {
                                 <div class="col-span-2 sm:col-span-2">
                                     <InputLabel for="title" value="Title" />
                                     <div class="mt-1 flex rounded-md shadow-sm">
-                                        <Dropdown class="w-full" :items="audience">
+                                        <Dropdown class="w-full" :items="props.brands" lots="true">
                                         </Dropdown>
                                         <InputError class="mt-2" :message="form.errors.title" />
                                     </div>

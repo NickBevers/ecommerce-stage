@@ -1,5 +1,5 @@
 <template>
-  <Listbox as="div" v-model="selected" :disabled="isDisabled">
+  <Listbox as="div" v-model="selected" :disabled="isDisabled" v-if="!lots">
     <div class="relative mt-2">
       <ListboxButton
         class="relative w-full cursor-default rounded-md bg-white py-1.5 pl-3 pr-10 text-left text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6"
@@ -33,8 +33,14 @@
       </transition>
     </div>
   </Listbox>
+  <select v-else v-model="selected" :disabled="isDisabled"
+    class="relative w-full cursor-default rounded-md bg-white py-1 pl-3 pr-10 text-left text-gray-900 shadow-sm ring-1 ring-inset ring-gray-50 border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6"
+    :class="{ 'opacity-50': isDisabled }">
+    <option v-for="item in props.items" :key="item" :value="item.item ? item.item : item">
+      {{ item.name ? item.name : item.item ? item.item : item }}
+    </option>
+  </select>
 </template>
-
 <script setup>
 import { ref, computed, watch } from 'vue'
 import { Listbox, ListboxButton, ListboxOption, ListboxOptions } from '@headlessui/vue'
@@ -44,6 +50,10 @@ const props = defineProps({
   items: {
     type: Object,
   },
+  lots: {
+    type: Boolean,
+    default: false
+  }
 })
 
 const selected = ref(props.items[0])
