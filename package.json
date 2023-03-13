@@ -20,6 +20,7 @@
     "dependencies": {
         "@headlessui/vue": "^1.7.12",
         "@heroicons/vue": "^2.0.16",
+        "@tailwindcss/aspect-ratio": "^0.4.2",
         "moment": "^2.29.4"
     }
 }
