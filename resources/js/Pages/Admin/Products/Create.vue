@@ -111,6 +111,8 @@ let selectedBrand = ref(null);
 let variations = reactive([])
 let variationError = ref(false);
 
+let formVariationError = ref(false);
+
 function updateSubCategories() {
     selectedHeadCategory.value = selectedHeadCategoryIndex.value.id - 1
 }
@@ -121,6 +123,7 @@ function addVariation() {
         return
     }
     variationError.value = false
+    formVariationError.value = false
     const newVariation = {
         sku: variationForm.sku,
         amount: variationForm.amount,
@@ -152,7 +155,19 @@ watch(() => {
     form.variations = variations
 })
 
+function submit() {
+    if (variations.length === 0) {
+        formVariationError.value = true
+        return
+    }
+    formVariationError.value = false
+    form.post(route('admin.products.store'),{
+            onSuccess: () => {
+                
+            }
 
+    })
+}
 
 </script>
 <template>
@@ -168,7 +183,10 @@ watch(() => {
                     </div>
                 </div>
             </div>
-            <form class="max-w-7xl mx-auto sm:px-6 lg:px-8 my-5">
+            <!-- print out the whole form -->
+            <pre>{{ form }}</pre>
+
+            <form class="max-w-7xl mx-auto sm:px-6 lg:px-8 my-5" @submit.prevent="submit">
                 <div class="bg-white px-4 py-5 shadow sm:rounded-lg mb-4 sm:p-6 ">
                     <div class="md:grid md:grid-cols-3 md:gap-6">
                         <div class="md:col-span-1">
@@ -244,6 +262,7 @@ watch(() => {
 
                 <div class="bg-white px-4 py-5 shadow  mb-4 sm:rounded-lg sm:p-6">
                     <form @submit.prevent="addVariation">
+                     
                         <div class="md:grid md:grid-cols-3 md:gap-6">
                             <div class="md:col-span-1">
                                 <h3 class="text-base font-semibold leading-6 text-gray-900">Variations</h3>
@@ -252,6 +271,7 @@ watch(() => {
                                     what you share.</p>
                             </div>
                             <div class="mt-5 md:col-span-2 md:mt-0">
+                                <InputError class="mt-2" v-if="formVariationError" message="Please create at least one variation" />
                                 <div class="grid grid-cols-6 gap-6">
                                     <div class="col-span-6 sm:col-span-3">
                                         <InputLabel for="sku" value="SKU" />
