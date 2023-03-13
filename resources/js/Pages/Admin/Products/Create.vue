@@ -1,6 +1,6 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
-import { defineProps, ref, reactive, computed, onMounted, onBeforeMount } from 'vue'
+import { defineProps, ref, reactive, watch, onMounted, onBeforeMount } from 'vue'
 import InputLabel from '@/Components/Admin/Atoms/InputLabel.vue';
 import TextInput from '@/Components/Admin/Atoms/TextInput.vue';
 import PrimaryButton from '@/Components/Admin/Atoms/PrimaryButton.vue';
@@ -82,8 +82,7 @@ function isChecked(filter, value) {
 const form = useForm({
     title: "",
     audience: "Male",
-    sub_category_id: "",
-    head_category_id: "",
+    sub_category_id: 1,
     description: "",
     variations: {
 
@@ -96,19 +95,24 @@ const audience = reactive(
 
 let selectedHeadCategoryIndex = ref(0);
 let selectedHeadCategory = ref(0);
+let selectedSubCategory = ref(null);
 
 
 function addVariation() {
  
 }
-onBeforeMount(() => {
-    // selectedHeadCategory.value = 0;
-    // selectedCategory = props.categories[0].subCategories
-    // selectedSubCategory = props.categories[0].subCategories
-});
+
 onMounted(() => {
 
 });
+
+//watch when selectedSubCategory changes
+watch(() => {
+    console.log(selectedSubCategory.value)
+    if (selectedSubCategory.value) {
+        form.sub_category_id = selectedSubCategory.value.id
+    }
+})
 
 function updateSubCategories() {
     selectedHeadCategory.value = selectedHeadCategoryIndex.value.id-1
@@ -169,7 +173,7 @@ function updateSubCategories() {
                                 <div class="col-span-2 sm:col-span-2">
                                 <InputLabel for="sub_category" value="Sub Category" />
                                 <div class="mt-1 flex rounded-md shadow-sm">
-                                    <Dropdown class="w-full" :items="selectedHeadCategory >= 0 ? props.categories[selectedHeadCategory].subCategories : []"/> 
+                                    <Dropdown class="w-full" v-model="selectedSubCategory" :items="selectedHeadCategory >= 0 ? props.categories[selectedHeadCategory].subCategories : []"/> 
                                     <InputError class="mt-2" :message="form.errors.title" />
                                 </div>
                                 </div>
