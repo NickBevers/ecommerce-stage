@@ -5,6 +5,7 @@ import CategoryPreview from '@/Components/Customer/Molecules/CategoryPreview.vue
 import Trending from '@/Components/Customer/Molecules/Trending.vue';
 import Hero from '@/Components/Customer/Molecules/Hero.vue';
 import PromoSection from '@/Components/Customer/Molecules/PromoSection.vue';
+import Incentive from '@/Components/Customer/Molecules/Incentive.vue';
 
 defineProps({
     canLogin: Boolean,
@@ -25,6 +26,7 @@ defineProps({
         <Hero/>
         <CategoryPreview/>
         <Trending/>
+        <Incentive/>
         <PromoSection/>
     </div>
       
