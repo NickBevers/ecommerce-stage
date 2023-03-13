@@ -83,11 +83,23 @@ const form = useForm({
     title: "",
     audience: "Male",
     sub_category_id: 1,
+    brand_id: 1,
     description: "",
+    extra_info: "",
     variations: {
 
     }
 });
+
+const variationForm = useForm({
+    sku: "",
+    amount: "",
+    price: "",
+    color: "",
+    sizes: "",
+    material: "",
+    images: [],
+})
 
 const audience = reactive(
     ["Male", "Female", "Children", "Unisex"]
@@ -96,27 +108,41 @@ const audience = reactive(
 let selectedHeadCategoryIndex = ref(0);
 let selectedHeadCategory = ref(0);
 let selectedSubCategory = ref(null);
+let selectedBrand = ref(null);
 
-
-function addVariation() {
- 
-}
-
-onMounted(() => {
-
-});
-
-//watch when selectedSubCategory changes
-watch(() => {
-    console.log(selectedSubCategory.value)
-    if (selectedSubCategory.value) {
-        form.sub_category_id = selectedSubCategory.value.id
-    }
-})
+let variations = reactive([])
 
 function updateSubCategories() {
     selectedHeadCategory.value = selectedHeadCategoryIndex.value.id-1
 }
+
+function addVariation() {
+    console.log(variations)
+    const newVariation = {
+    sku: variationForm.sku,
+    amount: variationForm.amount,
+    addOns: [],
+    images: [],
+  };
+
+  //push newVariation into form.variations
+    variations.push(newVariation);
+
+    variationForm.reset();
+
+}
+
+
+watch(() => {
+    if (selectedSubCategory.value) {
+        form.sub_category_id = selectedSubCategory.value.id
+    }
+    if (selectedBrand.value) {
+        form.brand_id = selectedBrand.value.id
+    }
+})
+
+
 
 </script>
 <template>
@@ -135,6 +161,7 @@ function updateSubCategories() {
             </div>
             <!-- print out the whole form -->
             <pre>{{ form }}</pre>
+
             <form class="max-w-7xl mx-auto sm:px-6 lg:px-8 my-5">
                 <div class="bg-white px-4 py-5 shadow sm:rounded-lg mb-4 sm:p-6 ">
                     <div class="md:grid md:grid-cols-3 md:gap-6">
@@ -149,7 +176,7 @@ function updateSubCategories() {
                                     <InputLabel for="title" value="Title" />
                                     <div class="mt-2 flex rounded-md shadow-sm">
                                         <TextInput id="title" type="text" class="mt-1 block w-full pl-3" name="title"
-                                            v-model="form.title" required autocomplete="title" placeholder="Product " />
+                                            v-model="form.title" required autocomplete="title" placeholder="Product" />
                                         <InputError class="mt-2" :message="form.errors.title" />
                                     </div>
                                 </div>
@@ -166,7 +193,6 @@ function updateSubCategories() {
                                 <InputLabel for="head_categories" value="Head Category" />
                                 <div class="mt-1 flex rounded-md shadow-sm">
                                     <Dropdown class="w-full" :items="props.categories" v-model="selectedHeadCategoryIndex" @click="updateSubCategories"/> 
-                                    <InputError class="mt-2" :message="form.errors.title" />
                                 </div>
                                 </div>
 
@@ -174,13 +200,12 @@ function updateSubCategories() {
                                 <InputLabel for="sub_category" value="Sub Category" />
                                 <div class="mt-1 flex rounded-md shadow-sm">
                                     <Dropdown class="w-full" v-model="selectedSubCategory" :items="selectedHeadCategory >= 0 ? props.categories[selectedHeadCategory].subCategories : []"/> 
-                                    <InputError class="mt-2" :message="form.errors.title" />
                                 </div>
                                 </div>
                                 <div class="col-span-2 sm:col-span-2">
-                                    <InputLabel for="title" value="Title" />
+                                    <InputLabel for="title" value="Brand" />
                                     <div class="mt-1 flex rounded-md shadow-sm">
-                                        <Dropdown class="w-full" :items="props.brands" lots="true">
+                                        <Dropdown class="w-full" :items="props.brands" lots="true" v-model="selectedBrand">
                                         </Dropdown>
                                         <InputError class="mt-2" :message="form.errors.title" />
                                     </div>
@@ -192,7 +217,8 @@ function updateSubCategories() {
                                 <div class="mt-2">
                                     <textarea id="description" name="description" maxlength="400" rows="3"
                                         class="block h-32 w-full rounded-md border-0 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:py-1.5 sm:text-sm sm:leading-6 resize-none"
-                                        placeholder="Brief description for your product.">  </textarea>
+                                        placeholder="Brief description for your product."
+                                        v-model="form.description">  </textarea>
                                 </div>
                             </div>
                             <div>
@@ -200,7 +226,8 @@ function updateSubCategories() {
                                 <div class="mt-2">
                                     <textarea id="description" name="description" maxlength="400" rows="3"
                                         class="block h-32 w-full rounded-md border-0 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:py-1.5 sm:text-sm sm:leading-6 resize-none"
-                                        placeholder="Brief description for your product.">  </textarea>
+                                        placeholder="Brief description for your product."
+                                        v-model="form.extra_info">  </textarea>
                                 </div>
                             </div>
                         </div>
@@ -208,7 +235,7 @@ function updateSubCategories() {
                 </div>
          
                 <div class="bg-white px-4 py-5 shadow  mb-4 sm:rounded-lg sm:p-6">
-                    <form>
+                <form @submit.prevent="addVariation">
                     <div class="md:grid md:grid-cols-3 md:gap-6">
                         <div class="md:col-span-1">
                             <h3 class="text-base font-semibold leading-6 text-gray-900">Variations</h3>
@@ -218,20 +245,20 @@ function updateSubCategories() {
                         <div class="mt-5 md:col-span-2 md:mt-0">
                             <div class="grid grid-cols-6 gap-6">
                                 <div class="col-span-6 sm:col-span-3">
-                                    <InputLabel for="title" value="Title" />
+                                    <InputLabel for="sku" value="SKU" />
                                     <div class="mt-2 flex rounded-md shadow-sm">
-                                        <TextInput id="title" type="title" class="mt-1 block w-full pl-3" name="title"
-                                            v-model="form.title" required autocomplete="title" placeholder="SKU " />
-                                        <InputError class="mt-2" :message="form.errors.title" />
+                                        <TextInput id="sku" type="text" class="mt-1 block w-full pl-3" name="SKU"
+                                            v-model="variationForm.sku" required autocomplete="SKU" placeholder="SKU" />
+                                        <InputError class="mt-2" :message="variationForm.errors.sku" />
                                     </div>
                                 </div>
 
                                 <div class="col-span-6 sm:col-span-3">
-                                    <InputLabel for="title" value="Title" />
+                                    <InputLabel for="stock" value="Stock" />
                                     <div class="mt-2 flex rounded-md shadow-sm">
-                                        <TextInput id="title" type="title" class="mt-1 block w-full pl-3" name="title"
-                                            v-model="form.title" required autocomplete="title" placeholder="Stock" />
-                                        <InputError class="mt-2" :message="form.errors.title" />
+                                        <TextInput id="stock" type="text" class="mt-1 block w-full pl-3" name="stock"
+                                            v-model="variationForm.amount" required autocomplete="title" placeholder="Stock" />
+                                        <InputError class="mt-2" :message="form.errors.variationForm" />
                                     </div>
                                 </div>
                                 <div class="col-span-6 sm:col-span-3">
@@ -297,7 +324,7 @@ function updateSubCategories() {
                                             </PopoverGroup>
                                         </div>
                                     </div>
-
+                                    V: {{ variations }}
                                 </div>
 
 
@@ -318,7 +345,7 @@ function updateSubCategories() {
                         </div>
                     </div>
                     <div class="flex justify-end">
-                        <PrimaryButton @click.prevent="addVariation()" class="mt-4">Add variation</PrimaryButton>
+                        <PrimaryButton type="submit" class="mt-4">Add variation</PrimaryButton>
                     </div>
                 </form>
 
