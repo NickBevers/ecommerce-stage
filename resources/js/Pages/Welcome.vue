@@ -17,8 +17,8 @@ defineProps({
 </script>
 
 <template>
-    <Head title="Welcome" />
-
+  
+    
     <div class="relative sm:flex sm:justify-center sm:items-center bg-dots-darker bg-center bg-gray-100 dark:bg-dots-lighter dark:bg-gray-900 selection:bg-red-500 selection:text-white">
         <Navigation :canLogin="canLogin" :canRegister="canRegister"/>
     </div>

@@ -1,5 +1,5 @@
 <script setup>
-import GuestLayout from "@/Layouts/GuestLayout.vue";
+
 import InputError from "@/Components/Admin/Atoms/InputError.vue";
 import InputLabel from "@/Components/Admin/Atoms/InputLabel.vue";
 import PrimaryButton from "@/Components/Admin/Atoms/PrimaryButton.vue";
@@ -23,7 +23,6 @@ const submit = () => {
 </script>
 
 <template>
-  <GuestLayout>
     <Head title="Log in" />
   <div class="flex min-h-screen">
     <div class="flex flex-1 flex-col justify-center py-12 px-4 sm:px-6 lg:flex-none lg:px-20 xl:px-24 w-1/2">
@@ -38,7 +37,7 @@ const submit = () => {
         <div class="mt-8">
           <div class="mt-6">
             <form @submit.prevent="submit" class="space-y-6">
-              <div class="flex w-full justify-between">
+              <div class="flex w-full justify-between gap-6">
               <div>
                 <InputLabel for="firstname" value="Firstname" />
                 <div>
@@ -148,5 +147,4 @@ const submit = () => {
       <img class="absolute inset-0 h-full w-full object-cover object-center" src="https://images.unsplash.com/photo-1633103110606-070511de45ee?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80" alt="" />
     </div>
   </div>
-</GuestLayout>
 </template>
