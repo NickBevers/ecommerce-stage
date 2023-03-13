@@ -15,7 +15,7 @@ import {
     PopoverGroup,
     PopoverPanel,
 } from '@headlessui/vue'
-import { ChevronDownIcon } from '@heroicons/vue/20/solid'
+import { ChevronDownIcon,XMarkIcon } from '@heroicons/vue/20/solid'
 
 const props = defineProps({
     brands: Array,
@@ -96,7 +96,7 @@ const variationForm = useForm({
     amount: "",
     price: "",
     color: "",
-    sizes: "",
+    sizes: [],
     material: "",
     images: [],
 })
@@ -111,24 +111,32 @@ let selectedSubCategory = ref(null);
 let selectedBrand = ref(null);
 
 let variations = reactive([])
+let variationError = ref(false);
 
 function updateSubCategories() {
     selectedHeadCategory.value = selectedHeadCategoryIndex.value.id-1
 }
 
 function addVariation() {
-    console.log(variations)
+    if (!variationForm.color || !variationForm.sizes || !variationForm.material) {
+        variationError.value = true
+        return
+    }
+    variationError.value = false
     const newVariation = {
     sku: variationForm.sku,
     amount: variationForm.amount,
-    addOns: [],
-    images: [],
+    price: variationForm.price,
+    color: variationForm.color,
+    sizes: variationForm.sizes,
+    material: variationForm.material,
   };
 
-  //push newVariation into form.variations
     variations.push(newVariation);
 
     variationForm.reset();
+
+    checkedFilters = reactive([])
 
 }
 
@@ -140,6 +148,7 @@ watch(() => {
     if (selectedBrand.value) {
         form.brand_id = selectedBrand.value.id
     }
+    form.variations = variations
 })
 
 
@@ -155,7 +164,6 @@ watch(() => {
                         <h1 class="text-xl font-semibold leading-6 text-gray-900">Add product</h1>
                     </div>
                     <div class="sm:mt-0 sm:ml-16 sm:flex-none">
-
                     </div>
                 </div>
             </div>
@@ -256,12 +264,21 @@ watch(() => {
                                 <div class="col-span-6 sm:col-span-3">
                                     <InputLabel for="stock" value="Stock" />
                                     <div class="mt-2 flex rounded-md shadow-sm">
-                                        <TextInput id="stock" type="text" class="mt-1 block w-full pl-3" name="stock"
-                                            v-model="variationForm.amount" required autocomplete="title" placeholder="Stock" />
-                                        <InputError class="mt-2" :message="form.errors.variationForm" />
+                                        <TextInput id="stock" type="number" class="mt-1 block w-full pl-3" name="stock"
+                                            v-model="variationForm.amount" required autocomplete="title" placeholder="50" />
+                                        <InputError class="mt-2" :message="variationForm.errors.amount" />
                                     </div>
                                 </div>
                                 <div class="col-span-6 sm:col-span-3">
+                                    <InputLabel for="stock" value="Price" />
+                                    <div class="mt-2 flex rounded-md shadow-sm">
+                                        <TextInput id="stock" type="number" class="mt-1 block w-full pl-3" name="price"
+                                            pattern="^\d*(\.\d{0,2})?$" step="0.01"
+                                            v-model="variationForm.price" required autocomplete="title" placeholder="19.99" />
+                                        <InputError class="mt-2" :message="variationForm.errors.price" />
+                                    </div>
+                                </div>
+                                <div class="col-span-6 sm:col-span-6">
                                     <InputLabel for="variation" value="Add-ons" />
                                     <div class="flex flex-row gap-6">
                                         <div class="flow-root" v-for="attribute in props.attributeTypes">
@@ -288,7 +305,7 @@ watch(() => {
                                                         <PopoverPanel class="absolute right-0 z-10 mt-2 origin-top-right rounded-md bg-white p-4 shadow-2xl ring-1 ring-black ring-opacity-5 focus:outline-none
                                                                 max-h-60 overflow-y-auto
                                                                 ">
-                                                            <form class="space-y-4">
+                                                            <div class="space-y-4">
                                                                 <div v-for="item in attribute.attributeValues"
                                                                     :key="item.id" class="flex items-center">
 
@@ -297,11 +314,15 @@ watch(() => {
                                                                         :id="`filter-${item.id}`" :name="`${item.id}`"
                                                                         :value="item.name" type="checkbox"
                                                                         @click.self="addCheckedFilter(attribute.name, item.name)"
+                                                                        v-model="variationForm.sizes"
+                                                                        required
                                                                         :checked="isChecked(attribute.name, item.name)"
                                                                         class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500" />
                                                                     <input v-else-if="attribute.name === 'Color'"
                                                                         :id="`filter-${item.id}`" :name="`${item.id}`"
                                                                         :value="item.name" type="radio"
+                                                                        v-model="variationForm.color"
+                                                                        required
                                                                         @click.self="addRadioFilter(attribute.name, item.name)"
                                                                         class="h-4 w-4 rounded-ld border-gray-300 text-indigo-600" />
 
@@ -309,6 +330,8 @@ watch(() => {
                                                                         :name="`${item.id}`" :value="item.name"
                                                                         @click.self="addRadioFilter(attribute.name, item.name)"
                                                                         type="radio"
+                                                                        v-model="variationForm.material"
+                                                                        required
                                                                         :checked="isChecked(attribute.name, item.name)"
                                                                         class="h-4 w-4 rounded-ld border-gray-300 text-indigo-600 focus:ring-indigo-500" />
                                                                     <label
@@ -316,7 +339,7 @@ watch(() => {
                                                                             item.name }}</label>
                                                                 </div>
 
-                                                            </form>
+                                                            </div>
 
                                                         </PopoverPanel>
                                                     </transition>
@@ -324,10 +347,8 @@ watch(() => {
                                             </PopoverGroup>
                                         </div>
                                     </div>
-                                    V: {{ variations }}
+                                    <InputError class="mt-2" v-if="variationError" message="Please select add-ons" />
                                 </div>
-
-
                             </div>
                             <div class="mt-6">
                                 <div class="sm:mt-0">
@@ -342,14 +363,50 @@ watch(() => {
                                 </div>
                             </div>
                             <UploadFile class="mt-6" />
+
                         </div>
+                     
                     </div>
                     <div class="flex justify-end">
                         <PrimaryButton type="submit" class="mt-4">Add variation</PrimaryButton>
                     </div>
                 </form>
-
+      
                 </div>
+                <div class="max-w-7xl mx-auto sm:py-6" v-if="variations">
+                <div class="sm:flex sm:items-center">
+                    <div class="sm:flex-auto">
+                        <h1 class="text-xl font-semibold leading-6 text-gray-900">Variations</h1>
+                    </div>
+                    <div class="sm:mt-0 sm:ml-16 sm:flex-none">
+
+                    </div>
+                </div>
+            </div>               
+    <div class="pointer-events-none mb-4" v-for="variation in variations" :key="variation">
+      <transition enter-active-class="transform ease-out duration-300 transition" enter-from-class="translate-y-2 opacity-0 sm:translate-y-0 sm:translate-x-2" enter-to-class="translate-y-0 opacity-100 sm:translate-x-0" leave-active-class="transition ease-in duration-100" leave-from-class="opacity-100" leave-to-class="opacity-0">
+            <div class="pointer-events-auto relative flex flex-row flex-wrap justify-between rounded-lg bg-white shadow-lg ring-1 ring-black ring-opacity-5 p-4 items-center">
+                <div class="flex flex-row gap-6 flex-wrap overflow-hidden">
+                    <p class="text-sm font-medium text-gray-900">#{{ variation.sku }}</p>
+                    <p class="text-sm font-medium text-gray-900">stock: {{ variation.amount }}</p>
+                    <p class="text-sm font-medium text-gray-900">€{{ variation.price }}</p>
+                    <div class="flex flex-row">
+                        <div v-for="(sizes, index) in variation.sizes.slice(0, 2)" :key="index" class="text-sm font-medium text-gray-900">{{ sizes }},
+                    </div>
+                    <div v-if="variation.sizes.slice(0, 2).length>1" class="text-sm font-medium text-gray-900">...</div>
+                    </div>
+                    <p class="text-sm font-medium text-gray-900">{{ variation.color }}</p>
+                    <p class="text-sm font-medium text-gray-900">{{ variation.material }}</p>
+                    </div>
+                    <div class="mt-2">
+                <button type="button" @click="" class="absolute top-0 right-0 mt-4 mr-4 rounded-md bg-white text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+                  <XMarkIcon class="h-6 w-6 text-red-500" />
+                </button>
+              </div>
+        </div>
+      </transition>
+  </div>           
+    
                 <div class="flex justify-end px-4 sm:px-0">
                     <button type="button"
                         class="rounded-md bg-white py-2 px-3 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">Cancel</button>
