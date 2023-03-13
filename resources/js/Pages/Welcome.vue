@@ -2,6 +2,7 @@
 import { Head, Link } from '@inertiajs/vue3';
 import Navigation from '@/Components/Customer/Organisms/Navigation.vue';
 import CategoryPreview from '@/Components/Customer/Molecules/CategoryPreview.vue';
+import Trending from '@/Components/Customer/Molecules/Trending.vue';
 
 defineProps({
     canLogin: Boolean,
@@ -20,6 +21,7 @@ defineProps({
   
     <div>
         <CategoryPreview/>
+        <Trending/>
     </div>
       
 </template>
