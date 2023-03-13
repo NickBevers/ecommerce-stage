@@ -1,11 +1,12 @@
 <script setup>
 import { Head, Link } from '@inertiajs/vue3';
 import Navigation from '@/Components/Customer/Organisms/Navigation.vue';
-import CategoryPreview from '@/Components/Customer/Molecules/CategoryPreview.vue';
-import Trending from '@/Components/Customer/Molecules/Trending.vue';
-import Hero from '@/Components/Customer/Molecules/Hero.vue';
-import PromoSection from '@/Components/Customer/Molecules/PromoSection.vue';
-import Incentive from '@/Components/Customer/Molecules/Incentive.vue';
+import CategoryPreview from '@/Components/Customer/Organisms/CategoryPreview.vue';
+import Trending from '@/Components/Customer/Organisms/Trending.vue';
+import Hero from '@/Components/Customer/Organisms/Hero.vue';
+import PromoSection from '@/Components/Customer/Organisms/PromoSection.vue';
+import Incentive from '@/Components/Customer/Organisms/Incentive.vue';
+import Footer from '@/Components/Customer/Organisms/Footer.vue';
 
 defineProps({
     canLogin: Boolean,
@@ -29,5 +30,7 @@ defineProps({
         <Incentive/>
         <PromoSection/>
     </div>
+
+    <Footer/>
       
 </template>
