@@ -17,18 +17,13 @@ class DatabaseSeeder extends Seeder
         $this->call([
             AttributeTypeSeeder::class,
             AttributeValueSeeder::class,
+            ColorSizeSeeder::class,
             CategorySeeder::class,
             SubCategorySeeder::class,
             BrandSeeder::class,
             ProductSeeder::class,
             SkuSeeder::class,
+            SkuVariationSeeder::class,
         ]);
-
-
-        Sku::all()->each(function (Sku $sku) {
-            $sku->attributeValues()->attach(
-                AttributeValue::all()->random(3)
-            );
-        });
     }
 }
