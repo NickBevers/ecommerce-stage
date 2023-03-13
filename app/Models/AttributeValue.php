@@ -4,36 +4,23 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use Illuminate\Database\Eloquent\Relations\HasOne;
-use Mockery\Matcher\Any;
+use Illuminate\Database\Eloquent\Relations\MorphOne;
 
 class AttributeValue extends Model
 {
-    protected $fillable = [
-        'name',
-        'attribute_type_id'
-    ];
-
-    protected $casts = [
-        'created_at' => 'datetime',
-        'updated_at' => 'datetime',
-    ];
-
-
-    /*
-    |--------------------------------------------------------------------------
-    | RELATIONS
-    |--------------------------------------------------------------------------
-    */
-
-    public function attributeType(): BelongsTo
+    public function attributeType(): belongsTo
     {
-        return $this->belongsTo(AttributeType::class);
+        return $this->belongsTo(AttributeType::class, 'attribute_type_id');
     }
 
-    public function skus(): BelongsToMany
+    public function colorSize(): belongsTo
     {
-        return $this->belongsToMany(Sku::class, 'attribute_value_sku', 'attribute_value_id', 'sku_id');
+        return $this->belongsTo(ColorSize::class);
+    }
+
+    public function skus()
+    {
+        return $this->morphedByMany(Sku::class, 'variation', 'sku_variations', 'variation_id')
+            ->where('variation_type', 'attribute_value');
     }
 }

@@ -2,6 +2,8 @@
 
 namespace Database\Seeders;
 
+use App\Models\AttributeValue;
+use App\Models\ColorSize;
 use App\Models\Sku;
 use Illuminate\Database\Seeder;
 

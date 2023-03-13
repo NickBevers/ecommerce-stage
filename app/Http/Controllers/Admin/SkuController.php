@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Product\ProductController;
 use App\Models\AttributeValue;
+use App\Models\ColorSize;
 use App\Models\Sku;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -14,13 +15,13 @@ class SkuController extends Controller
     public function index()
     {
         return Inertia::render('Admin/Products/Index', [
-            'skus' => Sku::with('attributeValues')
-                ->with('product')
-                ->orderBy('sku')
-                ->paginate(10),
-            'attributeValues' => AttributeValue::all(),
-            'minPrice' => Sku::min('price'),
-            'maxPrice' => Sku::max('price'),
+//            'skus' => Sku::with('attributeValues')
+//                ->with('product')
+//                ->orderBy('sku')
+//                ->paginate(10),
+//            'attributeValues' => AttributeValue::all(),
+//            'minPrice' => Sku::min('price'),
+//            'maxPrice' => Sku::max('price'),
         ]);
     }
 
