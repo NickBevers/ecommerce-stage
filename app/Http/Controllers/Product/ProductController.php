@@ -29,52 +29,11 @@ class ProductController extends Controller
         return Inertia::render('Admin/Products/Create');
     }
 
-        public function store(Request $request)
+    public function store(Request $request)
     {
-        // validate the request
-        $request->validate([
-            'title' => 'required|string|max:255',
-            'audience' => 'required|string|max:255',
-            'category' => 'required|string|max:255',
-            'files' => 'array|required',
-            'files.*' => 'required|mimetypes:image/jpg,image/jpeg,image/bmp,image/webp,image/png,image/svg+xml',
-        ]);
-
-        $imageArray = [];
-
-        if ($request->hasFile('images')) {
-            $images = $request->file('images');
-            foreach ($images as $image) {
-                $randomName = now().rand(1, 500);
-                $filename = $randomName.$image->getClientOriginalName();
-                Storage::move($filename, 'public/images/' . $filename);
-                $imageArray[] = $filename;
-            }
-        }
-
-        $categoryId = SubCategory::where('label', $request->category)->first()->id;
-
-        // create a new product
-        $product = new Product();
-        $product->title = $request->title;
-        $product->description = $request->description;
-        $product->audience = $request->audience;
-        $product->category_id = $categoryId;
-        $product->extra_info = $request->extra_info;
-
-        $request->has('is_promotion') ? $product->is_promotion = true : $product->is_promotion = false;
-        $request->has('is_active') ? $product->is_active = false : $product->is_active = true;
-
-        $product->images = json_encode($imageArray);
+        $product = Product::create($request->all());
         $product->save();
-        $productId = $product->id;
 
-
-        if ($request->hasFile('images')) {
-            foreach ($imageArray as $image) {
-                ProductImageController::store($image, $productId);
-            }
-        }
         return $product;
     }
 

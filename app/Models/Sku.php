@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\HasOneThrough;
 
 class Sku extends Model
 {
@@ -28,6 +29,11 @@ class Sku extends Model
         'updated_at' => 'datetime',
     ];
 
+    protected $hidden = [
+        'created_at',
+        'updated_at',
+    ];
+
     /*
     |--------------------------------------------------------------------------
     | RELATIONS
@@ -44,7 +50,6 @@ class Sku extends Model
         return $this->hasOne(Promo::class);
     }
 
-    // pivot table attribute_value_sku
     public function attributeValues(): BelongsToMany
     {
         return $this->belongsToMany(AttributeValue::class, 'attribute_value_sku', 'sku_id', 'attribute_value_id');

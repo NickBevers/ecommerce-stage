@@ -19,6 +19,11 @@ class Brand extends Model
         'updated_at' => 'datetime',
     ];
 
+    protected $hidden = [
+        'created_at',
+        'updated_at',
+    ];
+
     /*
     |--------------------------------------------------------------------------
     | RELATIONS

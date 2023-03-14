@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Product\ProductController;
 use App\Models\AttributeType;
 use App\Models\AttributeValue;
 use App\Models\Sku;
@@ -13,74 +14,30 @@ class SkuController extends Controller
 {
     public function index()
     {
-        // Retrieve all the SKUs with their variations
-//        $skus = Sku::find(1)
-//            ->with('variations')
-//            ->with('product')
-//            ->with('product.subCategory');
-
-        $skus = Sku::where('id', 1)
-            ->with('variations')
-            ->with('product')
-            ->with('product.subCategory')
-            ->get();
-
-        foreach ($skus as $sku) {
-            $attributeValues = [];
-            $colorSizes = [];
-            foreach ($sku->variations as $variation) {
-                // If the variation is an colorSize, add the color and size to an array
-                if ($variation->variation_type === 'App\Models\ColorSize'){
-                    $color = $variation->variation->color->name;
-                    $size = $variation->variation->size->name;
-
-//                    ray($color);
-
-                    if (!in_array($color, $colorSizes)) {
-                        $colorSizes[$color] = [$size];
-                    } else {
-                        ray(false);
-                    }
-                }
-
-                if ($variation->variation_type === 'App\Models\AttributeValue') {
-                    $attributeValue = AttributeValue::where('name', $variation->variation->name)->first();
-                    $attributeType = AttributeType::where('id', $attributeValue->attribute_type_id)->first();
-
-                    if (!in_array($attributeType->name, $attributeValues)) {
-                        $attributeValues[$attributeType->name] = [$variation->variation->name];
-                    }
-
-                    if (!in_array($variation->variation->name, $attributeValues[$attributeType->name])) {
-                        $attributeValues[$attributeType->name][] = $variation->variation->name;
-                    }
-                }
-
-            }
-
-            $sku->attributeValues = $attributeValues;
-            $sku->colorSizes = $colorSizes;
-            $sku->variations = [];
-        }
-
-        return $skus;
-
-//        return Inertia::render('Admin/Products/Index', [
-//            'skus' => Sku::with(['variations' => function ($query) { $query->with('variation'); }])
-//                ->with('product')
-//                ->orderBy('sku')
-//                ->paginate(10),
-//            'attributeValues' => AttributeValue::all(),
-//            'minPrice' => Sku::min('price'),
-//            'maxPrice' => Sku::max('price'),
-//        ]);
+        return Inertia::render('Admin/Products/Index', [
+            'skus' => Sku::with('attributeValues')
+                ->with('attributeValues.attributeType')
+                ->with('product')
+                ->with('product.subCategory')
+                ->with('product.subCategory.category')
+                ->with('product.brand')
+                ->orderBy('sku')
+                ->paginate(10),
+            'attributeValues' => AttributeValue::all(),
+            'minPrice' => Sku::min('price'),
+            'maxPrice' => Sku::max('price'),
+        ]);
     }
 
     public function search(Request $request)
     {
         $searchTerm = $request->input('searchTerm');
         return Sku::with('attributeValues')
+            ->with('attributeValues.attributeType')
             ->with('product')
+            ->with('product.subCategory')
+            ->with('product.subCategory.category')
+            ->with('product.brand')
             -> whereHas('product', function ($query) use ($searchTerm) {
                 $query->where('title', 'like', '%' . $searchTerm . '%');
             })
@@ -119,6 +76,34 @@ class SkuController extends Controller
 
     public function store(Request $request)
     {
+        // title, description, audience, brand_id, sub_category_id, extra_info
+
+        // get the product data from the request and create a new product
+        $productData = $request->only(['title', 'description', 'audience', 'brand_id', 'sub_category_id', 'extra_info']);
+        $product = app(ProductController::class)->store(new Request($productData));
+
+        foreach ($request->input('variations') as $variation) {
+            $sku = Sku::create([
+                'sku' => $variation['sku'],
+                'price' => $variation['price'],
+                'amount' => $variation['amount'],
+                'product_id' => $product->id,
+            ]);
+
+            $color = AttributeValue::where('name', $variation['color'])->first();
+            $sku->attributeValues()->attach($color);
+
+            $material = AttributeValue::where('name', $variation['material'])->first();
+            $sku->attributeValues()->attach($material);
+
+            foreach ($variation['sizes'] as $size) {
+                $size = AttributeValue::where('name', $size)->first();
+                $sku->attributeValues()->attach($size);
+            }
+        }
+
+        return $product;
+
     }
 
     public function sortClothing(Array $data): array

@@ -13,6 +13,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
+use App\Http\Middleware\VerifyCsrfToken as VerifyCsrfTokenMiddleware;
 use Inertia\Inertia;
 
 /*
@@ -98,10 +99,10 @@ Route::get('/shipping-addresses/{shippingAddress}/edit', [AddressController::cla
 Route::patch('/shipping-addresses/{shippingAddress}', [AddressController::class, 'update'])->name('shipping.update');
 Route::delete('/shipping-addresses/{shippingAddress}', [AddressController::class, 'destroy'])->name('shipping.destroy');
 
+    Route::post('/admin/products', [AdminSkuController::class, 'store'])->withoutMiddleware(\App\Http\Middleware\VerifyCsrfToken::class)->name('admin.products.store');
 Route::middleware('auth')->group(function () {
-    Route::get('/admin/test', [AdminSkuController::class, 'testFunc'])->name('admin.test');
+    Route::get('/admin/test', [\App\Http\Controllers\Admin\SubCategoryController::class, 'getAll'])->name('admin.test');
     Route::get('/admin/products', [AdminSkuController::class, 'index'])->name('admin.products.index');
-    Route::post('/admin/products', [AdminSkuController::class, 'store'])->name('admin.products.store');
     Route::post('/admin/products/search', [AdminSkuController::class, 'search'])->name('admin.products.search');
     Route::get('/admin/products/create', [AdminSkuController::class, 'create'])->name('admin.products.create');
     Route::get('/admin/products/{product}', [AdminSkuController::class, 'show'])->name('admin.products.show');
