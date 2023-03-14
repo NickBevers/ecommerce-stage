@@ -11,7 +11,7 @@ return new class extends Migration {
             $table->id();
             $table->string('name');
             $table->foreignId('attribute_type_id')->constrained();
-            $table->string('colorValue')->nullable();
+            $table->string('color_value')->nullable();
             $table->timestamps();
         });
     }

@@ -104,8 +104,8 @@ class SkuController extends Controller
             }
         }
 
-        return $product;
-
+//        return $product;
+        return redirect()->route('admin.products.index');
     }
 
     public function sortClothing(Array $data): array

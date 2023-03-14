@@ -196,7 +196,7 @@ class AttributeValueSeeder extends Seeder
             AttributeValue::create([
                 'name' => $color[0],
                 'attribute_type_id' => 2,
-                'colorValue' => $color[1],
+                'color_value' => $color[1],
             ]);
         }
 

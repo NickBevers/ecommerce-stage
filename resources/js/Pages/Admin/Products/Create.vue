@@ -81,7 +81,7 @@ function isChecked(filter, value) {
 
 const form = useForm({
     title: "",
-    audience: "Male",
+    audience: "Men",
     sub_category_id: 1,
     brand_id: 1,
     description: "",
@@ -100,7 +100,7 @@ const variationForm = useForm({
 })
 
 const audience = reactive(
-    ["Male", "Female", "Children", "Unisex"]
+    ["Men", "Women", "Kids", "Unisex"]
 );
 
 let selectedHeadCategoryIndex = ref(0);
