@@ -1,6 +1,6 @@
 <script setup>
 import ApplicationLogo from '@/Components/Customer/Atoms/ApplicationLogo.vue';
-import { ref, onMounted } from 'vue';
+import { onMounted, onBeforeMount, ref, watch } from "vue";
 import { Link } from '@inertiajs/vue3';
 import { Popover, PopoverButton, PopoverGroup, PopoverPanel } from '@headlessui/vue'
 import { MagnifyingGlassIcon, ShoppingBagIcon } from '@heroicons/vue/24/outline'
@@ -100,7 +100,26 @@ defineProps({
     phpVersion: String,
 });
 
-const showSubMenu = ref(false);
+const categories = ref([]);
+let selectedCategory = ref(null);
+
+onBeforeMount(async () => {
+  const response = await fetch('/admin/subcategories');
+  const categoriesData = await response.json();
+  categoriesData.forEach(category => {
+  category.subCategories?.slice(0, 2).forEach(subcategory => {
+    subcategory.preview = true;
+  });
+});
+  categories.value = categoriesData;
+  console.log(categories.value);
+});
+
+
+
+function selectCategory(category_id) {
+    selectedCategory.value = category_id;
+}
 
 
 </script>
@@ -220,10 +239,11 @@ const showSubMenu = ref(false);
                                 <!-- Flyout menus -->
                                 <PopoverGroup class="inset-x-0 bottom-0 px-4">
                                     <div class="flex h-full justify-center space-x-8">
-                                        <Popover v-for="category in navigation.categories" :key="category.name" class="flex"
+                                        <Popover v-for="category in categories" :key="category.name" class="flex"
                                             v-slot="{ open }">
                                             <div class="relative flex">
                                                 <PopoverButton
+                                                @click="selectCategory(category.id)"
                                                     :class="[open ? 'text-indigo-600' : 'text-gray-700 hover:text-gray-800', 'relative flex items-center justify-center text-sm font-medium transition-colors duration-200 ease-out']">
                                                     {{ category.name }}
                                                     <span
@@ -237,6 +257,7 @@ const showSubMenu = ref(false);
                                                 leave-active-class="transition ease-in duration-150"
                                                 leave-from-class="opacity-100" leave-to-class="opacity-0">
                                                 <PopoverPanel
+                                                v-if="selectedCategory === 1 || selectedCategory === 2 || selectedCategory === 3" 
                                                     class="absolute inset-x-0 top-full z-10 bg-white text-sm text-gray-500">
                                                     <!-- Presentational element used to render the bottom shadow, if we put the shadow on the actual panel it pokes out the top, so we use this shorter element to hide the top of the shadow -->
                                                     <div class="absolute inset-0 top-1/2 bg-white shadow"
@@ -249,33 +270,36 @@ const showSubMenu = ref(false);
                                                     </div>
 
                                                     <div class="relative">
-                                                        <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-                                                            <div class="grid grid-cols-4 gap-y-10 gap-x-8 py-16">
-                                                                <div v-for="item in category.featured" :key="item.name"
-                                                                class="group relative">
-                                                                <div
-                                                                    class="aspect-w-1 aspect-h-1 overflow-hidden rounded-md bg-gray-100 group-hover:opacity-75">
-                                                                    <img :src="item.imageSrc" :alt="item.imageAlt"
-                                                                        class="object-cover object-center" />
+                                                        <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 grid grid-cols-4 gap-y-4 gap-x-8 py-16">
+                                                                <div v-for="item in category.subCategories" :key="item.name" class="group relative ">
+                                                                 <div v-if="item.preview" class="aspect-w-1 aspect-h-1 overflow-hidden rounded-md bg-gray-100 group-hover:opacity-75">
+                                                                   <img src="https://tailwindui.com/img/ecommerce-images/mega-menu-category-02.jpg" alt="placeholder" class="object-cover object-center" />
+                                                                    </div>
+                                                                    <div  v-if="item.preview" class="flex flex-row">
+                                                                        <a :href="item.href" class="mt-4 block font-medium text-gray-900">
+                                                                        <span class="absolute inset-0 z-10" aria-hidden="true" />
+                                                                        {{ item.name }}
+                                                                        </a>
+                                                                    </div>
+                                                                    <div v-if="item.preview">
+                                                                        <p aria-hidden="true" class="mt-1">Shop now</p>
+                                                                    </div>
+                                                                    </div>
                                                                 </div>
-                                                                <a :href="item.href"
-                                                                    class="mt-4 block font-medium text-gray-900">
-                                                                    <span class="absolute inset-0 z-10"
-                                                                        aria-hidden="true" />
-                                                                    {{ item.name }}
-                                                                </a>
-                                                                <p aria-hidden="true" class="mt-1">Shop now</p>
+                                                                <div v-for="item in category.subCategories" :key="item.name" class="group relative ">
+                                                                    <div  v-if="!item.preview" class="flex flex-row">
+                                                                        <a :href="item.href" class="mt-4 block font-medium text-gray-900">
+                                                                        <span class="absolute inset-0 z-10" aria-hidden="true" />
+                                                                        {{ item.name }}
+                                                                        </a>
+                                                                    </div>
+                                                                    <div  v-if="!item.preview">    <p aria-hidden="true" class="mt-1">Shop now</p></div>
+                                                                </div>
                                                             </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
+                                             
                                             </PopoverPanel>
                                         </transition>
                                     </Popover>
-
-                                    <a v-for="page in navigation.pages" :key="page.name" :href="page.href"
-                                        class="flex items-center text-sm font-medium text-gray-700 hover:text-gray-800">{{
-                                        page.name }}</a>
                                 </div>
                             </PopoverGroup>
                         </div>

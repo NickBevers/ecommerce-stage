@@ -3,8 +3,8 @@ import Navigation from "@/Components/Customer/Organisms/Navigation.vue";
 import Footer from "@/Components/Customer/Organisms/Footer.vue";
 
 defineProps({
-    canLogin: Boolean,
-    canRegister: Boolean,
+  canLogin: Boolean,
+  canRegister: Boolean,
 });
 
 </script>
