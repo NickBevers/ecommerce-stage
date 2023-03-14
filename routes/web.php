@@ -99,6 +99,7 @@ Route::patch('/shipping-addresses/{shippingAddress}', [AddressController::class,
 Route::delete('/shipping-addresses/{shippingAddress}', [AddressController::class, 'destroy'])->name('shipping.destroy');
 
 Route::middleware('auth')->group(function () {
+    Route::get('/admin/test', [AdminSkuController::class, 'testFunc'])->name('admin.test');
     Route::get('/admin/products', [AdminSkuController::class, 'index'])->name('admin.products.index');
     Route::post('/admin/products', [AdminSkuController::class, 'store'])->name('admin.products.store');
     Route::post('/admin/products/search', [AdminSkuController::class, 'search'])->name('admin.products.search');

@@ -9,6 +9,10 @@ const props = defineProps({
     skus: Object,
 });
 
+onMounted(() => {
+    console.log(props.skus);
+});
+
 </script>
 <template>
     <Head title="Products" />

@@ -49,4 +49,24 @@ class Sku extends Model
     {
         return $this->hasOne(Promo::class);
     }
+
+//    public function attributeValues(): BelongsToMany
+//    {
+//        return $this->belongsToMany(AttributeValue::class, 'sku_variations', 'sku_id', 'variation_id');
+//    }
+//
+//    public function colorSizes(): BelongsToMany
+//    {
+//        return $this->belongsToMany(ColorSize::class, 'sku_variations', 'sku_id', 'variation_id');
+//    }
+
+    public function colorSizes()
+    {
+        return $this->morphedByMany(ColorSize::class, 'variation');
+    }
+
+    public function attributeValues()
+    {
+        return $this->morphedByMany(AttributeValue::class, 'variation');
+    }
 }
