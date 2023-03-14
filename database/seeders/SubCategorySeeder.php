@@ -60,6 +60,7 @@ class SubCategorySeeder extends Seeder
                 SubCategory::create([
                     'category_id' => $i + 1,
                     'name' => $subCategory,
+                    'slug' => preg_replace("/[^a-zA-Z0-9]+/", "", strtolower(trim($subCategory))),
                     'icon' => $icons[array_rand($icons)],
                     'created_at' => Carbon::now(),
                     'updated_at' => Carbon::now(),

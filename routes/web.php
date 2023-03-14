@@ -58,14 +58,14 @@ Route::get('/products/clothing', [ProductSkuController::class, 'showClothing'])-
 Route::get('/products/accessories', [ProductSkuController::class, 'showAccessories'])->name('accessories');
 Route::get('/products/promos', [ProductSkuController::class, 'showPromos'])->name('promos');
 
+Route::get('/products/{subCategory}', [ProductSkuController::class, 'showBySubCategory'])->name('products.showBySubCategory');
+
 // Product Routes
-Route::get('/products', [ProductSkuController::class, 'filter'])->name('products.index');
-Route::post('/products', [ProductController::class, 'store'])->name('products.store');
-Route::get('/products/create', [ProductController::class, 'create'])->name('products.create');
-Route::get('/products/{product}', [ProductController::class, 'show'])->name('products.show');
-Route::get('/products/{product}/edit', [ProductController::class, 'edit'])->name('products.edit');
-Route::patch('/products/{product}', [ProductController::class, 'update'])->name('products.update');
-Route::delete('/products/{product}', [ProductController::class, 'destroy'])->name('products.destroy');
+Route::get('/products', [ProductSkuController::class, 'index'])->name('products.index');
+Route::get('/product/{product}', [ProductController::class, 'show'])->name('product.show');
+Route::get('/product/{product}/edit', [ProductController::class, 'edit'])->name('product.edit');
+Route::patch('/product/{product}', [ProductController::class, 'update'])->name('product.update');
+Route::delete('/product/{product}', [ProductController::class, 'destroy'])->name('product.destroy');
 
 // Filter Routes
 Route::post('/filter', [ProductSkuController::class, 'filter'])->withoutMiddleware(\App\Http\Middleware\VerifyCsrfToken::class)->name('products.filter');
@@ -99,10 +99,10 @@ Route::get('/shipping-addresses/{shippingAddress}/edit', [AddressController::cla
 Route::patch('/shipping-addresses/{shippingAddress}', [AddressController::class, 'update'])->name('shipping.update');
 Route::delete('/shipping-addresses/{shippingAddress}', [AddressController::class, 'destroy'])->name('shipping.destroy');
 
-    Route::post('/admin/products', [AdminSkuController::class, 'store'])->withoutMiddleware(\App\Http\Middleware\VerifyCsrfToken::class)->name('admin.products.store');
 Route::middleware('auth')->group(function () {
     Route::get('/admin/test', [\App\Http\Controllers\Admin\SubCategoryController::class, 'getAll'])->name('admin.test');
     Route::get('/admin/products', [AdminSkuController::class, 'index'])->name('admin.products.index');
+    Route::post('/admin/products', [AdminSkuController::class, 'store'])->withoutMiddleware(\App\Http\Middleware\VerifyCsrfToken::class)->name('admin.products.store');
     Route::post('/admin/products/search', [AdminSkuController::class, 'search'])->name('admin.products.search');
     Route::get('/admin/products/create', [AdminSkuController::class, 'create'])->name('admin.products.create');
     Route::get('/admin/products/{product}', [AdminSkuController::class, 'show'])->name('admin.products.show');

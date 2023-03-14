@@ -6,7 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Http\Controllers\Product\ProductController;
 use App\Models\AttributeType;
 use App\Models\AttributeValue;
+use App\Models\Category;
 use App\Models\Sku;
+use App\Models\SubCategory;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 

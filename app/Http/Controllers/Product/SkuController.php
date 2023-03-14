@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Product;
 use App\Http\Controllers\Controller;
 use App\Models\AttributeValue;
 use App\Models\Sku;
+use App\Models\SubCategory;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -25,19 +26,26 @@ class SkuController extends Controller
 
     public function filter(Request $request)
     {
-        $category = request()->has('category')? request()->input('category') : false;
-        $promo = request()->has('promo')? request()->input('promo') : false;
-        $attributes = request()->has('attributes')? request()->input('attributes') : false;
-        $price = request()->has('price')? request()->input('price') : false;
-        $brand = request()->has('brand')? request()->input('brand') : false;
-        $sort = request()->has('sort')? request()->input('sort') : 'created_at';
-        $order = request()->has('order')? request()->input('order') : 'asc';
+        $category = $request->has('category')? $request->input('category') : false;
+        $subCategory = $request->has('subCategory')? $request->input('subCategory') : false;
+        $promo = $request->has('promo')? $request->input('promo') : false;
+        $attributes = $request->has('attributes')? $request->input('attributes') : false;
+        $price = $request->has('price')? $request->input('price') : false;
+        $brand = $request->has('brand')? $request->input('brand') : false;
+        $sort = $request->has('sort')? $request->input('sort') : 'created_at';
+        $order = $request->has('order')? $request->input('order') : 'asc';
 
         $skus = Sku::with('attributeValues')
             ->with('product')
             ->when($category, function ($query) use ($category){
                 $query->whereHas('product.subCategory.category', function ($query) use ($category) {
                     $query->where('name', $category);
+                });
+            })
+            ->when($subCategory, function ($query) use ($subCategory){
+                ray($subCategory);
+                $query->whereHas('product.subCategory', function ($query) use ($subCategory) {
+                    $query->where('slug', $subCategory);
                 });
             })
             ->when($promo, function ($query) use ($promo){
@@ -73,6 +81,12 @@ class SkuController extends Controller
             'minPrice' => Sku::min('price'),
             'maxPrice' => Sku::max('price'),
         ];
+    }
+
+    public function showBySubCategory(String $subCategory)
+    {
+        $data = $this->filter(new Request(['subCategory' => $subCategory]));
+        return Inertia::render('Admin/Products/Index', $data);
     }
 
     public function showShoes(Request $request)
