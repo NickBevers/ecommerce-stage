@@ -16,8 +16,8 @@ import {
   TransitionChild,
   TransitionRoot,
 } from '@headlessui/vue'
-import { Bars3CenterLeftIcon, ChartPieIcon, Bars4Icon, ClockIcon, HomeIcon, XMarkIcon } from '@heroicons/vue/24/outline'
-import { ChevronRightIcon, ChevronUpDownIcon, ShoppingBagIcon, EllipsisVerticalIcon, MagnifyingGlassIcon } from '@heroicons/vue/20/solid'
+import { Bars3CenterLeftIcon, ChartPieIcon, ShoppingBagIcon, Bars4Icon, ClockIcon, HomeIcon, XMarkIcon } from '@heroicons/vue/24/outline'
+import { ChevronRightIcon, ChevronUpDownIcon,  EllipsisVerticalIcon, MagnifyingGlassIcon } from '@heroicons/vue/20/solid'
 
 const navigation = [
   { name: 'Overview', href: '/admin/dashboard', icon: ChartPieIcon, current: false },
@@ -128,7 +128,7 @@ onMounted(() => {
             <MenuItems class="absolute right-0 left-0 z-10 mx-3 mt-1 origin-top divide-y divide-gray-200 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
               <div class="py-1">
                 <MenuItem v-slot="{ active }">
-                  <a :class="[active ? 'bg-gray-100 text-gray-900' : 'text-gray-700', 'block px-4 py-2 text-sm']" :href="route('profile.edit')" >Profile</a>
+                  <Link :class="[active ? 'bg-gray-100 text-gray-900' : 'text-gray-700', 'block px-4 py-2 text-sm']" :href="route('profile.edit')" >Profile</Link>
                 </MenuItem>
               </div>
               <div class="py-1">
@@ -182,7 +182,7 @@ onMounted(() => {
                 <MenuItems class="absolute right-0 z-10 mt-2 w-48 origin-top-right divide-y divide-gray-200 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
                   <div class="py-1">
                     <MenuItem v-slot="{ active }">
-                      <a href="#" :class="[active ? 'bg-gray-100 text-gray-900' : 'text-gray-700', 'block px-4 py-2 text-sm']">View profile</a>
+                      <Link :href="route('profile.edit')" :class="[active ? 'bg-gray-100 text-gray-900' : 'text-gray-700', 'block px-4 py-2 text-sm']">View profile</Link>
                     </MenuItem>
                   </div>
                   <div class="py-1">

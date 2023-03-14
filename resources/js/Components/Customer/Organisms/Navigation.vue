@@ -1,6 +1,6 @@
 <script setup>
 import ApplicationLogo from '@/Components/Customer/Atoms/ApplicationLogo.vue';
-import { ref, onMounted } from 'vue';
+import { onMounted, onBeforeMount, ref, watch } from "vue";
 import { Link } from '@inertiajs/vue3';
 import { Popover, PopoverButton, PopoverGroup, PopoverPanel } from '@headlessui/vue'
 import { MagnifyingGlassIcon, ShoppingBagIcon } from '@heroicons/vue/24/outline'
@@ -100,7 +100,26 @@ defineProps({
     phpVersion: String,
 });
 
-const showSubMenu = ref(false);
+const categories = ref([]);
+let selectedCategory = ref(null);
+
+onBeforeMount(async () => {
+    const response = await fetch('/admin/subcategories');
+    const categoriesData = await response.json();
+    categoriesData.forEach(category => {
+        category.subCategories?.slice(0, 2).forEach(subcategory => {
+            subcategory.preview = true;
+        });
+    });
+    categories.value = categoriesData;
+    console.log(categories.value);
+});
+
+
+
+function selectCategory(category_id) {
+    selectedCategory.value = category_id;
+}
 
 
 </script>
@@ -199,7 +218,8 @@ const showSubMenu = ref(false);
                                     <Link v-if="canRegister" :href="route('register')"
                                         class="text-sm font-medium mr-4 text-white hover:text-gray-100">
                                     Create an account</Link>
-                                    <Link :href="route('login')" class="text-sm  font-medium text-white hover:text-gray-100">
+                                    <Link :href="route('login')"
+                                        class="text-sm  font-medium text-white hover:text-gray-100">
                                     Sign in</Link>
                                 </template>
                             </div>
@@ -220,10 +240,10 @@ const showSubMenu = ref(false);
                                 <!-- Flyout menus -->
                                 <PopoverGroup class="inset-x-0 bottom-0 px-4">
                                     <div class="flex h-full justify-center space-x-8">
-                                        <Popover v-for="category in navigation.categories" :key="category.name" class="flex"
+                                        <Popover v-for="category in categories" :key="category.name" class="flex"
                                             v-slot="{ open }">
                                             <div class="relative flex">
-                                                <PopoverButton
+                                                <PopoverButton @click="selectCategory(category.id)"
                                                     :class="[open ? 'text-indigo-600' : 'text-gray-700 hover:text-gray-800', 'relative flex items-center justify-center text-sm font-medium transition-colors duration-200 ease-out']">
                                                     {{ category.name }}
                                                     <span
@@ -237,6 +257,7 @@ const showSubMenu = ref(false);
                                                 leave-active-class="transition ease-in duration-150"
                                                 leave-from-class="opacity-100" leave-to-class="opacity-0">
                                                 <PopoverPanel
+                                                    v-if="selectedCategory === 1 || selectedCategory === 2 || selectedCategory === 3"
                                                     class="absolute inset-x-0 top-full z-10 bg-white text-sm text-gray-500">
                                                     <!-- Presentational element used to render the bottom shadow, if we put the shadow on the actual panel it pokes out the top, so we use this shorter element to hide the top of the shadow -->
                                                     <div class="absolute inset-0 top-1/2 bg-white shadow"
@@ -249,95 +270,113 @@ const showSubMenu = ref(false);
                                                     </div>
 
                                                     <div class="relative">
-                                                        <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-                                                            <div class="grid grid-cols-4 gap-y-10 gap-x-8 py-16">
-                                                                <div v-for="item in category.featured" :key="item.name"
+                                                        <div
+                                                            class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 grid grid-cols-3 gap-y-4 gap-x-8 py-16">
+                                                            <div  v-for="(item, index) in category.subCategories.slice(0, 2)" :key="index"
                                                                 class="group relative">
-                                                                <div
+                                                                <div v-if="item.preview"
                                                                     class="aspect-w-1 aspect-h-1 overflow-hidden rounded-md bg-gray-100 group-hover:opacity-75">
-                                                                    <img :src="item.imageSrc" :alt="item.imageAlt"
+                                                                    <img src="https://tailwindui.com/img/ecommerce-images/mega-menu-category-02.jpg"
+                                                                        alt="placeholder"
                                                                         class="object-cover object-center" />
                                                                 </div>
-                                                                <a :href="item.href"
-                                                                    class="mt-4 block font-medium text-gray-900">
-                                                                    <span class="absolute inset-0 z-10"
-                                                                        aria-hidden="true" />
-                                                                    {{ item.name }}
-                                                                </a>
-                                                                <p aria-hidden="true" class="mt-1">Shop now</p>
+                                                                <div v-if="item.preview" class="flex flex-row">
+                                                                    <a :href="item.href"
+                                                                        class="mt-4 block font-medium text-gray-900">
+                                                                        <span class="absolute inset-0 z-10"
+                                                                            aria-hidden="true" />
+                                                                        {{ item.name }}
+                                                                    </a>
+                                                                </div>
+                                                                <div>
+                                                                    <p v-if="item.preview" aria-hidden="true" class="mt-1">
+                                                                        Shop now</p>
+                                                                </div>
+                                                            </div>
+                                                      
+
+
+                                                            <div>
+                                                                <div  v-for="(item, index) in category.subCategories.slice(3, 10)" :key="index"
+                                                                class="group relative">
+                                                                <div v-if="!item.preview" class="flex flex-row py-2">
+                                                                    <a :href="item.href"
+                                                                        class="mt-4 block font-medium text-gray-900">
+                                                                        <span class="absolute inset-0 z-10"
+                                                                            aria-hidden="true" />
+                                                                        {{ item.name }}
+                                                                    </a>
+                                                                </div>
+                                                            </div>
                                                             </div>
                                                         </div>
+
                                                     </div>
-                                                </div>
-                                            </PopoverPanel>
-                                        </transition>
-                                    </Popover>
 
-                                    <a v-for="page in navigation.pages" :key="page.name" :href="page.href"
-                                        class="flex items-center text-sm font-medium text-gray-700 hover:text-gray-800">{{
-                                        page.name }}</a>
-                                </div>
-                            </PopoverGroup>
-                        </div>
+                                                </PopoverPanel>
+                                            </transition>
+                                        </Popover>
+                                    </div>
+                                </PopoverGroup>
+                            </div>
 
-                        <!-- Mobile menu and search (lg-) -->
-                        <div class="flex flex-1 items-center lg:hidden">
-                            <button type="button" class="-ml-2 rounded-md bg-white p-2 text-gray-400"
-                                @click="open = true">
-                                <span class="sr-only">Open menu</span>
-                                <Bars3Icon class="h-6 w-6" aria-hidden="true" />
-                            </button>
+                            <!-- Mobile menu and search (lg-) -->
+                            <div class="flex flex-1 items-center lg:hidden">
+                                <button type="button" class="-ml-2 rounded-md bg-white p-2 text-gray-400"
+                                    @click="open = true">
+                                    <span class="sr-only">Open menu</span>
+                                    <Bars3Icon class="h-6 w-6" aria-hidden="true" />
+                                </button>
 
-                            <!-- Search -->
-                            <a href="#" class="ml-2 p-2 text-gray-400 hover:text-gray-500">
-                                <span class="sr-only">Search</span>
-                                <MagnifyingGlassIcon class="h-6 w-6" aria-hidden="true" />
-                            </a>
-                        </div>
-
-                        <!-- Logo (lg-) -->
-                        <a href="#" class="lg:hidden">
-                            <span class="sr-only">Your Company</span>
-                            <img src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600" alt=""
-                                class="h-8 w-auto" />
-                        </a>
-
-                        <div class="flex flex-1 items-center justify-end">
-                            <a href="#"
-                                class="hidden text-sm font-medium text-gray-700 hover:text-gray-800 lg:block">Search</a>
-
-                            <div class="flex items-center lg:ml-8">
-                                <!-- Help -->
-                                <a href="#" class="p-2 text-gray-400 hover:text-gray-500 lg:hidden">
-                                    <span class="sr-only">Help</span>
-                                    <QuestionMarkCircleIcon class="h-6 w-6" aria-hidden="true" />
+                                <!-- Search -->
+                                <a href="#" class="ml-2 p-2 text-gray-400 hover:text-gray-500">
+                                    <span class="sr-only">Search</span>
+                                    <MagnifyingGlassIcon class="h-6 w-6" aria-hidden="true" />
                                 </a>
+                            </div>
+
+                            <!-- Logo (lg-) -->
+                            <a href="#" class="lg:hidden">
+                                <span class="sr-only">Your Company</span>
+                                <img src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600" alt=""
+                                    class="h-8 w-auto" />
+                            </a>
+
+                            <div class="flex flex-1 items-center justify-end">
                                 <a href="#"
-                                    class="hidden text-sm font-medium text-gray-700 hover:text-gray-800 lg:block">Help</a>
-                                <!-- Wish -->
-                                <div class="flow-root lg:ml-8">
-                                    <a href="#" class="group -m-2 flex items-center p-2">
-                                        <HeartIcon
-                                            class="h-6 w-6 flex-shrink-0 text-gray-400 group-hover:text-gray-500"
-                                            aria-hidden="true" />
-                                        <span
-                                            class="ml-2 text-sm font-medium text-gray-700 group-hover:text-gray-800">0</span>
-                                        <span class="sr-only">items in wishlist, view wishlist</span>
+                                    class="hidden text-sm font-medium text-gray-700 hover:text-gray-800 lg:block">Search</a>
+
+                                <div class="flex items-center lg:ml-8">
+                                    <!-- Help -->
+                                    <a href="#" class="p-2 text-gray-400 hover:text-gray-500 lg:hidden">
+                                        <span class="sr-only">Help</span>
+                                        <QuestionMarkCircleIcon class="h-6 w-6" aria-hidden="true" />
                                     </a>
-                                </div>
-                                <!-- Cart -->
-                                <div class="ml-4 flow-root">
-                                    <a href="#" class="group -m-2 flex items-center p-2">
-                                        <ShoppingBagIcon
-                                            class="h-6 w-6 flex-shrink-0 text-gray-400 group-hover:text-gray-500"
-                                            aria-hidden="true" />
-                                        <span
-                                            class="ml-2 text-sm font-medium text-gray-700 group-hover:text-gray-800">0</span>
-                                        <span class="sr-only">items in cart, view bag</span>
-                                    </a>
+                                    <a href="#"
+                                        class="hidden text-sm font-medium text-gray-700 hover:text-gray-800 lg:block">Help</a>
+                                    <!-- Wish -->
+                                    <div class="flow-root lg:ml-8">
+                                        <a href="#" class="group -m-2 flex items-center p-2">
+                                            <HeartIcon class="h-6 w-6 flex-shrink-0 text-gray-400 group-hover:text-gray-500"
+                                                aria-hidden="true" />
+                                            <span
+                                                class="ml-2 text-sm font-medium text-gray-700 group-hover:text-gray-800">0</span>
+                                            <span class="sr-only">items in wishlist, view wishlist</span>
+                                        </a>
+                                    </div>
+                                    <!-- Cart -->
+                                    <div class="ml-4 flow-root">
+                                        <a href="#" class="group -m-2 flex items-center p-2">
+                                            <ShoppingBagIcon
+                                                class="h-6 w-6 flex-shrink-0 text-gray-400 group-hover:text-gray-500"
+                                                aria-hidden="true" />
+                                            <span
+                                                class="ml-2 text-sm font-medium text-gray-700 group-hover:text-gray-800">0</span>
+                                            <span class="sr-only">items in cart, view bag</span>
+                                        </a>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
                     </div>
                 </div>
             </div>

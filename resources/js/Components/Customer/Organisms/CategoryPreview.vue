@@ -1,10 +1,9 @@
 <template>
-    <div class="bg-gray-50 mt-14">
-      <div class="mx-auto max-w-7xl py-16 px-4 sm:py-24 sm:px-6 lg:px-8">
+    <div class="bg-gray-50">
+      <div class="mx-auto max-w-7xl py-16 px-4 sm:py-12 sm:px-6 lg:px-8">
         <div class="sm:flex sm:items-baseline sm:justify-between">
           <h2 class="text-2xl font-bold tracking-tight text-gray-900">Shop by Category</h2>
         </div>
-  
         <div class="mt-6 grid grid-cols-1 gap-y-6 sm:grid-cols-2 sm:grid-rows-2 sm:gap-x-6 lg:gap-8">
           <div class="group aspect-w-2 aspect-h-1 overflow-hidden rounded-lg sm:aspect-h-1 sm:aspect-w-1 sm:row-span-2">
             <img src="https://tailwindui.com/img/ecommerce-images/home-page-03-featured-category.jpg" alt="Two models wearing women's black cotton crewneck tee and off-white cotton crewneck tee." class="object-cover object-center group-hover:opacity-75" />

@@ -1,6 +1,5 @@
 <script setup>
 import ApplicationLogo from "@/Components/Customer/Atoms/ApplicationLogo.vue";
-import GuestLayout from "@/Layouts/GuestLayout.vue";
 import InputError from "@/Components/Admin/Atoms/InputError.vue";
 import InputLabel from "@/Components/Admin/Atoms/InputLabel.vue";
 import PrimaryButton from "@/Components/Admin/Atoms/PrimaryButton.vue";
@@ -26,7 +25,6 @@ const submit = () => {
 </script>
 
 <template>
-  <GuestLayout>
     <Head title="Log in" />
   <div class="flex min-h-screen">
     <div class="flex flex-1 flex-col justify-center py-12 px-4 sm:px-6 lg:flex-none lg:px-20 xl:px-24 w-1/2">
@@ -90,5 +88,4 @@ const submit = () => {
       <img class="absolute inset-0 h-full w-full object-cover object-top" src="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=720&q=80" alt="" />
     </div>
   </div>
-</GuestLayout>
 </template>
