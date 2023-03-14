@@ -10,7 +10,7 @@ return new class extends Migration {
         Schema::create('attribute_values', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->foreignId('attribute_type_id')->nullable()->constrained();
+            $table->foreignId('attribute_type_id')->constrained();
             $table->string('colorValue')->nullable();
             $table->timestamps();
         });
