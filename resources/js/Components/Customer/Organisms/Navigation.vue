@@ -93,12 +93,6 @@ const navigation = {
 
 const open = ref(false)
 
-defineProps({
-    canLogin: Boolean,
-    canRegister: Boolean,
-    laravelVersion: String,
-    phpVersion: String,
-});
 
 const categories = ref([]);
 let selectedCategory = ref(null);
@@ -123,7 +117,7 @@ function selectCategory(category_id) {
 
 </script>
 <template>
-    <div class="bg-white absolute top-0 left-0 z-20 w-full">
+    <div class="bg-white fixed top-0 left-0 z-20 w-full">
         <!-- Mobile menu -->
         <TransitionRoot as="template" :show="open">
             <Dialog as="div" class="relative z-40 lg:hidden" @close="open = false">
@@ -209,12 +203,12 @@ function selectCategory(category_id) {
                 <div class="bg-gray-900">
                     <div class="mx-auto flex h-10 max-w-7xl items-center justify-end px-4 sm:px-6 lg:px-8">
                         <div class="flex items-center space-x-6">
-                            <div v-if="canLogin">
+                            <div>
                                 <Link v-if="$page.props.auth.user" :href="route('dashboard')"
                                     class="text-sm font-medium text-white hover:text-gray-100">
                                 Dashboard</Link>
                                 <template v-else>
-                                    <Link v-if="canRegister" :href="route('register')"
+                                    <Link :href="route('register')"
                                         class="text-sm font-medium mr-4 text-white hover:text-gray-100">
                                     Create an account</Link>
                                     <Link :href="route('login')"
@@ -231,10 +225,13 @@ function selectCategory(category_id) {
                     <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                         <div class="flex h-16 items-center justify-between">
                             <!-- Logo (lg+) -->
+                        
                             <div class="hidden lg:flex lg:flex-1 lg:items-center">
+                                <Link href="/">
                                 <ApplicationLogo class="block h-8 w-auto" />
+                                </Link>
                             </div>
-
+                         
                             <div class="hidden h-full lg:flex">
                                 <!-- Flyout menus -->
                                 <PopoverGroup class="inset-x-0 bottom-0 px-4">
@@ -270,7 +267,7 @@ function selectCategory(category_id) {
 
                                                     <div class="relative">
                                                         <div
-                                                            class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 grid grid-cols-3 gap-y-4 gap-x-8 py-16">
+                                                            class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 grid grid-cols-4 gap-y-4 gap-x-8 py-16">
                                                             <div  v-for="(item, index) in category.subCategories.slice(0, 2)" :key="index"
                                                                 class="group relative">
                                                                 <div v-if="item.preview"
@@ -295,9 +292,9 @@ function selectCategory(category_id) {
                                                       
 
 
-                                                            <div>
+                                                            <div class=" col-span-2 flex">
                                                                 <div  v-for="(item, index) in category.subCategories.slice(2, 10)" :key="index"
-                                                                class="group relative">
+                                                                class="group relative  w-32">
                                                                 <div v-if="!item.preview" class="flex flex-row py-2">
                                                                     <Link :to="'/products/' + item.slug" :href="'/products/' + item.slug"
                                                                         class="mt-4 block font-medium text-gray-900">

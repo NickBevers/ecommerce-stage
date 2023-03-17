@@ -5,7 +5,7 @@
         <div v-for="product in props.skus" :key="product.id" class="mt-8">
           <div class="relative imgScale">
             <div class=" relative h-72 w-full overflow-hidden rounded-lg  duration-500 ">
-              <img src="https://tailwindui.com/img/ecommerce-images/product-page-03-related-product-01.jpg"
+              <img src="https://tailwindui.com/img/ecommerce-images/product-page-01-related-product-01.jpg"
                 alt="placeholder" class="h-full w-full object-cover object-center" />
             </div>
             <div class="relative mt-4">
@@ -32,11 +32,9 @@
 <style scoped>
 .imgScale img {
   transition: all 0.5s ease;
-
 }
 
 .imgScale:hover img {
-  background-color: red;
   transform: scale(1.1);
 }
 
