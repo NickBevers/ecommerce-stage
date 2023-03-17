@@ -8,7 +8,7 @@
   <script setup>
   import { defineProps, onBeforeMount, ref} from 'vue'
   import GuestLayout from '@/Layouts/GuestLayout.vue'
-  import ProductsFilter from '@/Components/Customer/Organisms/ProductsFilter.vue'
+  import ProductsFilter from '@/Components/Customer/Molecules/ProductsFilter.vue'
   import ProductsList from '@/Components/Customer/Molecules/ProductsList.vue'
 
   let categoryName = ref(null)
