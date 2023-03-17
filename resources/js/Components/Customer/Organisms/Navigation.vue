@@ -112,7 +112,6 @@ onBeforeMount(async () => {
         });
     });
     categories.value = categoriesData;
-    console.log(categories.value);
 });
 
 

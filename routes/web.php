@@ -112,8 +112,9 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/admin/categories', [AdminCategoryController::class, 'getAllCategories'])->name('admin.categories.getAll');
     Route::get('/admin/subcategories/{id}', [AdminSubcategoryController::class, 'getSubCategoriesById'])->name('admin.subcategories.getById');
-    Route::get('/admin/subcategories', [AdminSubcategoryController::class, 'getAll'])->name('admin.subcategories.getAll');
 });
+
+Route::get('/admin/subcategories', [AdminSubcategoryController::class, 'getAll'])->name('admin.subcategories.getAll');
 
 //TODO: make promo routes
 Route::get('/promos', [PromoController::class, 'index'])->name('promos.index');
