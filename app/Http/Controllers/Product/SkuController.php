@@ -86,7 +86,7 @@ class SkuController extends Controller
     public function showBySubCategory(String $subCategory)
     {
         $data = $this->filter(new Request(['subCategory' => $subCategory]));
-        return Inertia::render('Admin/Products/Index', $data);
+        return Inertia::render('Customer/Products/Index', $data);
     }
 
     public function showShoes(Request $request)
