@@ -29,6 +29,7 @@ class SubCategoryController extends Controller
             return [
                 'id' => $subCategory->id,
                 'name' => $subCategory->name,
+                'slug' => $subCategory->slug,
                 'category_id' => $subCategory->category_id,
             ];
         });
