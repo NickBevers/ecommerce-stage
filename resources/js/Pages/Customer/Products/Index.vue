@@ -1,6 +1,7 @@
 <template>
     <GuestLayout>
         <ProductsFilter :title="test"/>
+        <ProductsList :skus="skus.data" :links="skus.links"/>
     </GuestLayout>
   </template>
   
@@ -8,6 +9,7 @@
   import { defineProps, onMounted} from 'vue'
   import GuestLayout from '@/Layouts/GuestLayout.vue'
   import ProductsFilter from '@/Components/Customer/Organisms/ProductsFilter.vue'
+  import ProductsList from '@/Components/Customer/Molecules/ProductsList.vue'
 
   let test = 'test category'
 
@@ -15,7 +17,4 @@
     skus: Object,
     });
 
-    onMounted(() => {
-        console.log(props)
-    })
   </script>
