@@ -21,6 +21,7 @@ class SkuController extends Controller
             'skus' => Sku::with('attributeValues')
                 ->with('attributeValues.attributeType')
                 ->with('product')
+                ->with('product.productImages')
                 ->with('product.subCategory')
                 ->with('product.subCategory.category')
                 ->with('product.brand')
@@ -68,13 +69,12 @@ class SkuController extends Controller
 
     public function testFunc()
     {
-        // get all sku's with their attribute values where attribute value id is 3
-//        $sku = Sku::find(1);
-//        $res = $sku->attributeValues()->wherePivot('attribute_value_id', 3)->get();
-//        $res = $sku->morphedByMany(ColorSize::class, 'variation', 'sku_variations')->get();
-//        ray($res);
-
-        return $this->sortClothing(['6XL', 'XXL', '3XL']);
+        return Sku::whereHas('product.productImages')
+            ->with('product.productImages')
+            ->with('product.subCategory')
+            ->with('product.subCategory.category')
+            ->with('product.brand')
+            ->get();
     }
 
     public function store(Request $request)
@@ -87,10 +87,12 @@ class SkuController extends Controller
         $images = $request->files;
         foreach ($images as $image) {
             $type = 'image';
+            $isThumbnail = false;
             if ($images[0] == $image) {
                 $type = ('thumbnail');
+                $isThumbnail = true;
             }
-            $cloudinaryData = app(CloudinaryController::class)->uploadImage($image->getRealPath());
+            $cloudinaryData = app(CloudinaryController::class)->uploadImage($image->getRealPath(), $isThumbnail);
             app(ProductImageController::class)->store($product->id, $cloudinaryData['secure_url'], $cloudinaryData['public_id'], $image->getClientOriginalName(), $type);
         }
 

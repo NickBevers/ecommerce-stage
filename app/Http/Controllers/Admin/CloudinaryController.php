@@ -10,6 +10,7 @@ class CloudinaryController extends Controller
 {
     public function index()
     {
+        return $this->uploadImage(public_path('/pig.png'), false);
     }
 
     public function uploadImage($image, bool $isThumbnail = false)
