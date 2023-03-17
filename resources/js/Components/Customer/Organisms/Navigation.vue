@@ -118,6 +118,7 @@ onBeforeMount(async () => {
 
 function selectCategory(category_id) {
     selectedCategory.value = category_id;
+    console.log(categories.value)
 }
 
 
