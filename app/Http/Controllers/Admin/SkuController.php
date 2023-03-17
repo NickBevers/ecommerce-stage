@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Product\ProductController;
+use App\Http\Controllers\Product\ProductImageController;
 use App\Models\AttributeType;
 use App\Models\AttributeValue;
 use App\Models\Category;
@@ -78,11 +79,20 @@ class SkuController extends Controller
 
     public function store(Request $request)
     {
-        // title, description, audience, brand_id, sub_category_id, extra_info
 
         // get the product data from the request and create a new product
         $productData = $request->only(['title', 'description', 'audience', 'brand_id', 'sub_category_id', 'extra_info']);
         $product = app(ProductController::class)->store(new Request($productData));
+
+        $images = $request->files;
+        foreach ($images as $image) {
+            $type = 'image';
+            if ($images[0] == $image) {
+                $type = ('thumbnail');
+            }
+            $cloudinaryData = app(CloudinaryController::class)->uploadImage($image->getRealPath());
+            app(ProductImageController::class)->store($product->id, $cloudinaryData['secure_url'], $cloudinaryData['public_id'], $image->getClientOriginalName(), $type);
+        }
 
         foreach ($request->input('variations') as $variation) {
             $sku = Sku::create([

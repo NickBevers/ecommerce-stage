@@ -17,15 +17,15 @@ class ProductImageController extends Controller
 
     }
 
-    public function store(String $image, $id)
+    public function store($id, $link, $publicId, $alt, $type = 'image')
     {
-        $productImage = new ProductImage();
-        $productImage->product_id = $id;
-        $productImage->image_type = 'main';
-        $productImage->image_link = $image;
-        $productImage->image_public_id = `/images/${$image}`;
-        $productImage->alt = 'ProductImage';
-        $productImage->save();
+        return ProductImage::create([
+            'product_id' => $id,
+            'image_type' => $type,
+            'image_link' => $link,
+            'image_public_id' => $publicId,
+            'alt' => $alt,
+        ]);
     }
 
     public function show(ProductImage $productImage)
