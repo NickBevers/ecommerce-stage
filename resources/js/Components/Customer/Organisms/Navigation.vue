@@ -296,7 +296,7 @@ function selectCategory(category_id) {
 
 
                                                             <div>
-                                                                <div  v-for="(item, index) in category.subCategories.slice(3, 10)" :key="index"
+                                                                <div  v-for="(item, index) in category.subCategories.slice(2, 10)" :key="index"
                                                                 class="group relative">
                                                                 <div v-if="!item.preview" class="flex flex-row py-2">
                                                                     <Link :to="'/products/' + item.slug" :href="'/products/' + item.slug"
