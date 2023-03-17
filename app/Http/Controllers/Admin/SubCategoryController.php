@@ -35,6 +35,11 @@ class SubCategoryController extends Controller
         });
     }
 
+    public function getSubCategoryBySlug($name)
+    {
+        return SubCategory::where('slug', '=', $name)->get('name')->first();
+    }
+
     public function getAllSubCategories()
     {
         return SubCategory::all()->map(function ($subCategory) {
