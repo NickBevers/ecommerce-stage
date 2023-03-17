@@ -40,5 +40,5 @@ const props = defineProps({
   links: Object,
 });
 
-console.log(props.links)
+
 </script>
