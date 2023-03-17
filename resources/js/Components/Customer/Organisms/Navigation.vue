@@ -280,12 +280,12 @@ function selectCategory(category_id) {
                                                                         class="object-cover object-center" />
                                                                 </div>
                                                                 <div v-if="item.preview" class="flex flex-row">
-                                                                    <a :href="item.href"
+                                                                    <Link :to="'/products/' + item.slug" :href="'/products/' + item.slug"
                                                                         class="mt-4 block font-medium text-gray-900">
                                                                         <span class="absolute inset-0 z-10"
                                                                             aria-hidden="true" />
                                                                         {{ item.name }}
-                                                                    </a>
+                                                                </Link>
                                                                 </div>
                                                                 <div>
                                                                     <p v-if="item.preview" aria-hidden="true" class="mt-1">
@@ -296,15 +296,15 @@ function selectCategory(category_id) {
 
 
                                                             <div>
-                                                                <div  v-for="(item, index) in category.subCategories.slice(3, 10)" :key="index"
+                                                                <div  v-for="(item, index) in category.subCategories.slice(2, 10)" :key="index"
                                                                 class="group relative">
                                                                 <div v-if="!item.preview" class="flex flex-row py-2">
-                                                                    <a :href="item.href"
+                                                                    <Link :to="'/products/' + item.slug" :href="'/products/' + item.slug"
                                                                         class="mt-4 block font-medium text-gray-900">
                                                                         <span class="absolute inset-0 z-10"
                                                                             aria-hidden="true" />
                                                                         {{ item.name }}
-                                                                    </a>
+                                                                </Link>
                                                                 </div>
                                                             </div>
                                                             </div>
