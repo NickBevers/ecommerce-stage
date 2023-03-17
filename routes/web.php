@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\AttributeValueController;
 use App\Http\Controllers\Admin\BrandController as AdminBrandController;
 use App\Http\Controllers\Admin\CategoryController as AdminCategoryController;
+use App\Http\Controllers\Admin\CloudinaryController;
 use App\Http\Controllers\Admin\PromoController;
 use App\Http\Controllers\Admin\SubCategoryController as AdminSubCategoryController;
 use App\Http\Controllers\Customer\AddressController;
@@ -50,7 +51,7 @@ Route::get('/overview', function () {
 Route::get('/products', [ProductController::class, 'index'])->name('products.index');
 
 // Test Route
-//Route::get('/test', [ProductSkuController::class, 'filter'])->name('test');
+Route::get('/test', [CloudinaryController::class, 'index'])->name('test');
 
 // Get specific products
 Route::get('/products/shoes', [ProductSkuController::class, 'showShoes'])->name('shoes');
