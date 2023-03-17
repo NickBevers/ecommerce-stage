@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Product;
 
+use App\Http\Controllers\Admin\SubCategoryController;
 use App\Http\Controllers\Controller;
 use App\Models\AttributeValue;
 use App\Models\Sku;
@@ -43,7 +44,6 @@ class SkuController extends Controller
                 });
             })
             ->when($subCategory, function ($query) use ($subCategory){
-                ray($subCategory);
                 $query->whereHas('product.subCategory', function ($query) use ($subCategory) {
                     $query->where('slug', $subCategory);
                 });
@@ -76,10 +76,12 @@ class SkuController extends Controller
             ->paginate(48);
 
         // return the skus and min and max price
+//        dd(app(SubCategoryController::class)->getSubCategoryBySlug($subCategory));
         return [
             'skus' => $skus,
-            'minPrice' => Sku::min('price'),
-            'maxPrice' => Sku::max('price'),
+            'subCategory' => app(SubCategoryController::class)->getSubCategoryBySlug($subCategory),
+            'minPrice' => $skus->min('price'),
+            'maxPrice' => $skus->max('price'),
         ];
     }
 
