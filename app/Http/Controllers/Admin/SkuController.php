@@ -79,9 +79,9 @@ class SkuController extends Controller
 
     public function store(Request $request)
     {
-
+        dd($request->all());
         // get the product data from the request and create a new product
-        $productData = $request->only(['title', 'description', 'audience', 'brand_id', 'sub_category_id', 'extra_info']);
+        $productData = $request->only(['title', 'description', 'audience', 'brand_id', 'sub_category_id', 'product_type', 'extra_info']);
         $product = app(ProductController::class)->store(new Request($productData));
 
         $images = $request->files;
