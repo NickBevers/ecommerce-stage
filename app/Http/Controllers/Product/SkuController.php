@@ -133,13 +133,15 @@ class SkuController extends Controller
 
     public function show(String $sku)
     {
-        ray('hello');
         $sku = Sku::where('sku', $sku)
             ->with('attributeValues')
+            ->with('productImages')
             ->with('product')
             ->with('product.brand')
             ->with('product.subCategory')
             ->first();
+
+        ray($sku);
 
         $attributeValues = $sku->attributeValues;
         $material = $attributeValues->where('attribute_type_id', 3)->first();
