@@ -17,7 +17,7 @@ defineProps({
 </script>
 
 <template>
-    <GuestLayout :canLogin="canLogin" :canRegister="canRegister">
+    <GuestLayout>
     <div>
         <Hero/>
         <CategoryPreview/>
