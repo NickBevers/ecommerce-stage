@@ -1,6 +1,5 @@
 <template>
     <div class="mt-8">
-        {{ form }}
         <form class="max-w-7xl mx-auto sm:px-6 lg:px-8 my-5" @submit.prevent="submit">
             <div class="bg-white px-4 py-5 shadow sm:rounded-lg mb-4 sm:p-6 ">
                 <div class="md:grid md:grid-cols-3 md:gap-6">
@@ -155,50 +154,17 @@
 import { defineProps, ref, reactive, watch, onMounted, onBeforeMount } from 'vue'
 import InputLabel from '@/Components/Admin/Atoms/InputLabel.vue';
 import TextInput from '@/Components/Admin/Atoms/TextInput.vue';
-import PrimaryButton from '@/Components/Admin/Atoms/PrimaryButton.vue';
-import SecondaryButton from '@/Components/Admin/Atoms/SecondaryButton.vue';
 import UploadFile from '@/Components/Admin/Molecules/UploadFile.vue';
 import InputError from '@/Components/Admin/Atoms/InputError.vue';
 import { Head, Link, useForm } from '@inertiajs/vue3';
 import Dropdown from '@/Components/Admin/Atoms/Dropdown.vue';
 import SearchDropdown from 'search-dropdown-vue';
-import {
-    Popover,
-    PopoverButton,
-    PopoverGroup,
-    PopoverPanel,
-} from '@headlessui/vue'
-import { ChevronDownIcon, XMarkIcon } from '@heroicons/vue/20/solid'
 
 const props = defineProps({
     brands: Array,
     categories: Array,
     attributeTypes: Array,
 });
-
-let object = reactive({ id: null, name: null })
-
-
-
-let checkedFilters = reactive([])
-
-function addCheckedFilter(filter, value) {
-    const index = checkedFilters.findIndex(item => item[filter])
-    if (index === -1) {
-        checkedFilters.push({ [filter]: [value] })
-    } else {
-        const values = checkedFilters[index][filter]
-        if (!values) {
-            checkedFilters[index][filter] = []
-        }
-        const valueIndex = values.indexOf(value)
-        if (valueIndex === -1) {
-            values.push(value)
-        } else {
-            values.splice(valueIndex, 1)
-        }
-    }
-}
 
 function updateVariation(filter) {
     if(filter === 'sizes') {
@@ -207,42 +173,6 @@ function updateVariation(filter) {
     
 
 }
-
-function addRadioFilter(filter, value) {
-    //check if it already has a value
-    const index = checkedFilters.findIndex(item => item[filter])
-    //if it does replace the value
-    if (index !== -1) {
-        checkedFilters[index][filter] = [value]
-    } else {
-        //if it doesn't add it
-        checkedFilters.push({ [filter]: [value] })
-    }
-}
-
-//isChecked
-function isChecked(filter, value) {
-    const index = checkedFilters.findIndex(item => item[filter])
-    if (index === -1) {
-        // Attribute not present in the array
-        return false
-    } else {
-        const values = checkedFilters[index][filter]
-        if (!values) {
-            // The filter key is present but its value is undefined
-            return false
-        }
-        const valueIndex = values.indexOf(value)
-        if (valueIndex === -1) {
-            // Value not present in the attribute
-            return false
-        } else {
-            // Value already present in the attribute
-            return true
-        }
-    }
-}
-
 
 const form = useForm({
     title: "",
@@ -254,8 +184,8 @@ const form = useForm({
     variations: [
         { 
         sku: "",
-        amount: 0,
-        price: 0,
+        amount: "",
+        price: "",
         color: "",
         sizes: [],
         material: "",
@@ -263,16 +193,6 @@ const form = useForm({
     }
     ]
 });
-
-const variationForm = useForm({
-    sku: "",
-    amount: "",
-    price: "",
-    color: "",
-    sizes: [],
-    material: "",
-    images: [],
-})
 
 const audience = reactive(
     ["Men", "Women", "Kids", "Unisex"]
@@ -298,33 +218,6 @@ function updateSubCategories() {
 
 function onSelectedOption(option) {
     form.brand_id = option.id
-}
-
-function addVariation() {
-    if (!variationForm.color || !variationForm.sizes || !variationForm.material) {
-        variationError.value = true
-        return
-    }
-    variationError.value = false
-    formVariationError.value = false
-    const newVariation = {
-        sku: variationForm.sku,
-        amount: variationForm.amount,
-        price: variationForm.price,
-        color: variationForm.color,
-        sizes: variationForm.sizes,
-        material: variationForm.material,
-    };
-
-
-    variationForm.reset();
-
-    checkedFilters = reactive([])
-
-}
-
-function removeVariation(index) {
-
 }
 
 watch(() => {
