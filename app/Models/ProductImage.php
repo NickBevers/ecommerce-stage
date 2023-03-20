@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class ProductImage extends Model
 {
 protected $fillable = [
-        'product_id',
+        'sku_id',
         'image_type',
         'image_link',
         'image_public_id',
@@ -22,8 +22,8 @@ protected $fillable = [
     |--------------------------------------------------------------------------
     */
 
-    public function product(): BelongsTo
+    public function sku(): BelongsTo
     {
-        return $this->belongsTo(Product::class);
+        return $this->belongsTo(Sku::class);
     }
 }
