@@ -134,4 +134,38 @@ class SkuController extends Controller
     public function show(Sku $sku)
     {
     }
+
+    public function getSingleSku(String $sku)
+    {
+        $sku = Sku::where('sku', $sku)
+            ->with('attributeValues')
+            ->with('product')
+            ->with('product.brand')
+            ->with('product.subCategory')
+            ->first();
+
+        $attributeValues = $sku->attributeValues;
+        $material = $attributeValues->where('attribute_type_id', 3)->first();
+        $sizes = [];
+        $colors = [];
+        foreach ($attributeValues as $attributeValue) {
+            if ($attributeValue->attribute_type_id == 1) {
+                $sizes[] = $attributeValue->name;
+            } else if ($attributeValue->attribute_type_id == 2) {
+                $colors[] = $attributeValue->name;
+            }
+        }
+
+        $variations = Sku::where('product_id', $sku->product_id)
+            ->whereNotIn('sku', [$sku->sku])
+            ->get();
+
+        return [
+            'sku' => $sku,
+            'variations' => $variations,
+            'sizes' => $sizes,
+            'colors' => $colors,
+            'material' => $material->name,
+        ];
+    }
 }

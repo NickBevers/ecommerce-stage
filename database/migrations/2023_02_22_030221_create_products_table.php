@@ -12,6 +12,7 @@ return new class extends Migration {
             $table->String('title');
             $table->String('description')->nullable();
             $table->String('audience');
+            $table->String('product_type')->default('simple');
             $table->foreignId('sub_category_id')->constrained();
             $table->String('extra_info')->nullable();
             $table->boolean('is_active')->default(true);

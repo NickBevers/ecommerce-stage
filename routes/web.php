@@ -51,7 +51,7 @@ Route::get('/overview', function () {
 Route::get('/products', [ProductController::class, 'index'])->name('products.index');
 
 // Test Route
-Route::get('/test', [CloudinaryController::class, 'index'])->name('test');
+Route::get('/test/{id}', [ProductSkuController::class, 'getSingleSku'])->name('test');
 
 // Get specific products
 Route::get('/products/shoes', [ProductSkuController::class, 'showShoes'])->name('shoes');
