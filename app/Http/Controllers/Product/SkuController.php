@@ -131,12 +131,9 @@ class SkuController extends Controller
 //        return $sku;
     }
 
-    public function show(Sku $sku)
+    public function show(String $sku)
     {
-    }
-
-    public function getSingleSku(String $sku)
-    {
+        ray('hello');
         $sku = Sku::where('sku', $sku)
             ->with('attributeValues')
             ->with('product')
@@ -160,12 +157,12 @@ class SkuController extends Controller
             ->whereNotIn('sku', [$sku->sku])
             ->get();
 
-        return [
+        return Inertia::render('Customer/Product/Index', [
             'sku' => $sku,
             'variations' => $variations,
             'sizes' => $sizes,
             'colors' => $colors,
             'material' => $material->name,
-        ];
+        ]);
     }
 }

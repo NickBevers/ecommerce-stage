@@ -48,10 +48,9 @@ Route::get('/overview', function () {
     return Inertia::render('Dashboard/Overview');
 })->middleware(['auth', 'verified'])->name('overview');
 
-Route::get('/products', [ProductController::class, 'index'])->name('products.index');
 
 // Test Route
-Route::get('/test/{id}', [ProductSkuController::class, 'getSingleSku'])->name('test');
+Route::get('/test/{id}', [ProductSkuController::class, 'show'])->name('test');
 
 // Get specific products
 Route::get('/products/shoes', [ProductSkuController::class, 'showShoes'])->name('shoes');
@@ -62,11 +61,12 @@ Route::get('/products/promos', [ProductSkuController::class, 'showPromos'])->nam
 Route::get('/products/{subCategory}', [ProductSkuController::class, 'showBySubCategory'])->name('products.showBySubCategory');
 
 // Product Routes
+//Route::get('/products', [ProductController::class, 'index'])->name('products.index');
 Route::get('/products', [ProductSkuController::class, 'index'])->name('products.index');
-Route::get('/product/{product}', [ProductController::class, 'show'])->name('product.show');
-Route::get('/product/{product}/edit', [ProductController::class, 'edit'])->name('product.edit');
-Route::patch('/product/{product}', [ProductController::class, 'update'])->name('product.update');
-Route::delete('/product/{product}', [ProductController::class, 'destroy'])->name('product.destroy');
+Route::get('/product/{id}',  [ProductSkuController::class, 'show'])->name('product.show');
+Route::get('/product/{product}/edit', [ProductSkuController::class, 'edit'])->name('product.edit');
+Route::patch('/product/{product}', [ProductSkuController::class, 'update'])->name('product.update');
+Route::delete('/product/{product}', [ProductSkuController::class, 'destroy'])->name('product.destroy');
 
 // Filter Routes
 Route::post('/filter', [ProductSkuController::class, 'filter'])->withoutMiddleware(\App\Http\Middleware\VerifyCsrfToken::class)->name('products.filter');
