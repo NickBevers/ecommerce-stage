@@ -127,15 +127,71 @@ class SkuController extends Controller
         return array_values($res);
     }
 
-    public function edit(Sku $sku)
+    public function edit(String $skuNumber)
     {
+        $sku = Sku::where('sku', $skuNumber)
+            ->with('product')
+            ->with('productImages')
+            ->with('product.subCategory')
+            ->with('product.subCategory.category')
+            ->with('product.brand')
+            ->with('attributeValues')
+            ->with('attributeValues.attributeType')
+            ->first();
+
+        return Inertia::render('Admin/Products/Edit', [
+            'skus' => $sku,
+            'brands' => app(BrandController::class)->getAllBrands(),
+            'categories' => app(CategoryController::class)->getAllCategories(),
+            'attributeTypes' => app(AttributeTypesController::class)->getAllTypes(),
+            'sizes' => app(AttributeValueController::class)->getSizes(),
+            'colors' => app(AttributeValueController::class)->getColors(),
+            'materials' => app(AttributeValueController::class)->getMaterials(),
+        ]);
     }
 
     public function update(Request $request, Sku $sku)
     {
+        $productData = $request->only(['title', 'description', 'audience', 'brand_id', 'sub_category_id', 'product_type', 'extra_info']);
+        $product = app(ProductController::class)->update(new Request($productData), $sku->product_id);
+
+        $images = $request->files;
+        foreach ($images as $image) {
+            $type = 'image';
+            $isThumbnail = false;
+            if ($images[0] == $image) {
+                $type = ('thumbnail');
+                $isThumbnail = true;
+            }
+            $cloudinaryData = app(CloudinaryController::class)->uploadImage($image->getRealPath(), $isThumbnail);
+            app(ProductImageController::class)->store($product->id, $cloudinaryData['secure_url'], $cloudinaryData['public_id'], $image->getClientOriginalName(), $type);
+        }
+
+        $sku->update([
+            'sku' => $request->input('sku'),
+            'price' => $request->input('price'),
+            'amount' => $request->input('amount'),
+        ]);
+
+        $sku->attributeValues()->detach();
+        $color = AttributeValue::where('name', $request->input('color'))->first();
+        $sku->attributeValues()->attach($color);
+
+        $material = AttributeValue::where('name', $request->input('material'))->first();
+        $sku->attributeValues()->attach($material);
+
+        $sizes = $this->sortClothing($request->input('sizes'));
+        foreach ($sizes as $size) {
+            $size = AttributeValue::where('name', $size)->first();
+            $sku->attributeValues()->attach($size);
+        }
+
+        return redirect()->route('admin.products.index');
     }
 
     public function destroy(Sku $sku)
     {
+        $sku->delete();
+        return redirect()->route('admin.products.index');
     }
 }

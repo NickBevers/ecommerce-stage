@@ -54,4 +54,9 @@ class Sku extends Model
     {
         return $this->belongsToMany(AttributeValue::class, 'attribute_value_sku', 'sku_id', 'attribute_value_id');
     }
+
+    public function productImages(): HasMany
+    {
+        return $this->hasMany(ProductImage::class);
+    }
 }

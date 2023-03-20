@@ -86,6 +86,8 @@ class ProductController extends Controller
     {
         $productToUpdate = Product::find($product->id);
         $productToUpdate->update($request->all());
+        $productToUpdate->save();
+        return $productToUpdate;
     }
 
     public function destroy(Product $product)

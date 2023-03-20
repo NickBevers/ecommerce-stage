@@ -107,7 +107,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/admin/products/search', [AdminSkuController::class, 'search'])->name('admin.products.search');
     Route::get('/admin/products/create', [AdminSkuController::class, 'create'])->name('admin.products.create');
 //    Route::get('/admin/products/{product}', [AdminSkuController::class, 'show'])->name('admin.products.show');
-//    Route::get('/admin/products/{product}/edit', [AdminSkuController::class, 'edit'])->name('admin.products.edit');
+        Route::get('/admin/products/{sku}/edit', [AdminSkuController::class, 'edit'])->name('admin.products.edit');
     Route::patch('/admin/products/{product}', [AdminSkuController::class, 'update'])->name('admin.products.update');
 //    Route::delete('/admin/products/{product}', [AdminSkuController::class, 'destroy'])->name('admin.products.destroy');
 
