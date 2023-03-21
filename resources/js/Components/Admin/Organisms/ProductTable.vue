@@ -56,13 +56,13 @@ function getBgClass(amount) {
                   </div>
                 </td>
                 <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                  <div class="inline-flex rounded-full bg-blue-100 px-2 text-xs font-semibold leading-5 text-blue-800">{{ product.product.sub_category_id }}</div>
+                  <div class="inline-flex rounded-full bg-blue-100 px-2 text-xs font-semibold leading-5 text-blue-800">{{ product.product.sub_category.name }}</div>
              
                 </td>
                 <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
                     <span class="inline-flex rounded-full px-2 text-xs font-semibold leading-5 text-white" :class="getBgClass(product.amount)">{{product.amount}}</span>
                 </td>
-                <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">$23</td>
+                <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">${{ product.price }}</td>
                 <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-left text-sm font-medium sm:pr-0">
                   <a href="#" class="text-indigo-600 hover:text-indigo-900"
                     >Edit<span class="sr-only">, {{ product.id }}</span></a
