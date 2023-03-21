@@ -18,7 +18,7 @@
                         class="relative cursor-pointer rounded-md bg-white font-medium text-indigo-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-500 focus-within:ring-offset-2 hover:text-indigo-500">
                         <span>Upload a file</span>
                         <input id="file-upload" name="file-upload" type="file" class="sr-only" @change="handleFileUpload"
-                            multiple />
+                            multiple required/>
                     </label>
                     <p class="pl-1">or drag and drop</p>
                 </div>
@@ -39,8 +39,17 @@
 </template>
   
 <script setup>
-import { ref, reactive } from 'vue';
+import { ref, reactive, defineEmits, watch, defineProps} from 'vue';
 import { XMarkIcon } from '@heroicons/vue/24/outline'
+
+const emit = defineEmits(['imagePreviews'])
+
+const props = defineProps({
+  formSubmitted: {
+    type: Boolean,
+    required: true,
+  },
+});
 
 const imagePreviews = ref([]);
 
@@ -52,6 +61,7 @@ const handleFileUpload = (e) => {
     reader.readAsDataURL(file);
     reader.onload = () => {
       imagePreviews.value.push(reader.result);
+      submit()
     };
   }
 };
@@ -65,6 +75,7 @@ const handleDrop = (e) => {
     reader.readAsDataURL(file);
     reader.onload = () => {
       imagePreviews.value.push(reader.result);
+      submit()
     };
   }
 };
@@ -72,5 +83,21 @@ const handleDrop = (e) => {
 const removeImage = (index) => {
   imagePreviews.value.splice(index, 1);
 };
+
+function submit(){
+  emit('imagePreviews', imagePreviews.value)
+}
+
+watch(
+
+  () => props.formSubmitted,
+
+  (newValue) => {
+    if (newValue) {
+
+      imagePreviews.value = [];
+    }
+  }
+);
 
 </script>
