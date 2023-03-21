@@ -24,7 +24,6 @@ class CloudinaryController extends Controller
             'height' => $uploadedFile->getHeight(),
             'url' => $uploadedFile->getPath(),
             'secure_url' => $uploadedFile->getSecurePath(),
-            'original_filename' => $uploadedFile->getOriginalFilename()
         ];
     }
 }

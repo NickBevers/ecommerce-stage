@@ -79,7 +79,6 @@ class SkuController extends Controller
 
     public function store(Request $request)
     {
-        dd($request->all());
         // get the product data from the request and create a new product
         $productData = $request->only(['title', 'description', 'audience', 'brand_id', 'sub_category_id', 'product_type', 'extra_info']);
         $product = app(ProductController::class)->store(new Request($productData));
@@ -95,7 +94,7 @@ class SkuController extends Controller
             foreach ($variation['images'] as $image) {
                 $type = 'image';
                 $isThumbnail = false;
-                if ($images[0] == $image) {
+                if ($variation['images'][0] == $image) {
                     $type = ('thumbnail');
                     $isThumbnail = true;
                 }
