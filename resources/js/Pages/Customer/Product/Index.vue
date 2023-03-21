@@ -180,6 +180,6 @@ const props = defineProps({
   material: Object,
 });
 
-console.log(props.colors)
+console.log(props.variations)
 
 </script>
