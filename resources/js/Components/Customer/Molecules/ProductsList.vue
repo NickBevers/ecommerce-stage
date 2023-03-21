@@ -10,7 +10,9 @@
             </div>
             <div class="relative mt-4">
               <h3 class="text-sm font-medium text-gray-900">{{ product.product.title }}</h3>
-              <p class="mt-1 text-sm text-gray-500">{{ product.product.description.slice(0, 30) }}...</p>
+              <p class="mt-1 text-sm text-gray-500">
+              {{ !product.product.description ? '' : product.product.description.length <= 30 ? product.product.description : product.product.description.slice(0, 30) + '...' }}
+            </p>
             </div>
             <div class="grade absolute inset-x-0 top-0 flex h-72 items-end justify-end overflow-hidden rounded-lg p-4">
               <div aria-hidden="true" class="absolute inset-x-0 bottom-0 h-36 bg-gradient-to-t from-black opacity-50" />
