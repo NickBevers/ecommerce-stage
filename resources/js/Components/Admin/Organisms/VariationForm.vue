@@ -1,5 +1,7 @@
 <template>
          <div class="mt-8">
+            {{ form }}
+            <b>{{     variationForm.images }}</b>
             <form class="max-w-7xl mx-auto sm:px-6 lg:px-8 my-5" @submit.prevent="submit">
                 <div class="bg-white px-4 py-5 shadow sm:rounded-lg mb-4 sm:p-6 ">
                     <div class="md:grid md:grid-cols-3 md:gap-6">
@@ -198,7 +200,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <UploadFile class="mt-6" />
+                                <UploadFile class="mt-6" @image-previews="updateImages" :formSubmitted="submitImage"/>
 
                             </div>
 
@@ -288,6 +290,8 @@ const props = defineProps({
 });
 
 let checkedFilters = reactive([])
+
+let submitImage = ref(false)
 
 function addCheckedFilter(filter, value) {
     const index = checkedFilters.findIndex(item => item[filter])
@@ -388,6 +392,8 @@ function addVariation() {
     }
     variationError.value = false
     formVariationError.value = false
+    submitImage.value = true
+
     const newVariation = {
         sku: variationForm.sku,
         amount: variationForm.amount,
@@ -395,14 +401,16 @@ function addVariation() {
         color: variationForm.color,
         sizes: variationForm.sizes,
         material: variationForm.material,
+        images: variationForm.images 
     };
 
     variations.push(newVariation);
 
+    variationForm.images = []
+
     variationForm.reset();
 
     checkedFilters = reactive([])
-
 }
 
 function removeVariation(index) {
@@ -418,6 +426,11 @@ watch(() => {
     }
     form.variations = variations
 })
+
+function updateImages(images) {
+    variationForm.images = images
+}
+
 
 function submit() {
     if (variations.length === 0) {

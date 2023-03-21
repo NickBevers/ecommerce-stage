@@ -108,7 +108,6 @@
                                     </div>
                               
                             </div>
-                            <InputError class="mt-2" v-if="variationError" message="Please select add-ons" />
                         </div>
                         <div>
                             <InputLabel for="description">Description</InputLabel>
@@ -128,12 +127,9 @@
                                     v-model="form.extra_info">  </textarea>
                             </div>
                         </div>
-
+                        {{ images }}
                         <div class="mt-5 md:col-span-2 md:mt-0">
-                            <InputError class="mt-2" v-if="formVariationError"
-                                message="Please create at least one variation" />
-                            <UploadFile class="mt-6" />
-
+                            <UploadFile class="mt-6" @image-previews="updateImages" />
                         </div>
                     </div>
 
@@ -207,10 +203,9 @@ let formSize = ref("");
 let formColor = ref("");
 let formMaterial = ref("");
 
-
-let variationError = ref(false);
-
-let formVariationError = ref(false);
+function updateImages(images) {
+    form.variations[0].images = images
+}
 
 function updateSubCategories() {
     selectedHeadCategory.value = selectedHeadCategoryIndex.value.id - 1
