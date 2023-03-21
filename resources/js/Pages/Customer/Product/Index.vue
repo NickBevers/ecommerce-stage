@@ -73,8 +73,10 @@
                 -->
                 <label class="relative -m-0.5 flex cursor-pointer items-center justify-center rounded-full p-0.5 focus:outline-none ring-gray-900">
                   <input type="radio" name="color-choice" value="Black" class="sr-only" aria-labelledby="color-choice-0-label">
-                  <span id="color-choice-0-label" class="sr-only"> Black </span>
-                  <span aria-hidden="true" class="h-8 w-8 bg-gray-900 rounded-full border border-black border-opacity-10"></span>
+                  <span id="color-choice-0-label" class="sr-only">{{ props.colors[0].name }}</span>
+                  <span aria-hidden="true" 
+                  class='h-8 w-8 rounded-full border border-black border-opacity-10' 
+                  :style="{ backgroundColor: props.colors[0].hex}"></span>
                 </label>
               </div>
             </fieldset>
@@ -172,8 +174,12 @@ import ProductReviews from '@/Components/Customer/Molecules/ProductReviews.vue';
 
 const props = defineProps({
   sku: Object,
+  variations: Object,
+  sizes: Object,
+  colors: Object,
+  material: Object,
 });
 
-console.log(props.sku)
+console.log(props.colors)
 
 </script>
