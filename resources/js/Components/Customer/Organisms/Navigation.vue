@@ -101,7 +101,7 @@ onBeforeMount(async () => {
     const response = await fetch('/admin/subcategories');
     const categoriesData = await response.json();
     categoriesData.forEach(category => {
-        category.subCategories?.slice(0, 2).forEach(subcategory => {
+        category.subCategories?.slice(0, 3).forEach(subcategory => {
             subcategory.preview = true;
         });
     });
@@ -158,7 +158,7 @@ function selectCategory(category_id) {
                                 <TabPanels as="template">
                                     <TabPanel v-for="category in navigation.categories" :key="category.name"
                                         class="space-y-12 px-4 py-6">
-                                        <div class="grid grid-cols-2 gap-x-4 gap-y-10">
+                                        <div class="grid grid-cols-1 gap-x-4 gap-y-10">
                                             <div v-for="item in category.featured" :key="item.name" class="group relative">
                                                 <div
                                                     class="aspect-w-1 aspect-h-1 overflow-hidden rounded-md bg-gray-100 group-hover:opacity-75">
@@ -268,7 +268,7 @@ function selectCategory(category_id) {
                                                     <div class="relative">
                                                         <div
                                                             class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 grid grid-cols-4 gap-y-4 gap-x-8 py-16">
-                                                            <div  v-for="(item, index) in category.subCategories.slice(0, 2)" :key="index"
+                                                            <div  v-for="(item, index) in category.subCategories.slice(0, 3)" :key="index"
                                                                 class="group relative">
                                                                 <div v-if="item.preview"
                                                                     class="aspect-w-1 aspect-h-1 overflow-hidden rounded-md bg-gray-100 group-hover:opacity-75">
@@ -292,8 +292,8 @@ function selectCategory(category_id) {
                                                       
 
 
-                                                            <div class="col-span-2 flex flex-wrap ">
-                                                                <div  v-for="(item, index) in category.subCategories.slice(2, 10)" :key="index"
+                                                            <div class="col-span-1 flex flex-wrap ">
+                                                                <div  v-for="(item, index) in category.subCategories.slice(3, 10)" :key="index"
                                                                 class="group relative w-full">
                                                                 <div v-if="!item.preview" class="flex flex-row flex-wrap justify-start pl-8 gap-6">
                                                                     <Link :to="'/products/' + item.slug" :href="'/products/' + item.slug"
