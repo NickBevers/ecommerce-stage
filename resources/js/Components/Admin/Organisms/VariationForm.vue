@@ -1,7 +1,5 @@
 <template>
          <div class="mt-8">
-            {{ form }}
-            <b>{{     variationForm.images }}</b>
             <form class="max-w-7xl mx-auto sm:px-6 lg:px-8 my-5" @submit.prevent="submit">
                 <div class="bg-white px-4 py-5 shadow sm:rounded-lg mb-4 sm:p-6 ">
                     <div class="md:grid md:grid-cols-3 md:gap-6">
