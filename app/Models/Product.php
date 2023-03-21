@@ -12,7 +12,6 @@ use Illuminate\Database\Eloquent\Relations\HasOneThrough;
 
 class Product extends Model
 {
-
     use HasFactory;
 
     protected $fillable = [
@@ -57,6 +56,4 @@ class Product extends Model
     {
         return $this->hasMany(Sku::class);
     }
-
-
 }

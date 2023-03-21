@@ -38,6 +38,8 @@ class SkuController extends Controller
 
         $skus = Sku::with('attributeValues')
             ->with('product')
+            ->with('productImages')
+            ->with('product.subCategory')
             ->when($category, function ($query) use ($category){
                 $query->whereHas('product.subCategory.category', function ($query) use ($category) {
                     $query->where('name', $category);
@@ -133,13 +135,15 @@ class SkuController extends Controller
 
     public function show(String $sku)
     {
-        ray('hello');
         $sku = Sku::where('sku', $sku)
             ->with('attributeValues')
+            ->with('productImages')
             ->with('product')
             ->with('product.brand')
             ->with('product.subCategory')
             ->first();
+
+        ray($sku);
 
         $attributeValues = $sku->attributeValues;
         $material = $attributeValues->where('attribute_type_id', 3)->first();

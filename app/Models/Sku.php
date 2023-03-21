@@ -12,7 +12,6 @@ use Illuminate\Database\Eloquent\Relations\HasOneThrough;
 
 class Sku extends Model
 {
-
     use HasFactory;
 
     protected $table = 'skus';
@@ -57,6 +56,6 @@ class Sku extends Model
 
     public function productImages(): HasMany
     {
-        return $this->hasMany(ProductImage::class);
+        return $this->hasMany(ProductImage::class, 'sku_id');
     }
 }
