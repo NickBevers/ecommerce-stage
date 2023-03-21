@@ -292,10 +292,10 @@ function selectCategory(category_id) {
                                                       
 
 
-                                                            <div class=" col-span-2 flex">
+                                                            <div class="col-span-2 flex flex-wrap ">
                                                                 <div  v-for="(item, index) in category.subCategories.slice(2, 10)" :key="index"
-                                                                class="group relative  w-32">
-                                                                <div v-if="!item.preview" class="flex flex-row py-2">
+                                                                class="group relative w-full">
+                                                                <div v-if="!item.preview" class="flex flex-row flex-wrap justify-start pl-8 gap-6">
                                                                     <Link :to="'/products/' + item.slug" :href="'/products/' + item.slug"
                                                                         class="mt-4 block font-medium text-gray-900">
                                                                         <span class="absolute inset-0 z-10"

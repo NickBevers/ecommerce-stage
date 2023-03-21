@@ -42,7 +42,7 @@
   </select>
 </template>
 <script setup>
-import { ref, computed, watch } from 'vue'
+import { ref, computed, watch, onMounted } from 'vue'
 import { Listbox, ListboxButton, ListboxOption, ListboxOptions } from '@headlessui/vue'
 import { CheckIcon, ChevronUpDownIcon } from '@heroicons/vue/20/solid'
 
@@ -53,14 +53,28 @@ const props = defineProps({
   lots: {
     type: Boolean,
     default: false
+  },
+  place: {
+    type: String,
+    default: null
   }
 })
 
-const selected = ref(props.items[0])
+onMounted(() => {
+
+  if (props.place) {
+    selected.value = props.place
+  }
+  else{
+    selected.value = props.items[0]
+  }
+})
+
+const selected = ref("test")
 
 const isDisabled = computed(() => props.items.length === 0)
 
-// Set the selected value to "No Options" if props.items is empty
+
 if (isDisabled.value) {
   selected.value = 'No Options'
 }
