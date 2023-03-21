@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Product\ProductController;
 use App\Models\Promo;
+use App\Models\Sku;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -12,11 +13,20 @@ class PromoController extends Controller
 {
     public function index()
     {
-        return Inertia::render('Admin/Promos/Index');
+        return redirect()->route('promos');
     }
 
-    public function create()
+    public function create(String $skuId)
     {
+        $sku = Sku::where('sku', $skuId)
+            ->with('attributeValues.attributeType')
+            ->with('product')
+            ->with('productImages')
+            ->with('product.subCategory')
+            ->with('product.subCategory.category')
+            ->with('product.brand')
+            ->first();
+
         return Inertia::render('Admin/Promos/Create');
     }
 

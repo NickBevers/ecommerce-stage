@@ -21,7 +21,7 @@ class SkuController extends Controller
             'skus' => Sku::with('attributeValues')
                 ->with('attributeValues.attributeType')
                 ->with('product')
-                ->with('product.productImages')
+                ->with('productImages')
                 ->with('product.subCategory')
                 ->with('product.subCategory.category')
                 ->with('product.brand')

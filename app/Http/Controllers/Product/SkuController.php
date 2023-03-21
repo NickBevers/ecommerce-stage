@@ -38,6 +38,8 @@ class SkuController extends Controller
 
         $skus = Sku::with('attributeValues')
             ->with('product')
+            ->with('productImages')
+            ->with('product.subCategory')
             ->when($category, function ($query) use ($category){
                 $query->whereHas('product.subCategory.category', function ($query) use ($category) {
                     $query->where('name', $category);
