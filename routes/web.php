@@ -5,7 +5,8 @@ use App\Http\Controllers\Admin\BrandController as AdminBrandController;
 use App\Http\Controllers\Admin\CategoryController as AdminCategoryController;
 use App\Http\Controllers\Admin\CloudinaryController;
 use App\Http\Controllers\Admin\PromoController;
-use App\Http\Controllers\Admin\ReviewController;
+use App\Http\Controllers\Admin\ReviewController as AdminReviewController;
+use App\Http\Controllers\Customer\ReviewController as CustomerReviewController;
 use App\Http\Controllers\Admin\SubCategoryController as AdminSubCategoryController;
 use App\Http\Controllers\Customer\AddressController;
 use App\Http\Controllers\Product\ProductController;
@@ -130,14 +131,15 @@ Route::patch('/promos/{promo}', [PromoController::class, 'update'])->name('promo
 Route::delete('/promos/{promo}', [PromoController::class, 'destroy'])->name('promos.destroy');
 
 
-// Review Routes
-Route::get('/reviews', [ReviewController::class, 'index'])->name('reviews.index');
-Route::post('/reviews', [ReviewController::class, 'store'])->name('reviews.store');
-Route::get('/reviews/create', [ReviewController::class, 'create'])->name('reviews.create');
-Route::get('/reviews/{review}', [ReviewController::class, 'show'])->name('reviews.show');
-Route::get('/reviews/{review}/edit', [ReviewController::class, 'edit'])->name('reviews.edit');
-Route::patch('/reviews/{review}', [ReviewController::class, 'update'])->name('reviews.update');
-Route::delete('/reviews/{review}', [ReviewController::class, 'destroy'])->name('reviews.destroy');
+// Admin Review Routes
+Route::get('/reviews/{id}', [AdminReviewController::class, 'getAllReviews'])->name('reviews.index');
+Route::get('/reviews/toggle/{id}', [AdminReviewController::class, 'toggleInactive'])->name('reviews.create');
+
+// Customer Review Routes
+Route::get('/review/useful/{id}', [CustomerReviewController::class, 'markAsUseful'])->name('reviews.useful');
+Route::get('/review/unuseful/{id}', [CustomerReviewController::class, 'markAsNotUseful'])->name('reviews.notUseful');
+Route::post('/reviews', [CustomerReviewController::class, 'store'])->name('reviews.store');
+Route::delete('/reviews/{review}', [CustomerReviewController::class, 'destroy'])->name('reviews.destroy');
 
 
 
