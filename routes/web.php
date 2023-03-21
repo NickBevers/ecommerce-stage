@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\AttributeValueController;
 use App\Http\Controllers\Admin\BrandController as AdminBrandController;
+use App\Http\Controllers\Customer\BrandController as CustomerBrandController;
 use App\Http\Controllers\Admin\CategoryController as AdminCategoryController;
 use App\Http\Controllers\Admin\CloudinaryController;
 use App\Http\Controllers\Admin\PromoController;
@@ -141,6 +142,8 @@ Route::get('/review/unuseful/{id}', [CustomerReviewController::class, 'markAsNot
 Route::post('/reviews', [CustomerReviewController::class, 'store'])->name('reviews.store');
 Route::delete('/reviews/{review}', [CustomerReviewController::class, 'destroy'])->name('reviews.destroy');
 
-
+// Brand Routes
+Route::get('/brands', [CustomerBrandController::class, 'index'])->name('brands.index');
+Route::get('/brands/{brand}', [CustomerBrandController::class, 'show'])->name('brands.show');
 
 require __DIR__.'/auth.php';
