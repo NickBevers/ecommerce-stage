@@ -84,18 +84,6 @@ class SkuController extends Controller
         $productData = $request->only(['title', 'description', 'audience', 'brand_id', 'sub_category_id', 'product_type', 'extra_info']);
         $product = app(ProductController::class)->store(new Request($productData));
 
-        $images = $request->files;
-        foreach ($images as $image) {
-            $type = 'image';
-            $isThumbnail = false;
-            if ($images[0] == $image) {
-                $type = ('thumbnail');
-                $isThumbnail = true;
-            }
-            $cloudinaryData = app(CloudinaryController::class)->uploadImage($image, $isThumbnail);
-            app(ProductImageController::class)->store($product->id, $cloudinaryData['secure_url'], $cloudinaryData['public_id'], $image->getClientOriginalName(), $type);
-        }
-
         foreach ($request->input('variations') as $variation) {
             $sku = Sku::create([
                 'sku' => $variation['sku'],
@@ -103,6 +91,17 @@ class SkuController extends Controller
                 'amount' => $variation['amount'],
                 'product_id' => $product->id,
             ]);
+
+            foreach ($variation['images'] as $image) {
+                $type = 'image';
+                $isThumbnail = false;
+                if ($images[0] == $image) {
+                    $type = ('thumbnail');
+                    $isThumbnail = true;
+                }
+                $cloudinaryData = app(CloudinaryController::class)->uploadImage($image, $isThumbnail);
+                app(ProductImageController::class)->store($sku->id, $cloudinaryData['secure_url'], $cloudinaryData['public_id'], "productImage", $type);
+            }
 
             $color = AttributeValue::where('name', $variation['color'])->first();
             $sku->attributeValues()->attach($color);
