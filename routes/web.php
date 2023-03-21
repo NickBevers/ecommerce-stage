@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\BrandController as AdminBrandController;
 use App\Http\Controllers\Admin\CategoryController as AdminCategoryController;
 use App\Http\Controllers\Admin\CloudinaryController;
 use App\Http\Controllers\Admin\PromoController;
+use App\Http\Controllers\Admin\ReviewController;
 use App\Http\Controllers\Admin\SubCategoryController as AdminSubCategoryController;
 use App\Http\Controllers\Customer\AddressController;
 use App\Http\Controllers\Product\ProductController;
@@ -100,24 +101,26 @@ Route::get('/shipping-addresses/{shippingAddress}/edit', [AddressController::cla
 Route::patch('/shipping-addresses/{shippingAddress}', [AddressController::class, 'update'])->name('shipping.update');
 Route::delete('/shipping-addresses/{shippingAddress}', [AddressController::class, 'destroy'])->name('shipping.destroy');
 
-    Route::post('/admin/products', [AdminSkuController::class, 'store'])->withoutMiddleware(\App\Http\Middleware\VerifyCsrfToken::class)->name('admin.products.store');
+// Admin Routes for products and (sub)categories
 Route::middleware('auth')->group(function () {
-    Route::get('/admin/test', [\App\Http\Controllers\Admin\SubCategoryController::class, 'getAll'])->name('admin.test');
+    // Admin Product Routes
+    Route::post('/admin/products', [AdminSkuController::class, 'store'])->withoutMiddleware(\App\Http\Middleware\VerifyCsrfToken::class)->name('admin.products.store');
+    Route::get('/admin/test', [AdminSubCategoryController::class, 'getAll'])->name('admin.test');
     Route::get('/admin/products', [AdminSkuController::class, 'index'])->name('admin.products.index');
     Route::post('/admin/products/search', [AdminSkuController::class, 'search'])->name('admin.products.search');
     Route::get('/admin/products/create', [AdminSkuController::class, 'create'])->name('admin.products.create');
 //    Route::get('/admin/products/{product}', [AdminSkuController::class, 'show'])->name('admin.products.show');
-        Route::get('/admin/products/{sku}/edit', [AdminSkuController::class, 'edit'])->name('admin.products.edit');
+    Route::get('/admin/products/{sku}/edit', [AdminSkuController::class, 'edit'])->name('admin.products.edit');
     Route::patch('/admin/products/{product}', [AdminSkuController::class, 'update'])->name('admin.products.update');
 //    Route::delete('/admin/products/{product}', [AdminSkuController::class, 'destroy'])->name('admin.products.destroy');
 
+    // Admin (Sub)Category Routes
     Route::get('/admin/categories', [AdminCategoryController::class, 'getAllCategories'])->name('admin.categories.getAll');
     Route::get('/admin/subcategories/{id}', [AdminSubcategoryController::class, 'getSubCategoriesById'])->name('admin.subcategories.getById');
+    Route::get('/admin/subcategories', [AdminSubcategoryController::class, 'getAll'])->name('admin.subcategories.getAll');
 });
 
-Route::get('/admin/subcategories', [AdminSubcategoryController::class, 'getAll'])->name('admin.subcategories.getAll');
 
-//TODO: make promo routes
 Route::get('/promos', [PromoController::class, 'index'])->name('promos.index');
 Route::post('/promos', [PromoController::class, 'store'])->name('promos.store');
 Route::get('/promos/create', [PromoController::class, 'create'])->name('promos.create');
@@ -125,6 +128,17 @@ Route::get('/promos/{promo}', [PromoController::class, 'show'])->name('promos.sh
 Route::get('/promos/{promo}/edit', [PromoController::class, 'edit'])->name('promos.edit');
 Route::patch('/promos/{promo}', [PromoController::class, 'update'])->name('promos.update');
 Route::delete('/promos/{promo}', [PromoController::class, 'destroy'])->name('promos.destroy');
+
+
+// Review Routes
+Route::get('/reviews', [ReviewController::class, 'index'])->name('reviews.index');
+Route::post('/reviews', [ReviewController::class, 'store'])->name('reviews.store');
+Route::get('/reviews/create', [ReviewController::class, 'create'])->name('reviews.create');
+Route::get('/reviews/{review}', [ReviewController::class, 'show'])->name('reviews.show');
+Route::get('/reviews/{review}/edit', [ReviewController::class, 'edit'])->name('reviews.edit');
+Route::patch('/reviews/{review}', [ReviewController::class, 'update'])->name('reviews.update');
+Route::delete('/reviews/{review}', [ReviewController::class, 'destroy'])->name('reviews.destroy');
+
 
 
 require __DIR__.'/auth.php';
