@@ -25,7 +25,7 @@ class SkuController extends Controller
                 ->with('product.subCategory')
                 ->with('product.subCategory.category')
                 ->with('product.brand')
-                ->orderBy('sku')
+                ->orderBy('created_at', 'desc')
                 ->paginate(10),
             'attributeValues' => AttributeValue::all(),
             'minPrice' => Sku::min('price'),
