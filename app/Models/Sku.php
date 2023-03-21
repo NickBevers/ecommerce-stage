@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\HasOneOrMany;
 use Illuminate\Database\Eloquent\Relations\HasOneThrough;
 
 class Sku extends Model
@@ -44,9 +45,9 @@ class Sku extends Model
         return $this->belongsTo(Product::class);
     }
 
-    public function promo(): HasOne
+    public function promos(): HasMany
     {
-        return $this->hasOne(Promo::class);
+        return $this->HasMany(Promo::class);
     }
 
     public function attributeValues(): BelongsToMany

@@ -38,6 +38,7 @@ class SkuController extends Controller
 
         $skus = Sku::with('attributeValues')
             ->with('product')
+            ->with('promos')
             ->with('product.brand')
             ->with('productImages')
             ->with('product.subCategory')
