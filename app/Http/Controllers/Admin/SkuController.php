@@ -25,7 +25,7 @@ class SkuController extends Controller
                 ->with('product.subCategory')
                 ->with('product.subCategory.category')
                 ->with('product.brand')
-                ->orderBy('sku')
+                ->orderBy('created_at', 'desc')
                 ->paginate(10),
             'attributeValues' => AttributeValue::all(),
             'minPrice' => Sku::min('price'),
@@ -79,22 +79,9 @@ class SkuController extends Controller
 
     public function store(Request $request)
     {
-        dd($request->all());
         // get the product data from the request and create a new product
         $productData = $request->only(['title', 'description', 'audience', 'brand_id', 'sub_category_id', 'product_type', 'extra_info']);
         $product = app(ProductController::class)->store(new Request($productData));
-
-        $images = $request->files;
-        foreach ($images as $image) {
-            $type = 'image';
-            $isThumbnail = false;
-            if ($images[0] == $image) {
-                $type = ('thumbnail');
-                $isThumbnail = true;
-            }
-            $cloudinaryData = app(CloudinaryController::class)->uploadImage($image, $isThumbnail);
-            app(ProductImageController::class)->store($product->id, $cloudinaryData['secure_url'], $cloudinaryData['public_id'], $image->getClientOriginalName(), $type);
-        }
 
         foreach ($request->input('variations') as $variation) {
             $sku = Sku::create([
@@ -103,6 +90,17 @@ class SkuController extends Controller
                 'amount' => $variation['amount'],
                 'product_id' => $product->id,
             ]);
+
+            foreach ($variation['images'] as $image) {
+                $type = 'image';
+                $isThumbnail = false;
+                if ($variation['images'][0] == $image) {
+                    $type = ('thumbnail');
+                    $isThumbnail = true;
+                }
+                $cloudinaryData = app(CloudinaryController::class)->uploadImage($image, $isThumbnail);
+                app(ProductImageController::class)->store($sku->id, $cloudinaryData['secure_url'], $cloudinaryData['public_id'], "productImage", $type);
+            }
 
             $color = AttributeValue::where('name', $variation['color'])->first();
             $sku->attributeValues()->attach($color);

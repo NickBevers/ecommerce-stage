@@ -20,7 +20,7 @@ class ProductImageController extends Controller
     public function store($id, $link, $publicId, $alt, $type = 'image')
     {
         return ProductImage::create([
-            'product_id' => $id,
+            'sku_id' => $id,
             'image_type' => $type,
             'image_link' => $link,
             'image_public_id' => $publicId,
