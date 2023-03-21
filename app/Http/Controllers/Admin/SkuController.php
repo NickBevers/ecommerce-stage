@@ -92,7 +92,7 @@ class SkuController extends Controller
                 $type = ('thumbnail');
                 $isThumbnail = true;
             }
-            $cloudinaryData = app(CloudinaryController::class)->uploadImage($image->getRealPath(), $isThumbnail);
+            $cloudinaryData = app(CloudinaryController::class)->uploadImage($image, $isThumbnail);
             app(ProductImageController::class)->store($product->id, $cloudinaryData['secure_url'], $cloudinaryData['public_id'], $image->getClientOriginalName(), $type);
         }
 
