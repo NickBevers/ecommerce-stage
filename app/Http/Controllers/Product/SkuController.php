@@ -155,7 +155,9 @@ class SkuController extends Controller
             if ($attributeValue->attribute_type_id == 1) {
                 $sizes[] = $attributeValue->name;
             } else if ($attributeValue->attribute_type_id == 2) {
-                $colors[] = $attributeValue->name;
+                $colors[] = [
+                    "name" => $attributeValue->name, 
+                    "hex" => $attributeValue->color_value];
             }
         }
 
@@ -168,7 +170,7 @@ class SkuController extends Controller
             'variations' => $variations,
             'sizes' => $sizes,
             'colors' => $colors,
-            'material' => $material->name,
+            'material' => $material?->name,
         ]);
     }
 }

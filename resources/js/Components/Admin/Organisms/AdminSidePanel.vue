@@ -83,7 +83,7 @@ onMounted(() => {
                 </div>
               </TransitionChild>
               <div class="flex flex-shrink-0 items-center px-4">
-                <Link to="/">
+                <Link to="/" href="/">
                   <ApplicationLogo class="h-8 w-auto" />
                 </Link>
               </div>
@@ -99,13 +99,11 @@ onMounted(() => {
     <!-- Static sidebar for desktop -->
     <div class="hidden lg:inset-y-0 lg:flex lg:w-64 lg:flex-col lg:border-r lg:border-gray-200 lg:bg-gray-100 lg:pt-5 lg:pb-4">
       <div class="flex flex-shrink-0 items-center px-6">
-       <Link to="/">
+       <Link to="/" href="/">
         <ApplicationLogo class="h-8 w-auto" />
       </Link>
       </div>
-      <!-- Sidebar component, swap this element with another sidebar if you like -->
       <div class="mt-5 flex h-0 flex-1 flex-col overflow-y-auto pt-1">
-        <!-- User account dropdown -->
         <Menu as="div" class="relative inline-block px-3 text-left">
           <div>
             <MenuButton class="group w-full rounded-md bg-gray-100 px-3.5 py-2 text-left text-sm font-medium text-gray-700 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-gray-100">
@@ -187,7 +185,7 @@ onMounted(() => {
                   </div>
                   <div class="py-1">
                     <MenuItem v-slot="{ active }">
-                      <a :href="route('logout')" method="POST" as="button" :class="[active ? 'bg-gray-100 text-gray-900' : 'text-gray-700', 'block px-4 py-2 text-sm']">Logout</a>
+                      <Link :href="route('logout')" method="POST" as="button" :class="[active ? 'bg-gray-100 text-gray-900' : 'text-gray-700', 'block px-4 py-2 text-sm']">Logout</Link>
                     </MenuItem>
                   </div>
                 </MenuItems>

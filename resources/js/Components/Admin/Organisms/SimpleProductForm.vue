@@ -154,7 +154,7 @@ import UploadFile from '@/Components/Admin/Molecules/UploadFile.vue';
 import InputError from '@/Components/Admin/Atoms/InputError.vue';
 import { Head, Link, useForm } from '@inertiajs/vue3';
 import Dropdown from '@/Components/Admin/Atoms/Dropdown.vue';
-import SearchDropdown from 'search-dropdown-vue';
+import SearchDropdown from '@/Components/Admin/Atoms/SearchDropdown.vue';
 
 const props = defineProps({
     brands: Array,

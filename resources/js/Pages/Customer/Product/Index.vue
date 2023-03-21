@@ -4,8 +4,8 @@
     <div class="lg:grid lg:auto-rows-min lg:grid-cols-12 lg:gap-x-8">
       <div class="lg:col-span-5 lg:col-start-8">
         <div class="flex justify-between">
-          <h1 class="text-xl font-medium text-gray-900">Basic Tee</h1>
-          <p class="text-xl font-medium text-gray-900">$35</p>
+          <h1 class="text-xl font-medium text-gray-900">{{ props.sku.product.title }}</h1>
+          <p class="text-xl font-medium text-gray-900">€{{ props.sku.price }}</p>
         </div>
         <!-- Reviews -->
         <div class="mt-4">
@@ -73,18 +73,10 @@
                 -->
                 <label class="relative -m-0.5 flex cursor-pointer items-center justify-center rounded-full p-0.5 focus:outline-none ring-gray-900">
                   <input type="radio" name="color-choice" value="Black" class="sr-only" aria-labelledby="color-choice-0-label">
-                  <span id="color-choice-0-label" class="sr-only"> Black </span>
-                  <span aria-hidden="true" class="h-8 w-8 bg-gray-900 rounded-full border border-black border-opacity-10"></span>
-                </label>
-
-                <!--
-                  Active and Checked: "ring ring-offset-1"
-                  Not Active and Checked: "ring-2"
-                -->
-                <label class="relative -m-0.5 flex cursor-pointer items-center justify-center rounded-full p-0.5 focus:outline-none ring-gray-400">
-                  <input type="radio" name="color-choice" value="Heather Grey" class="sr-only" aria-labelledby="color-choice-1-label">
-                  <span id="color-choice-1-label" class="sr-only"> Heather Grey </span>
-                  <span aria-hidden="true" class="h-8 w-8 bg-gray-400 rounded-full border border-black border-opacity-10"></span>
+                  <span id="color-choice-0-label" class="sr-only">{{ props.colors[0].name }}</span>
+                  <span aria-hidden="true" 
+                  class='h-8 w-8 rounded-full border border-black border-opacity-10' 
+                  :style="{ backgroundColor: props.colors[0].hex}"></span>
                 </label>
               </div>
             </fieldset>
@@ -111,8 +103,18 @@
               </div>
             </fieldset>
           </div>
-
-          <button type="submit" class="mt-8 flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 py-3 px-8 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">Add to cart</button>
+        
+         
+            <div class="mt-10 flex justify-between">
+              <button type="submit" class="flex  w-full flex-1 items-center justify-center rounded-md border border-transparent bg-indigo-600 py-3 px-8 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-50 sm:w-full">Add to bag</button>
+              <button type="button" class="ml-4 flex items-center justify-center rounded-md py-3 px-3 text-gray-400 hover:bg-gray-100 hover:text-gray-500">
+                <svg class="h-6 w-6 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z" />
+                </svg>
+                <span class="sr-only">Add to favorites</span>
+              </button>
+        
+          </div>
         </form>
 
         <!-- Product details -->
@@ -170,12 +172,14 @@ import { defineProps, onMounted, ref} from 'vue'
 import GuestLayout from '@/Layouts/GuestLayout.vue'
 import ProductReviews from '@/Components/Customer/Molecules/ProductReviews.vue';
 
-// const props = defineProps({
-//   skus: Object,
-//   minPrice: Number,
-//   maxPrice: Number,
-//   subCategory: Object,
-// });
+const props = defineProps({
+  sku: Object,
+  variations: Object,
+  sizes: Object,
+  colors: Object,
+  material: Object,
+});
 
+console.log(props.variations)
 
 </script>

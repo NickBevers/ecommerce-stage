@@ -3,6 +3,7 @@
     <div class="mx-auto max-w-2xl py-6 px-4 sm:py-6 sm:px-6 lg:max-w-7xl lg:px-8">
       <div class="grid grid-cols-1 gap-y-12 sm:grid-cols-2 sm:gap-x-6 lg:grid-cols-4 xl:gap-x-8">
         <div v-for="product in props.skus" :key="product.id" class="mt-8">
+          <Link :to="'/product/' + product.sku" :href="'/product/' + product.sku">
           <div class="relative imgScale">
             <div class=" relative h-72 w-full overflow-hidden rounded-lg  duration-500 ">
               <img src="https://tailwindui.com/img/ecommerce-images/product-page-01-related-product-01.jpg"
@@ -25,7 +26,8 @@
                 </a>
               </div>
             </div>
-          </div>
+          </div>     
+        </Link>
         </div>
       </div>
     </div>
@@ -51,6 +53,7 @@
   
 <script setup>
 import { defineProps, onMounted } from 'vue'
+import { Link } from '@inertiajs/vue3';
 import {
   HeartIcon,
 } from '@heroicons/vue/24/outline'
