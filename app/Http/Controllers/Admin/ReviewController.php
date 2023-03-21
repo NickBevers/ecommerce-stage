@@ -8,11 +8,19 @@ use Illuminate\Http\Request;
 
 class ReviewController extends Controller
 {
-    public function index()
+    public function getAllReviews($skuId)
     {
-
+        return [
+            "reviews" => Review::where('sku_id', $skuId)->get(),
+            "averageScore" => Review::where('sku_id', $skuId)->avg('score'),
+        ];
     }
-    public function show(Review $review)
+
+    public function toggleInactive($id)
     {
+        $review = Review::find($id);
+        $review->approved = !$review->approved;
+        $review->save();
+        return redirect()->route('products.index');
     }
 }

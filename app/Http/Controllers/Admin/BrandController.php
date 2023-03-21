@@ -10,7 +10,6 @@ class BrandController extends Controller
 {
     public function index()
     {
-
     }
 
     public function getAllBrands()
@@ -22,29 +21,5 @@ class BrandController extends Controller
                 'slug' => $brand->slug,
             ];
         });
-    }
-
-    public function create()
-    {
-    }
-
-    public function store(Request $request)
-    {
-    }
-
-    public function show(Brand $brand)
-    {
-    }
-
-    public function edit(Brand $brand)
-    {
-    }
-
-    public function update(Request $request, Brand $brand)
-    {
-    }
-
-    public function destroy(Brand $brand)
-    {
     }
 }

@@ -38,6 +38,8 @@ class SkuController extends Controller
 
         $skus = Sku::with('attributeValues')
             ->with('product')
+            ->with('promos')
+            ->with('product.brand')
             ->with('productImages')
             ->with('product.subCategory')
             ->when($category, function ($query) use ($category){
@@ -114,7 +116,7 @@ class SkuController extends Controller
     public function showPromos(Request $request)
     {
         $request->merge(['promo' => true]);
-        return $this->filter($request);
+        return Inertia::render('Customer/Products/Index', $this->filter($request));
     }
 
     public function testFunc()
