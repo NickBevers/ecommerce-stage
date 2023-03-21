@@ -27,12 +27,9 @@ onMounted(() => {
                     <h1 class="text-xl font-semibold leading-6 text-gray-900">Products</h1>
                 </div>
                 <div class="sm:mt-0 sm:ml-16 sm:flex-none">
-                    <PrimaryButton
-                    >
-                    <Link href="/admin/products/create" to="/admin/products/create">
+                    <Link href="/admin/products/create" to="/admin/products/create" class="rounded-md bg-indigo-600 py-2 px-3 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
                         Add product
                     </Link>
-              </PrimaryButton>
                 </div>
                 </div>
                 <ProductTable :skus="skus.data" :links="skus.links"/>
