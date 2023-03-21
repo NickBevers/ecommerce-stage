@@ -268,7 +268,7 @@ import PrimaryButton from '@/Components/Admin/Atoms/PrimaryButton.vue';
 import SecondaryButton from '@/Components/Admin/Atoms/SecondaryButton.vue';
 import UploadFile from '@/Components/Admin/Molecules/UploadFile.vue';
 import InputError from '@/Components/Admin/Atoms/InputError.vue';
-import SearchDropdown from 'search-dropdown-vue';
+import SearchDropdown from '@/Components/Admin/Atoms/SearchDropdown.vue';
 import { Head, Link, useForm } from '@inertiajs/vue3';
 import Dropdown from '@/Components/Admin/Atoms/Dropdown.vue';
 import {
