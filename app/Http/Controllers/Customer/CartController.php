@@ -11,15 +11,31 @@ class CartController extends Controller
 {
     public function index()
     {
-
-    }
-
-    public function create()
-    {
+        return Inertia::render('Customer/Cart/Index', [
+            'cart' => $this->getProductsPerUser(),
+        ]);
     }
 
     public function store(Request $request)
     {
+        $cart = Cart::where('user_id', auth()->user()->id)
+            ->where('sku_id', $request->sku_id)
+            ->first();
+
+        if ($cart) {
+            $cart->amount = $cart->amount + $request->amount;
+            $cart->save();
+
+            return redirect()->route('customer.cart.index')->with('success', 'Product added to cart');
+        }
+
+        Cart::create([
+            'user_id' => auth()->user()->id,
+            'sku_id' => $request->sku_id,
+            'amount' => $request->amount,
+        ]);
+
+        return redirect()->route('customer.cart.index')->with('success', 'Product added to cart');
     }
 
     public function getProductsPerUser()
@@ -34,22 +50,25 @@ class CartController extends Controller
             ->get();
     }
 
-    public function show(Cart $cart)
+    public function show()
     {
-        return Inertia::render('Customer/Cart/Index', [
-            'skus' => $cart->skus,
-        ]);
+        return $this->getProductsPerUser();
     }
 
-    public function edit(Cart $cart)
+    public function update(Request $request)
     {
+        $cart = Cart::where('user_id', auth()->user()->id)
+            ->where('sku_id', $request->sku_id)
+            ->first();
+        $cart->amount = $request->amount;
+        $cart->save();
+
+        return redirect()->route('customer.cart.index')->with('success', 'Product updated in cart');
     }
 
-    public function update(Request $request, Cart $cart)
+    public function destroy(Int $id)
     {
-    }
-
-    public function destroy(Cart $cart)
-    {
+        Cart::destroy($id);
+        return redirect()->route('customer.cart.index')->with('success', 'Product removed from cart');
     }
 }

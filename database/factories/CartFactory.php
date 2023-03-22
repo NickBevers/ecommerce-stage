@@ -16,6 +16,7 @@ class CartFactory extends Factory
         return [
             'user_id' => User::all()->random()->id,
             'sku_id' => Sku::all()->random()->id,
+            'amount' => $this->faker->numberBetween(1, 8),
             'created_at' => now(),
             'updated_at' => now(),
         ];

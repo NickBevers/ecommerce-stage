@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\CategoryController as AdminCategoryController;
 use App\Http\Controllers\Admin\CloudinaryController;
 use App\Http\Controllers\Admin\PromoController;
 use App\Http\Controllers\Admin\ReviewController as AdminReviewController;
+use App\Http\Controllers\Customer\CartController;
 use App\Http\Controllers\Customer\ReviewController as CustomerReviewController;
 use App\Http\Controllers\Admin\SubCategoryController as AdminSubCategoryController;
 use App\Http\Controllers\Customer\AddressController;
@@ -53,7 +54,7 @@ Route::get('/overview', function () {
 
 
 // Test Route
-Route::get('/test', [\App\Http\Controllers\Customer\CartController::class, 'index'])->middleware('admin')->name('test');
+Route::get('/test', [CartController::class, 'show'])->name('test');
 
 // Get specific products
 Route::get('/products/shoes', [ProductSkuController::class, 'showShoes'])->name('shoes');
@@ -149,6 +150,12 @@ Route::delete('/reviews/{review}', [CustomerReviewController::class, 'destroy'])
 // Upvote Review Routes
 Route::get('/upvote/{id}', [CustomerReviewController::class, 'markAsUseful'])->name('review.upvote');
 Route::get('/downvote/{id}', [CustomerReviewController::class, 'markAsNotUseful'])->name('review.downvote');
+
+// Cart Routes
+Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
+Route::post('/cart', [CartController::class, 'store'])->name('cart.store');
+Route::patch('/cart/{product}', [CartController::class, 'update'])->name('cart.update');
+Route::delete('/cart/{product}', [CartController::class, 'destroy'])->name('cart.destroy');
 
 
 require __DIR__.'/auth.php';
