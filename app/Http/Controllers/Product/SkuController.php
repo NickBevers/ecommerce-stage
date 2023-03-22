@@ -143,7 +143,9 @@ class SkuController extends Controller
             ->with('productImages')
             ->with('product')
             ->with('promos')
-            ->with('reviews')
+            ->with('reviews', function ($query) {
+                $query->where('approved', true);
+            })
             ->with('product.brand')
             ->with('product.subCategory')
             ->first();
