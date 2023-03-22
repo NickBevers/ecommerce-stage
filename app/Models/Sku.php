@@ -59,4 +59,9 @@ class Sku extends Model
     {
         return $this->hasMany(ProductImage::class, 'sku_id');
     }
+
+    public function reviews(): HasMany
+    {
+        return $this->hasMany(Review::class);
+    }
 }

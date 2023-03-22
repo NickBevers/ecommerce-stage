@@ -8,6 +8,7 @@ use App\Models\AttributeValue;
 use App\Models\Sku;
 use App\Models\SubCategory;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 
 class SkuController extends Controller
@@ -141,11 +142,11 @@ class SkuController extends Controller
             ->with('attributeValues')
             ->with('productImages')
             ->with('product')
+            ->with('promos')
+            ->with('reviews')
             ->with('product.brand')
             ->with('product.subCategory')
             ->first();
-
-        ray($sku);
 
         $attributeValues = $sku->attributeValues;
         $material = $attributeValues->where('attribute_type_id', 3)->first();
@@ -164,6 +165,12 @@ class SkuController extends Controller
         $variations = Sku::where('product_id', $sku->product_id)
             ->whereNotIn('sku', [$sku->sku])
             ->get();
+
+        $reviews = $sku->reviews;
+        foreach ($reviews as $review) {
+            $review->upvotes = $review->upvotes()->count();
+            $review->userLikes = $review->upvotes()->where('user_id', Auth::id())->exists();
+        }
 
         return Inertia::render('Customer/Product/Index', [
             'sku' => $sku,

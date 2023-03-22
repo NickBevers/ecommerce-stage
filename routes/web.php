@@ -53,7 +53,7 @@ Route::get('/overview', function () {
 
 
 // Test Route
-Route::get('/test/{id}', [ProductSkuController::class, 'show'])->name('test');
+Route::get('/test/{id}', [\App\Http\Controllers\Customer\ReviewController::class, 'markAsNotUseful'])->name('test');
 
 // Get specific products
 Route::get('/products/shoes', [ProductSkuController::class, 'showShoes'])->name('shoes');
@@ -119,10 +119,12 @@ Route::middleware('auth')->group(function () {
     // Admin (Sub)Category Routes
     Route::get('/admin/categories', [AdminCategoryController::class, 'getAllCategories'])->name('admin.categories.getAll');
     Route::get('/admin/subcategories/{id}', [AdminSubcategoryController::class, 'getSubCategoriesById'])->name('admin.subcategories.getById');
-    Route::get('/admin/subcategories', [AdminSubcategoryController::class, 'getAll'])->name('admin.subcategories.getAll');
 });
 
+// SubCategory Routes for Navigation
+Route::get('/admin/subcategories', [AdminSubcategoryController::class, 'getAll'])->name('admin.subcategories.getAll');
 
+// Promo Routes
 Route::get('/promos', [PromoController::class, 'index'])->name('promos.index');
 Route::post('/promos', [PromoController::class, 'store'])->name('promos.store');
 Route::get('/promos/create', [PromoController::class, 'create'])->name('promos.create');
@@ -136,14 +138,17 @@ Route::delete('/promos/{promo}', [PromoController::class, 'destroy'])->name('pro
 Route::get('/reviews/{id}', [AdminReviewController::class, 'getAllReviews'])->name('reviews.index');
 Route::get('/reviews/toggle/{id}', [AdminReviewController::class, 'toggleInactive'])->name('reviews.create');
 
-// Customer Review Routes
-Route::get('/review/useful/{id}', [CustomerReviewController::class, 'markAsUseful'])->name('reviews.useful');
-Route::get('/review/unuseful/{id}', [CustomerReviewController::class, 'markAsNotUseful'])->name('reviews.notUseful');
-Route::post('/reviews', [CustomerReviewController::class, 'store'])->name('reviews.store');
-Route::delete('/reviews/{review}', [CustomerReviewController::class, 'destroy'])->name('reviews.destroy');
-
 // Brand Routes
 Route::get('/brands', [CustomerBrandController::class, 'index'])->name('brands.index');
 Route::get('/brands/{brand}', [CustomerBrandController::class, 'show'])->name('brands.show');
+
+// Customer Review Routes
+Route::post('/reviews', [CustomerReviewController::class, 'store'])->name('reviews.store');
+Route::delete('/reviews/{review}', [CustomerReviewController::class, 'destroy'])->name('reviews.destroy');
+
+// Upvote Review Routes
+Route::get('/upvote/{id}', [CustomerReviewController::class, 'markAsUseful'])->name('review.upvote');
+Route::get('/downvote/{id}', [CustomerReviewController::class, 'markAsNotUseful'])->name('review.downvote');
+
 
 require __DIR__.'/auth.php';

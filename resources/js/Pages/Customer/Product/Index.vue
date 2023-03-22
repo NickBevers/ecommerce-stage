@@ -180,6 +180,9 @@ const props = defineProps({
   material: Object,
 });
 
-console.log(props.variations)
+onMounted(() => {
+  console.log(props.sku.reviews)
+  // console.log(props.variations)
+})
 
 </script>
