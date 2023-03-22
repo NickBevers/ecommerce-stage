@@ -11,6 +11,7 @@ use App\Http\Controllers\Customer\CartController;
 use App\Http\Controllers\Customer\ReviewController as CustomerReviewController;
 use App\Http\Controllers\Admin\SubCategoryController as AdminSubCategoryController;
 use App\Http\Controllers\Customer\AddressController;
+use App\Http\Controllers\Customer\WishlistController;
 use App\Http\Controllers\Product\ProductController;
 use App\Http\Controllers\Product\SkuController as ProductSkuController;
 use App\Http\Controllers\Admin\SkuController as AdminSkuController;
@@ -54,7 +55,7 @@ Route::get('/overview', function () {
 
 
 // Test Route
-Route::get('/test', [CartController::class, 'show'])->name('test');
+Route::get('/test', [WishlistController::class, 'show'])->name('test');
 
 // Get specific products
 Route::get('/products/shoes', [ProductSkuController::class, 'showShoes'])->name('shoes');

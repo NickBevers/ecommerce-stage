@@ -9,7 +9,7 @@ return new class extends Migration {
     {
         Schema::create('skus', function (Blueprint $table) {
             $table->id();
-            $table->string('sku');
+            $table->string('sku')->unique();
             $table->foreignId('product_id')->constrained();
             $table->integer('amount');
             $table->float('price');
