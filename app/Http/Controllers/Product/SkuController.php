@@ -166,6 +166,9 @@ class SkuController extends Controller
 
         $variations = Sku::where('product_id', $sku->product_id)
             ->whereNotIn('sku', [$sku->sku])
+            ->with('productImages', function ($query) {
+                $query->where('image_type', 'thumbnail');
+            })
             ->get();
 
         $reviews = $sku->reviews;

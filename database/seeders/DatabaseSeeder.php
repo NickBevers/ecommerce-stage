@@ -23,6 +23,7 @@ class DatabaseSeeder extends Seeder
             BrandSeeder::class,
             ProductSeeder::class,
             SkuSeeder::class,
+            ProductImageSeeder::class,
             CartSeeder::class,
         ]);
 
