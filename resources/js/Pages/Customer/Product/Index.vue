@@ -58,10 +58,10 @@
         </div>
       </div>
 
-      <div class="mt-8 lg:col-span-5">
+      <div class="lg:col-span-5">
         <form>
           <!-- Color picker -->
-          <div>
+          <div v-if="props.colors.length > 1">
             <h2 class="text-sm font-medium text-gray-900">Color</h2>
 
             <fieldset class="mt-2">
@@ -80,6 +80,12 @@
                 </label>
               </div>
             </fieldset>
+          </div>
+          <div v-else-if="props.colors.length === 1" class="flex flex-row mt-8">
+            <h2 class="text-sm font-medium text-gray-900 py-0.5">Color: </h2>
+              <span class="inline-flex ml-2 items-center px-3 py-0.5 rounded-full text-sm font-medium bg-gray-100 text-gray-800">
+                {{ props.colors[0].name }}
+              </span>
           </div>
 
           <!-- Size picker -->
