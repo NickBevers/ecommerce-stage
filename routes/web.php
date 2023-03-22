@@ -53,7 +53,7 @@ Route::get('/overview', function () {
 
 
 // Test Route
-Route::get('/test', [ProductSkuController::class, 'showPromos'])->middleware('admin')->name('test');
+Route::get('/test', [\App\Http\Controllers\Customer\CartController::class, 'index'])->middleware('admin')->name('test');
 
 // Get specific products
 Route::get('/products/shoes', [ProductSkuController::class, 'showShoes'])->name('shoes');

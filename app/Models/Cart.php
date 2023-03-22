@@ -2,15 +2,18 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use \Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Cart extends Model
 {
+    use HasFactory;
+
     protected $fillable = [
         'user_id',
-        'products',
+        'sku_id',
         'modified_at',
     ];
 
@@ -29,8 +32,8 @@ class Cart extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function product(): HasMany
+    public function sku(): BelongsTo
     {
-        return $this->hasMany(Product::class);
+        return $this->belongsTo(Sku::class);
     }
 }

@@ -23,9 +23,10 @@ class DatabaseSeeder extends Seeder
             BrandSeeder::class,
             ProductSeeder::class,
             SkuSeeder::class,
+            CartSeeder::class,
         ]);
 
-        Sku::all()->each(function (Sku $sku) {
+        Sku::inRandomOrder()->limit(500)->get()->each(function (Sku $sku) {
             for ($i = 0; $i < 3; $i++) {
                 $sku->attributeValues()->attach(
                     AttributeValue::where('attribute_type_id', $i+1)->inRandomOrder()->first(),

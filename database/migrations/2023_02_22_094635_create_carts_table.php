@@ -10,7 +10,7 @@ return new class extends Migration {
         Schema::create('carts', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained();
-            $table->json('products')->nullable();
+            $table->foreignId('sku_id')->constrained();
             $table->timestamps();
         });
     }
