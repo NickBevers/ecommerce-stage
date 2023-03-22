@@ -54,7 +54,7 @@ class SkuController extends Controller
                 });
             })
             ->when($promo, function ($query) use ($promo){
-                $query->whereHas('promo', function ($query) use ($promo) {
+                $query->whereHas('promos', function ($query) use ($promo) {
                     $query->where('start_date', '<=', now())
                         ->where('end_date', '>=', now());
                 });

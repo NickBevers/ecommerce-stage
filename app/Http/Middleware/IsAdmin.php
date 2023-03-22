@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Providers\RouteServiceProvider;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -16,10 +17,15 @@ class IsAdmin
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (Auth::user() &&  Auth::user()->isAdmin()) {
+        if (!Auth::user()) {
+            return redirect()->route('login');
+        }
+
+        if (Auth::user()->isAdmin()) {
             return $next($request);
         }
 
-        return redirect('/');
+        return redirect()->route('login');
+//        return redirect('/')->with('error', 'You are not authorized to access this page');
     }
 }
