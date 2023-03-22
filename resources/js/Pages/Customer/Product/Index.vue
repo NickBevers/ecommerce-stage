@@ -64,16 +64,18 @@
         <div class="mt-8 lg:col-span-7 lg:col-start-1 lg:row-span-3 lg:row-start-1 lg:mt-0">
           <h2 class="sr-only">Images</h2>
 
-          <div class="grid grid-cols-1 lg:grid-cols-2 lg:grid-rows-3 lg:gap-8">
-            <img src="https://tailwindui.com/img/ecommerce-images/product-page-01-featured-product-shot.jpg"
-              alt="Back of women&#039;s Basic Tee in black." class="lg:col-span-2 lg:row-span-2 rounded-lg">
+       
+          <div v-for="image in props.sku.product_images">
+            <div class="grid grid-cols-1 lg:grid-cols-2 lg:grid-rows-3 lg:gap-8">
+            <img :src="image.image_link" v-if="image.image_type==='thumbnail'"
+              alt="Back of women&#039;s Basic Tee in black." class="lg:col-span-2  rounded-lg">
 
-            <img src="https://tailwindui.com/img/ecommerce-images/product-page-01-product-shot-01.jpg"
+            <img :src="image.image_link" v-if="image.image_type==='image'"
               alt="Side profile of women&#039;s Basic Tee in black." class="hidden lg:block rounded-lg">
 
-            <img src="https://tailwindui.com/img/ecommerce-images/product-page-01-product-shot-02.jpg"
-              alt="Front of women&#039;s Basic Tee in black." class="hidden lg:block rounded-lg">
           </div>
+        </div>
+
         </div>
 
         <div class="mt-8 lg:col-span-5">
@@ -136,7 +138,7 @@
           </div>
 
             <!-- Size picker -->
-            <div class="mt-8">
+            <div class="mt-8" v-if="props.sizes.length > 0">
               <div class="flex items-center justify-between">
                 <h2 class="text-sm font-medium text-gray-900">Size</h2>
               </div>
@@ -154,7 +156,7 @@
                     class="flex flex-row items-center justify-center rounded-md border py-3 px-3 text-sm font-medium sm:flex-1 cursor-pointer active:ring-2 active:ring-indigo-500 active:ring-offset-2">
                     <input type="radio" name="size-choice" :value="size" class="sr-only"
                       aria-labelledby="size-choice-0-label">
-                    <span id="size-choice-0-label">{{  }}One Size</span>
+                    <span id="size-choice-0-label">{{ size }}</span>
                   </label>
                 </div>
               </fieldset>
@@ -247,6 +249,6 @@ const props = defineProps({
 
 let showAll = ref(false);
 
-console.log(props.variations)
+console.log(props.sku)
 
 </script>
