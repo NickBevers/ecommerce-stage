@@ -3,52 +3,35 @@
 namespace App\Http\Controllers\Customer;
 
 use App\Http\Controllers\Controller;
+use App\Models\Address;
 use App\Models\ShippingAddress;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
 class AddressController extends Controller
 {
-    public function index()
+    public function getAddressesPerUser()
     {
+        return Address::where('user_id', auth()->user()->id)->get();
     }
 
-    public function create()
-    {
-    }
-
-
-    public function store(Request $request): RedirectResponse
+    public function store(Request $request)
     {
         $request->validate([
             'address_line1' => 'required',
-            'address_line2' => 'nullable',
             'city' => 'required',
             'postal_code' => 'required',
+            'address_type' => 'required',
             'country' => 'required',
         ]);
 
-        $shippingAddress = new ShippingAddress();
-        $shippingAddress->user_id = $request->user_id;
-        $shippingAddress->address_line1 = $request->address_line1;
-        $shippingAddress->address_line2 = $request->address_line2;
-        $shippingAddress->city = $request->city;
-        $shippingAddress->postal_code = $request->postal_code;
-        $shippingAddress->country = $request->country;
-        $shippingAddress->save();
+        $request->merge(['user_id' => auth()->user()->id]);
+        $address = Address::create($request->all());
 
-        return redirect()->route('shipping-addresses.index');
+        return redirect()->route('shipping-addresses.index')->with('success', 'Shipping Address created successfully')->with('address', $address);
     }
 
-    public function show(ShippingAddress $shippingAddress)
-    {
-    }
-
-    public function edit(ShippingAddress $shippingAddress)
-    {
-    }
-
-    public function update(Request $request, ShippingAddress $shippingAddress): redirectResponse
+    public function update(Request $request, Address $shippingAddress)
     {
         $shippingAddress->update($request->all());
 
@@ -58,7 +41,7 @@ class AddressController extends Controller
 
     }
 
-    public function destroy(ShippingAddress $shippingAddress): RedirectResponse
+    public function destroy(Address $shippingAddress): RedirectResponse
     {
         $shippingAddress->delete();
 
