@@ -25,6 +25,7 @@ class DatabaseSeeder extends Seeder
             SkuSeeder::class,
             ProductImageSeeder::class,
             CartSeeder::class,
+            WishlistSeeder::class,
         ]);
 
         Sku::inRandomOrder()->limit(500)->get()->each(function (Sku $sku) {

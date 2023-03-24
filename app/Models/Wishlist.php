@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -9,8 +10,12 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Wishlist extends Model
 {
+    use HasFactory;
+
+
     protected $fillable = [
         'user_id',
+        'sku_id',
         'products',
         'modified_at',
     ];
@@ -30,8 +35,8 @@ class Wishlist extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function product(): HasMany
+    public function sku(): BelongsTo
     {
-        return $this->hasMany(Product::class);
+        return $this->belongsTo(Sku::class);
     }
 }
