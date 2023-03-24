@@ -15,9 +15,8 @@
 
         <div class="mt-8 lg:col-span-5">
           <form>
-            <div class="mb-6 gap-3 justify-center">
-              <div class="flex flex-wrap">
-
+            <div class="mb-6">
+            <div class="flex flex-wrap gap-2">
             <div v-for="variation, index in props.variations" :key="variation.id" class="m-1 overflow-hidden rounded-md" :class="{'hidden': !showAll && index > 3 }">
               <div v-if="!showAll" class="overflow-hidden">
                 <div class="h-32 w-20 inline hover:scale-125 duration-500 col-span-4 transition-all rounded-md object-cover">
