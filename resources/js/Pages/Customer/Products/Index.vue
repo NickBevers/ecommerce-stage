@@ -18,6 +18,6 @@
   });
 
   onMounted(()=>{
-    console.log(props.minPrice)
+   
   })
   </script>

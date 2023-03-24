@@ -41,7 +41,6 @@ subCategories.push({ id: 6, name: "Sub Category 6", head_category_id: 3 });
 subCategories.push({ id: 7, name: "Sub Category 7", head_category_id: 3 });
 
 function handleCategory() {
-    console.log(form);
     showSubCategory.value = false;
 
     if (form.head_category.value != "") {
@@ -120,9 +119,6 @@ function handleDrop(event) {
 function submit() {
 
     form.product_number = Math.floor(Math.random() * 1000000);
-    console.log(form.product_number, form.title);
-
-    console.log(form)
     form.post(route("products.store"), {
         preserveScroll: true,
         onSuccess: () => {
