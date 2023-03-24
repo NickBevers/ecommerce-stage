@@ -6,7 +6,7 @@
           <Link :to="'/product/' + product.sku" :href="'/product/' + product.sku">
           <div class="relative imgScale">
             <div class=" relative h-72 w-full overflow-hidden rounded-lg  duration-500 ">
-              <img src="https://tailwindui.com/img/ecommerce-images/product-page-01-related-product-01.jpg"
+              <img :src="product.product_images[0].image_link "
                 alt="placeholder" class="h-full w-full object-cover object-center" />
             </div>
             <div class="relative mt-4">
