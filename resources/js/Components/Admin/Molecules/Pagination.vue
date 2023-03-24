@@ -13,8 +13,8 @@ onMounted(() => {
 })
 </script>
 <template>
-    <div class="flex items-center justify-between border-t border-gray-200 bg-white pt-4">
-        <div class="hidden sm:flex sm:flex-1 sm:items-center sm:justify-end">
+    <div class="flex items-center bg-white pt-4">
+        <div class="sm:flex sm:flex-1 sm:items-center">
             <div>
                 <nav class="isolate inline-flex -space-x-px rounded-md shadow-sm" aria-label="Pagination">
                     <div v-for="(link, index) in props.links"> 

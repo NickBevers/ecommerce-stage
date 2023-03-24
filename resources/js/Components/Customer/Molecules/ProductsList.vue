@@ -30,6 +30,9 @@
         </Link>
         </div>
       </div>
+      <div class="mt-4 flex sm:justify-center" v-if="props.links.length >3">
+            <Pagination :links="props.links" />
+        </div>
     </div>
   </div>
 </template>
@@ -53,6 +56,7 @@
   
 <script setup>
 import { defineProps, onMounted } from 'vue'
+import {Pagination} from '@/Components/Admin'
 import { Link } from '@inertiajs/vue3';
 import {
   HeartIcon,
@@ -62,4 +66,6 @@ const props = defineProps({
   skus: Object,
   links: Object,
 });
+
+console.log(props.links)
 </script>

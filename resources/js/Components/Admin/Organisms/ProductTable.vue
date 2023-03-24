@@ -70,7 +70,7 @@ function getBgClass(amount) {
               </tr>
             </tbody>
           </table>
-          <div>
+          <div class="border-t border-gray-200  flex sm:justify-end">
             <Pagination :links="props.links" />
         </div>
         </div>
