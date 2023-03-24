@@ -11,7 +11,7 @@ class CartController extends Controller
 {
     public function index()
     {
-        return Inertia::render('Customer/Cart/Index', [
+        return Inertia::render('Customer/Checkout/ShoppingBag', [
             'cart' => $this->getProductsPerUser(),
         ]);
     }
