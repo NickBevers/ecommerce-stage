@@ -1,6 +1,5 @@
 <script setup>
-import CreateProductModal from '@/Components/Admin/Molecules/CreateProductModal.vue';
-import Pagination from '@/Components/Admin/Molecules/Pagination.vue'
+import {Pagination} from '@/Components/Admin'
 import { defineProps, onMounted, computed } from 'vue';
 import moment from 'moment';
 

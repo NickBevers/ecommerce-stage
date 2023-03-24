@@ -17,9 +17,13 @@ onMounted(() => {
             <div>
                 <nav class="isolate inline-flex -space-x-px rounded-md shadow-sm" aria-label="Pagination">
                     <div v-for="link in props.links"> 
-                        <Link v-if="link" :href="link.url"
-                            :class="{ 'bg-indigo-600': props.links.active }"
-                            class="relative inline-flex items-center px-4 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0">{{ link.label }}
+                        <Link v-if="link" :href="link.url" :to="link.url"
+                            class="relative inline-flex items-center px-4 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300  focus:z-20 focus:outline-offset-0"
+                            :class="{
+                                'bg-indigo-600 text-white hover:bg-indigo-700': link.active,
+                                'hover:bg-indigo-50': !link.active
+                                }"
+                            >{{ link.label }}
                         </Link>
                     </div>
                 </nav>

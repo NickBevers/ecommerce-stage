@@ -1,9 +1,7 @@
 <script setup>
 import { defineProps, ref } from 'vue';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
-import VariationForm from '@/Components/Admin/Organisms/VariationForm.vue';
-import SimpleProductForm from '@/Components/Admin/Organisms/SimpleProductForm.vue';
-import Toggle from '@/Components/Admin/Atoms/Toggle.vue';
+import {VariationForm, SimpleProductForm, Toggle} from '@/Components/Admin';
 
 const props = defineProps({
     brands: Array,

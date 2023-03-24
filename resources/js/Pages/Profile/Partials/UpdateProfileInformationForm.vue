@@ -1,8 +1,5 @@
 <script setup>
-import InputError from "@/Components/Admin/Atoms/InputError.vue";
-import InputLabel from "@/Components/Admin/Atoms/InputLabel.vue";
-import PrimaryButton from "@/Components/Admin/Atoms/PrimaryButton.vue";
-import TextInput from "@/Components/Admin/Atoms/TextInput.vue";
+import {InputError, InputLabel, PrimaryButton, TextInput} from "@/Components/Admin";
 import { Link, useForm, usePage } from "@inertiajs/vue3";
 import { onMounted } from "vue";
 

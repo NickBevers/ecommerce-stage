@@ -1,6 +1,6 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
-import Stats from '@/Components/Admin/Molecules/Stats.vue';
+import {Stats} from '@/Components/Admin';
 import { Head } from '@inertiajs/vue3';
 </script>
 

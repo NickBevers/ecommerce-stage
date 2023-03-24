@@ -1,9 +1,6 @@
 <script setup>
 import { computed, onMounted } from "vue";
-import SecondaryButton from "@/Components/Admin/Atoms/SecondaryButton.vue";
-import PrimaryButton from "@/Components/Admin/Atoms/PrimaryButton.vue";
-import ApplicationLogo from "@/Components/Customer/Atoms/ApplicationLogo.vue";
-import NavLink from "@/Components/Admin/Atoms/NavLink.vue";
+import {ApplicationLogo} from "@/Components/Customer";
 import { Link } from "@inertiajs/vue3";
 import { ref } from 'vue'
 import {
@@ -23,6 +20,8 @@ const navigation = [
   { name: 'Overview', href: '/admin/dashboard', icon: ChartPieIcon, current: false },
   { name: 'Products', href: '/admin/products', icon: ShoppingBagIcon , current: false },
 ]
+
+let active = ref(false)
 
 const sidebarOpen = ref(false)
 
@@ -55,6 +54,8 @@ function getInitials(firstName, lastName) {
 }
 
 onMounted(() => {
+
+
   navigation.forEach((item) => {
     if (item.href === window.location.pathname) {
       item.current = true;

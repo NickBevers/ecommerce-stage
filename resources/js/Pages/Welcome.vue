@@ -1,13 +1,6 @@
 <script setup>
-import { Head, Link } from '@inertiajs/vue3';
 import GuestLayout from '@/Layouts/GuestLayout.vue';
-import CategoryPreview from '@/Components/Customer/Organisms/CategoryPreview.vue';
-import Trending from '@/Components/Customer/Organisms/Trending.vue';
-import Hero from '@/Components/Customer/Organisms/Hero.vue';
-import PromoSection from '@/Components/Customer/Organisms/PromoSection.vue';
-import Incentive from '@/Components/Customer/Organisms/Incentive.vue';
-import Footer from '@/Components/Customer/Organisms/Footer.vue';
-
+import { CategoryPreview, Trending, Hero, PromoSection, Incentive } from '@/Components/Customer';
 defineProps({
     canLogin: Boolean,
     canRegister: Boolean,
@@ -26,5 +19,4 @@ defineProps({
         <PromoSection/>
     </div>
 </GuestLayout>
-      
 </template>

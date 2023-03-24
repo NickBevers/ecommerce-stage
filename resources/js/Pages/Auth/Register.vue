@@ -1,11 +1,7 @@
 <script setup>
-
-import InputError from "@/Components/Admin/Atoms/InputError.vue";
-import InputLabel from "@/Components/Admin/Atoms/InputLabel.vue";
-import PrimaryButton from "@/Components/Admin/Atoms/PrimaryButton.vue";
-import TextInput from "@/Components/Admin/Atoms/TextInput.vue";
+import {InputError, InputLabel, PrimaryButton, TextInput} from "@/Components/Admin";
 import { Head, Link, useForm } from "@inertiajs/vue3";
-import ApplicationLogo from "@/Components/Customer/Atoms/ApplicationLogo.vue";
+import {ApplicationLogo} from "@/Components/Customer";
 const form = useForm({
   firstname: "",
   lastname: "",

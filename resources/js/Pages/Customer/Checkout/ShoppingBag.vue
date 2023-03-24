@@ -20,9 +20,7 @@
   
   <script setup>
   import GuestLayout from '@/Layouts/GuestLayout.vue'
-  import EmptyState from '@/Components/Customer/Molecules/EmptyState.vue'
-  import OrderSummary from '@/Components/Customer/Molecules/OrderSummary.vue'
-  import CartItem from '@/Components/Customer/Molecules/CartItem.vue'
+  import {EmptyState, OrderSummary, CartItem} from '@/Components/Customer'
   
   const products = [
   {

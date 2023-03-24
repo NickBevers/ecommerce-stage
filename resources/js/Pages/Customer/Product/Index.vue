@@ -99,22 +99,15 @@
 
 </GuestLayout></template>
 <script setup>
-import { defineProps, onMounted, computed, ref, reactive } from 'vue'
 import GuestLayout from '@/Layouts/GuestLayout.vue'
-import ProductReviews from '@/Components/Customer/Molecules/ProductReviews.vue';
-import ProductVariationList from '@/Components/Customer/Molecules/ProductVariationList.vue';
-import ProductStars from '@/Components/Customer/Molecules/ProductStars.vue';
-import ImageGallery from '@/Components/Customer/Molecules/ImageGallery.vue';
-import ProductDetails from '@/Components/Customer/Molecules/ProductDetails.vue';
-import Policies from '@/Components/Customer/Molecules/Policies.vue';
-import { Head, Link, useForm } from '@inertiajs/vue3';
+import {ProductReviews, ProductVariationList, ProductStars, ImageGallery, ProductDetails, Policies} from '@/Components/Customer';
 
 const props = defineProps({
   sku: Object,
   variations: Object,
   sizes: Object,
   colors: Object,
-  material: Object,
+  material: String,
 });
 
 </script>

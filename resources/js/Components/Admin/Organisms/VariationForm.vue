@@ -261,16 +261,9 @@
     </div>
 </template>
 <script setup>
-import { defineProps, ref, reactive, watch, onMounted, onBeforeMount } from 'vue'
-import InputLabel from '@/Components/Admin/Atoms/InputLabel.vue';
-import TextInput from '@/Components/Admin/Atoms/TextInput.vue';
-import PrimaryButton from '@/Components/Admin/Atoms/PrimaryButton.vue';
-import SecondaryButton from '@/Components/Admin/Atoms/SecondaryButton.vue';
-import UploadFile from '@/Components/Admin/Molecules/UploadFile.vue';
-import InputError from '@/Components/Admin/Atoms/InputError.vue';
-import SearchDropdown from '@/Components/Admin/Atoms/SearchDropdown.vue';
+import { defineProps, ref, reactive, watch } from 'vue'
+import {InputLabel, TextInput,Dropdown, PrimaryButton, UploadFile, InputError, SearchDropdown} from '@/Components/Admin'
 import { Head, Link, useForm } from '@inertiajs/vue3';
-import Dropdown from '@/Components/Admin/Atoms/Dropdown.vue';
 import {
     Popover,
     PopoverButton,

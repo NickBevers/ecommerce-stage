@@ -52,7 +52,7 @@
             </ul>
 </template>
 <script setup>
-import { CheckIcon, ClockIcon, QuestionMarkCircleIcon, XMarkIcon } from '@heroicons/vue/20/solid'
+import { CheckIcon, ClockIcon, XMarkIcon } from '@heroicons/vue/20/solid'
 
 defineProps({
   products: {

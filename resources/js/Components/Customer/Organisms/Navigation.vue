@@ -1,6 +1,6 @@
 <script setup>
-import ApplicationLogo from '@/Components/Customer/Atoms/ApplicationLogo.vue';
-import { onMounted, onBeforeMount, ref, watch } from "vue";
+import {ApplicationLogo} from '@/Components/Customer';
+import { onBeforeMount, ref } from "vue";
 import { Link } from '@inertiajs/vue3';
 import { Popover, PopoverButton, PopoverGroup, PopoverPanel } from '@headlessui/vue'
 import { MagnifyingGlassIcon, ShoppingBagIcon } from '@heroicons/vue/24/outline'

@@ -6,11 +6,9 @@
   </template>
   
   <script setup>
-  import { defineProps, onMounted, ref} from 'vue'
+  import { defineProps, onMounted} from 'vue'
   import GuestLayout from '@/Layouts/GuestLayout.vue'
-  import ProductsFilter from '@/Components/Customer/Molecules/ProductsFilter.vue'
-  import ProductsList from '@/Components/Customer/Molecules/ProductsList.vue'
-  
+  import {ProductsFilter, ProductsList} from '@/Components/Customer'
 
   const props = defineProps({
     skus: Object,

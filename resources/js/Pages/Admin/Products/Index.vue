@@ -1,7 +1,6 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
-import ProductTable from '@/Components/Admin/Organisms/ProductTable.vue';
-import PrimaryButton from '@/Components/Admin/Atoms/PrimaryButton.vue';
+import {ProductTable} from '@/Components/Admin';
 import { defineProps, onMounted } from 'vue'
 import { Head, Link } from '@inertiajs/vue3';
 

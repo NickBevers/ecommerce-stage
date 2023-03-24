@@ -1,11 +1,7 @@
 <script setup>
-import PrimaryButton from "@/Components/Admin/Atoms/PrimaryButton.vue";
-import { onMounted, ref, reactive } from "vue";
-import InputLabel from "@/Components/Admin/Atoms/InputLabel.vue";
-import TextInput from "@/Components/Admin/Atoms/TextInput.vue";
-import InputError from "@/Components/Admin/Atoms/InputError.vue";
+import { ref, reactive } from "vue";
+import {InputError, InputLabel, PrimaryButton, TextInput} from "@/Components/Admin";
 import { useForm, usePage } from "@inertiajs/vue3";
-
 
 const showModal = ref(false);
 

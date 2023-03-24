@@ -1,10 +1,5 @@
 <script setup>
-import DangerButton from '@/Components/Admin/Atoms/DangerButton.vue';
-import InputError from '@/Components/Admin/Atoms/InputError.vue';
-import InputLabel from '@/Components/Admin/Atoms/InputLabel.vue';
-import Modal from '@/Components/Admin/Molecules/Modal.vue';
-import SecondaryButton from '@/Components/Admin/Atoms/SecondaryButton.vue';
-import TextInput from '@/Components/Admin/Atoms/TextInput.vue';
+import {DangerButton, InputError, InputLabel, Modal, SecondaryButton, TextInput} from '@/Components/Admin'
 import { useForm } from '@inertiajs/vue3';
 import { nextTick, ref } from 'vue';
 

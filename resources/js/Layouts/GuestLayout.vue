@@ -1,6 +1,5 @@
 <script setup>
-import Navigation from "@/Components/Customer/Organisms/Navigation.vue";
-import Footer from "@/Components/Customer/Organisms/Footer.vue";
+import {Navigation, Footer} from "@/Components/Customer";
 
 defineProps({
   canLogin: Boolean,

@@ -147,14 +147,9 @@
     </div>
 </template>
 <script setup>
-import { defineProps, ref, reactive, watch, onMounted, onBeforeMount } from 'vue'
-import InputLabel from '@/Components/Admin/Atoms/InputLabel.vue';
-import TextInput from '@/Components/Admin/Atoms/TextInput.vue';
-import UploadFile from '@/Components/Admin/Molecules/UploadFile.vue';
-import InputError from '@/Components/Admin/Atoms/InputError.vue';
+import { defineProps, ref, reactive, watch} from 'vue'
 import { Head, Link, useForm } from '@inertiajs/vue3';
-import Dropdown from '@/Components/Admin/Atoms/Dropdown.vue';
-import SearchDropdown from '@/Components/Admin/Atoms/SearchDropdown.vue';
+import {InputLabel, TextInput, UploadFile, InputError, Dropdown, SearchDropdown} from '@/Components/Admin';
 
 const props = defineProps({
     brands: Array,
