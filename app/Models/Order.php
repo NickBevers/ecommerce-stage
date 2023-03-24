@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
@@ -20,7 +21,6 @@ class Order extends Model
     protected $casts = [
         'created_at' => 'datetime',
         'updated_at' => 'datetime',
-        'images' => 'array',
     ];
 
     /*
@@ -39,8 +39,9 @@ class Order extends Model
         return $this->hasOne(Address::class);
     }
 
-    public function productOrder(): HasMany
+    public function skus(): BelongsToMany
     {
-        return $this->hasMany(ProductOrder::class);
+        return $this->belongsToMany(Sku::class, 'product_order', 'order_id', 'sku_id');
     }
+
 }

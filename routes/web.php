@@ -8,6 +8,8 @@ use App\Http\Controllers\Admin\CloudinaryController;
 use App\Http\Controllers\Admin\PromoController;
 use App\Http\Controllers\Admin\ReviewController as AdminReviewController;
 use App\Http\Controllers\Customer\CartController;
+use App\Http\Controllers\Customer\OrderController;
+use App\Http\Controllers\Admin\OrderController as AdminOrderController;
 use App\Http\Controllers\Customer\PaymentOptionController;
 use App\Http\Controllers\Customer\ReviewController as CustomerReviewController;
 use App\Http\Controllers\Admin\SubCategoryController as AdminSubCategoryController;
@@ -156,19 +158,26 @@ Route::get('/wishlist', [WishlistController::class, 'index'])->name('wishlist.in
 Route::post('/wishlist', [WishlistController::class, 'store'])->name('wishlist.store');
 Route::delete('/wishlist/{product}', [WishlistController::class, 'destroy'])->name('wishlist.destroy');
 
-
 // Address Routes
 Route::get('/addresses', [AddressController::class, 'getAddressesPerUser'])->name('addresses.getAddressesPerUser');
 Route::post('/addresses', [AddressController::class, 'store'])->name('addresses.store');
 Route::patch('/addresses/{address}', [AddressController::class, 'update'])->name('addresses.update');
 Route::delete('/addresses/{address}', [AddressController::class, 'destroy'])->name('addresses.destroy');
 
-
 // PaymentOption Routes
 Route::get('/payment', [PaymentOptionController::class, 'getPaymentOptionsPerUser'])->name('payment.index');
 Route::post('/payment', [PaymentOptionController::class, 'store'])->name('payment.store');
 Route::delete('/payment/{id}', [PaymentOptionController::class, 'destroy'])->name('payment.destroy');
 
+// Order Routes
+Route::get('/orders', [OrderController::class, 'index'])->name('orders.index');
+Route::get('/orders/{order}', [OrderController::class, 'show'])->name('orders.show');
+Route::get('orders/cancel/{order}', [OrderController::class, 'cancelOrder'])->name('orders.cancel');
+Route::post('/orders', [OrderController::class, 'store'])->name('orders.store');
+Route::delete('/orders/{order}', [OrderController::class, 'destroy'])->name('orders.destroy');
+
+// Admin Order Routes
+Route::post('/admin/orders/{order}', [AdminOrderController::class, 'update'])->name('admin.orders.update');
 
 
 

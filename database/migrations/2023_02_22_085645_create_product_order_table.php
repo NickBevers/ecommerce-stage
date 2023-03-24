@@ -7,11 +7,11 @@ use Illuminate\Support\Facades\Schema;
 return new class extends Migration {
     public function up(): void
     {
-        Schema::create('product_orders', function (Blueprint $table) {
+        Schema::create('product_order', function (Blueprint $table) {
             $table->id();
             $table->foreignId('product_id')->constrained();
             $table->foreignId('order_id')->constrained();
-            $table->integer('quantity')->default(1);
+            $table->integer('amount')->default(1);
             $table->integer('price');
             $table->json('attributes')->nullable();
             $table->timestamps();
@@ -20,6 +20,6 @@ return new class extends Migration {
 
     public function down(): void
     {
-        Schema::dropIfExists('product_orders');
+        Schema::dropIfExists('product_order');
     }
 };
