@@ -21,7 +21,7 @@
             </div>
             <div>
               <div class="absolute top-0 right-0 p-2 m-2">
-                <a href="#" class="group -m-2 flex items-center p-2">
+                <a href="#" class="group -m-2 flex items-center p-2 rounded-md bg-white">
                   <HeartIcon class="h-6 w-6 flex-shrink-0 text-gray-400 group-hover:text-blue-600" aria-hidden="true" />
                 </a>
               </div>
