@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\CloudinaryController;
 use App\Http\Controllers\Admin\PromoController;
 use App\Http\Controllers\Admin\ReviewController as AdminReviewController;
 use App\Http\Controllers\Customer\CartController;
+use App\Http\Controllers\Customer\PaymentOptionController;
 use App\Http\Controllers\Customer\ReviewController as CustomerReviewController;
 use App\Http\Controllers\Admin\SubCategoryController as AdminSubCategoryController;
 use App\Http\Controllers\Customer\AddressController;
@@ -55,7 +56,7 @@ Route::get('/overview', function () {
 
 
 // Test Route
-Route::post('/test', [AddressController::class, 'store'])->name('test');
+//Route::delete('/test/{id}', [\App\Http\Controllers\Customer\PaymentOptionController::class, 'destroy'])->name('test');
 
 // Get specific products
 Route::get('/products/shoes', [ProductSkuController::class, 'showShoes'])->name('shoes');
@@ -161,6 +162,12 @@ Route::get('/addresses', [AddressController::class, 'getAddressesPerUser'])->nam
 Route::post('/addresses', [AddressController::class, 'store'])->name('addresses.store');
 Route::patch('/addresses/{address}', [AddressController::class, 'update'])->name('addresses.update');
 Route::delete('/addresses/{address}', [AddressController::class, 'destroy'])->name('addresses.destroy');
+
+
+// PaymentOption Routes
+Route::get('/payment', [PaymentOptionController::class, 'getPaymentOptionsPerUser'])->name('payment.index');
+Route::post('/payment', [PaymentOptionController::class, 'store'])->name('payment.store');
+Route::delete('/payment/{id}', [PaymentOptionController::class, 'destroy'])->name('payment.destroy');
 
 
 

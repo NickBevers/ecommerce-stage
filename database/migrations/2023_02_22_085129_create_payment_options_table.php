@@ -9,7 +9,8 @@ return new class extends Migration {
     {
         Schema::create('payment_options', function (Blueprint $table) {
             $table->id();
-            $table->String('label');
+            $table->foreignId('user_id')->constrained('users');
+            $table->String('payment_type');
             $table->String('extra_info');
             $table->timestamps();
         });
