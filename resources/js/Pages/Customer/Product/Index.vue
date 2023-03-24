@@ -63,19 +63,23 @@
         <!-- Image gallery -->
         <div class="mt-8 lg:col-span-7 lg:col-start-1 lg:row-span-3 lg:row-start-1 lg:mt-0">
           <h2 class="sr-only">Images</h2>
-
-       
-          <div v-for="image in props.sku.product_images">
-            <div class="grid grid-cols-1 lg:grid-cols-2 lg:grid-rows-3 lg:gap-8">
-            <img :src="image.image_link" v-if="image.image_type==='thumbnail'"
-              alt="Back of women&#039;s Basic Tee in black." class="lg:col-span-2  rounded-lg">
-
-            <img :src="image.image_link" v-if="image.image_type==='image'"
-              alt="Side profile of women&#039;s Basic Tee in black." class="hidden lg:block rounded-lg">
-
+          <div>
+            <div v-for="image in props.sku.product_images"  class="grid grid-cols-1 lg:grid-cols-2">
+            <div  class="lg:col-span-2 mb-8 rounded-lg overflow-hidden">
+              <img
+                v-if="image.image_type === 'thumbnail'"
+                :src="image.image_link" 
+                alt="Back of women's Basic Tee in black."
+                class="col-span-3" >
+                <img 
+                v-else
+                :src="image.image_link" 
+                alt="Back of women's Basic Tee in black." >
+              </div>
+ 
           </div>
+          
         </div>
-
         </div>
 
         <div class="mt-8 lg:col-span-5">
