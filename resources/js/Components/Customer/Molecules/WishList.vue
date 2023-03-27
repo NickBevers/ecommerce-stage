@@ -3,7 +3,7 @@
       <div class="mx-auto max-w-2xl px-4 pt-16 pb-24 sm:px-6 lg:max-w-7xl lg:px-8">
         <h1 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Wishlist</h1>
       <div class="grid grid-cols-1 gap-y-12 sm:grid-cols-2 sm:gap-x-6 lg:grid-cols-4 xl:gap-x-8">
-        <div v-for="product in props.products" :key="product.id" class="mt-8">
+        <div v-for="product in props.products" :key="product.id" class="mt-8"  :id="product.sku.id">
           <Link :to="'/product/' + product.sku.sku" :href="'/product/' + product.sku.sku">
           <div class="relative imgScale">
             <div class=" relative h-72 w-full overflow-hidden rounded-lg  duration-500 ">
@@ -19,7 +19,7 @@
             </div>
             <div>
               <div class="absolute top-0 right-0 p-2 m-2">
-                <a href="#" class="group -m-2 flex items-center p-2 rounded-md bg-white">
+                <a href="#" class="group -m-2 flex items-center p-2 rounded-md bg-white" @click.prevent="removeFromWishlist(product.sku.id)">
                   <PlusIcon class="h-6 w-6 rotate-45 flex-shrink-0 text-gray-400 group-hover:text-blue-600" aria-hidden="true" />
                 </a>
               </div>
@@ -47,6 +47,21 @@ import {
 const props = defineProps({
   products: Object,
 });
+
+function removeFromWishlist(id) {
+  fetch('/wishlist/'+id, {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  })
+    .then((response) => {
+      document.getElementById(id).remove();
+    })
+    .catch((error) => {
+      console.error('There has been a problem with your fetch operation:', error);
+    });
+}
 </script>
 
 <style scoped>
