@@ -21,7 +21,7 @@
             </div>
             <div>
               <div class="absolute top-0 right-0 p-2 m-2">
-                <a href="#" class="group -m-2 flex items-center p-2 rounded-md bg-white">
+                <a href="#" class="group -m-2 flex items-center p-2 rounded-md bg-white" @click.prevent="addToWishlist(product.id)">
                   <HeartIcon class="h-6 w-6 flex-shrink-0 text-gray-400 group-hover:text-blue-600" aria-hidden="true" />
                 </a>
               </div>
@@ -67,5 +67,23 @@ const props = defineProps({
   links: Object,
 });
 
-console.log(props.links)
+function addToWishlist(product) {
+            fetch('/wishlist', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    sku_id: product,
+                })
+            })
+            .then(response => {
+                // handle success response
+                console.log(response);
+            })
+            .catch(error => {
+                // handle error response
+                console.log(error);
+            });
+        }
 </script>
