@@ -66,6 +66,7 @@
 import { defineProps, onMounted } from 'vue'
 import { Pagination } from '@/Components/Admin'
 import { Link } from '@inertiajs/vue3';
+import { useWishlistStore } from '@/Stores/wishlist';
 import {
   HeartIcon,
 } from '@heroicons/vue/24/outline'
@@ -74,6 +75,8 @@ const props = defineProps({
   skus: Object,
   links: Object,
 });
+
+const wishlistStore = useWishlistStore();
 
 function addToWishlist(product, wishlists) {
   fetch('/wishlist', {
@@ -88,6 +91,7 @@ function addToWishlist(product, wishlists) {
     .then(response => {
       if (response.status === 200) {
         wishlists.push({ id: 0 });
+        wishlistStore.increment()
       }
     })
     .catch(error => {
@@ -108,6 +112,7 @@ function removeFromWishlist(product, wishlists) {
     .then(response => {
       if (response.status === 200) {
         wishlists.pop();
+        wishlistStore.decrement()
       }
     })
     .catch(error => {

@@ -1,7 +1,8 @@
 <script setup>
 import {ApplicationLogo} from '@/Components/Customer';
-import { onBeforeMount, ref, onMounted } from "vue";
+import { onBeforeMount, ref, onMounted, computed } from "vue";
 import { Link } from '@inertiajs/vue3';
+import { useWishlistStore } from '@/Stores/wishlist';
 import { Popover, PopoverButton, PopoverGroup, PopoverPanel } from '@headlessui/vue'
 import { MagnifyingGlassIcon, ShoppingBagIcon } from '@heroicons/vue/24/outline'
 import {
@@ -96,7 +97,6 @@ const open = ref(false)
 
 const categories = ref([]);
 let selectedCategory = ref(null);
-let wishlistCount = ref("")
 
 onBeforeMount(async () => {
     const response = await fetch('/admin/subcategories');
@@ -109,17 +109,20 @@ onBeforeMount(async () => {
     categories.value = categoriesData;
 });
 
+const wishlistStore = useWishlistStore();
+
+
 onMounted(() => {
-    fetchCount();
+    wishlistStore.fetchCount()
 });
 
-function fetchCount(){
-    fetch("/wishlist/count")
-    .then(response => response.json())
-    .then(data => {
-        wishlistCount.value = data.count;
-    });
-};
+// function fetchCount(){
+//     fetch("/wishlist/count")
+//     .then(response => response.json())
+//     .then(data => {
+//         wishlistCount.value = data.count;
+//     });
+// };
 
 function selectCategory(category_id) {
     selectedCategory.value = category_id;
@@ -367,7 +370,7 @@ function selectCategory(category_id) {
                                             <HeartIcon class="h-6 w-6 flex-shrink-0 text-gray-400 group-hover:text-gray-500"
                                                 aria-hidden="true" />
                                             <span
-                                                class="ml-2 text-sm font-medium text-gray-700 group-hover:text-gray-800">{{ wishlistCount }}</span>
+                                                class="ml-2 text-sm font-medium text-gray-700 group-hover:text-gray-800">{{ wishlistStore.count }}</span>
                                             <span class="sr-only">items in wishlist, view wishlist</span>
                                         </Link>
                                     </div>
