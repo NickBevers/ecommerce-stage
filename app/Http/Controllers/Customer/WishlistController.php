@@ -44,7 +44,8 @@ class WishlistController extends Controller
 
     public function getAmountOfItemsInWishlist()
     {
-        return Wishlist::where('user_id', auth()->user()->id)->count();
+        $count = Wishlist::where('user_id', auth()->user()->id)->count();
+        return response()->json(['count' => $count]);
     }
 
     public function show()
