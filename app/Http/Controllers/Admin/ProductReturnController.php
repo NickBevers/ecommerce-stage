@@ -13,7 +13,18 @@ class ProductReturnController extends Controller
         return ProductReturn::all();
     }
 
-    public function show(ProductReturn $productReturn)
+    public function update(Request $request, Int $id)
     {
+        $return = ProductReturn::find($id);
+        $return->update($request->all());
+        return $return;
+    }
+
+    public function updateStatus(Int $id, String $status){
+        $produtReturn = ProductReturn::find($id);
+        $produtReturn->status = $status;
+        $produtReturn->save();
+
+        return $produtReturn;
     }
 }

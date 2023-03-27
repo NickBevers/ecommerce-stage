@@ -28,23 +28,21 @@ class OrderController extends Controller
         $request->validate([
             'user_id' => 'required',
             'shipping_address_id' => 'required',
-            'order_date' => 'required',
-            'order_status' => 'required',
             'preferred_delivery_date' => 'required',
             'payment_method' => 'required',
-            'skus' => 'array,required',
+            'skus' => 'array|required',
         ]);
 
         $order = Order::create($request->all());
 
         foreach ($request->skus as $sku) {
-            $order->skus()->attach($sku->id, [
-                'quantity' => $sku['quantity'],
+            $order->skus()->attach($sku['id'], [
+                'amount' => $sku['amount'],
                 'price' => $sku['price'],
             ]);
         }
 
-        return redirect()->route('orders.show', $order->id);
+//        return redirect()->route('orders.show', $order->id);
     }
 
     public function show(Int $id)

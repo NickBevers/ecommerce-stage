@@ -10,11 +10,11 @@ class ProductImageSeeder extends Seeder
     public function run(): void
     {
         $images = [
-            "https://files.nickbevers.be/brownVest.jpg",
-            "https://files.nickbevers.be/leaveTheRoadShirt.jpg",
-            "https://files.nickbevers.be/pinkPants.jpg",
-            "https://files.nickbevers.be/scarf.jpg",
-            "https://files.nickbevers.be/whiteShirt.jpg",
+            "https://files.nickbevers.be/brownVest.webp",
+            "https://files.nickbevers.be/leaveTheRoadShirt.webp",
+            "https://files.nickbevers.be/pinkPants.webp",
+            "https://files.nickbevers.be/scarf.webp",
+            "https://files.nickbevers.be/whiteShirt.webp",
         ];
 
         $alt = [

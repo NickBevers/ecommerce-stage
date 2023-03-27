@@ -9,7 +9,7 @@ return new class extends Migration {
     {
         Schema::create('product_order', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('product_id')->constrained();
+            $table->foreignId('sku_id')->constrained();
             $table->foreignId('order_id')->constrained();
             $table->integer('amount')->default(1);
             $table->integer('price');
