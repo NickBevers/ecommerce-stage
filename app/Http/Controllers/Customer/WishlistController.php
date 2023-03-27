@@ -12,32 +12,24 @@ class WishlistController extends Controller
     public function index()
     {
         return Inertia::render('Customer/Checkout/Wishlist', [
-            'cart' => $this->getlistItemsPerUser(),
+            'wishlist' => $this->getListItemsPerUser(),
         ]);
     }
 
     public function store(Request $request)
     {
-        $cart = Wishlist::where('user_id', auth()->user()->id)
-            ->where('sku_id', $request->sku_id)
-            ->first();
-
-        if ($cart) {
-            $cart->amount = $cart->amount + $request->amount;
-            $cart->save();
-
-            return redirect()->route('customer.wishlist.index')->with('success', 'Product added to wishlist');
-        }
-
         Wishlist::create([
             'user_id' => auth()->user()->id,
             'sku_id' => $request->sku_id,
         ]);
 
-        return redirect()->route('customer.wishlist.index')->with('success', 'Product added to wishlist');
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Product added to wishlist',
+        ]);
     }
 
-    public function getlistItemsPerUser()
+    public function getListItemsPerUser()
     {
         return Wishlist::where('user_id', auth()->user()->id)
             ->with('sku')

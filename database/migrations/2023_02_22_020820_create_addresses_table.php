@@ -14,7 +14,7 @@ return new class extends Migration {
             $table->string('address_line2')->nullable();
             $table->string('city');
             $table->string('postal_code');
-            $table->String('address_type');
+            $table->String('address_type'); // billing or shipping
             $table->string('country');
             $table->String('btw_number')->nullable();
             $table->timestamps();

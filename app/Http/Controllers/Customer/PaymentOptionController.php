@@ -8,32 +8,35 @@ use Illuminate\Http\Request;
 
 class PaymentOptionController extends Controller
 {
-    public function index()
+    public function getPaymentOptionsPerUser()
     {
-        
-    }
-
-    public function create()
-    {
+        $paymentOptions = PaymentOption::where('user_id', auth()->user()->id)->get();
+        return response()->json($paymentOptions);
     }
 
     public function store(Request $request)
     {
+        $request->validate([
+            'payment_type' => 'required',
+        ]);
+
+        PaymentOption::create([
+            'user_id' => auth()->user()->id,
+            'payment_type' => $request->payment_type,
+            'extra_info' => $request->extra_info,
+        ]);
+
+        return response()->json(['message' => 'Payment option added successfully']);
     }
 
-    public function show(PaymentOption $paymentOption)
+    public function destroy(String $id)
     {
-    }
+        $paymentOption = PaymentOption::where('id', $id)->where('user_id', auth()->user()->id)->first();
+        if (!$paymentOption) {
+            return response()->json(['message' => 'Payment option not found'], 404);
+        }
 
-    public function edit(PaymentOption $paymentOption)
-    {
-    }
-
-    public function update(Request $request, PaymentOption $paymentOption)
-    {
-    }
-
-    public function destroy(PaymentOption $paymentOption)
-    {
+        $paymentOption->delete();
+        return response()->json(['message' => 'Payment option deleted successfully']);
     }
 }
