@@ -75,8 +75,6 @@ const props = defineProps({
   links: Object,
 });
 
-console.log(props.skus)
-
 function addToWishlist(product, wishlists) {
   fetch('/wishlist', {
     method: 'POST',
