@@ -11,7 +11,7 @@ class WishlistController extends Controller
 {
     public function index()
     {
-        return Inertia::render('Customer/Wishlist/Index', [
+        return Inertia::render('Customer/Checkout/Wishlist', [
             'wishlist' => $this->getListItemsPerUser(),
         ]);
     }
@@ -26,6 +26,7 @@ class WishlistController extends Controller
         return response()->json([
             'status' => 'success',
             'message' => 'Product added to wishlist',
+            'count' => $this->getAmountOfItemsInWishlist(),
         ]);
     }
 
@@ -39,6 +40,11 @@ class WishlistController extends Controller
             ->with('sku.attributeValues')
             ->with('sku.promos')
             ->get();
+    }
+
+    public function getAmountOfItemsInWishlist()
+    {
+        return Wishlist::where('user_id', auth()->user()->id)->count();
     }
 
     public function show()
