@@ -66,11 +66,6 @@ class User extends Authenticatable implements CanResetPasswordContract
         return $this->hasMany(Order::class);
     }
 
-    public function productReturns(): HasMany
-    {
-        return $this->hasMany(ProductReturn::class);
-    }
-
     public function cart(): HasOne
     {
         return $this->hasOne(Cart::class);
@@ -96,5 +91,8 @@ class User extends Authenticatable implements CanResetPasswordContract
         return $this->hasMany(PaymentOption::class);
     }
 
-
+    public function productReturns(): HasMany
+    {
+        return $this->hasMany(ProductReturn::class);
+    }
 }

@@ -11,6 +11,6 @@ class SkuSeeder extends Seeder
 {
     public function run(): void
     {
-        Sku::factory()->count(4000)->create();
+        Sku::factory()->count(1500)->create();
     }
 }

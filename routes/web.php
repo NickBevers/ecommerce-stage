@@ -8,6 +8,9 @@ use App\Http\Controllers\Admin\CloudinaryController;
 use App\Http\Controllers\Admin\PromoController;
 use App\Http\Controllers\Admin\ReviewController as AdminReviewController;
 use App\Http\Controllers\Customer\CartController;
+use App\Http\Controllers\Customer\OrderController;
+use App\Http\Controllers\Admin\OrderController as AdminOrderController;
+use App\Http\Controllers\Customer\PaymentOptionController;
 use App\Http\Controllers\Customer\ReviewController as CustomerReviewController;
 use App\Http\Controllers\Admin\SubCategoryController as AdminSubCategoryController;
 use App\Http\Controllers\Customer\AddressController;
@@ -55,7 +58,7 @@ Route::get('/overview', function () {
 
 
 // Test Route
-Route::get('/test', [WishlistController::class, 'show'])->name('test');
+//Route::delete('/test/{id}', [\App\Http\Controllers\Customer\PaymentOptionController::class, 'destroy'])->name('test');
 
 // Get specific products
 Route::get('/products/shoes', [ProductSkuController::class, 'showShoes'])->name('shoes');
@@ -96,14 +99,6 @@ Route::get('/users/{user}/edit', [UserController::class, 'edit'])->name('users.e
 Route::patch('/users/{user}', [UserController::class, 'update'])->name('users.update');
 Route::patch('/users/{user}/bank', [UserController::class, 'updateBankAccount'])->name('users.updateBankAccount');
 Route::delete('/users/{user}', [UserController::class, 'destroy'])->name('users.destroy');
-
-// Shipping Address Routes
-Route::get('/shipping-addresses', [AddressController::class, 'index'])->name('shipping.index');
-Route::post('/shipping-addresses', [AddressController::class, 'store'])->name('shipping.store');
-Route::get('/shipping-addresses/{shippingAddress}', [AddressController::class, 'show'])->name('shipping.show');
-Route::get('/shipping-addresses/{shippingAddress}/edit', [AddressController::class, 'edit'])->name('shipping.edit');
-Route::patch('/shipping-addresses/{shippingAddress}', [AddressController::class, 'update'])->name('shipping.update');
-Route::delete('/shipping-addresses/{shippingAddress}', [AddressController::class, 'destroy'])->name('shipping.destroy');
 
 // Admin Routes for products and (sub)categories
 Route::middleware('auth')->group(function () {
@@ -162,6 +157,28 @@ Route::delete('/cart/{product}', [CartController::class, 'destroy'])->name('cart
 Route::get('/wishlist', [WishlistController::class, 'index'])->name('wishlist.index');
 Route::post('/wishlist', [WishlistController::class, 'store'])->name('wishlist.store');
 Route::delete('/wishlist/{product}', [WishlistController::class, 'destroy'])->name('wishlist.destroy');
+
+// Address Routes
+Route::get('/addresses', [AddressController::class, 'getAddressesPerUser'])->name('addresses.getAddressesPerUser');
+Route::post('/addresses', [AddressController::class, 'store'])->name('addresses.store');
+Route::patch('/addresses/{address}', [AddressController::class, 'update'])->name('addresses.update');
+Route::delete('/addresses/{address}', [AddressController::class, 'destroy'])->name('addresses.destroy');
+
+// PaymentOption Routes
+Route::get('/payment', [PaymentOptionController::class, 'getPaymentOptionsPerUser'])->name('payment.index');
+Route::post('/payment', [PaymentOptionController::class, 'store'])->name('payment.store');
+Route::delete('/payment/{id}', [PaymentOptionController::class, 'destroy'])->name('payment.destroy');
+
+// Order Routes
+Route::get('/orders', [OrderController::class, 'index'])->name('orders.index');
+Route::get('/orders/{order}', [OrderController::class, 'show'])->name('orders.show');
+Route::get('orders/cancel/{order}', [OrderController::class, 'cancelOrder'])->name('orders.cancel');
+Route::post('/orders', [OrderController::class, 'store'])->name('orders.store');
+Route::delete('/orders/{order}', [OrderController::class, 'destroy'])->name('orders.destroy');
+
+// Admin Order Routes
+Route::post('/admin/orders/{order}', [AdminOrderController::class, 'update'])->name('admin.orders.update');
+
 
 
 require __DIR__.'/auth.php';
