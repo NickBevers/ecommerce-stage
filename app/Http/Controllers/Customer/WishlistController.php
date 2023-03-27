@@ -11,7 +11,7 @@ class WishlistController extends Controller
 {
     public function index()
     {
-        return Inertia::render('Customer/Wishlist/Index', [
+        return Inertia::render('Customer/Checkout/Wishlist', [
             'wishlist' => $this->getListItemsPerUser(),
         ]);
     }
