@@ -44,4 +44,9 @@ class Order extends Model
         return $this->belongsToMany(Sku::class, 'product_order', 'order_id', 'sku_id');
     }
 
+    public function productReturns(): HasMany
+    {
+        return $this->hasMany(ProductReturn::class);
+    }
+
 }

@@ -43,6 +43,9 @@ class SkuController extends Controller
             ->with('product.brand')
             ->with('productImages')
             ->with('product.subCategory')
+            ->with('wishlists', function ($query) {
+                $query->where('user_id', Auth::id());
+            })
             ->when($category, function ($query) use ($category){
                 $query->whereHas('product.subCategory.category', function ($query) use ($category) {
                     $query->where('name', $category);

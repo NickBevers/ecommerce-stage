@@ -79,4 +79,9 @@ class Sku extends Model
     {
         return $this->belongsToMany(Order::class, 'product_order', 'sku_id', 'order_id');
     }
+
+    public function productReturns(): HasMany
+    {
+        return $this->hasMany(ProductReturn::class);
+    }
 }
