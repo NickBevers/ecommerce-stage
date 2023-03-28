@@ -12,7 +12,7 @@
                   </svg>
                   <span class="mt-4 text-sm font-medium text-gray-900">International delivery</span>
                 </dt>
-                <dd class="mt-1 text-sm text-gray-500">Get your order in 2 years</dd>
+                <dd class="mt-1 text-sm text-gray-500">Shipping in 2-4 days</dd>
               </div>
 
               <div class="rounded-lg border border-gray-200 bg-gray-50 p-6 text-center">
@@ -22,9 +22,9 @@
                   <path stroke-linecap="round" stroke-linejoin="round"
                     d="M12 6v12m-3-2.818l.879.659c1.171.879 3.07.879 4.242 0 1.172-.879 1.172-2.303 0-3.182C13.536 12.219 12.768 12 12 12c-.725 0-1.45-.22-2.003-.659-1.106-.879-1.106-2.303 0-3.182s2.9-.879 4.006 0l.415.33M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
-                <span class="mt-4 text-sm font-medium text-gray-900">Loyalty rewards</span>
+                <span class="mt-4 text-sm font-medium text-gray-900">Placeholder</span>
               </dt>
-              <dd class="mt-1 text-sm text-gray-500">Don&#039;t look at other tees</dd>
+              <dd class="mt-1 text-sm text-gray-500">Placeholder</dd>
             </div>
           </dl>
         </section>
