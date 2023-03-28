@@ -151,6 +151,9 @@ class SkuController extends Controller
             })
             ->with('product.brand')
             ->with('product.subCategory')
+            ->with('wishlists', function ($query) {
+                $query->where('user_id', Auth::id());
+            })
             ->first();
 
         $attributeValues = $sku->attributeValues;
