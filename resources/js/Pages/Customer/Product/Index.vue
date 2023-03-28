@@ -84,6 +84,11 @@
                 </svg>
                 <span class="sr-only">Add to favorites</span>
               </button>
+              <div>
+                <!-- {{ props.sku }}
+                <WishlistButton :sku="props.sku.product" />  -->
+              </div>
+              
 
             </div>
           </form>
@@ -100,7 +105,7 @@
 </GuestLayout></template>
 <script setup>
 import GuestLayout from '@/Layouts/GuestLayout.vue'
-import {ProductReviews, ProductVariationList, ProductStars, ImageGallery, ProductDetails, Policies} from '@/Components/Customer';
+import {ProductReviews, WishlistButton, ProductVariationList, ProductStars, ImageGallery, ProductDetails, Policies} from '@/Components/Customer';
 
 const props = defineProps({
   sku: Object,
