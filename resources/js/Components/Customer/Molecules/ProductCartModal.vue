@@ -129,6 +129,8 @@
   const selectedSize = ref(product.sizes[2])
   let open = ref(false)
 
+  const emit = defineEmits(['isOpen'])
+
   const props = defineProps({
     open: {
       type: Boolean,
