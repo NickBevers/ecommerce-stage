@@ -116,14 +116,6 @@ onMounted(() => {
     wishlistStore.fetchCount()
 });
 
-// function fetchCount(){
-//     fetch("/wishlist/count")
-//     .then(response => response.json())
-//     .then(data => {
-//         wishlistCount.value = data.count;
-//     });
-// };
-
 function selectCategory(category_id) {
     selectedCategory.value = category_id;
 }
