@@ -17,13 +17,7 @@ class SkuController extends Controller
     public function index()
     {
         return Inertia::render('Admin/Products/Index', [
-            'skus' => Sku::with('attributeValues')
-                ->with('attributeValues.attributeType')
-                ->with('product')
-                ->with('productImages')
-                ->with('product.subCategory')
-                ->with('product.subCategory.category')
-                ->with('product.brand')
+            'skus' => Sku::withAllRelations()
                 ->orderBy('created_at', 'desc')
                 ->paginate(10),
             'attributeValues' => AttributeValue::all(),
@@ -35,15 +29,10 @@ class SkuController extends Controller
     public function search(Request $request)
     {
         $searchTerm = $request->input('searchTerm');
-        return Sku::with('attributeValues')
-            ->with('attributeValues.attributeType')
-            ->with('product')
-            ->with('product.subCategory')
-            ->with('product.subCategory.category')
-            ->with('product.brand')
-            -> whereHas('product', function ($query) use ($searchTerm) {
+        return Sku::whereHas('product', function ($query) use ($searchTerm) {
                 $query->where('title', 'like', '%' . $searchTerm . '%');
             })
+            ->withAllRelations()
             ->orderBy('sku')
             ->paginate(10);
     }
@@ -68,7 +57,6 @@ class SkuController extends Controller
 
     public function store(Request $request)
     {
-        // get the product data from the request and create a new product
         $productData = $request->only(['title', 'description', 'audience', 'brand_id', 'sub_category_id', 'product_type', 'extra_info']);
         $product = app(ProductController::class)->store(new Request($productData));
 
@@ -109,7 +97,8 @@ class SkuController extends Controller
 
     public function sortClothing(Array $data): array
     {
-        $sizes = [ 'One Size', 'XXS', 'XS', 'S', 'M', 'L', 'XL', 'XXL', '3XL', '4XL', '5XL', '6XL', '7XL', '8XL', '23', '24', '25', '26', '27', '28', '29', '30', '31', '32', '33', '34', '35', '36', '37', '38', '39', '40', '41', '42', '43', '44', '45', '46', '47', '48', '49', '50', '52', '54', '56', '58', '60', '62', '64', '66', '68', '70', '90', '94', '98', '102','106', '110',];
+//        $sizes = [ 'One Size', 'XXS', 'XS', 'S', 'M', 'L', 'XL', 'XXL', '3XL', '4XL', '5XL', '6XL', '7XL', '8XL', '23', '24', '25', '26', '27', '28', '29', '30', '31', '32', '33', '34', '35', '36', '37', '38', '39', '40', '41', '42', '43', '44', '45', '46', '47', '48', '49', '50', '52', '54', '56', '58', '60', '62', '64', '66', '68', '70', '90', '94', '98', '102','106', '110',];
+        $sizes = app(AttributeValueController::class)->getValuesByType("size");
         $res = array_intersect($sizes, $data);
         return array_values($res);
     }
@@ -117,13 +106,7 @@ class SkuController extends Controller
     public function edit(String $skuNumber)
     {
         $sku = Sku::where('sku', $skuNumber)
-            ->with('product')
-            ->with('productImages')
-            ->with('product.subCategory')
-            ->with('product.subCategory.category')
-            ->with('product.brand')
-            ->with('attributeValues')
-            ->with('attributeValues.attributeType')
+            ->withAllRelations()
             ->first();
 
         return Inertia::render('Admin/Products/Edit', [

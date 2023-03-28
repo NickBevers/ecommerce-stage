@@ -35,4 +35,26 @@ class Cart extends Model
     {
         return $this->belongsTo(Sku::class);
     }
+
+    /*
+     * --------------------------------------------------------------------------
+     * SCOPES
+     * --------------------------------------------------------------------------
+     */
+
+    public function scopeByUser($query, $user_id)
+    {
+        return $query->where('user_id', $user_id);
+    }
+
+    public function scopeWithSku($query)
+    {
+        return $query
+            ->with('sku')
+            ->with('sku.product')
+            ->with('sku.productImages')
+            ->with('sku.product.brand')
+            ->with('sku.attributeValues')
+            ->with('sku.promos');
+    }
 }

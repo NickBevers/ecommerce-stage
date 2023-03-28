@@ -36,14 +36,9 @@ class ProductReturnController extends Controller
     public function show(Int $id)
     {
         $return = ProductReturn::where('id', $id)
-            ->with('order')
-            ->with('sku', function ($query) {
-                $query->with('product')
-                    ->with('productImages')
-                    ->with('attributeValues')
-                    ->with('promos')
-                    ->get();
-            });
+            ->withSku()
+            ->first();
+
 
         return Inertia::render('Returns/Detail', [
             'return' => $return,

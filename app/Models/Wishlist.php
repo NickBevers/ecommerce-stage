@@ -37,4 +37,21 @@ class Wishlist extends Model
     {
         return $this->belongsTo(Sku::class);
     }
+
+    /*
+     * |--------------------------------------------------------------------------
+     * | SCOPES
+     * |--------------------------------------------------------------------------
+     */
+
+    public function scopeWithSku($query)
+    {
+        return $query
+            ->with('sku')
+            ->with('sku.product')
+            ->with('sku.productImages')
+            ->with('sku.product.brand')
+            ->with('sku.attributeValues')
+            ->with('sku.promos');
+    }
 }

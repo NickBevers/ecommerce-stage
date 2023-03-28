@@ -81,4 +81,34 @@ class Sku extends Model
     {
         return $this->hasMany(ProductReturn::class);
     }
+
+    /*
+     * |--------------------------------------------------------------------------
+     * | SCOPES
+     * |--------------------------------------------------------------------------
+     */
+
+    public function scopeSearch($query, $searchTerm)
+    {
+        return $query->whereHas('product', function ($query) use ($searchTerm) {
+            $query->where('title', 'like', '%' . $searchTerm . '%');
+        });
+    }
+
+    public function scopeWithAllRelations($query)
+    {
+        return $query->with('product')
+            ->with('product.subCategory')
+            ->with('product.subCategory.category')
+            ->with('product.brand')
+            ->with('productImages')
+            ->with('attributeValues')
+            ->with('attributeValues.attributeType')
+            ->with('promos')
+            ->with('reviews')
+            ->with('carts')
+            ->with('wishlists')
+            ->with('orders')
+            ->with('productReturns');
+    }
 }

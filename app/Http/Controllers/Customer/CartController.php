@@ -41,13 +41,8 @@ class CartController extends Controller
     public function getProductsPerUser()
     {
         return Cart::where('user_id', auth()->user()->id)
-            ->with('sku')
-            ->with('sku.product')
-            ->with('sku.productImages')
-            ->with('sku.product.brand')
-            ->with('sku.attributeValues')
-            ->with('sku.promos')
-            ->get();
+            ->withSku()
+            ->first();
     }
 
     public function show()
