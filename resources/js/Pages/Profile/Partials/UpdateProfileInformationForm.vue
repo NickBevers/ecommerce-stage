@@ -1,5 +1,5 @@
 <script setup>
-import {InputError, InputLabel, PrimaryButton, TextInput} from "@/Components/Admin";
+import { InputError, InputLabel, PrimaryButton, TextInput } from "@/Components/Admin";
 import { Link, useForm, usePage } from "@inertiajs/vue3";
 import { onMounted } from "vue";
 
@@ -56,30 +56,16 @@ const updateProfile = () => {
         <div class="w-2/4">
           <InputLabel for="firstname" value="Firstname" />
 
-          <TextInput
-            id="firstname"
-            type="text"
-            class="mt-1 block w-full"
-            v-model="form.firstname"
-            required
-            autofocus
-            autocomplete="firstname"
-          />
+          <TextInput id="firstname" type="text" class="mt-1 block w-full" v-model="form.firstname" required autofocus
+            autocomplete="firstname" />
 
           <InputError class="mt-2" :message="form.errors.firstname" />
         </div>
         <div class="w-2/4">
           <InputLabel for="lastname" value="Lastname" />
 
-          <TextInput
-            id="lastname"
-            type="text"
-            class="mt-1 block w-full"
-            v-model="form.lastname"
-            required
-            autofocus
-            autocomplete="lastname"
-          />
+          <TextInput id="lastname" type="text" class="mt-1 block w-full" v-model="form.lastname" required autofocus
+            autocomplete="lastname" />
 
           <InputError class="mt-2" :message="form.errors.lastname" />
         </div>
@@ -88,14 +74,8 @@ const updateProfile = () => {
       <div>
         <InputLabel for="email" value="Email" />
 
-        <TextInput
-          id="email"
-          type="email"
-          class="mt-1 block w-full"
-          v-model="form.email"
-          required
-          autocomplete="username"
-        />
+        <TextInput id="email" type="email" class="mt-1 block w-full" v-model="form.email" required
+          autocomplete="username" />
 
         <InputError class="mt-2" :message="form.errors.email" />
       </div>
@@ -103,14 +83,8 @@ const updateProfile = () => {
       <div>
         <InputLabel for="password_check" value="Password" />
 
-        <TextInput
-          id="password_check"
-          type="password"
-          class="mt-1 block w-full"
-          v-model="form.password"
-          autocomplete="new-password"
-          required
-        />
+        <TextInput id="password_check" type="password" class="mt-1 block w-full" v-model="form.password"
+          autocomplete="new-password" required />
 
         <InputError class="mt-2" :message="form.errors.password" />
       </div>
@@ -118,20 +92,13 @@ const updateProfile = () => {
       <div v-if="props.mustVerifyEmail && user.email_verified_at === null">
         <p class="text-sm mt-2 text-gray-800">
           Your email address is unverified.
-          <Link
-            :href="route('verification.send')"
-            method="post"
-            as="button"
-            class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-          >
-            Click here to re-send the verification email.
+          <Link :href="route('verification.send')" method="post" as="button"
+            class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+          Click here to re-send the verification email.
           </Link>
         </p>
 
-        <div
-          v-show="props.status === 'verification-link-sent'"
-          class="mt-2 font-medium text-sm text-green-600"
-        >
+        <div v-show="props.status === 'verification-link-sent'" class="mt-2 font-medium text-sm text-green-600">
           A new verification link has been sent to your email address.
         </div>
       </div>
@@ -139,11 +106,7 @@ const updateProfile = () => {
       <div class="flex items-center gap-4">
         <PrimaryButton :disabled="form.processing">Save</PrimaryButton>
 
-        <Transition
-          enter-from-class="opacity-0"
-          leave-to-class="opacity-0"
-          class="transition ease-in-out"
-        >
+        <Transition enter-from-class="opacity-0" leave-to-class="opacity-0" class="transition ease-in-out">
           <p v-if="form.recentlySuccessful" class="text-sm text-gray-600">
             Saved.
           </p>

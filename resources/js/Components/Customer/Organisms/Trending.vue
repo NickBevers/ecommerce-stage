@@ -25,6 +25,7 @@
 </template>
   
 <script setup>
+
 const products = [
     {
         id: 1,

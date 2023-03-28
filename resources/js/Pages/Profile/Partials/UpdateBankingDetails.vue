@@ -1,7 +1,7 @@
 <script setup>
-import {InputError, InputLabel, PrimaryButton, TextInput} from "@/Components/Admin";
+import { InputError, InputLabel, PrimaryButton, TextInput } from "@/Components/Admin";
 import { useForm, usePage } from '@inertiajs/vue3';
-import { ref, onMounted} from 'vue';
+import { ref, onMounted } from 'vue';
 
 
 const user = usePage().props.auth.user;
@@ -10,10 +10,6 @@ const bankInput = ref(null);
 
 const form = useForm({
     bank_account: '',
-});
-
-onMounted(() => {
-   console.log(user)
 });
 
 const updateBank = () => {
@@ -43,14 +39,8 @@ const updateBank = () => {
         <form @submit.prevent="updateBank" class="mt-6 space-y-6">
             <div>
                 <InputLabel for="bank_account" value="Bank Account" />
-                <TextInput
-                    id="bank_account"
-                    ref="bankInput"
-                    v-model="form.bank_account"
-                    type="text"
-                    class="mt-1 block w-full"
-                    autocomplete="bank_account"
-                />
+                <TextInput id="bank_account" ref="bankInput" v-model="form.bank_account" type="text"
+                    class="mt-1 block w-full" autocomplete="bank_account" />
 
                 <InputError :message="form.errors.bank_account" class="mt-2" />
             </div>
