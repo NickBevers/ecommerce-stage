@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Facades\Auth;
 
 class Sku extends Model
 {
@@ -105,9 +106,13 @@ class Sku extends Model
             ->with('attributeValues')
             ->with('attributeValues.attributeType')
             ->with('promos')
-            ->with('reviews')
+            ->with('reviews', function ($query) {
+                $query->where('approved', true);
+            })
             ->with('carts')
-            ->with('wishlists')
+            ->with('wishlists', function ($query) {
+                $query->where('user_id', Auth::id());
+            })
             ->with('orders')
             ->with('productReturns');
     }

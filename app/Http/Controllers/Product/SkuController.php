@@ -36,15 +36,7 @@ class SkuController extends Controller
         $sort = $request->has('sort')? $request->input('sort') : 'created_at';
         $order = $request->has('order')? $request->input('order') : 'asc';
 
-        $skus = Sku::with('attributeValues')
-            ->with('product')
-            ->with('promos')
-            ->with('product.brand')
-            ->with('productImages')
-            ->with('product.subCategory')
-            ->with('wishlists', function ($query) {
-                $query->where('user_id', Auth::id());
-            })
+        $skus = Sku::withAllRelations()
             ->when($category, function ($query) use ($category){
                 $query->whereHas('product.subCategory.category', function ($query) use ($category) {
                     $query->where('name', $category);
@@ -96,46 +88,20 @@ class SkuController extends Controller
         return Inertia::render('Customer/Products/Index', $data);
     }
 
+    public function showByCategory(String $category)
+    {
+        return $this->filter(new Request(['category' => $category]));
+    }
+
     public function showShoes(Request $request)
     {
         $request->merge(['category' => "Shoes"]);
         return $this->filter($request);
     }
 
-    public function showClothing(Request $request)
-    {
-        $request->merge(['category' => "Clothing"]);
-        return $this->filter($request);
-    }
-
-    public function showAccessories(Request $request)
-    {
-        $request->merge(['category' => "Accessories"]);
-        return $this->filter($request);
-    }
-
-    public function showPromos(Request $request)
-    {
-        $request->merge(['promo' => true]);
-        return Inertia::render('Customer/Products/Index', $this->filter($request));
-    }
-
     public function show(String $sku)
     {
-        $sku = Sku::where('sku', $sku)
-            ->with('attributeValues')
-            ->with('productImages')
-            ->with('product')
-            ->with('promos')
-            ->with('reviews', function ($query) {
-                $query->where('approved', true);
-            })
-            ->with('product.brand')
-            ->with('product.subCategory')
-            ->with('wishlists', function ($query) {
-                $query->where('user_id', Auth::id());
-            })
-            ->first();
+        $sku = Sku::withAllRelations()->first();
 
         $attributeValues = $sku->attributeValues;
         $material = $attributeValues->where('attribute_type_id', 3)->first();
