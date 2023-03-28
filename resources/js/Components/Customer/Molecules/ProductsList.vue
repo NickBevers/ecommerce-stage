@@ -20,7 +20,7 @@
               <p class="relative text-lg font-semibold text-white">€{{ product.price.toFixed(2) }}</p>
             </div>
             <div>
-              <WishlistButton :product="product" class="absolute top-0 right-0 p-2 m-2"/>
+              <WishlistButton :product="product" class="absolute top-0 right-0 p-2 m-2 bg-white rounded-md"/>
             </div>
           </div>
           </Link>

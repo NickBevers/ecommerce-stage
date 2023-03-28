@@ -1,10 +1,10 @@
 <template>
     <div>
-        <a href="#" class="group -m-2 flex items-center p-2 rounded-md bg-white" v-if="props.product.wishlists.length === 0"
+        <a href="#" class="group -m-2 flex items-center p-2 rounded-md" v-if="props.product.wishlists.length === 0"
             @click.prevent="addToWishlist(props.product.id, props.product.wishlists)">
             <HeartIcon class="h-6 w-6 flex-shrink-0 text-gray-400 group-hover:text-indigo-600" aria-hidden="true" />
         </a>
-        <a href="#" class="group -m-2 flex items-center p-2 rounded-md bg-white text-indigo-600" v-else
+        <a href="#" class="group -m-2 flex items-center p-2 rounded-md text-indigo-600" v-else
             @click.prevent="removeFromWishlist(props.product.id, props.product.wishlists)">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6">
                 <path
