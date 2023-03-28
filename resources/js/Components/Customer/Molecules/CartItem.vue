@@ -1,6 +1,6 @@
 <template>
       <ul role="list" class="divide-y divide-gray-200 border-t border-b border-gray-200">
-              <li v-for="(product, productIdx) in products" :key="product.id" class="flex py-6 sm:py-10">
+              <li v-for="(product, productIdx) in products" :key="product.id" class="flex py-6 sm:py-10" :id="product.sku.id">
                 <div class="flex-shrink-0">
                   <img :src="product.sku.product_images[0].image_link" alt="shopping cart item" class="h-24 w-24 rounded-md object-cover object-center sm:h-48 sm:w-48" />
                 </div>
@@ -62,6 +62,7 @@ function removeFromCart(id) {
   })
     .then((response) => {
       document.getElementById(id).remove();
+
       // wishlistStore.decrement();
     })
     .catch((error) => {
