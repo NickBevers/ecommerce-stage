@@ -1,3 +1,13 @@
+<script setup>
+import GuestLayout from '@/Layouts/GuestLayout.vue'
+import { EmptyState, OrderSummary, CartItem } from '@/Components/Customer'
+
+const props = defineProps({
+  cart: Object,
+});
+
+console.log(props.cart)
+</script>
 <template>
   <GuestLayout>
     <div class="bg-white mt-24">
@@ -18,14 +28,3 @@
     </div>
   </GuestLayout>
 </template>
-  
-<script setup>
-import GuestLayout from '@/Layouts/GuestLayout.vue'
-import { EmptyState, OrderSummary, CartItem } from '@/Components/Customer'
-
-const props = defineProps({
-  cart: Object,
-});
-
-console.log(props.cart)
-</script>

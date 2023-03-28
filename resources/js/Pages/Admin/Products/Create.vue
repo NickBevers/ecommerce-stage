@@ -27,4 +27,5 @@ let variation = ref(false);
             :attributeTypes="props.attributeTypes" />
         <VariationForm v-else :brands="props.brands" :categories="props.categories"
             :attributeTypes="props.attributeTypes" />
-    </AuthenticatedLayout></template>
+    </AuthenticatedLayout>
+</template>

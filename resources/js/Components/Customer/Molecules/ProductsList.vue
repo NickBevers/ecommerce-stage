@@ -7,7 +7,7 @@
           <div class="relative group">
             <div class="relative h-72 w-full overflow-hidden rounded-lg">
               <img :src="product.product_images[0].image_link" alt="placeholder"
-                class="h-full w-full object-cover object-center duration-500 scale-100 group-hover:scale-125" />
+                class="h-full w-full object-cover object-center duration-500 group-hover:scale-125" />
             </div>
             <div class="relative mt-4">
               <h3 class="text-sm font-medium text-gray-900">{{ product.product.title }}</h3>

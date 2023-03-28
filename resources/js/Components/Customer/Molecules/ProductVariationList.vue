@@ -1,3 +1,18 @@
+<script setup>
+import { ref } from 'vue'
+import { Link } from '@inertiajs/vue3';
+
+const props = defineProps({
+  variations: {
+    type: Object,
+    required: true
+  }
+})
+
+
+let showAll = ref(false);
+
+</script>
 <template>
   <div class="flex flex-wrap gap-2">
     <div v-for="variation, index in props.variations" :key="variation.id" class="m-1 overflow-hidden rounded-md"
@@ -28,18 +43,3 @@
 
   </div>
 </template>
-<script setup>
-import { ref } from 'vue'
-import { Link } from '@inertiajs/vue3';
-
-const props = defineProps({
-  variations: {
-    type: Object,
-    required: true
-  }
-})
-
-
-let showAll = ref(false);
-
-</script>

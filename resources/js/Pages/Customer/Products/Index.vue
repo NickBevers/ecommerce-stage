@@ -1,10 +1,3 @@
-<template>
-  <GuestLayout>
-    <ProductsFilter :title="props.subCategory.name" />
-    <ProductsList :skus="skus.data" :links="skus.links" />
-  </GuestLayout>
-</template>
-  
 <script setup>
 import { defineProps, onMounted } from 'vue'
 import GuestLayout from '@/Layouts/GuestLayout.vue'
@@ -17,3 +10,9 @@ const props = defineProps({
   subCategory: Object,
 });
 </script>
+<template>
+  <GuestLayout>
+    <ProductsFilter :title="props.subCategory.name" />
+    <ProductsList :skus="skus.data" :links="skus.links" />
+  </GuestLayout>
+</template>

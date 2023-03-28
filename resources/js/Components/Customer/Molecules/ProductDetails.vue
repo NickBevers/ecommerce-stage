@@ -1,3 +1,11 @@
+<script setup>
+const props = defineProps({
+  sku: {
+    type: Object,
+    required: true
+  }
+})
+</script>
 <template>
   <div class="mt-10" v-if="props.sku.product.description">
     <h2 class="text-sm font-medium text-gray-900">Description</h2>
@@ -15,11 +23,3 @@
     </div>
   </div>
 </template>
-<script setup>
-const props = defineProps({
-  sku: {
-    type: Object,
-    required: true
-  }
-})
-</script>

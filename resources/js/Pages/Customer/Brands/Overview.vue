@@ -11,7 +11,4 @@ onMounted(() => {
     console.log(props.skus)
 })
 </script>
-
 <template></template>
-
-<style scoped></style>

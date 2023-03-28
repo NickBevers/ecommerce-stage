@@ -1,6 +1,6 @@
 <script setup>
 import { ref, reactive } from "vue";
-import {InputError, InputLabel, PrimaryButton, TextInput} from "@/Components/Admin";
+import { InputError, InputLabel, PrimaryButton, TextInput } from "@/Components/Admin";
 import { useForm, usePage } from "@inertiajs/vue3";
 
 const showModal = ref(false);
@@ -58,60 +58,60 @@ const error = ref('');
 let files = reactive([]);
 
 function handleDragEnter(event) {
-  error.value = '';
-  // Prevent default behavior
-  event.preventDefault();
+    error.value = '';
+    // Prevent default behavior
+    event.preventDefault();
 
-  // Add "dragging" class to label
-  isDragging.value = true;
+    // Add "dragging" class to label
+    isDragging.value = true;
 }
 
 function handleDragOver(event) {
-  // Prevent default behavior
-  event.preventDefault();
+    // Prevent default behavior
+    event.preventDefault();
 
-  // Add "dragging" class to label
-  isDragging.value = true;
+    // Add "dragging" class to label
+    isDragging.value = true;
 }
 
 function handleDragLeave(event) {
-  // Prevent default behavior
-  event.preventDefault();
+    // Prevent default behavior
+    event.preventDefault();
 
-  // Remove "dragging" class from label
-  isDragging.value = false;
+    // Remove "dragging" class from label
+    isDragging.value = false;
 }
 
 function handleDrop(event) {
-  // Prevent default behavior
-  event.preventDefault();
+    // Prevent default behavior
+    event.preventDefault();
 
-  // Remove "dragging" class from label
-  isDragging.value = false;
+    // Remove "dragging" class from label
+    isDragging.value = false;
 
-  files = event.dataTransfer.files;
+    files = event.dataTransfer.files;
 
-  if(!files){ 
-    error.value = 'No file found';
-  }
+    if (!files) {
+        error.value = 'No file found';
+    }
 
-  if(files.length > 10){
+    if (files.length > 10) {
         error.value = 'You can only upload 10 images at a time';
-  }
+    }
 
-  //check if error is empty
-   
-        for (let i = 0; i < files.length; i++) {
+    //check if error is empty
+
+    for (let i = 0; i < files.length; i++) {
         const file = files[i];
         const fileType = file.type.split('/')[1];
         const fileSize = file.size / 1024 / 1024;
 
         if (fileType !== 'jpeg' && fileType !== 'webp' && fileType !== 'png' && fileType !== 'jpg') {
-          error.value = `${file.name} is not a valid image file.`;
+            error.value = `${file.name} is not a valid image file.`;
         }
 
         if (fileSize > 5) {
-          error.value = `${file.name} exceeds the 5MB file size limit.`;
+            error.value = `${file.name} exceeds the 5MB file size limit.`;
         }
     }
 }
@@ -176,21 +176,19 @@ function submit() {
                         </div>
                         <div>
                             <InputLabel for="price">Price</InputLabel>
-                            <TextInput type="number" name="price" id="price" placeholder="$999" required min="1"  v-model="form.price">
+                            <TextInput type="number" name="price" id="price" placeholder="$999" required min="1"
+                                v-model="form.price">
                             </TextInput>
                         </div>
                         <div class="sm:col-span-2">
                             <InputLabel for="description">Description</InputLabel>
-                            <textarea id="description" rows="4" maxlength="500"
-                                required
+                            <textarea id="description" rows="4" maxlength="500" required
                                 class="resize-none block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                placeholder="Write product description here"  v-model="form.description"></textarea>
+                                placeholder="Write product description here" v-model="form.description"></textarea>
                         </div>
                         <div>
                             <InputLabel for="audience">Audience</InputLabel>
-                            <select id="audience"
-                                 v-model="form.audience"
-                                 required
+                            <select id="audience" v-model="form.audience" required
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
                                 <option value="" disabled selected>Select Audience</option>
                                 <option value="male">Male</option>
@@ -200,13 +198,13 @@ function submit() {
                         </div>
                         <div>
                             <InputLabel for="stock">Stock</InputLabel>
-                            <TextInput type="number" name="stock" id="stock" placeholder="99" required min="1" v-model="form.stock">
+                            <TextInput type="number" name="stock" id="stock" placeholder="99" required min="1"
+                                v-model="form.stock">
                             </TextInput>
                         </div>
                         <div>
                             <InputLabel for="head_category">Head Category</InputLabel>
-                            <select id="head_category" v-model="form.head_category" @change="handleCategory"
-                                required
+                            <select id="head_category" v-model="form.head_category" @change="handleCategory" required
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
                                 <option value="" disabled selected>Select Head Category</option>
                                 <option v-for="headCategory in headCategories" :key="headCategory.id"
@@ -217,9 +215,7 @@ function submit() {
                         </div>
                         <div v-if="showSubCategory">
                             <InputLabel for="category">Sub Category</InputLabel>
-                            <select id="category" @change="resetDropdown"
-                            required
-                            v-model="form.category"
+                            <select id="category" @change="resetDropdown" required v-model="form.category"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
                                 <option value="" disabled selected>Select subCategory</option>
                                 <option v-for="subCategory in categoriesSelection" :key="subCategory.id"
@@ -229,28 +225,27 @@ function submit() {
                             </select>
                         </div>
                         <div v-if="!showSubCategory">
-                         &nbsp;
+                            &nbsp;
                         </div>
                         <div>
-   
+
                             <InputLabel for="stock">SKU</InputLabel>
-                            <TextInput maxlength="16" type="text" v-model="form.sku" name="stock" id="stock" placeholder="99" required min="1">
+                            <TextInput maxlength="16" type="text" v-model="form.sku" name="stock" id="stock"
+                                placeholder="99" required min="1">
                             </TextInput>
-                     
+
                         </div>
                         <div class="sm:col-span-2">
                             <InputLabel for="extra_info">Extra Info</InputLabel>
-                            <textarea id="extra_info" rows="4" maxlength="500"
-                                required
-                                v-model="form.extra_info"
+                            <textarea id="extra_info" rows="4" maxlength="500" required v-model="form.extra_info"
                                 class="block resize-none p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                 placeholder="Write extra details the client should know about the product here"></textarea>
                         </div>
                         <InputLabel for="dropzone-file">Product Image</InputLabel>
-                        <div class="sm:col-span-2 flex items-center justify-center w-full" @dragenter.prevent="handleDragEnter"
-                        @dragover.prevent="handleDragOver" @dragleave.prevent="handleDragLeave" @drop.prevent="handleDrop">
-                            <label for="dropzone-file"
-                            :class="{ 'border-gray-500': isDragging }"
+                        <div class="sm:col-span-2 flex items-center justify-center w-full"
+                            @dragenter.prevent="handleDragEnter" @dragover.prevent="handleDragOver"
+                            @dragleave.prevent="handleDragLeave" @drop.prevent="handleDrop">
+                            <label for="dropzone-file" :class="{ 'border-gray-500': isDragging }"
                                 class="flex flex-col items-center justify-center w-full border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
                                 <div class="flex flex-col items-center justify-center pt-5 pb-6">
                                     <svg aria-hidden="true" class="w-10 h-10 mb-3 text-gray-400" fill="none"
@@ -265,12 +260,14 @@ function submit() {
                                     <p class="text-xs text-gray-500 dark:text-gray-400">
                                         PNG, JPG or WEBP (MAX. 5MB)
                                     </p>
-                                    <InputError for="dropzone-file" class="mt-2" :message="error"/>
+                                    <InputError for="dropzone-file" class="mt-2" :message="error" />
                                     <div class="text-center px-8 pt-4">
-                                        <span v-for="file in files" :key="file.name" class="mt-2 text-xs text-gray-500 dark:text-gray-400">{{ file.name }}, </span>
+                                        <span v-for="file in files" :key="file.name"
+                                            class="mt-2 text-xs text-gray-500 dark:text-gray-400">{{ file.name }}, </span>
                                     </div>
                                 </div>
-                                <input id="dropzone-file" name="images" class="opacity-0 absolute" type="file" ref="fileInput" multiple required/>  
+                                <input id="dropzone-file" name="images" class="opacity-0 absolute" type="file"
+                                    ref="fileInput" multiple required />
                             </label>
 
                         </div>

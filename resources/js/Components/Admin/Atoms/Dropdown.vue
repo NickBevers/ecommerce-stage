@@ -61,11 +61,10 @@ const props = defineProps({
 })
 
 onMounted(() => {
-
   if (props.place) {
     selected.value = props.place
   }
-  else{
+  else {
     selected.value = props.items[0]
   }
 })

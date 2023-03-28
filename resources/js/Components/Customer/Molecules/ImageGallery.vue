@@ -1,3 +1,16 @@
+<script setup>
+import { ref } from 'vue'
+
+const props = defineProps({
+  sku: {
+    type: Object,
+    required: true
+  }
+})
+
+let imagePreview = ref(props.sku.product_images[0].image_link);
+</script>
+
 <template>
   <div class="mt-8 lg:col-span-7 lg:col-start-1 lg:row-span-3 lg:row-start-1 lg:mt-0">
     <h2 class="sr-only">Images</h2>
@@ -17,15 +30,3 @@
     </div>
   </div>
 </template>
-<script setup>
-import { ref } from 'vue'
-
-const props = defineProps({
-  sku: {
-    type: Object,
-    required: true
-  }
-})
-
-let imagePreview = ref(props.sku.product_images[0].image_link);
-</script>
