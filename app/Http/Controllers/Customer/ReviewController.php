@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Models\Review;
 use App\Models\Upvote;
 use Illuminate\Http\Request;
-use Ramsey\Uuid\Type\Integer;
 
 class ReviewController extends Controller
 {

@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
-use PhpParser\Node\Expr\Cast\Object_;
 
 class CloudinaryController extends Controller
 {

@@ -9,7 +9,6 @@ use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 
 class Category extends Model
 {
-    use HasFactory;
 
     protected $fillable = [
         'name',

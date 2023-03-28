@@ -8,14 +8,6 @@ use Illuminate\Http\Request;
 
 class ProductImageController extends Controller
 {
-    public function index()
-    {
-    }
-
-    public function create()
-    {
-
-    }
 
     public function store($id, $link, $publicId, $alt, $type = 'image')
     {
@@ -26,21 +18,5 @@ class ProductImageController extends Controller
             'image_public_id' => $publicId,
             'alt' => $alt,
         ]);
-    }
-
-    public function show(ProductImage $productImage)
-    {
-    }
-
-    public function edit(ProductImage $productImage)
-    {
-    }
-
-    public function update(Request $request, ProductImage $productImage)
-    {
-    }
-
-    public function destroy(ProductImage $productImage)
-    {
     }
 }

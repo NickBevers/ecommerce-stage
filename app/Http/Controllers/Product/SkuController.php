@@ -82,8 +82,6 @@ class SkuController extends Controller
             })
             ->paginate(48);
 
-        // return the skus and min and max price
-//        dd(app(SubCategoryController::class)->getSubCategoryBySlug($subCategory));
         return [
             'skus' => $skus,
             'subCategory' => app(SubCategoryController::class)->getSubCategoryBySlug($subCategory),
