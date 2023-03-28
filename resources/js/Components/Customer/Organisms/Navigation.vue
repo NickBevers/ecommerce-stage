@@ -98,7 +98,7 @@ const categories = ref([]);
 let selectedCategory = ref(null);
 
 onBeforeMount(async () => {
-    const response = await fetch('/admin/subcategories');
+    const response = await fetch('/subcategories');
     const categoriesData = await response.json();
     categoriesData.forEach(category => {
         category.subCategories?.slice(0, 3).forEach(subcategory => {

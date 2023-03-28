@@ -11,11 +11,6 @@ use Inertia\Inertia;
 
 class PromoController extends Controller
 {
-    public function index()
-    {
-        return redirect()->route('promos');
-    }
-
     public function create(String $skuId)
     {
         $sku = Sku::where('sku', $skuId)
@@ -52,10 +47,6 @@ class PromoController extends Controller
         return redirect()
             ->route('products.index')
             ->with('success', 'Promo created successfully.');
-    }
-
-    public function show(Promo $promo)
-    {
     }
 
     public function edit(Promo $promo)

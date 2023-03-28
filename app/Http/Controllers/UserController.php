@@ -10,12 +10,6 @@ use Inertia\Inertia;
 
 class UserController extends Controller
 {
-    public function index()
-    {
-        $users = User::all();
-        return $users;
-    }
-
     public function create()
     {
         return Inertia::render('Auth/Register');
@@ -42,10 +36,6 @@ class UserController extends Controller
     public function show(User $user)
     {
         return User::findOrFail($user->id);
-    }
-
-    public function edit(User $user)
-    {
     }
 
     public function update(Request $request, User $user)
@@ -85,9 +75,9 @@ class UserController extends Controller
         return redirect()->route('users.index');
     }
 
-
-
     public function destroy(User $user)
     {
+        $user->delete();
+        return redirect()->route('login');
     }
 }

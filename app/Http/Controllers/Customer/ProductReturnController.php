@@ -19,7 +19,6 @@ class ProductReturnController extends Controller
 
     public function store(Request $request)
     {
-        // validate the request with all tables from the order migration
         $request->validate([
             'user_id' => 'required',
             'order_id' => 'required',
@@ -42,6 +41,7 @@ class ProductReturnController extends Controller
                 $query->with('product')
                     ->with('productImages')
                     ->with('attributeValues')
+                    ->with('promos')
                     ->get();
             });
 

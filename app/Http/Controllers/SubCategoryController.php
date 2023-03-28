@@ -1,17 +1,12 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\SubCategory;
 
 class SubCategoryController extends Controller
 {
-    public function index()
-    {
-    }
-
     public function getAll()
     {
         return Category::all()->map(function ($category) {
@@ -25,7 +20,7 @@ class SubCategoryController extends Controller
 
     public function getSubCategoriesById($id)
     {
-        return SubCategory::all()->where('category_id', '=', $id)->map(function ($subCategory) {
+        return SubCategory::all()->where('category_id', $id)->map(function ($subCategory) {
             return [
                 'id' => $subCategory->id,
                 'name' => $subCategory->name,
@@ -37,16 +32,6 @@ class SubCategoryController extends Controller
 
     public function getSubCategoryBySlug($name)
     {
-        return SubCategory::where('slug', '=', $name)->get('name')->first();
-    }
-
-    public function getAllSubCategories()
-    {
-        return SubCategory::all()->map(function ($subCategory) {
-            return [
-                'id' => $subCategory->id,
-                'name' => $subCategory->name,
-            ];
-        });
+        return SubCategory::where('slug', $name)->get('name')->first();
     }
 }

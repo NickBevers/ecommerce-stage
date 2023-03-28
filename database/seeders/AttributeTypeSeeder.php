@@ -10,9 +10,9 @@ class AttributeTypeSeeder extends Seeder
     public function run(): void
     {
         $attributeTypes = [
-            'Size',
-            'Color',
-            'Material',
+            'size',
+            'color',
+            'material',
         ];
 
         foreach ($attributeTypes as $attributeType) {

@@ -9,11 +9,6 @@ use Inertia\Inertia;
 
 class OrderController extends Controller
 {
-    public function index()
-    {
-        return Order::all();
-    }
-
     public function getOrdersByUser()
     {
         $orders = Order::where('user_id', auth()->user()->id)->get();
@@ -24,7 +19,6 @@ class OrderController extends Controller
 
     public function store(Request $request)
     {
-        // validate the request with all tables from the order migration
         $request->validate([
             'user_id' => 'required',
             'shipping_address_id' => 'required',
@@ -42,7 +36,7 @@ class OrderController extends Controller
             ]);
         }
 
-//        return redirect()->route('orders.show', $order->id);
+        return redirect()->route('orders.show', $order->id);
     }
 
     public function show(Int $id)

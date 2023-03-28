@@ -7,6 +7,7 @@ use App\Models\Address;
 use App\Models\ShippingAddress;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
 
 class AddressController extends Controller
 {
@@ -28,7 +29,10 @@ class AddressController extends Controller
         $request->merge(['user_id' => auth()->user()->id]);
         $address = Address::create($request->all());
 
-        return redirect()->route('shipping-addresses.index')->with('success', 'Shipping Address created successfully')->with('address', $address);
+        return Inertia::render('Customer/Address/Address', [
+            'address' => $address,
+            'success' => 'Address created successfully',
+        ]);
     }
 
     public function update(Request $request, Address $shippingAddress)

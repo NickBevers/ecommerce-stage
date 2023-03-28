@@ -14,8 +14,7 @@ class ReviewController extends Controller
     public function store(Request $request)
     {
         $review = Review::create($request->all());
-        return redirect()->route('products.index');
-//        return $review;
+        return redirect()->route('products.index')->with('success', 'Review created successfully');
     }
 
     public function markAsUseful($id)
@@ -25,7 +24,6 @@ class ReviewController extends Controller
             'user_id' => $this->user_id,
             'review_id' => $id,
         ]);
-//        return redirect()->route('products.index');
 
         return count($review->upvotes);
     }
@@ -44,6 +42,6 @@ class ReviewController extends Controller
     public function destroy($id)
     {
         Review::destroy($id);
-        return redirect()->route('products.index');
+        return redirect()->route('products.index')->with('success', 'Review deleted successfully');
     }
 }

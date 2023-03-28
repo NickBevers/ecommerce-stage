@@ -2,18 +2,17 @@
 
 namespace App\Http\Controllers\Product;
 
-use App\Http\Controllers\Admin\SubCategoryController;
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\SubCategoryController;
 use App\Models\AttributeValue;
 use App\Models\Sku;
-use App\Models\SubCategory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 
 class SkuController extends Controller
 {
-    public function index(Request $request)
+    public function index()
     {
         return Inertia::render('Products', [
             'skus' => Sku::with('attributeValues')
@@ -123,22 +122,6 @@ class SkuController extends Controller
         return Inertia::render('Customer/Products/Index', $this->filter($request));
     }
 
-    public function testFunc()
-    {
-        // get all sku's with their attribute values where attribute value id is 3
-        return Sku::with('attributeValues')
-            ->whereHas('attributeValues', function ($query) {
-                $query->where('attribute_type_id', 3);
-            })
-            ->get();
-
-
-//        $sku = Sku::find(1)
-//            ->attributeValues()
-//            ->get();
-//        return $sku;
-    }
-
     public function show(String $sku)
     {
         $sku = Sku::where('sku', $sku)
@@ -151,6 +134,9 @@ class SkuController extends Controller
             })
             ->with('product.brand')
             ->with('product.subCategory')
+            ->with('wishlists', function ($query) {
+                $query->where('user_id', Auth::id());
+            })
             ->first();
 
         $attributeValues = $sku->attributeValues;
@@ -160,7 +146,8 @@ class SkuController extends Controller
         foreach ($attributeValues as $attributeValue) {
             if ($attributeValue->attribute_type_id == 1) {
                 $sizes[] = $attributeValue->name;
-            } else if ($attributeValue->attribute_type_id == 2) {
+            }
+            if ($attributeValue->attribute_type_id == 2) {
                 $colors[] = [
                     "name" => $attributeValue->name, 
                     "hex" => $attributeValue->color_value];

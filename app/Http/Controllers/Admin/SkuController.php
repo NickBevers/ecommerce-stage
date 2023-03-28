@@ -2,14 +2,13 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Product\ProductController;
 use App\Http\Controllers\Product\ProductImageController;
-use App\Models\AttributeType;
+use App\Http\Controllers\SubCategoryController;
 use App\Models\AttributeValue;
-use App\Models\Category;
 use App\Models\Sku;
-use App\Models\SubCategory;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -65,16 +64,6 @@ class SkuController extends Controller
            'categories' => $categories,
            'attributeTypes' => $attributeTypes,
        ]);
-    }
-
-    public function testFunc()
-    {
-        return Sku::whereHas('product.productImages')
-            ->with('product.productImages')
-            ->with('product.subCategory')
-            ->with('product.subCategory.category')
-            ->with('product.brand')
-            ->get();
     }
 
     public function store(Request $request)
@@ -142,9 +131,9 @@ class SkuController extends Controller
             'brands' => app(BrandController::class)->getAllBrands(),
             'categories' => app(CategoryController::class)->getAllCategories(),
             'attributeTypes' => app(AttributeTypesController::class)->getAllTypes(),
-            'sizes' => app(AttributeValueController::class)->getSizes(),
-            'colors' => app(AttributeValueController::class)->getColors(),
-            'materials' => app(AttributeValueController::class)->getMaterials(),
+            'sizes' => app(AttributeValueController::class)->getValuesByType("size"),
+            'colors' => app(AttributeValueController::class)->getValuesByType("color"),
+            'materials' => app(AttributeValueController::class)->getValuesByType("material"),
         ]);
     }
 

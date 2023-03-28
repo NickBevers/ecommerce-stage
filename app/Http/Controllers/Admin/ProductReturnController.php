@@ -20,9 +20,14 @@ class ProductReturnController extends Controller
         return $return;
     }
 
-    public function updateStatus(Int $id, String $status){
-        $produtReturn = ProductReturn::find($id);
-        $produtReturn->status = $status;
+    public function updateStatus(Request $request){
+        $request->validate([
+            'id' => 'required',
+            'status' => 'required',
+        ]);
+
+        $produtReturn = ProductReturn::find($request->id);
+        $produtReturn->status = $request->status;
         $produtReturn->save();
 
         return $produtReturn;
