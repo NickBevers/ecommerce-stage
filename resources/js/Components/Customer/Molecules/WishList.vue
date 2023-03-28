@@ -1,4 +1,5 @@
 <template>
+    <ProductCartModal :open="openCart"/>
     <div class="bg-white mt-24">
       <div class="mx-auto max-w-2xl px-4 pt-16 pb-24 sm:px-6 lg:max-w-7xl lg:px-8">
         <h1 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Wishlist</h1>
@@ -28,7 +29,8 @@
           </div>     
         </Link>
         <div class="mt-6">
-            <a :href="'/product/' + product.href" class="relative flex items-center justify-center rounded-md border border-transparent bg-gray-100 py-2 px-8 text-sm font-medium text-gray-900 hover:bg-gray-200"
+            <a href="#" @click="openCart = true"
+            class="relative flex items-center justify-center rounded-md border border-transparent bg-gray-100 py-2 px-8 text-sm font-medium text-gray-900 hover:bg-gray-200"
               >Add to bag<span class="sr-only">, {{ product.name }}</span></a
             >
           </div>
@@ -40,7 +42,9 @@
   
   <script setup>
 import { Link } from '@inertiajs/vue3';
+import {ref} from 'vue'
 import { useWishlistStore } from '@/Stores/wishlist';
+import { ProductCartModal } from '@/Components/Customer';
 import {
   PlusIcon  ,
 } from '@heroicons/vue/24/solid'
@@ -50,6 +54,8 @@ const props = defineProps({
 });
 
 const wishlistStore = useWishlistStore();
+
+let openCart = ref(false);
 
 function removeFromWishlist(id) {
   fetch('/wishlist/'+id, {
