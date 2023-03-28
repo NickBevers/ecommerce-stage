@@ -69,8 +69,6 @@
                 </div>
               </fieldset>
             </div>
-
-
             <div class="mt-10 flex justify-between">
               <button type="submit"
                 class="flex  w-full flex-1 items-center justify-center rounded-md border border-transparent bg-indigo-600 py-3 px-8 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-50 sm:w-full">Add
@@ -78,14 +76,10 @@
               <div class="ml-4 flex items-center justify-center rounded-md py-3 px-3 text-gray-400 hover:bg-gray-100 hover:text-gray-500">
                 <WishlistButton :product="props.sku" /> 
               </div>
-              
-
             </div>
           </form>
-
           <!-- Product details -->
           <ProductDetails :sku="props.sku"/>
-          
           <Policies/>
       </div>
     </div>
@@ -104,6 +98,4 @@ const props = defineProps({
   colors: Object,
   material: String,
 });
-
-console.log(props.sku)
 </script>

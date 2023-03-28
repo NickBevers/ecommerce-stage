@@ -1,3 +1,4 @@
+//TODO - Add filters from backend 
 <template>
      <div class="bg-gray-50 pt-24">
       <TransitionRoot as="template" :show="open">
