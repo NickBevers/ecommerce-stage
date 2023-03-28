@@ -6,7 +6,7 @@
         <form class="mt-12 lg:grid lg:grid-cols-12 lg:items-start lg:gap-x-12 xl:gap-x-16" v-if="products.length > 0">
           <section aria-labelledby="cart-heading" class="lg:col-span-7">
             <h2 id="cart-heading" class="sr-only">Items in your shopping cart</h2>
-            <CartItem :products="products"/> 
+            <CartItem :products="props.cart"/> 
           </section>
           <OrderSummary />
         </form>
@@ -35,4 +35,10 @@
       imageAlt: "Front of men's Basic Tee in sienna.",
     },
   ]
+
+  const props = defineProps({
+    cart: Object,
+  });
+
+  console.log(props.cart)
   </script>
