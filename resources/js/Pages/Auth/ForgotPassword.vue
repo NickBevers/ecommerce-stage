@@ -1,6 +1,6 @@
 <script setup>
 import GuestLayout from '@/Layouts/GuestLayout.vue';
-import {InputError, InputLabel, PrimaryButton, TextInput} from "@/Components/Admin";
+import { InputError, InputLabel, PrimaryButton, TextInput } from "@/Components/Admin";
 import { Head, useForm } from '@inertiajs/vue3';
 
 defineProps({
@@ -18,6 +18,7 @@ const submit = () => {
 
 <template>
     <GuestLayout>
+
         <Head title="Forgot Password" />
 
         <div class="mb-4 text-sm text-gray-600">
@@ -33,15 +34,8 @@ const submit = () => {
             <div>
                 <InputLabel for="email" value="Email" />
 
-                <TextInput
-                    id="email"
-                    type="email"
-                    class="mt-1 block w-full"
-                    v-model="form.email"
-                    required
-                    autofocus
-                    autocomplete="username"
-                />
+                <TextInput id="email" type="email" class="mt-1 block w-full" v-model="form.email" required autofocus
+                    autocomplete="username" />
 
                 <InputError class="mt-2" :message="form.errors.email" />
             </div>

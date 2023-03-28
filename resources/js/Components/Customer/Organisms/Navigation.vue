@@ -1,5 +1,5 @@
 <script setup>
-import {ApplicationLogo} from '@/Components/Customer';
+import { ApplicationLogo } from '@/Components/Customer';
 import { onBeforeMount, ref, onMounted, computed } from "vue";
 import { Link } from '@inertiajs/vue3';
 import { useWishlistStore } from '@/Stores/wishlist';
@@ -148,7 +148,6 @@ function selectCategory(category_id) {
                                     <XMarkIcon class="h-6 w-6" aria-hidden="true" />
                                 </button>
                             </div>
-
                             <!-- Links -->
                             <TabGroup as="div" class="mt-2">
                                 <div class="border-b border-gray-200">
@@ -231,13 +230,13 @@ function selectCategory(category_id) {
                     <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                         <div class="flex h-16 items-center justify-between">
                             <!-- Logo (lg+) -->
-                        
+
                             <div class="hidden lg:flex lg:flex-1 lg:items-center">
                                 <Link href="/">
                                 <ApplicationLogo class="block h-8 w-auto" />
                                 </Link>
                             </div>
-                         
+
                             <div class="hidden h-full lg:flex">
                                 <!-- Flyout menus -->
                                 <PopoverGroup class="inset-x-0 bottom-0 px-4">
@@ -274,8 +273,8 @@ function selectCategory(category_id) {
                                                     <div class="relative">
                                                         <div
                                                             class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 grid grid-cols-4 gap-y-4 gap-x-8 py-16">
-                                                            <div  v-for="(item, index) in category.subCategories.slice(0, 3)" :key="index"
-                                                                class="group relative">
+                                                            <div v-for="(item, index) in category.subCategories.slice(0, 3)"
+                                                                :key="index" class="group relative">
                                                                 <div v-if="item.preview"
                                                                     class="aspect-w-1 aspect-h-1 overflow-hidden rounded-md bg-gray-100 group-hover:opacity-75">
                                                                     <img src="https://tailwindui.com/img/ecommerce-images/mega-menu-category-02.jpg"
@@ -283,33 +282,36 @@ function selectCategory(category_id) {
                                                                         class="object-cover object-center" />
                                                                 </div>
                                                                 <div v-if="item.preview" class="flex flex-row">
-                                                                    <Link :to="'/products/' + item.slug" :href="'/products/' + item.slug"
+                                                                    <Link :to="'/products/' + item.slug"
+                                                                        :href="'/products/' + item.slug"
                                                                         class="mt-4 block font-medium text-gray-900">
-                                                                        <span class="absolute inset-0 z-10"
-                                                                            aria-hidden="true" />
-                                                                        {{ item.name }}
-                                                                </Link>
+                                                                    <span class="absolute inset-0 z-10"
+                                                                        aria-hidden="true" />
+                                                                    {{ item.name }}
+                                                                    </Link>
                                                                 </div>
                                                                 <div>
                                                                     <p v-if="item.preview" aria-hidden="true" class="mt-1">
                                                                         Shop now</p>
                                                                 </div>
                                                             </div>
-                                                      
+
 
 
                                                             <div class="col-span-1 flex flex-wrap ">
-                                                                <div  v-for="(item, index) in category.subCategories.slice(3, 10)" :key="index"
-                                                                class="group relative w-full">
-                                                                <div v-if="!item.preview" class="flex flex-row flex-wrap justify-start pl-8 gap-6">
-                                                                    <Link :to="'/products/' + item.slug" :href="'/products/' + item.slug"
-                                                                        class="mt-4 block font-medium text-gray-900">
+                                                                <div v-for="(item, index) in category.subCategories.slice(3, 10)"
+                                                                    :key="index" class="group relative w-full">
+                                                                    <div v-if="!item.preview"
+                                                                        class="flex flex-row flex-wrap justify-start pl-8 gap-6">
+                                                                        <Link :to="'/products/' + item.slug"
+                                                                            :href="'/products/' + item.slug"
+                                                                            class="mt-4 block font-medium text-gray-900">
                                                                         <span class="absolute inset-0 z-10"
                                                                             aria-hidden="true" />
                                                                         {{ item.name }}
-                                                                </Link>
+                                                                        </Link>
+                                                                    </div>
                                                                 </div>
-                                                            </div>
                                                             </div>
                                                         </div>
 
@@ -359,29 +361,29 @@ function selectCategory(category_id) {
                                     <!-- Wish -->
                                     <div class="flow-root lg:ml-8">
                                         <Link href="/wishlist" class="group -m-2 flex items-center p-2">
-                                            <HeartIcon class="h-6 w-6 flex-shrink-0 text-gray-400 group-hover:text-gray-500"
-                                                aria-hidden="true" />
-                                            <span
-                                                class="ml-2 text-sm font-medium text-gray-700 group-hover:text-gray-800">{{ wishlistStore.count }}</span>
-                                            <span class="sr-only">items in wishlist, view wishlist</span>
+                                        <HeartIcon class="h-6 w-6 flex-shrink-0 text-gray-400 group-hover:text-gray-500"
+                                            aria-hidden="true" />
+                                        <span class="ml-2 text-sm font-medium text-gray-700 group-hover:text-gray-800">{{
+                                            wishlistStore.count }}</span>
+                                        <span class="sr-only">items in wishlist, view wishlist</span>
                                         </Link>
                                     </div>
                                     <!-- Cart -->
                                     <div class="ml-4 flow-root">
                                         <Link href="/cart" class="group -m-2 flex items-center p-2">
-                                            <ShoppingBagIcon
-                                                class="h-6 w-6 flex-shrink-0 text-gray-400 group-hover:text-gray-500"
-                                                aria-hidden="true" />
-                                            <span
-                                                class="ml-2 text-sm font-medium text-gray-700 group-hover:text-gray-800">0</span>
-                                            <span class="sr-only">items in cart, view bag</span>
+                                        <ShoppingBagIcon
+                                            class="h-6 w-6 flex-shrink-0 text-gray-400 group-hover:text-gray-500"
+                                            aria-hidden="true" />
+                                        <span
+                                            class="ml-2 text-sm font-medium text-gray-700 group-hover:text-gray-800">0</span>
+                                        <span class="sr-only">items in cart, view bag</span>
                                         </Link>
                                     </div>
                                 </div>
                             </div>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </nav>
+            </nav>
     </header>
 </div></template>

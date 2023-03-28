@@ -16,11 +16,12 @@
                   product.product.description : product.product.description.slice(0, 30) + '...' }} </p>
             </div>
             <div class="grade absolute inset-x-0 top-0 flex h-72 items-end justify-end overflow-hidden rounded-lg p-4">
-              <div aria-hidden="true" class="absolute inset-x-0 bottom-0 h-36 bg-gradient-to-t from-black opacity-50 group-hover:h-20 group-hover:opacity-20 duration-500" />
+              <div aria-hidden="true"
+                class="absolute inset-x-0 bottom-0 h-36 bg-gradient-to-t from-black opacity-50 group-hover:h-20 group-hover:opacity-20 duration-500" />
               <p class="relative text-lg font-semibold text-white">€{{ product.price.toFixed(2) }}</p>
             </div>
             <div>
-              <WishlistButton :product="product" class="absolute top-0 right-0 p-2 m-2 bg-white rounded-md group-odd"/>
+              <WishlistButton :product="product" class="absolute top-0 right-0 p-2 m-2 bg-white rounded-md group-odd" />
             </div>
           </div>
           </Link>
@@ -35,7 +36,7 @@
 <script setup>
 import { defineProps } from 'vue'
 import { Pagination } from '@/Components/Admin'
-import {WishlistButton} from '@/Components/Customer'
+import { WishlistButton } from '@/Components/Customer'
 import { Link } from '@inertiajs/vue3';
 
 const props = defineProps({
