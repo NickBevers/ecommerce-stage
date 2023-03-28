@@ -13,8 +13,12 @@ defineProps({
     <div class="relative sm:flex sm:justify-center sm:items-center bg-dots-darker bg-center bg-gray-100 dark:bg-dots-lighter dark:bg-gray-900">
         <Navigation/>
     </div>
-    <slot />
+    <div>
+      <slot />
+    </div>
     
-    <Footer/>
+    <div>
+      <Footer/>
+    </div>
 </div>
 </template>

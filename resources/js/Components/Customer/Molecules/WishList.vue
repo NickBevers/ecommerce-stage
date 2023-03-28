@@ -40,6 +40,7 @@
   
   <script setup>
 import { Link } from '@inertiajs/vue3';
+import { useWishlistStore } from '@/Stores/wishlist';
 import {
   PlusIcon  ,
 } from '@heroicons/vue/24/solid'
@@ -47,6 +48,8 @@ import {
 const props = defineProps({
   products: Object,
 });
+
+const wishlistStore = useWishlistStore();
 
 function removeFromWishlist(id) {
   fetch('/wishlist/'+id, {
@@ -57,6 +60,7 @@ function removeFromWishlist(id) {
   })
     .then((response) => {
       document.getElementById(id).remove();
+      wishlistStore.decrement();
     })
     .catch((error) => {
       console.error('There has been a problem with your fetch operation:', error);

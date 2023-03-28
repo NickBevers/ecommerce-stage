@@ -23,6 +23,7 @@
         "@heroicons/vue": "^2.0.16",
         "@tailwindcss/aspect-ratio": "^0.4.2",
         "moment": "^2.29.4",
+        "pinia": "^2.0.33",
         "search-dropdown-vue": "^1.0.3"
     }
 }

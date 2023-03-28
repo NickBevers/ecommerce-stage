@@ -47,7 +47,7 @@ function getBgClass(amount) {
                 <td class="whitespace-nowrap py-2 pl-4 pr-3 text-sm sm:pl-0">
                   <div class="flex items-center">
                     <div class="h-10 w-10 flex-shrink-0">
-                      <img src="https://flowbite.s3.amazonaws.com/blocks/application-ui/products/imac-front-image.png" alt="iMac Front Image" class="h-10 w-10 rounded-m">
+                      <img :src="product.product_images[0].image_link" alt="iMac Front Image" class="h-10 w-10 rounded-m object-cover object-center">
                     </div>
                     <div class="ml-4">
                       <div class="font-medium text-gray-900">{{ product.product.title }}</div>
@@ -61,7 +61,7 @@ function getBgClass(amount) {
                 <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
                     <span class="inline-flex rounded-full px-2 text-xs font-semibold leading-5 text-white" :class="getBgClass(product.amount)">{{product.amount}}</span>
                 </td>
-                <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">€{{ product.price }}</td>
+                <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">€{{ product.price.toFixed(2) }}</td>
                 <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-left text-sm font-medium sm:pr-0">
                   <a href="#" class="text-indigo-600 hover:text-indigo-900"
                     >Edit<span class="sr-only">, {{ product.id }}</span></a
