@@ -1,3 +1,90 @@
+<script setup>
+import { defineProps, ref, reactive, watch } from 'vue'
+import { Head, Link, useForm } from '@inertiajs/vue3';
+import { InputLabel, TextInput, UploadFile, InputError, Dropdown, SearchDropdown } from '@/Components/Admin';
+
+const props = defineProps({
+    brands: Array,
+    categories: Array,
+    attributeTypes: Array,
+});
+
+function updateVariation(filter) {
+    if (filter === 'sizes') {
+        console.log('sizes')
+    }
+
+
+}
+
+const form = useForm({
+    title: "",
+    audience: "Men",
+    sub_category_id: 1,
+    brand_id: 1,
+    description: "",
+    extra_info: "",
+    variations: [
+        {
+            sku: "",
+            amount: "",
+            price: "",
+            color: "",
+            sizes: [],
+            material: "",
+            images: [],
+        }
+    ]
+});
+
+const audience = reactive(
+    ["Men", "Women", "Kids", "Unisex"]
+);
+
+let selectedHeadCategoryIndex = ref(0);
+let selectedHeadCategory = ref(0);
+let selectedSubCategory = ref(null);
+let selectedBrand = ref(null);
+
+let formSize = ref("");
+let formColor = ref("");
+let formMaterial = ref("");
+
+function updateImages(images) {
+    form.variations[0].images = images
+}
+
+function updateSubCategories() {
+    selectedHeadCategory.value = selectedHeadCategoryIndex.value.id - 1
+}
+
+function onSelectedOption(option) {
+    form.brand_id = option.id
+}
+
+watch(() => {
+    if (selectedSubCategory.value) {
+        form.sub_category_id = selectedSubCategory.value.id
+    }
+
+    if (formSize.value) {
+        form.variations[0].sizes = [formSize.value.name]
+    }
+
+    if (formColor.value) {
+        form.variations[0].color = formColor.value.name
+    }
+
+    if (formMaterial.value) {
+        form.variations[0].material = formMaterial.value.name
+    }
+})
+
+function submit() {
+
+    form.post(route('admin.products.store'))
+}
+</script>
 <template>
     <div class="mt-8">
         <form class="max-w-7xl mx-auto sm:px-6 lg:px-8 my-5" @submit.prevent="submit">
@@ -56,7 +143,6 @@
                                 <InputLabel for="sku" value="SKU" />
                                 <div class="mt-1 flex rounded-md shadow-sm">
                                     <TextInput id="sku" type="text" class="mt-1 block w-full pl-3" name="SKU"
-                                    
                                         v-model="form.variations[0].sku" required autocomplete="SKU" placeholder="SKU" />
                                     <InputError class="mt-2" :message="form.variations.error" />
                                 </div>
@@ -84,29 +170,20 @@
                         <div class="col-span-6 sm:col-span-6">
                             <InputLabel for="attributes" value="Attributes" />
                             <div class="flex flex-row gap-6 flex-wrap">
-                                    <div class="mt-1 flex rounded-md shadow-sm">
-                                        <Dropdown :items="props.attributeTypes[0].attributeValues"
-                                        class="min-w-[150px]"
-                                         v-model="formSize"
-                                         @click="updateVariation('sizes')"
-                                         place="Select Size"
-                                         />
-                                    </div>
+                                <div class="mt-1 flex rounded-md shadow-sm">
+                                    <Dropdown :items="props.attributeTypes[0].attributeValues" class="min-w-[150px]"
+                                        v-model="formSize" @click="updateVariation('sizes')" place="Select Size" />
+                                </div>
 
-                                    <div class="mt-1 flex rounded-md shadow-sm">
-                                        <Dropdown :items="props.attributeTypes[1].attributeValues"
-                                           v-model="formColor"
-                                           class="min-w-[150px]"
-                               
-                                           place="Select Color"/>
-                                    </div>
-                                    <div class="mt-1 flex rounded-md shadow-sm">
-                                        <Dropdown :items="props.attributeTypes[2].attributeValues"
-                                            v-model="formMaterial"
-                                            class="min-w-[180px]"
-                                            place="Select Material"/>
-                                    </div>
-                              
+                                <div class="mt-1 flex rounded-md shadow-sm">
+                                    <Dropdown :items="props.attributeTypes[1].attributeValues" v-model="formColor"
+                                        class="min-w-[150px]" place="Select Color" />
+                                </div>
+                                <div class="mt-1 flex rounded-md shadow-sm">
+                                    <Dropdown :items="props.attributeTypes[2].attributeValues" v-model="formMaterial"
+                                        class="min-w-[180px]" place="Select Material" />
+                                </div>
+
                             </div>
                         </div>
                         <div>
@@ -146,90 +223,3 @@
         </form>
     </div>
 </template>
-<script setup>
-import { defineProps, ref, reactive, watch} from 'vue'
-import { Head, Link, useForm } from '@inertiajs/vue3';
-import {InputLabel, TextInput, UploadFile, InputError, Dropdown, SearchDropdown} from '@/Components/Admin';
-
-const props = defineProps({
-    brands: Array,
-    categories: Array,
-    attributeTypes: Array,
-});
-
-function updateVariation(filter) {
-    if(filter === 'sizes') {
-        console.log('sizes')
-    }
-    
-
-}
-
-const form = useForm({
-    title: "",
-    audience: "Men",
-    sub_category_id: 1,
-    brand_id: 1,
-    description: "",
-    extra_info: "",
-    variations: [
-        { 
-        sku: "",
-        amount: "",
-        price: "",
-        color: "",
-        sizes: [],
-        material: "",
-        images: [],
-    }
-    ]
-});
-
-const audience = reactive(
-    ["Men", "Women", "Kids", "Unisex"]
-);
-
-let selectedHeadCategoryIndex = ref(0);
-let selectedHeadCategory = ref(0);
-let selectedSubCategory = ref(null);
-let selectedBrand = ref(null);
-
-let formSize = ref("");
-let formColor = ref("");
-let formMaterial = ref("");
-
-function updateImages(images) {
-    form.variations[0].images = images
-}
-
-function updateSubCategories() {
-    selectedHeadCategory.value = selectedHeadCategoryIndex.value.id - 1
-}
-
-function onSelectedOption(option) {
-    form.brand_id = option.id
-}
-
-watch(() => {
-    if (selectedSubCategory.value) {
-        form.sub_category_id = selectedSubCategory.value.id
-    }
-
-    if (formSize.value) {
-       form.variations[0].sizes = [formSize.value.name]
-    }
-
-    if (formColor.value) {
-        form.variations[0].color = formColor.value.name
-    }
-
-    if (formMaterial.value) {
-        form.variations[0].material = formMaterial.value.name
-    }
-})
-
-function submit() {
-
-    form.post(route('admin.products.store'))
-}
-</script>

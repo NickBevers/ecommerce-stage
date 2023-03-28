@@ -95,24 +95,12 @@ export default {
 <template>
   <div class="dropdown" v-if="options">
     <div class="dropdown-toggle">
-      <input
-        :name="name"
-        @focus="showOptions()"
-        @blur="exit()"
-        @keyup="keyMonitor"
-        v-model="searchFilter"
-        :disabled="disabled"
-        :placeholder="placeholder"
-        required
-      />
+      <input :name="name" @focus="showOptions()" @blur="exit()" @keyup="keyMonitor" v-model="searchFilter"
+        :disabled="disabled" :placeholder="placeholder" required />
     </div>
     <transition name="fade">
       <ul class="dropdown-menu" v-show="optionsShown">
-        <li
-          @mousedown="selectOption(option)"
-          v-for="(option, index) in filteredOptions"
-          :key="index"
-        >
+        <li @mousedown="selectOption(option)" v-for="(option, index) in filteredOptions" :key="index">
           <a href="javascript:void(0)">
             {{ option.name || option.id || '-' }}
           </a>
@@ -127,6 +115,7 @@ export default {
 .fade-leave-active {
   transition: opacity 250ms cubic-bezier(0.25, 0.46, 0.45, 0.94) 0s;
 }
+
 .fade-enter-from,
 .fade-leave-to {
   opacity: 0;
@@ -141,6 +130,7 @@ export default {
   vertical-align: middle;
   width: 100%;
 }
+
 .dropdown a:hover {
   text-decoration: none;
 }
@@ -152,6 +142,7 @@ export default {
   border-radius: 1px 1px 0 0;
   width: 100%;
 }
+
 .dropdown-toggle input {
   box-shadow: var(--tw-ring-inset) 0 0 0 calc(1px + var(--tw-ring-offset-width)) #333333;
   -webkit-box-shadow: var(--tw-ring-inset) 0 0 0 calc(1px + var(--tw-ring-offset-width)) #333333;
@@ -190,7 +181,7 @@ export default {
   background-clip: padding-box;
 }
 
-.dropdown-menu > li > a {
+.dropdown-menu>li>a {
   display: block;
   clear: both;
   font-weight: normal;
@@ -202,12 +193,13 @@ export default {
   font-size: 14px;
   padding: 8px 16px 8px 32px;
 }
-.dropdown-menu > li > a:hover {
+
+.dropdown-menu>li>a:hover {
   background-color: rgb(79 70 229);
   color: #ffffff;
 }
 
-.dropdown-menu > li {
+.dropdown-menu>li {
   overflow: hidden;
   position: relative;
   margin: 0;

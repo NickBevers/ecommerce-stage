@@ -1,5 +1,5 @@
 <script setup>
-import {onMounted} from "vue";
+import { onMounted } from "vue";
 
 const props = defineProps({
     skus: Object,
@@ -10,16 +10,8 @@ const props = defineProps({
     colors: Object,
     materials: Object,
 });
-
-onMounted(()=>{
-})
-
 </script>
-<template>
-
-</template>
+<template></template>
 
 
-<style scoped>
-
-</style>
+<style scoped></style>

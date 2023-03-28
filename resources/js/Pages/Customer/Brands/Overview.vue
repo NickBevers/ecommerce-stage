@@ -1,21 +1,14 @@
 <script setup>
-import {onMounted} from "vue";
+import { onMounted } from "vue";
 
 const props = defineProps({
     brand: Object,
     skus: Object,
 })
 
-onMounted(()=>{
+onMounted(() => {
     console.log(props.brand)
     console.log(props.skus)
 })
 </script>
-
-<template>
-
-</template>
-
-<style scoped>
-
-</style>
+<template></template>

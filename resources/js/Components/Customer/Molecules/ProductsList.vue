@@ -4,10 +4,10 @@
       <div class="grid grid-cols-1 gap-y-12 sm:grid-cols-2 sm:gap-x-6 lg:grid-cols-4 xl:gap-x-8">
         <div v-for="product in props.skus" :key="product.id" class="mt-8" :id="product.id">
           <Link :to="'/product/' + product.sku" :href="'/product/' + product.sku">
-          <div class="relative imgScale">
-            <div class=" relative h-72 w-full overflow-hidden rounded-lg  duration-500 ">
+          <div class="relative group">
+            <div class="relative h-72 w-full overflow-hidden rounded-lg">
               <img :src="product.product_images[0].image_link" alt="placeholder"
-                class="h-full w-full object-cover object-center" />
+                class="h-full w-full object-cover object-center duration-500 group-hover:scale-125" />
             </div>
             <div class="relative mt-4">
               <h3 class="text-sm font-medium text-gray-900">{{ product.product.title }}</h3>
@@ -16,11 +16,12 @@
                   product.product.description : product.product.description.slice(0, 30) + '...' }} </p>
             </div>
             <div class="grade absolute inset-x-0 top-0 flex h-72 items-end justify-end overflow-hidden rounded-lg p-4">
-              <div aria-hidden="true" class="absolute inset-x-0 bottom-0 h-36 bg-gradient-to-t from-black opacity-50" />
+              <div aria-hidden="true"
+                class="absolute inset-x-0 bottom-0 h-36 bg-gradient-to-t from-black opacity-50 group-hover:h-20 group-hover:opacity-20 duration-500" />
               <p class="relative text-lg font-semibold text-white">€{{ product.price.toFixed(2) }}</p>
             </div>
             <div>
-              <WishlistButton :product="product" class="absolute top-0 right-0 p-2 m-2 bg-white rounded-md"/>
+              <WishlistButton :product="product" class="absolute top-0 right-0 p-2 m-2 bg-white rounded-md group-odd" />
             </div>
           </div>
           </Link>
@@ -32,28 +33,10 @@
     </div>
   </div>
 </template>
-<style scoped>
-.imgScale img {
-  transition: all 0.5s ease;
-}
-
-.imgScale:hover img {
-  transform: scale(1.1);
-}
-
-.imgScale .grade div {
-  transition: all 0.5s ease;
-}
-
-.imgScale:hover .grade div {
-  height: 6rem;
-}
-</style>
-  
 <script setup>
-import { defineProps, onMounted } from 'vue'
+import { defineProps } from 'vue'
 import { Pagination } from '@/Components/Admin'
-import {WishlistButton} from '@/Components/Customer'
+import { WishlistButton } from '@/Components/Customer'
 import { Link } from '@inertiajs/vue3';
 
 const props = defineProps({

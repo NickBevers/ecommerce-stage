@@ -1,5 +1,5 @@
 <script setup>
-import {CreateProductModal} from '@/Components/Admin';
+import { CreateProductModal } from '@/Components/Admin';
 import { defineProps } from 'vue';
 
 const props = defineProps({
