@@ -43,4 +43,22 @@ class ProductReturn extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    /*
+     * |--------------------------------------------------------------------------
+     * | SCOPES
+     * |--------------------------------------------------------------------------
+     */
+
+    public function scopeWithSku($query)
+    {
+        return $query
+            ->with('order')
+            ->with('sku')
+            ->with('sku.product')
+            ->with('sku.product.brand')
+            ->with('sku.productImages')
+            ->with('sku.attributeValues')
+            ->with('sku.promos');
+    }
 }

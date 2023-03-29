@@ -33,12 +33,7 @@ class WishlistController extends Controller
     public function getListItemsPerUser()
     {
         return Wishlist::where('user_id', auth()->user()->id)
-            ->with('sku')
-            ->with('sku.product')
-            ->with('sku.productImages')
-            ->with('sku.product.brand')
-            ->with('sku.attributeValues')
-            ->with('sku.promos')
+            ->withSku()
             ->get();
     }
 
@@ -56,7 +51,6 @@ class WishlistController extends Controller
             'status' => 'success',
             'count' => $count,
         ]);
-
     }
 
     public function show()

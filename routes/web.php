@@ -137,9 +137,9 @@ Route::get('/wishlist/count', [WishlistController::class, 'getAmountOfItemsInWis
 // Product Routes
 Route::get('/products', [ProductSkuController::class, 'index'])->name('products.index');
 Route::get('/product/{id}',  [ProductSkuController::class, 'show'])->name('product.show');
-Route::get('/products/shoes', [ProductSkuController::class, 'showShoes'])->name('shoes');
-Route::get('/products/clothing', [ProductSkuController::class, 'showClothing'])->name('clothing');
-Route::get('/products/accessories', [ProductSkuController::class, 'showAccessories'])->name('accessories');
+Route::get('/products/category/{categoryName}', [ProductSkuController::class, 'showShoes'])->name('shoes');
+Route::get('/products/category/clothing', [ProductSkuController::class, 'showClothing'])->name('clothing');
+Route::get('/products/category/accessories', [ProductSkuController::class, 'showAccessories'])->name('accessories');
 Route::get('/products/promos', [ProductSkuController::class, 'showPromos'])->name('promos');
 Route::get('/products/{subCategory}', [ProductSkuController::class, 'showBySubCategory'])->name('products.showBySubCategory');
 
