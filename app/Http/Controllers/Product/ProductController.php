@@ -3,14 +3,23 @@
 namespace App\Http\Controllers\Product;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\ProductValidationRequest;
 use App\Models\AttributeValue;
 use App\Models\Product;
 use App\Models\Sku;
+use App\Services\ProductService;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
 class ProductController extends Controller
 {
+    private ProductService $productService;
+
+    public function __construct()
+    {
+        $this->productService = new ProductService();
+    }
+
     public function index()
     {
         return Inertia::render('Admin/Products/Index', [
@@ -27,17 +36,10 @@ class ProductController extends Controller
         return Inertia::render('Admin/Products/Create');
     }
 
-    public function store(Request $request)
+    public function store(ProductValidationRequest $request)
     {
-        $product = Product::create($request->all());
-        $product->save();
-
-        return $product;
-    }
-
-    public function testFunction()
-    {
-        return "Works";
+        $this->productService->store($request);
+        return redirect()->route('admin.products.index');
     }
 
     public function show(Product $product)
@@ -59,18 +61,6 @@ class ProductController extends Controller
         return $product->is_active;
     }
 
-    public function getPromotionStatus(Product $product)
-    {
-        return $product->is_promotion;
-    }
-
-    public function setPromotionStatus(Product $product)
-    {
-        $product->is_promotion = !$product->is_promotion;
-        $product->save();
-        return $product->is_promotion;
-    }
-
     public function edit(Product $product)
     {
         $productDetails = Product::find($product->id);
@@ -85,11 +75,13 @@ class ProductController extends Controller
         $productToUpdate = Product::find($product->id);
         $productToUpdate->update($request->all());
         $productToUpdate->save();
+
         return $productToUpdate;
     }
 
     public function destroy(Product $product)
     {
         $product->delete();
+        return redirect()->route('admin.products.index');
     }
 }

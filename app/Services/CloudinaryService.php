@@ -1,11 +1,10 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Services;
 
-use App\Http\Controllers\Controller;
 use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
 
-class CloudinaryController extends Controller
+class CloudinaryService
 {
     public function uploadImage($image, bool $isThumbnail = false)
     {

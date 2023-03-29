@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Services;
 
 use App\Models\Category;
 use App\Models\SubCategory;
 
-class SubCategoryController extends Controller
+class SubCategoryService
 {
     public function getAll()
     {

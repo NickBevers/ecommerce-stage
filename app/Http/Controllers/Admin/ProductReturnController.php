@@ -8,10 +8,6 @@ use Illuminate\Http\Request;
 
 class ProductReturnController extends Controller
 {
-    public function index()
-    {
-        return ProductReturn::all();
-    }
 
     public function update(Request $request, Int $id)
     {
@@ -26,10 +22,10 @@ class ProductReturnController extends Controller
             'status' => 'required',
         ]);
 
-        $produtReturn = ProductReturn::find($request->id);
-        $produtReturn->status = $request->status;
-        $produtReturn->save();
+        $productReturn = ProductReturn::find($request->id);
+        $productReturn->status = $request->status;
+        $productReturn->save();
 
-        return $produtReturn;
+        return $productReturn;
     }
 }

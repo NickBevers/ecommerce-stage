@@ -3,15 +3,26 @@
 namespace App\Http\Controllers\Product;
 
 use App\Http\Controllers\Controller;
-use App\Http\Controllers\SubCategoryController;
+use App\Models\AttributeType;
 use App\Models\AttributeValue;
 use App\Models\Sku;
+use App\Services\SkuService;
+use App\Services\SubCategoryService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 
 class SkuController extends Controller
 {
+    private SubCategoryService $subCategoryService;
+    private SkuService $skuService;
+
+    public function __construct()
+    {
+        $this->subCategoryService = new SubCategoryService();
+        $this->skuService = new SkuService();
+    }
+
     public function index()
     {
         return Inertia::render('Products', [
@@ -27,56 +38,10 @@ class SkuController extends Controller
 
     public function filter(Request $request)
     {
-        $category = $request->has('category')? $request->input('category') : false;
-        $subCategory = $request->has('subCategory')? $request->input('subCategory') : false;
-        $promo = $request->has('promo')? $request->input('promo') : false;
-        $attributes = $request->has('attributes')? $request->input('attributes') : false;
-        $price = $request->has('price')? $request->input('price') : false;
-        $brand = $request->has('brand')? $request->input('brand') : false;
-        $sort = $request->has('sort')? $request->input('sort') : 'created_at';
-        $order = $request->has('order')? $request->input('order') : 'asc';
-
-        $skus = Sku::withAllRelations()
-            ->when($category, function ($query) use ($category){
-                $query->whereHas('product.subCategory.category', function ($query) use ($category) {
-                    $query->where('name', $category);
-                });
-            })
-            ->when($subCategory, function ($query) use ($subCategory){
-                $query->whereHas('product.subCategory', function ($query) use ($subCategory) {
-                    $query->where('slug', $subCategory);
-                });
-            })
-            ->when($promo, function ($query) use ($promo){
-                $query->whereHas('promos', function ($query) use ($promo) {
-                    $query->where('start_date', '<=', now())
-                        ->where('end_date', '>=', now());
-                });
-            })
-            ->when($attributes, function ($query) use ($attributes){
-                foreach ($attributes as $attribute) {
-                    $query->whereHas('attributeValues', function ($query) use ($attribute) {
-                        $query->whereIn('name', $attribute);
-                    });
-                }
-            })
-            ->when($price, function ($query) use ($price){
-                $query->where('price', '>=', $price[0])
-                    ->where('price', '<=', $price[1]);
-            })
-            ->when($brand, function ($query) use ($brand){
-                $query->whereHas('product.brand', function ($query) use ($brand) {
-                    $query->where('slug', $brand);
-                });
-            })
-            ->when($sort && $order, function ($query) use ($sort, $order){
-                $query->orderBy($sort, $order);
-            })
-            ->paginate(48);
-
+        $skus = $this->skuService->filter($request);
         return [
             'skus' => $skus,
-            'subCategory' => app(SubCategoryController::class)->getSubCategoryBySlug($subCategory),
+            'subCategory' => $this->subCategoryService->getSubCategoryBySlug($request->input('subCategory', '')),
             'minPrice' => $skus->min('price'),
             'maxPrice' => $skus->max('price'),
         ];
@@ -93,10 +58,10 @@ class SkuController extends Controller
         return $this->filter(new Request(['category' => $category]));
     }
 
-    public function showShoes(Request $request)
+    public function showPromos(Request $request)
     {
-        $request->merge(['category' => "Shoes"]);
-        return $this->filter($request);
+        $request->merge(['promo' => true]);
+        return Inertia::render('Customer/Products/Index', $this->filter($request));
     }
 
     public function show(String $sku)
@@ -104,14 +69,14 @@ class SkuController extends Controller
         $sku = Sku::where('sku', $sku)->withAllRelations()->first();
 
         $attributeValues = $sku->attributeValues;
-        $material = $attributeValues->where('attribute_type_id', 3)->first();
+        $material = $attributeValues->where('attribute_type_id', AttributeType::where('name', 'material')->first()->id)->first();
         $sizes = [];
         $colors = [];
         foreach ($attributeValues as $attributeValue) {
-            if ($attributeValue->attribute_type_id == 1) {
+            if ($attributeValue->attribute_type_id == AttributeType::where('name', 'size')->first()->id) {
                 $sizes[] = $attributeValue->name;
             }
-            if ($attributeValue->attribute_type_id == 2) {
+            if ($attributeValue->attribute_type_id == AttributeType::where('name', 'color')->first()->id) {
                 $colors[] = [
                     "name" => $attributeValue->name, 
                     "hex" => $attributeValue->color_value];
