@@ -15,8 +15,8 @@ use App\Http\Controllers\Customer\ReviewController as CustomerReviewController;
 use App\Http\Controllers\Customer\WishlistController;
 use App\Http\Controllers\Product\SkuController as ProductSkuController;
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\SubCategoryController;
 use App\Http\Controllers\UserController;
+use App\Services\SubCategoryService;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -152,8 +152,8 @@ Route::post('/users', [UserController::class, 'store'])->name('users.store');
 
 // (Sub)Category Routes
 Route::get('/categories', [CategoryController::class, 'getAllCategories'])->name('admin.categories.getAll');
-Route::get('/subcategories', [SubCategoryController::class, 'getAll'])->name('admin.subcategories.getAll');
-Route::get('/subcategories/{id}', [SubCategoryController::class, 'getSubCategoriesById'])->name('admin.subcategories.getById');
+Route::get('/subcategories', [SubCategoryService::class, 'getAll'])->name('admin.subcategories.getAll');
+Route::get('/subcategories/{id}', [SubCategoryService::class, 'getSubCategoriesById'])->name('admin.subcategories.getById');
 
 // Brand Routes
 Route::get('/brands', [CustomerBrandController::class, 'index'])->name('brands.index');

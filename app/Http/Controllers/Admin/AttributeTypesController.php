@@ -8,11 +8,6 @@ use Illuminate\Http\Request;
 
 class AttributeTypesController extends Controller
 {
-    public function getAllTypes()
-    {
-        return AttributeType::all();
-    }
-
     public function store(Request $request)
     {
         $request->validate([

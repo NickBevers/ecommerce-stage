@@ -2,18 +2,47 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Product\ProductController;
 use App\Http\Controllers\Product\ProductImageController;
-use App\Http\Controllers\SubCategoryController;
+use App\Http\Requests\ProductValidationRequest;
+use App\Models\AttributeType;
 use App\Models\AttributeValue;
+use App\Models\Category;
 use App\Models\Sku;
+use App\Services\CloudinaryService;
+use App\Services\GetAttributeValuesService;
+use App\Services\GetBrandsService;
+use App\Services\ProductImageService;
+use App\Services\ProductService;
+use App\Services\SkuService;
+use App\Services\SubCategoryService;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
 class SkuController extends Controller
 {
+    // implement the GetAttributeValuesService
+    private GetAttributeValuesService $attributeValueService;
+    private GetBrandsService $brandService;
+    private SubCategoryService $subCategoryService;
+    private CloudinaryService $cloudinaryService;
+    private ProductImageService $productImageService;
+    private ProductService $productService;
+    private SkuService $skuService;
+
+    public function __construct()
+    {
+        $this->attributeValueService = new GetAttributeValuesService();
+        $this->brandService = new GetBrandsService();
+        $this->subCategoryService = new SubCategoryService();
+        $this->cloudinaryService = new CloudinaryService();
+        $this->productImageService = new ProductImageService();
+        $this->productService = new ProductService();
+        $this->skuService = new SkuService();
+    }
+
+
     public function index()
     {
         return Inertia::render('Admin/Products/Index', [
@@ -39,17 +68,18 @@ class SkuController extends Controller
 
     public function create()
     {
-        $attributeTypes = app(AttributeTypesController::class)->getAllTypes();
+        $attributeTypes = AttributeType::all();
         foreach ($attributeTypes as $attributeType) {
-            $attributeType->attributeValues = app(AttributeValueController::class)->getValuesByType($attributeType->id);
+            $attributeType->attributeValues = $this->attributeValueService->getValuesByTypeId($attributeType->id);
         }
 
-        $categories = app(CategoryController::class)->getAllCategories();
+        $categories = Category::all();
         foreach ($categories as $category) {
-            $category->subCategories = app(SubCategoryController::class)->getSubCategoriesById($category->id);
+            $category->subCategories = $this->subCategoryService->getSubCategoriesById($category->id);
         }
+
        return Inertia::render('Admin/Products/Create', [
-           'brands' => app(BrandController::class)->getAllBrands(),
+           'brands' => $this->brandService->getBrands(),
            'categories' => $categories,
            'attributeTypes' => $attributeTypes,
        ]);
@@ -57,8 +87,8 @@ class SkuController extends Controller
 
     public function store(Request $request)
     {
-        $productData = $request->only(['title', 'description', 'audience', 'brand_id', 'sub_category_id', 'product_type', 'extra_info']);
-        $product = app(ProductController::class)->store(new Request($productData));
+        $productRequest = new ProductValidationRequest($request->only(['title', 'description', 'audience', 'brand_id', 'sub_category_id', 'product_type', 'extra_info']));
+        $product = $this->productService->store($productRequest);
 
         foreach ($request->input('variations') as $variation) {
             $sku = Sku::create([
@@ -75,20 +105,14 @@ class SkuController extends Controller
                     $type = ('thumbnail');
                     $isThumbnail = true;
                 }
-                $cloudinaryData = app(CloudinaryController::class)->uploadImage($image, $isThumbnail);
-                app(ProductImageController::class)->store($sku->id, $cloudinaryData['secure_url'], $cloudinaryData['public_id'], "productImage", $type);
+                $cloudinaryData = $this->cloudinaryService->uploadImage($image, $isThumbnail);
+                $this->productImageService->store($sku->id, $cloudinaryData['secure_url'], $cloudinaryData['public_id'], "productImage", $type);
             }
 
             $color = AttributeValue::where('name', $variation['color'])->first();
-            $sku->attributeValues()->attach($color);
-
             $material = AttributeValue::where('name', $variation['material'])->first();
-            $sku->attributeValues()->attach($material);
 
-            foreach ($variation['sizes'] as $size) {
-                $size = AttributeValue::where('name', $size)->first();
-                $sku->attributeValues()->attach($size);
-            }
+            $this->skuService->attachAttributes($sku, $color, $material, $variation['sizes']);
         }
 
 //        return $product;
@@ -98,7 +122,7 @@ class SkuController extends Controller
     public function sortClothing(Array $data): array
     {
 //        $sizes = [ 'One Size', 'XXS', 'XS', 'S', 'M', 'L', 'XL', 'XXL', '3XL', '4XL', '5XL', '6XL', '7XL', '8XL', '23', '24', '25', '26', '27', '28', '29', '30', '31', '32', '33', '34', '35', '36', '37', '38', '39', '40', '41', '42', '43', '44', '45', '46', '47', '48', '49', '50', '52', '54', '56', '58', '60', '62', '64', '66', '68', '70', '90', '94', '98', '102','106', '110',];
-        $sizes = app(AttributeValueController::class)->getValuesByType("size");
+        $sizes = $this->attributeValueService->getValuesByType("size");
         $res = array_intersect($sizes, $data);
         return array_values($res);
     }
@@ -111,19 +135,19 @@ class SkuController extends Controller
 
         return Inertia::render('Admin/Products/Edit', [
             'skus' => $sku,
-            'brands' => app(BrandController::class)->getAllBrands(),
-            'categories' => app(CategoryController::class)->getAllCategories(),
-            'attributeTypes' => app(AttributeTypesController::class)->getAllTypes(),
-            'sizes' => app(AttributeValueController::class)->getValuesByType("size"),
-            'colors' => app(AttributeValueController::class)->getValuesByType("color"),
-            'materials' => app(AttributeValueController::class)->getValuesByType("material"),
+            'brands' => $this->brandService->getBrands(),
+            'categories' => Category::all(),
+            'attributeTypes' => AttributeType::all(),
+            'sizes' => $this->attributeValueService->getValuesByType("size"),
+            'colors' => $this->attributeValueService->getValuesByType("color"),
+            'materials' => $this->attributeValueService->getValuesByType("material"),
         ]);
     }
 
     public function update(Request $request, Sku $sku)
     {
-        $productData = $request->only(['title', 'description', 'audience', 'brand_id', 'sub_category_id', 'product_type', 'extra_info']);
-        $product = app(ProductController::class)->update(new Request($productData), $sku->product_id);
+        $productData = new ProductValidationRequest($request->only(['title', 'description', 'audience', 'brand_id', 'sub_category_id', 'product_type', 'extra_info']));
+        $product = $this->productService->update($productData, $sku->product_id);
 
         $images = $request->files;
         foreach ($images as $image) {
@@ -133,8 +157,8 @@ class SkuController extends Controller
                 $type = ('thumbnail');
                 $isThumbnail = true;
             }
-            $cloudinaryData = app(CloudinaryController::class)->uploadImage($image->getRealPath(), $isThumbnail);
-            app(ProductImageController::class)->store($product->id, $cloudinaryData['secure_url'], $cloudinaryData['public_id'], $image->getClientOriginalName(), $type);
+            $cloudinaryData = $this->cloudinaryService->uploadImage($image->getRealPath(), $isThumbnail);
+            $this->productImageService->store($product->id, $cloudinaryData['secure_url'], $cloudinaryData['public_id'], $image->getClientOriginalName(), $type);
         }
 
         $sku->update([
@@ -145,16 +169,10 @@ class SkuController extends Controller
 
         $sku->attributeValues()->detach();
         $color = AttributeValue::where('name', $request->input('color'))->first();
-        $sku->attributeValues()->attach($color);
-
         $material = AttributeValue::where('name', $request->input('material'))->first();
-        $sku->attributeValues()->attach($material);
-
         $sizes = $this->sortClothing($request->input('sizes'));
-        foreach ($sizes as $size) {
-            $size = AttributeValue::where('name', $size)->first();
-            $sku->attributeValues()->attach($size);
-        }
+
+        $this->skuService->attachAttributes($sku, $color, $material, $sizes);
 
         return redirect()->route('admin.products.index');
     }
