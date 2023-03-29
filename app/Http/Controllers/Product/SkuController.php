@@ -101,7 +101,7 @@ class SkuController extends Controller
 
     public function show(String $sku)
     {
-        $sku = Sku::withAllRelations()->first();
+        $sku = Sku::where('sku', $sku)->withAllRelations()->first();
 
         $attributeValues = $sku->attributeValues;
         $material = $attributeValues->where('attribute_type_id', 3)->first();
