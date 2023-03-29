@@ -11,12 +11,12 @@ const props = defineProps({
   products: Object,
 });
 
-
-
 const wishlistStore = useWishlistStore();
 
 let openCart = ref(false);
 let selectedProduct = ref(null);
+
+let checked = ref(false);
 
 function removeFromWishlist(id) {
   fetch('/wishlist/' + id, {
@@ -33,6 +33,7 @@ function removeFromWishlist(id) {
       console.error('There has been a problem with your fetch operation:', error);
     });
 }
+
 </script>
 <template>
   <div class="bg-white mt-24">

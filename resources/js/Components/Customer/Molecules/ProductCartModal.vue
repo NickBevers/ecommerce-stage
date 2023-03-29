@@ -18,7 +18,7 @@ const open = ref(true)
 const selectedColor = ref("")
 const selectedSize = ref("")
 
-const emits = defineEmits(['closed'])
+const emits = defineEmits(['closed', 'checked'])
 
 const props = defineProps({
   product: {
@@ -40,7 +40,6 @@ const error = {
 let showError = ref(false)
 
 function toggleOpen() {
-
   open.value = !open.value
   emits('closed')
 }
@@ -62,8 +61,10 @@ function submit() {
       })
     })
       .then(response => {
-        if (response.status === 200) {
-          console.log(response)
+        if (response.status == 200) {
+          console.log("success")
+          emits('checked')
+          emits('closed')
         }
       })
       .catch(error => {
