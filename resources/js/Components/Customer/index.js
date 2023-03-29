@@ -1,6 +1,7 @@
 // Atoms
 export { default as ApplicationLogo } from "./Atoms/ApplicationLogo.vue";
 export { default as WishlistButton } from "./Atoms/WishlistButton.vue";
+export { default as Alert } from "./Atoms/Alert.vue";
 
 // Molecules
 export { default as CartItem } from "./Molecules/CartItem.vue";

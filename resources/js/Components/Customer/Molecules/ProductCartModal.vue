@@ -1,6 +1,7 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import { Link } from '@inertiajs/vue3';
+import { Alert } from '@/Components/Customer'
 import {
   Dialog,
   DialogPanel,
@@ -13,32 +14,9 @@ import {
 import { XMarkIcon } from '@heroicons/vue/24/outline'
 import { StarIcon } from '@heroicons/vue/20/solid'
 
-const product = {
-  name: "Women's Basic Tee",
-  price: '$32',
-  rating: 3.9,
-  reviewCount: 512,
-  href: '#',
-  imageSrc: 'https://tailwindui.com/img/ecommerce-images/product-page-01-featured-product-shot.jpg',
-  imageAlt: "Back of women's Basic Tee in black.",
-  colors: [
-    { name: 'Black', bgColor: 'bg-gray-900', selectedColor: 'ring-gray-900' },
-    { name: 'Heather Grey', bgColor: 'bg-gray-400', selectedColor: 'ring-gray-400' },
-  ],
-  sizes: [
-    { name: 'XXS', inStock: true },
-    { name: 'XS', inStock: true },
-    { name: 'S', inStock: true },
-    { name: 'M', inStock: true },
-    { name: 'L', inStock: true },
-    { name: 'XL', inStock: true },
-    { name: 'XXL', inStock: false },
-  ],
-}
-
 const open = ref(true)
-const selectedColor = ref(product.colors[0])
-const selectedSize = ref(product.sizes[2])
+const selectedColor = ref("")
+const selectedSize = ref("")
 
 const emits = defineEmits(['closed'])
 
@@ -49,11 +27,49 @@ const props = defineProps({
     default: null,
   },
 })
+
 console.log(props.product.sku)
+
+const error = {
+  title: "There were errors with your submission",
+  errors: [{
+    message: "Select attributes"
+  }]
+}
+
+let showError = ref(false)
+
 function toggleOpen() {
 
   open.value = !open.value
   emits('closed')
+}
+
+function submit() {
+  //check if color and size are selected
+  if (selectedColor.value == "" || selectedSize.value == "") {
+    showError.value = true
+  } else {
+    showError.value = false
+    fetch('/cart', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        sku_id: props.product.sku.id,
+        amount: 1,
+      })
+    })
+      .then(response => {
+        if (response.status === 200) {
+          console.log(response)
+        }
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  }
 }
 
 </script>
@@ -74,6 +90,7 @@ function toggleOpen() {
             enter-to="opacity-100 translate-y-0 md:scale-100" leave="ease-in duration-200"
             leave-from="opacity-100 translate-y-0 md:scale-100"
             leave-to="opacity-0 translate-y-4 md:translate-y-0 md:scale-95">
+
             <DialogPanel
               class="flex w-full transform text-left text-base transition md:my-8 md:max-w-2xl md:px-4 lg:max-w-4xl">
               <div
@@ -84,14 +101,14 @@ function toggleOpen() {
                   <span class="sr-only">Close</span>
                   <XMarkIcon class="h-6 w-6" aria-hidden="true" />
                 </button>
-
                 <div
                   class="grid w-full grid-cols-1 items-start gap-y-8 gap-x-6 sm:grid-cols-12 lg:items-center lg:gap-x-8">
                   <div class="aspect-w-2 aspect-h-3 overflow-hidden rounded-lg bg-gray-100 sm:col-span-4 lg:col-span-5">
-                    <img :src="props.product.sku.product_images[0].image_link" :alt="product.imageAlt"
+                    <img :src="props.product.sku.product_images[0].image_link" alt="Product image"
                       class="object-cover object-center" />
                   </div>
                   <div class="sm:col-span-8 lg:col-span-7">
+
                     <h2 class="text-xl font-medium text-gray-900 sm:pr-12">{{ props.product.sku.product.title }}</h2>
 
                     <section aria-labelledby="information-heading" class="mt-1">
@@ -146,8 +163,8 @@ function toggleOpen() {
                             </div>
                           </RadioGroup>
                         </div>
-
-                        <button type="submit"
+                        <Alert class="mt-4" :error="error" v-if="showError" />
+                        <button @click.prevent="submit"
                           class="mt-8 flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 py-3 px-8 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">Add
                           to bag</button>
                         <p class="absolute top-4 left-4 text-center sm:static sm:mt-8">
