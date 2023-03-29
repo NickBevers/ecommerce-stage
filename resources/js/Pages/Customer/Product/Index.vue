@@ -9,6 +9,8 @@ const props = defineProps({
   colors: Object,
   material: String,
 });
+
+console.log(props.sku)
 </script>
 <template>
   <GuestLayout>
@@ -24,10 +26,10 @@ const props = defineProps({
 
         <ImageGallery :sku="props.sku" />
 
-        <div class="mt-8 lg:col-span-5">
+      <div class="mt-8 lg:col-span-5">
         <form>
-          <div class="mb-6">
-            <ProductVariationList :variations="props.variations" />
+            <div class="mb-6">
+              <ProductVariationList :variations="props.variations" />
             </div>
 
             <!-- Color picker -->
@@ -37,9 +39,9 @@ const props = defineProps({
                 <legend class="sr-only">Choose a color</legend>
                 <div class="flex items-center space-x-3">
                   <!--
-                      Active and Checked: "ring ring-offset-1"
-                      Not Active and Checked: "ring-2"
-                    -->
+                          Active and Checked: "ring ring-offset-1"
+                          Not Active and Checked: "ring-2"
+                        -->
                   <label
                     class="relative -m-0.5 flex cursor-pointer items-center justify-center rounded-full p-0.5 focus:outline-none ring-gray-900">
                     <input type="radio" name="color-choice" value="Black" class="sr-only"
@@ -55,12 +57,12 @@ const props = defineProps({
               <h2 class="text-sm font-medium text-gray-900 py-0.5">Color: </h2>
               <span
                 class="inline-flex ml-2 items-center px-3 py-0.5 rounded-full text-sm font-medium bg-gray-100 text-gray-800">
-                {{ props.colors[0].name }}
-              </span>
+              {{ props.colors[0].name }}
+            </span>
           </div>
 
-          <!-- Size picker -->
-          <div class="mt-8" v-if="props.sizes.length > 0">
+            <!-- Size picker -->
+            <div class="mt-8" v-if="props.sizes.length > 0">
               <div class="flex items-center justify-between">
                 <h2 class="text-sm font-medium text-gray-900">Size</h2>
               </div>
@@ -69,10 +71,10 @@ const props = defineProps({
                 <legend class="sr-only">Choose a size</legend>
                 <div class="grid grid-cols-3 gap-3 sm:grid-cols-5">
                   <!--
-                      In Stock: "cursor-pointer", Out of Stock: "opacity-25 cursor-not-allowed"
-                      Active: "ring-2 ring-indigo-500 ring-offset-2"
-                      Checked: "border-transparent bg-indigo-600 text-white hover:bg-indigo-700", Not Checked: "border-gray-200 bg-white text-gray-900 hover:bg-gray-50"
-                    -->
+                          In Stock: "cursor-pointer", Out of Stock: "opacity-25 cursor-not-allowed"
+                          Active: "ring-2 ring-indigo-500 ring-offset-2"
+                          Checked: "border-transparent bg-indigo-600 text-white hover:bg-indigo-700", Not Checked: "border-gray-200 bg-white text-gray-900 hover:bg-gray-50"
+                        -->
                   <label v-for="size in props.sizes"
                     class="flex flex-row items-center justify-center rounded-md border py-3 px-3 text-sm font-medium sm:flex-1 cursor-pointer active:ring-2 active:ring-indigo-500 active:ring-offset-2">
                     <input type="radio" name="size-choice" :value="size" class="sr-only"

@@ -1,5 +1,6 @@
 <script setup>
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
+import { Link } from '@inertiajs/vue3';
 import {
   Dialog,
   DialogPanel,
@@ -35,13 +36,30 @@ const product = {
   ],
 }
 
-const open = ref(false)
+const open = ref(true)
 const selectedColor = ref(product.colors[0])
 const selectedSize = ref(product.sizes[2])
+
+const emits = defineEmits(['closed'])
+
+const props = defineProps({
+  product: {
+    type: Object,
+    required: true,
+    default: null,
+  },
+})
+console.log(props.product.sku)
+function toggleOpen() {
+
+  open.value = !open.value
+  emits('closed')
+}
+
 </script>
 <template>
-  <TransitionRoot as="template" :show="open">
-    <Dialog as="div" class="relative z-20" @close="open = false">
+  <TransitionRoot as="template" :show="open" v-if="props.product">
+    <Dialog as="div" class="relative z-20" @close="toggleOpen">
       <TransitionChild as="template" enter="ease-out duration-300" enter-from="opacity-0" enter-to="opacity-100"
         leave="ease-in duration-200" leave-from="opacity-100" leave-to="opacity-0">
         <div class="fixed inset-0 hidden bg-gray-500 bg-opacity-75 transition-opacity md:block" />
@@ -62,7 +80,7 @@ const selectedSize = ref(product.sizes[2])
                 class="relative flex w-full items-center overflow-hidden bg-white px-4 pt-14 pb-8 shadow-2xl sm:px-6 sm:pt-8 md:p-6 lg:p-8">
                 <button type="button"
                   class="absolute top-4 right-4 text-gray-400 hover:text-gray-500 sm:top-8 sm:right-6 md:top-6 md:right-6 lg:top-8 lg:right-8"
-                  @click="open = false">
+                  @click="toggleOpen">
                   <span class="sr-only">Close</span>
                   <XMarkIcon class="h-6 w-6" aria-hidden="true" />
                 </button>
@@ -70,36 +88,16 @@ const selectedSize = ref(product.sizes[2])
                 <div
                   class="grid w-full grid-cols-1 items-start gap-y-8 gap-x-6 sm:grid-cols-12 lg:items-center lg:gap-x-8">
                   <div class="aspect-w-2 aspect-h-3 overflow-hidden rounded-lg bg-gray-100 sm:col-span-4 lg:col-span-5">
-                    <img :src="product.imageSrc" :alt="product.imageAlt" class="object-cover object-center" />
+                    <img :src="props.product.sku.product_images[0].image_link" :alt="product.imageAlt"
+                      class="object-cover object-center" />
                   </div>
                   <div class="sm:col-span-8 lg:col-span-7">
-                    <h2 class="text-xl font-medium text-gray-900 sm:pr-12">{{ product.name }}</h2>
+                    <h2 class="text-xl font-medium text-gray-900 sm:pr-12">{{ props.product.sku.product.title }}</h2>
 
                     <section aria-labelledby="information-heading" class="mt-1">
                       <h3 id="information-heading" class="sr-only">Product information</h3>
 
-                      <p class="font-medium text-gray-900">{{ product.price }}</p>
-
-                      <!-- Reviews -->
-                      <div class="mt-4">
-                        <h4 class="sr-only">Reviews</h4>
-                        <div class="flex items-center">
-                          <p class="text-sm text-gray-700">
-                            {{ product.rating }}
-                            <span class="sr-only"> out of 5 stars</span>
-                          </p>
-                          <div class="ml-1 flex items-center">
-                            <StarIcon v-for="rating in [0, 1, 2, 3, 4]" :key="rating"
-                              :class="[product.rating > rating ? 'text-yellow-400' : 'text-gray-200', 'h-5 w-5 flex-shrink-0']"
-                              aria-hidden="true" />
-                          </div>
-                          <div class="ml-4 hidden lg:flex lg:items-center">
-                            <span class="text-gray-300" aria-hidden="true">&middot;</span>
-                            <a href="#" class="ml-4 text-sm font-medium text-indigo-600 hover:text-indigo-500">See all {{
-                              product.reviewCount }} reviews</a>
-                          </div>
-                        </div>
-                      </div>
+                      <p class="font-medium text-gray-900">€{{ props.product.sku.price.toFixed(2) }}</p>
                     </section>
 
                     <section aria-labelledby="options-heading" class="mt-8">
@@ -113,13 +111,14 @@ const selectedSize = ref(product.sizes[2])
                           <RadioGroup v-model="selectedColor" class="mt-2">
                             <RadioGroupLabel class="sr-only"> Choose a color </RadioGroupLabel>
                             <div class="flex items-center space-x-3">
-                              <RadioGroupOption as="template" v-for="color in product.colors" :key="color.name"
-                                :value="color" v-slot="{ active, checked }">
-                                <div
-                                  :class="[color.selectedColor, active && checked ? 'ring ring-offset-1' : '', !active && checked ? 'ring-2' : '', 'relative -m-0.5 flex cursor-pointer items-center justify-center rounded-full p-0.5 focus:outline-none']">
+                              <RadioGroupOption as="template" v-for="color in props.product.sku.attribute_values"
+                                :key="color.name" :value="color" v-slot="{ active, checked }">
+                                <div class="-ml-4"
+                                  :class="[active && checked ? 'ring ring-offset-1' : '', !active && checked ? 'ring-2' : '', 'relative -m-0.5 flex cursor-pointer items-center justify-center rounded-full p-0.5 focus:outline-none']">
                                   <RadioGroupLabel as="span" class="sr-only"> {{ color.name }} </RadioGroupLabel>
                                   <span aria-hidden="true"
-                                    :class="[color.bgColor, 'h-8 w-8 rounded-full border border-black border-opacity-10']" />
+                                    :class="['h-8 w-8 rounded-full border border-black border-opacity-10', color.attribute_type_id !== 2 ? 'hidden' : '']"
+                                    :style="{ backgroundColor: color.color_value }" />
                                 </div>
                               </RadioGroupOption>
                             </div>
@@ -130,17 +129,18 @@ const selectedSize = ref(product.sizes[2])
                         <div class="mt-8">
                           <div class="flex items-center justify-between">
                             <h4 class="text-sm font-medium text-gray-900">Size</h4>
-                            <a href="#" class="text-sm font-medium text-indigo-600 hover:text-indigo-500">Size guide</a>
                           </div>
 
                           <RadioGroup v-model="selectedSize" class="mt-2">
                             <RadioGroupLabel class="sr-only"> Choose a size </RadioGroupLabel>
                             <div class="grid grid-cols-7 gap-2">
-                              <RadioGroupOption as="template" v-for="size in product.sizes" :key="size.name" :value="size"
-                                :disabled="!size.inStock" v-slot="{ active, checked }">
+                              <RadioGroupOption as="template" v-for="size in props.product.sku.attribute_values"
+                                :key="size.name" :value="size" v-slot="{ active, checked }">
                                 <div
-                                  :class="[size.inStock ? 'cursor-pointer focus:outline-none' : 'cursor-not-allowed opacity-25', active ? 'ring-2 ring-indigo-500 ring-offset-2' : '', checked ? 'border-transparent bg-indigo-600 text-white hover:bg-indigo-700' : 'border-gray-200 bg-white text-gray-900 hover:bg-gray-50', 'flex items-center justify-center rounded-md border py-3 px-3 text-sm font-medium uppercase sm:flex-1']">
-                                  <RadioGroupLabel as="span">{{ size.name }}</RadioGroupLabel>
+                                  :class="[active ? 'ring-2 ring-indigo-500 ring-offset-2' : '', checked ? 'border-transparent bg-indigo-600 text-white hover:bg-indigo-700' : 'border-gray-200 bg-white text-gray-900 hover:bg-gray-50', 'flex items-center justify-center rounded-md border py-3 px-3 text-sm font-medium uppercase sm:flex-1', size.attribute_type_id !== 1 ? 'hidden' : '']">
+                                  <RadioGroupLabel as="span">
+                                    {{ size.name }}
+                                  </RadioGroupLabel>
                                 </div>
                               </RadioGroupOption>
                             </div>
@@ -151,8 +151,9 @@ const selectedSize = ref(product.sizes[2])
                           class="mt-8 flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 py-3 px-8 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">Add
                           to bag</button>
                         <p class="absolute top-4 left-4 text-center sm:static sm:mt-8">
-                          <a :href="product.href" class="font-medium text-indigo-600 hover:text-indigo-500">View full
-                            details</a>
+                          <Link :to="'/product/' + props.product.sku.sku" :href="'/product/' + props.product.sku.sku">
+                          <a class="font-medium text-indigo-600 hover:text-indigo-500">View full details</a>
+                          </Link>
                         </p>
                       </form>
                     </section>
