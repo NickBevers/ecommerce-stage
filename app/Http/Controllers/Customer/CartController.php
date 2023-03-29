@@ -42,7 +42,7 @@ class CartController extends Controller
     {
         return Cart::where('user_id', auth()->user()->id)
             ->withSku()
-            ->first();
+            ->get();
     }
 
     public function show()
