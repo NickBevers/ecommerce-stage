@@ -1,7 +1,8 @@
-  
 <script setup>
 import { Link } from '@inertiajs/vue3';
+import { ref } from 'vue'
 import { useWishlistStore } from '@/Stores/wishlist';
+import { ProductCartModal } from '@/Components/Customer';
 import {
   PlusIcon,
 } from '@heroicons/vue/24/solid'
@@ -11,6 +12,8 @@ const props = defineProps({
 });
 
 const wishlistStore = useWishlistStore();
+
+let openCart = ref(false);
 
 function removeFromWishlist(id) {
   fetch('/wishlist/' + id, {
@@ -29,16 +32,17 @@ function removeFromWishlist(id) {
 }
 </script>
 <template>
+  <ProductCartModal :open="openCart" />
   <div class="bg-white mt-24">
     <div class="mx-auto max-w-2xl px-4 pt-16 pb-24 sm:px-6 lg:max-w-7xl lg:px-8">
       <h1 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Wishlist</h1>
       <div class="grid grid-cols-1 gap-y-12 sm:grid-cols-2 sm:gap-x-6 lg:grid-cols-4 xl:gap-x-8">
         <div v-for="product in props.products" :key="product.id" class="mt-8" :id="product.sku.id">
           <Link :to="'/product/' + product.sku.sku" :href="'/product/' + product.sku.sku">
-          <div class="relative group">
+          <div class="relative imgScale">
             <div class=" relative h-72 w-full overflow-hidden rounded-lg  duration-500 ">
               <img :src="product.sku.product_images[0].image_link" alt="placeholder"
-                class="h-full w-full object-cover object-center duration-500 group-hover:scale-125" />
+                class="h-full w-full object-cover object-center" />
             </div>
             <div class="relative mt-4">
               <h3 class="text-sm font-medium text-gray-900">{{ product.sku.product.title }}</h3>
@@ -56,11 +60,10 @@ function removeFromWishlist(id) {
                 </a>
               </div>
             </div>
-
           </div>
           </Link>
           <div class="mt-6">
-            <a :href="'/product/' + product.href"
+            <a href="#" @click.prevent="openCart = true"
               class="relative flex items-center justify-center rounded-md border border-transparent bg-gray-100 py-2 px-8 text-sm font-medium text-gray-900 hover:bg-gray-200">Add
               to bag<span class="sr-only">, {{ product.name }}</span></a>
           </div>
