@@ -1,5 +1,4 @@
 <script setup>
-import { ref } from 'vue';
 import { AdminSidePanel } from '@/Components/Admin';
 </script>
 

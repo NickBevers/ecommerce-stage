@@ -1,6 +1,6 @@
 <script setup>
 import { Pagination } from '@/Components/Admin'
-import { defineProps, onMounted, computed } from 'vue';
+import { onMounted, computed } from 'vue';
 import moment from 'moment';
 
 const props = defineProps({

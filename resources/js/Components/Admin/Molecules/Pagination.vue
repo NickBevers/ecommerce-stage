@@ -1,5 +1,5 @@
 <script setup>
-import { defineProps, onMounted } from 'vue'
+import { onMounted } from 'vue'
 import { Link } from '@inertiajs/vue3';
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/vue/20/solid'
 

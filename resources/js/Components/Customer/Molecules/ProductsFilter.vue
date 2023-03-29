@@ -1,4 +1,88 @@
 //TODO - Add filters from backend 
+<script setup>
+import { ref } from 'vue'
+import {
+  Dialog,
+  DialogPanel,
+  Disclosure,
+  DisclosureButton,
+  DisclosurePanel,
+  Menu,
+  MenuButton,
+  MenuItem,
+  MenuItems,
+  Popover,
+  PopoverButton,
+  PopoverGroup,
+  PopoverPanel,
+  TransitionChild,
+  TransitionRoot,
+} from '@headlessui/vue'
+import { XMarkIcon } from '@heroicons/vue/24/outline'
+import { ChevronDownIcon } from '@heroicons/vue/20/solid'
+
+const sortOptions = [
+  { name: 'Most Popular', href: '#' },
+  { name: 'Best Rating', href: '#' },
+  { name: 'Newest', href: '#' },
+]
+const filters = [
+  {
+    id: 'brand',
+    name: 'Brand',
+    options: [
+      { value: 'clothing-company', label: 'Clothing Company' },
+      { value: 'fashion-inc', label: 'Fashion Inc.' },
+      { value: 'shoes-n-more', label: "Shoes 'n More" },
+    ],
+  },
+  {
+    id: 'color',
+    name: 'Color',
+    options: [
+      { value: 'white', label: 'White' },
+      { value: 'black', label: 'Black' },
+      { value: 'grey', label: 'Grey' },
+    ],
+  },
+  {
+    id: 'sizes',
+    name: 'Sizes',
+    options: [
+      { value: 's', label: 'S' },
+      { value: 'm', label: 'M' },
+      { value: 'l', label: 'L' },
+    ],
+  },
+  {
+    id: 'material',
+    name: 'Material',
+    options: [
+      { value: 'cotton', label: 'Cotton' },
+      { value: 'wool', label: 'Wool' },
+      { value: 'polyester', label: 'Polyester' },
+    ],
+  },
+  {
+    id: 'price',
+    name: 'Price',
+    options: [
+      { value: '0-50', label: '$0-50' },
+      { value: '50-100', label: '$50-100' },
+      { value: '100-150', label: '$100-150' },
+    ],
+  }
+]
+
+const open = ref(false)
+
+const props = defineProps({
+  title: {
+    type: String,
+    required: true,
+  },
+})
+</script>
 <template>
   <div class="bg-gray-50 pt-24">
     <TransitionRoot as="template" :show="open">
@@ -131,87 +215,3 @@
     </div>
   </div>
 </template>
-<script setup>
-import { ref, defineProps } from 'vue'
-import {
-  Dialog,
-  DialogPanel,
-  Disclosure,
-  DisclosureButton,
-  DisclosurePanel,
-  Menu,
-  MenuButton,
-  MenuItem,
-  MenuItems,
-  Popover,
-  PopoverButton,
-  PopoverGroup,
-  PopoverPanel,
-  TransitionChild,
-  TransitionRoot,
-} from '@headlessui/vue'
-import { XMarkIcon } from '@heroicons/vue/24/outline'
-import { ChevronDownIcon } from '@heroicons/vue/20/solid'
-
-const sortOptions = [
-  { name: 'Most Popular', href: '#' },
-  { name: 'Best Rating', href: '#' },
-  { name: 'Newest', href: '#' },
-]
-const filters = [
-  {
-    id: 'brand',
-    name: 'Brand',
-    options: [
-      { value: 'clothing-company', label: 'Clothing Company' },
-      { value: 'fashion-inc', label: 'Fashion Inc.' },
-      { value: 'shoes-n-more', label: "Shoes 'n More" },
-    ],
-  },
-  {
-    id: 'color',
-    name: 'Color',
-    options: [
-      { value: 'white', label: 'White' },
-      { value: 'black', label: 'Black' },
-      { value: 'grey', label: 'Grey' },
-    ],
-  },
-  {
-    id: 'sizes',
-    name: 'Sizes',
-    options: [
-      { value: 's', label: 'S' },
-      { value: 'm', label: 'M' },
-      { value: 'l', label: 'L' },
-    ],
-  },
-  {
-    id: 'material',
-    name: 'Material',
-    options: [
-      { value: 'cotton', label: 'Cotton' },
-      { value: 'wool', label: 'Wool' },
-      { value: 'polyester', label: 'Polyester' },
-    ],
-  },
-  {
-    id: 'price',
-    name: 'Price',
-    options: [
-      { value: '0-50', label: '$0-50' },
-      { value: '50-100', label: '$50-100' },
-      { value: '100-150', label: '$100-150' },
-    ],
-  }
-]
-
-const open = ref(false)
-
-const props = defineProps({
-  title: {
-    type: String,
-    required: true,
-  },
-})
-</script>

@@ -1,5 +1,4 @@
 <script setup>
-import { defineProps, onMounted } from 'vue'
 import GuestLayout from '@/Layouts/GuestLayout.vue'
 import { ProductsFilter, ProductsList } from '@/Components/Customer'
 
