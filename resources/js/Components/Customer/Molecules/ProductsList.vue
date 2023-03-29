@@ -1,3 +1,14 @@
+<script setup>
+import { Pagination } from '@/Components/Admin'
+import { WishlistButton } from '@/Components/Customer'
+import { Link } from '@inertiajs/vue3';
+
+const props = defineProps({
+  skus: Object,
+  links: Object,
+});
+
+</script>
 <template>
   <div class="bg-white">
     <div class="mx-auto max-w-2xl py-6 px-4 sm:py-6 sm:px-6 lg:max-w-7xl lg:px-8">
@@ -33,15 +44,3 @@
     </div>
   </div>
 </template>
-<script setup>
-import { defineProps } from 'vue'
-import { Pagination } from '@/Components/Admin'
-import { WishlistButton } from '@/Components/Customer'
-import { Link } from '@inertiajs/vue3';
-
-const props = defineProps({
-  skus: Object,
-  links: Object,
-});
-
-</script>

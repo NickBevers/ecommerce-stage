@@ -1,6 +1,6 @@
 
 <script setup>
-import { ref, reactive, defineEmits, watch, defineProps } from 'vue';
+import { ref, reactive, watch } from 'vue';
 import { XMarkIcon } from '@heroicons/vue/24/outline'
 
 const emit = defineEmits(['imagePreviews'])
