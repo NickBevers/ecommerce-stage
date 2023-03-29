@@ -1,6 +1,5 @@
-
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref } from 'vue'
 import {
   Dialog,
   DialogPanel,
@@ -36,30 +35,16 @@ const product = {
   ],
 }
 
-
+const open = ref(false)
 const selectedColor = ref(product.colors[0])
 const selectedSize = ref(product.sizes[2])
-let open = ref(false)
-
-const emit = defineEmits(['isOpen'])
-
-const props = defineProps({
-  open: {
-    type: Boolean,
-    required: true,
-  },
-})
-
-onMounted(() => {
-  open = props.open
-})
 </script>
 <template>
   <TransitionRoot as="template" :show="open">
     <Dialog as="div" class="relative z-20" @close="open = false">
       <TransitionChild as="template" enter="ease-out duration-300" enter-from="opacity-0" enter-to="opacity-100"
         leave="ease-in duration-200" leave-from="opacity-100" leave-to="opacity-0">
-        <div class="fixed inset-0 hidden bg-gray-500 bg-opacity-20 transition-opacity md:block" />
+        <div class="fixed inset-0 hidden bg-gray-500 bg-opacity-75 transition-opacity md:block" />
       </TransitionChild>
 
       <div class="fixed inset-0 z-10 overflow-y-auto">
@@ -77,7 +62,7 @@ onMounted(() => {
                 class="relative flex w-full items-center overflow-hidden bg-white px-4 pt-14 pb-8 shadow-2xl sm:px-6 sm:pt-8 md:p-6 lg:p-8">
                 <button type="button"
                   class="absolute top-4 right-4 text-gray-400 hover:text-gray-500 sm:top-8 sm:right-6 md:top-6 md:right-6 lg:top-8 lg:right-8"
-                  @close="open = false">
+                  @click="open = false">
                   <span class="sr-only">Close</span>
                   <XMarkIcon class="h-6 w-6" aria-hidden="true" />
                 </button>
@@ -94,6 +79,27 @@ onMounted(() => {
                       <h3 id="information-heading" class="sr-only">Product information</h3>
 
                       <p class="font-medium text-gray-900">{{ product.price }}</p>
+
+                      <!-- Reviews -->
+                      <div class="mt-4">
+                        <h4 class="sr-only">Reviews</h4>
+                        <div class="flex items-center">
+                          <p class="text-sm text-gray-700">
+                            {{ product.rating }}
+                            <span class="sr-only"> out of 5 stars</span>
+                          </p>
+                          <div class="ml-1 flex items-center">
+                            <StarIcon v-for="rating in [0, 1, 2, 3, 4]" :key="rating"
+                              :class="[product.rating > rating ? 'text-yellow-400' : 'text-gray-200', 'h-5 w-5 flex-shrink-0']"
+                              aria-hidden="true" />
+                          </div>
+                          <div class="ml-4 hidden lg:flex lg:items-center">
+                            <span class="text-gray-300" aria-hidden="true">&middot;</span>
+                            <a href="#" class="ml-4 text-sm font-medium text-indigo-600 hover:text-indigo-500">See all {{
+                              product.reviewCount }} reviews</a>
+                          </div>
+                        </div>
+                      </div>
                     </section>
 
                     <section aria-labelledby="options-heading" class="mt-8">
@@ -124,6 +130,7 @@ onMounted(() => {
                         <div class="mt-8">
                           <div class="flex items-center justify-between">
                             <h4 class="text-sm font-medium text-gray-900">Size</h4>
+                            <a href="#" class="text-sm font-medium text-indigo-600 hover:text-indigo-500">Size guide</a>
                           </div>
 
                           <RadioGroup v-model="selectedSize" class="mt-2">
@@ -143,19 +150,19 @@ onMounted(() => {
                         <button type="submit"
                           class="mt-8 flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 py-3 px-8 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">Add
                           to bag</button>
-
-                      <p class="absolute top-4 left-4 text-center sm:static sm:mt-8">
-                        <a :href="product.href" class="font-medium text-indigo-600 hover:text-indigo-500">View full
-                          details</a>
-                      </p>
-                    </form>
-                  </section>
+                        <p class="absolute top-4 left-4 text-center sm:static sm:mt-8">
+                          <a :href="product.href" class="font-medium text-indigo-600 hover:text-indigo-500">View full
+                            details</a>
+                        </p>
+                      </form>
+                    </section>
+                  </div>
                 </div>
               </div>
-            </div>
-          </DialogPanel>
-        </TransitionChild>
+            </DialogPanel>
+          </TransitionChild>
+        </div>
       </div>
-    </div>
-  </Dialog>
-</TransitionRoot></template>
+    </Dialog>
+  </TransitionRoot>
+</template>
