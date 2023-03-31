@@ -63,6 +63,9 @@ class WishlistController extends Controller
     public function destroy(Sku $sku)
     {
         Wishlist::where("sku_id", $sku->id)->where("user_id", auth()->user()->id)->delete();
-        return redirect()->route('customer.wishlist.index')->with('success', 'Product removed from wishlist');
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Product removed from wishlist',
+        ]);
     }
 }

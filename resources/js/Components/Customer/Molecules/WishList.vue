@@ -16,8 +16,6 @@ const wishlistStore = useWishlistStore();
 let openCart = ref(false);
 let selectedProduct = ref(null);
 
-let checked = ref(false);
-
 function removeFromWishlist(id) {
   fetch('/wishlist/' + id, {
     method: 'DELETE',

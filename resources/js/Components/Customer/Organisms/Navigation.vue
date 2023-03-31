@@ -3,6 +3,7 @@ import { ApplicationLogo } from '@/Components/Customer';
 import { onBeforeMount, ref, onMounted, computed } from "vue";
 import { Link } from '@inertiajs/vue3';
 import { useWishlistStore } from '@/Stores/wishlist';
+import { useCartStore } from '@/Stores/cart';
 import { Popover, PopoverButton, PopoverGroup, PopoverPanel } from '@headlessui/vue'
 import { MagnifyingGlassIcon, ShoppingBagIcon } from '@heroicons/vue/24/outline'
 import {
@@ -111,9 +112,12 @@ onBeforeMount(async () => {
 
 const wishlistStore = useWishlistStore();
 
+const cartStore = useCartStore();
+
 
 onMounted(() => {
     wishlistStore.fetchCount()
+    cartStore.fetchCount()
 });
 
 function selectCategory(category_id) {
@@ -375,7 +379,7 @@ function selectCategory(category_id) {
                                             class="h-6 w-6 flex-shrink-0 text-gray-400 group-hover:text-gray-500"
                                             aria-hidden="true" />
                                         <span
-                                            class="ml-2 text-sm font-medium text-gray-700 group-hover:text-gray-800">0</span>
+                                            class="ml-2 text-sm font-medium text-gray-700 group-hover:text-gray-800">{{cartStore.count}}</span>
                                         <span class="sr-only">items in cart, view bag</span>
                                         </Link>
                                     </div>
