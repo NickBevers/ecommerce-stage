@@ -17,6 +17,8 @@ export { default as ProductStars } from "./Molecules/ProductStars.vue";
 export { default as ProductVariationList } from "./Molecules/ProductVariationList.vue";
 export { default as WishList } from "./Molecules/WishList.vue";
 export { default as ProductCartModal } from "./Molecules/ProductCartModal.vue";
+export { default as AddProductCart } from "./Molecules/AddProductCart.vue";
+export { default as DetailCart } from "./Molecules/DetailCart.vue";
 
 // Organisms
 export { default as CategoryPreview } from "./Organisms/CategoryPreview.vue";
