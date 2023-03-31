@@ -17,6 +17,7 @@ class AddressController extends Controller
 
     public function store(Request $request)
     {
+        // TODO: validate the request and put it in a request class
         $request->validate([
             'address_line1' => 'required',
             'city' => 'required',
@@ -36,6 +37,8 @@ class AddressController extends Controller
 
     public function update(Request $request, Address $shippingAddress)
     {
+        // TODO: validate the request and put it in a request class
+        
         $shippingAddress->update($request->all());
 
         return redirect()

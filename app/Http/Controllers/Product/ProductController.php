@@ -72,6 +72,8 @@ class ProductController extends Controller
 
     public function update(Request $request, Product $product)
     {
+        // TODO: validate the request (and put it in a request class)
+
         $productToUpdate = Product::find($product->id);
         $productToUpdate->update($request->all());
         $productToUpdate->save();

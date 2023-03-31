@@ -17,6 +17,7 @@ class UserController extends Controller
 
     public function store(Request $request)
     {
+        // TODO: validate the request and put it in a request class
         $request->validate([
             'firstname' => 'required|string|max:255',
             'lastname' => 'required|string|max:255',
@@ -40,7 +41,7 @@ class UserController extends Controller
 
     public function update(Request $request, User $user)
     {
-
+        // TODO: validate the request and put it in a request class
         $request->validate([
             'firstname' => 'required',
             'lastname' => 'required',

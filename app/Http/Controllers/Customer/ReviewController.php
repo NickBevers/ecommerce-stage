@@ -16,20 +16,18 @@ class ReviewController extends Controller
         return redirect()->route('products.index')->with('success', 'Review created successfully');
     }
 
-    public function markAsUseful($id)
+    public function markAsUseful(Review $review)
     {
-        $review = Review::find($id);
         Upvote::create([
             'user_id' => $this->user_id,
-            'review_id' => $id,
+            'review_id' => $review->id,
         ]);
 
         return count($review->upvotes);
     }
 
-    public function markAsNotUseful($id)
+    public function markAsNotUseful(Review $review)
     {
-        $review = Review::find($id);
         $upvote = $review->upvotes->where('user_id', $this->user_id)->first();
         if ($upvote) {
             $upvote->delete();
@@ -38,9 +36,9 @@ class ReviewController extends Controller
         return count($review->upvotes);
     }
 
-    public function destroy($id)
+    public function destroy(Review $review)
     {
-        Review::destroy($id);
+        $review->delete();
         return redirect()->route('products.index')->with('success', 'Review deleted successfully');
     }
 }

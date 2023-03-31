@@ -12,21 +12,14 @@ class PromoController extends Controller
 {
     public function create(String $skuId)
     {
-        $sku = Sku::where('sku', $skuId)
-            ->with('attributeValues.attributeType')
-            ->with('product')
-            ->with('productImages')
-            ->with('product.subCategory')
-            ->with('product.subCategory.category')
-            ->with('product.brand')
-            ->first();
+        $sku = Sku::where('id', $skuId)->withAllRelations()->first();
 
-        return Inertia::render('Admin/Promos/Create');
+        return Inertia::render('Admin/Promos/Create')->with('sku', $sku);
     }
 
     public function store(Request $request)
     {
-        // create a new promo after validating the request
+        // TODO: validate the request and put it in a request class
         $request->validate([
             'sku_id' => 'required',
             'start_date' => 'required',
@@ -35,13 +28,7 @@ class PromoController extends Controller
             'extra_info' => 'String,max:1000',
         ]);
 
-        Promo::create([
-            'sku_id' => $request->sku_id,
-            'start_date' => $request->start_date,
-            'end_date' => $request->end_date,
-            'new_price' => $request->new_price,
-            'extra_info' => $request->extra_info,
-        ]);
+        Promo::create($request->all());
 
         return redirect()
             ->route('products.index')
@@ -57,6 +44,7 @@ class PromoController extends Controller
 
     public function update(Request $request, Promo $promo)
     {
+        // TODO: validate the request and put it in a request class
         $request->validate([
             'sku_id' => 'required',
             'start_date' => 'required',

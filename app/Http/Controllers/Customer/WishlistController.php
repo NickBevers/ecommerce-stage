@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Customer;
 
 use App\Http\Controllers\Controller;
+use App\Models\Sku;
 use App\Models\Wishlist;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -59,12 +60,9 @@ class WishlistController extends Controller
         return $this->getlistItemsPerUser();
     }
 
-    public function destroy(Int $id)
+    public function destroy(Sku $sku)
     {
-        Wishlist::where("sku_id", $id)->where("user_id", auth()->user()->id)->delete();
-        return response()->json([
-            'status' => 'success',
-            'message' => 'Product removed from wishlist',
-        ]);
+        Wishlist::where("sku_id", $sku->id)->where("user_id", auth()->user()->id)->delete();
+        return redirect()->route('customer.wishlist.index')->with('success', 'Product removed from wishlist');
     }
 }

@@ -8,13 +8,12 @@ use Illuminate\Http\Request;
 
 class OrderController extends Controller
 {
-    public function update(Request $request, Int $id)
+    public function update(Request $request, Order $order)
     {
         $request->validate([
             'order_status' => 'required',
         ]);
 
-        $order = Order::find($id);
         $order->update([
             'order_status' => $request->order_status,
         ]);

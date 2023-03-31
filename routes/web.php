@@ -57,21 +57,20 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::post('/admin/products', [AdminSkuController::class, 'store'])->name('admin.products.store');
     Route::post('/admin/products/search', [AdminSkuController::class, 'search'])->name('admin.products.search');
     Route::get('/admin/products/create', [AdminSkuController::class, 'create'])->name('admin.products.create');
-    Route::get('/admin/products/{sku}/edit', [AdminSkuController::class, 'edit'])->name('admin.products.edit');
-    Route::patch('/admin/products/{product}', [AdminSkuController::class, 'update'])->name('admin.products.update');
-    Route::delete('/admin/products/{product}', [AdminSkuController::class, 'destroy'])->name('admin.products.destroy');
+    Route::get('/admin/products/{sku}/edit', [AdminSkuController::class, 'edi t'])->name('admin.products.edit');
+    Route::patch('/admin/products/{sku}', [AdminSkuController::class, 'update'])->name('admin.products.update');
+    Route::delete('/admin/products/{sku}', [AdminSkuController::class, 'destroy'])->name('admin.products.destroy');
 
     // Admin ProductReturn Routes
     Route::post('/admin/returns', [AdminProductReturnController::class, 'update'])->name('admin.returns.update');
     Route::post('/admin/returns/status', [AdminProductReturnController::class, 'updateStatus'])->name('admin.returns.updateStatus');
 
     // Admin Review Routes
-    Route::get('/admin/reviews/{id}', [AdminReviewController::class, 'getAllReviews'])->name('reviews.index');
-    Route::get('/admin/reviews/toggle/{id}', [AdminReviewController::class, 'toggleInactive'])->name('reviews.create');
+    Route::get('/admin/reviews/{sku}', [AdminReviewController::class, 'getAllReviews'])->name('reviews.index');
+    Route::get('/admin/reviews/toggle/{sku}', [AdminReviewController::class, 'toggleInactive'])->name('reviews.create');
 
     // Admin Promo Routes
     Route::get('/promos/create', [PromoController::class, 'create'])->name('promos.create');
-    Route::get('/promos/{promo}', [PromoController::class, 'show'])->name('promos.show');
     Route::get('/promos/{promo}/edit', [PromoController::class, 'edit'])->name('promos.edit');
     Route::post('/promos', [PromoController::class, 'store'])->name('promos.store');
     Route::patch('/promos/{promo}', [PromoController::class, 'update'])->name('promos.update');
@@ -89,19 +88,19 @@ Route::middleware('auth')->group(function () {
     Route::delete('/reviews/{review}', [CustomerReviewController::class, 'destroy'])->name('reviews.destroy');
 
     // Upvote Review Routes
-    Route::get('/upvote/{id}', [CustomerReviewController::class, 'markAsUseful'])->name('review.upvote');
-    Route::get('/downvote/{id}', [CustomerReviewController::class, 'markAsNotUseful'])->name('review.downvote');
+    Route::get('/upvote/{review}', [CustomerReviewController::class, 'markAsUseful'])->name('review.upvote');
+    Route::get('/downvote/{review}', [CustomerReviewController::class, 'markAsNotUseful'])->name('review.downvote');
 
     // Cart Routes
     Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
     Route::post('/cart', [CartController::class, 'store'])->name('cart.store');
-    Route::patch('/cart/{product}', [CartController::class, 'update'])->name('cart.update');
-    Route::delete('/cart/{product}', [CartController::class, 'destroy'])->name('cart.destroy');
+    Route::patch('/cart/{sku}', [CartController::class, 'update'])->name('cart.update');
+    Route::delete('/cart/{sku}', [CartController::class, 'destroy'])->name('cart.destroy');
 
     // Wishlist Routes
     Route::get('/wishlist', [WishlistController::class, 'index'])->name('wishlist.index');
     Route::post('/wishlist', [WishlistController::class, 'store'])->name('wishlist.store');
-    Route::delete('/wishlist/{product}', [WishlistController::class, 'destroy'])->name('wishlist.destroy');
+    Route::delete('/wishlist/{sku}', [WishlistController::class, 'destroy'])->name('wishlist.destroy');
 
     // Address Routes
     Route::get('/addresses', [AddressController::class, 'getAddressesPerUser'])->name('addresses.getAddressesPerUser');
@@ -117,7 +116,7 @@ Route::middleware('auth')->group(function () {
     // Order Routes
     Route::get('/orders', [CustomerOrderController::class, 'getOrdersByUser'])->name('orders.getOrdersByUser');
     Route::get('/orders/{order}', [CustomerOrderController::class, 'show'])->name('orders.show');
-    Route::get('orders/cancel/{order}', [CustomerOrderController::class, 'cancelOrder'])->name('orders.cancel');
+    Route::get('/orders/cancel/{order}', [CustomerOrderController::class, 'cancelOrder'])->name('orders.cancel');
     Route::post('/orders', [CustomerOrderController::class, 'store'])->name('orders.store');
 
     // Customer ProductReturn Routes

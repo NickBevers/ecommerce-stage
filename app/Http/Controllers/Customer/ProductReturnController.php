@@ -19,6 +19,7 @@ class ProductReturnController extends Controller
 
     public function store(Request $request)
     {
+        // TODO: validate the request and put it in a request class
         $request->validate([
             'user_id' => 'required',
             'order_id' => 'required',

@@ -3,9 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Http\Controllers\Product\ProductController;
-use App\Http\Controllers\Product\ProductImageController;
 use App\Http\Requests\ProductValidationRequest;
+use App\Http\Requests\SkuValidationRequest;
 use App\Models\AttributeType;
 use App\Models\AttributeValue;
 use App\Models\Category;
@@ -17,6 +16,7 @@ use App\Services\ProductImageService;
 use App\Services\ProductService;
 use App\Services\SkuService;
 use App\Services\SubCategoryService;
+use App\Services\UploadSkuImageService;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -26,20 +26,18 @@ class SkuController extends Controller
     private GetAttributeValuesService $attributeValueService;
     private GetBrandsService $brandService;
     private SubCategoryService $subCategoryService;
-    private CloudinaryService $cloudinaryService;
-    private ProductImageService $productImageService;
     private ProductService $productService;
     private SkuService $skuService;
+    private UploadSkuImageService $uploadSkuImageService;
 
     public function __construct()
     {
         $this->attributeValueService = new GetAttributeValuesService();
         $this->brandService = new GetBrandsService();
         $this->subCategoryService = new SubCategoryService();
-        $this->cloudinaryService = new CloudinaryService();
-        $this->productImageService = new ProductImageService();
         $this->productService = new ProductService();
         $this->skuService = new SkuService();
+        $this->uploadSkuImageService = new UploadSkuImageService();
     }
 
 
@@ -85,7 +83,7 @@ class SkuController extends Controller
        ]);
     }
 
-    public function store(Request $request)
+    public function store(SkuValidationRequest $request)
     {
         $productRequest = new ProductValidationRequest($request->only(['title', 'description', 'audience', 'brand_id', 'sub_category_id', 'product_type', 'extra_info']));
         $product = $this->productService->store($productRequest);
@@ -98,16 +96,7 @@ class SkuController extends Controller
                 'product_id' => $product->id,
             ]);
 
-            foreach ($variation['images'] as $image) {
-                $type = 'image';
-                $isThumbnail = false;
-                if ($variation['images'][0] == $image) {
-                    $type = ('thumbnail');
-                    $isThumbnail = true;
-                }
-                $cloudinaryData = $this->cloudinaryService->uploadImage($image, $isThumbnail);
-                $this->productImageService->store($sku->id, $cloudinaryData['secure_url'], $cloudinaryData['public_id'], "productImage", $type);
-            }
+            $this->uploadSkuImageService->upload($variation['images'], $sku->id);
 
             $color = AttributeValue::where('name', $variation['color'])->first();
             $material = AttributeValue::where('name', $variation['material'])->first();
@@ -144,28 +133,16 @@ class SkuController extends Controller
         ]);
     }
 
-    public function update(Request $request, Sku $sku)
+    public function update(SkuValidationRequest $request, Sku $sku)
     {
         $productData = new ProductValidationRequest($request->only(['title', 'description', 'audience', 'brand_id', 'sub_category_id', 'product_type', 'extra_info']));
         $product = $this->productService->update($productData, $sku->product_id);
 
-        $images = $request->files;
-        foreach ($images as $image) {
-            $type = 'image';
-            $isThumbnail = false;
-            if ($images[0] == $image) {
-                $type = ('thumbnail');
-                $isThumbnail = true;
-            }
-            $cloudinaryData = $this->cloudinaryService->uploadImage($image->getRealPath(), $isThumbnail);
-            $this->productImageService->store($product->id, $cloudinaryData['secure_url'], $cloudinaryData['public_id'], $image->getClientOriginalName(), $type);
-        }
+        $sku->productImages()->delete();
+        $this->uploadSkuImageService->upload($request->input('images'), $sku->id);
 
-        $sku->update([
-            'sku' => $request->input('sku'),
-            'price' => $request->input('price'),
-            'amount' => $request->input('amount'),
-        ]);
+
+        $sku->update([ 'sku' => $request->input('sku'), 'price' => $request->input('price'), 'amount' => $request->input('amount')]);
 
         $sku->attributeValues()->detach();
         $color = AttributeValue::where('name', $request->input('color'))->first();
@@ -174,7 +151,7 @@ class SkuController extends Controller
 
         $this->skuService->attachAttributes($sku, $color, $material, $sizes);
 
-        return redirect()->route('admin.products.index');
+        return redirect()->route('admin.products.index')->with('success', 'Product updated successfully');
     }
 
     public function destroy(Sku $sku)
