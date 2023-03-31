@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Customer;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\ProductReturnRequest;
 use App\Models\ProductReturn;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -17,7 +18,7 @@ class ProductReturnController extends Controller
         ]);
     }
 
-    public function store(Request $request)
+    public function store(ProductReturnRequest $request)
     {
         $return = ProductReturn::create($request->all());
 

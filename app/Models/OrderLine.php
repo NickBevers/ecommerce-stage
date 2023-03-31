@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class ProductOrder extends Model
+class OrderLine extends Model
 {
 protected $fillable = [
         'product_id',
