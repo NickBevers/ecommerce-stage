@@ -54,7 +54,7 @@ function submit() {
       },
       body: JSON.stringify({
         sku_id: props.product.sku.id,
-        amount: amount,
+        amount: amount.value,
       })
     })
       .then(response => {
@@ -80,7 +80,7 @@ function submit() {
       },
       body: JSON.stringify({
         sku_id: props.product.sku.id,
-        amount: amount,
+        amount: amount.value,
       })
     })
     .then(response => {
