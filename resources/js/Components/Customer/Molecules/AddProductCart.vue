@@ -2,6 +2,7 @@
 import { Link } from '@inertiajs/vue3';
 import { ref } from 'vue'
 import { Alert } from '@/Components/Customer'
+import { useCartStore } from '@/Stores/cart';
 import {
     RadioGroup,
     RadioGroupLabel,
@@ -17,6 +18,8 @@ const props = defineProps({
         default: null,
     },
 })
+
+const cartStore = useCartStore();
 
 let showError = ref(false)
 const error = {
@@ -43,7 +46,7 @@ function submit() {
         })
             .then(response => {
                 if (response.status == 200) {
-                    console.log("success")
+                    cartStore.increment();
                     emits('checked')
                     emits('closed')
                 }
