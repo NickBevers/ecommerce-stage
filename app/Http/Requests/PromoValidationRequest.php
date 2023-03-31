@@ -11,7 +11,7 @@ class PromoValidationRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,11 @@ class PromoValidationRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'sku_id' => 'required',
+            'start_date' => 'required',
+            'end_date' => 'required',
+            'new_price' => 'required',
+            'extra_info' => 'String,max:1000',
         ];
     }
 }

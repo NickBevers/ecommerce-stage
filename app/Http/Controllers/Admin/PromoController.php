@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\PromoValidationRequest;
 use App\Models\Promo;
 use App\Models\Sku;
 use Illuminate\Http\Request;
@@ -17,17 +18,8 @@ class PromoController extends Controller
         return Inertia::render('Admin/Promos/Create')->with('sku', $sku);
     }
 
-    public function store(Request $request)
+    public function store(PromoValidationRequest $request)
     {
-        // TODO: validate the request and put it in a request class
-        $request->validate([
-            'sku_id' => 'required',
-            'start_date' => 'required',
-            'end_date' => 'required',
-            'new_price' => 'required',
-            'extra_info' => 'String,max:1000',
-        ]);
-
         Promo::create($request->all());
 
         return redirect()
@@ -42,17 +34,8 @@ class PromoController extends Controller
         ]);
     }
 
-    public function update(Request $request, Promo $promo)
+    public function update(PromoValidationRequest $request, Promo $promo)
     {
-        // TODO: validate the request and put it in a request class
-        $request->validate([
-            'sku_id' => 'required',
-            'start_date' => 'required',
-            'end_date' => 'required',
-            'new_price' => 'required',
-            'extra_info' => 'String,max:1000',
-        ]);
-
         //patch the promo
         $promo->fill($request->all());
         $promo->save();

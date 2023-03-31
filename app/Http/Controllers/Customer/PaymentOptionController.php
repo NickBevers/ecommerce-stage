@@ -29,14 +29,18 @@ class PaymentOptionController extends Controller
         return response()->json(['message' => 'Payment option added successfully']);
     }
 
-    public function destroy(String $id)
+    public function destroy(PaymentOption $paymentOption)
     {
-        $paymentOption = PaymentOption::where('id', $id)->where('user_id', auth()->user()->id)->first();
-        if (!$paymentOption) {
-            return response()->json(['message' => 'Payment option not found'], 404);
+        // check if the payment option exists for the user before deleting it
+        $payment = PaymentOption::where('user_id', auth()->user()->id)
+            ->where('id', $paymentOption->id)
+            ->first();
+
+        if ($payment) {
+            $payment->delete();
+            return response()->json(['message' => 'Payment option deleted successfully']);
         }
 
-        $paymentOption->delete();
-        return response()->json(['message' => 'Payment option deleted successfully']);
+        return response()->json(['message' => 'Payment option not found'], 404);
     }
 }

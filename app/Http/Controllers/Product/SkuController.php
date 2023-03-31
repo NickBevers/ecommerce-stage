@@ -64,9 +64,9 @@ class SkuController extends Controller
         return Inertia::render('Customer/Products/Index', $this->filter($request));
     }
 
-    public function show(String $sku)
+    public function show(Sku $sku)
     {
-        $sku = Sku::where('sku', $sku)->withAllRelations()->first();
+        $sku = $sku->withAllRelations()->first();
 
         $attributeValues = $sku->attributeValues;
         $material = $attributeValues->where('attribute_type_id', AttributeType::where('name', 'material')->first()->id)->first();

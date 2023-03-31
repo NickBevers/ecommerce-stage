@@ -111,7 +111,7 @@ Route::middleware('auth')->group(function () {
     // PaymentOption Routes
     Route::get('/payment', [PaymentOptionController::class, 'getPaymentOptionsPerUser'])->name('payment.index');
     Route::post('/payment', [PaymentOptionController::class, 'store'])->name('payment.store');
-    Route::delete('/payment/{id}', [PaymentOptionController::class, 'destroy'])->name('payment.destroy');
+    Route::delete('/payment/{paymentOption}', [PaymentOptionController::class, 'destroy'])->name('payment.destroy');
 
     // Order Routes
     Route::get('/orders', [CustomerOrderController::class, 'getOrdersByUser'])->name('orders.getOrdersByUser');
@@ -138,12 +138,10 @@ Route::get('/cart/count', [CartController::class, 'getAmountOfItemsInCart'])->na
 
 // Product Routes
 Route::get('/products', [ProductSkuController::class, 'index'])->name('products.index');
-Route::get('/product/{id}',  [ProductSkuController::class, 'show'])->name('product.show');
-Route::get('/products/category/{categoryName}', [ProductSkuController::class, 'showShoes'])->name('shoes');
-Route::get('/products/category/clothing', [ProductSkuController::class, 'showClothing'])->name('clothing');
-Route::get('/products/category/accessories', [ProductSkuController::class, 'showAccessories'])->name('accessories');
-Route::get('/products/promos', [ProductSkuController::class, 'showPromos'])->name('promos');
+Route::get('/product/{sku}',  [ProductSkuController::class, 'show'])->name('product.show');
+Route::get('/products/category/{categoryName}', [ProductSkuController::class, 'showByCategory'])->name('products.showByCategory');
 Route::get('/products/{subCategory}', [ProductSkuController::class, 'showBySubCategory'])->name('products.showBySubCategory');
+Route::get('/products/promos', [ProductSkuController::class, 'showPromos'])->name('promos');
 
 // Filter Routes
 Route::post('/filter', [ProductSkuController::class, 'filter'])->name('products.filter');
@@ -155,7 +153,7 @@ Route::post('/users', [UserController::class, 'store'])->name('users.store');
 // (Sub)Category Routes
 Route::get('/categories', [CategoryController::class, 'getAllCategories'])->name('admin.categories.getAll');
 Route::get('/subcategories', [SubCategoryService::class, 'getAll'])->name('admin.subcategories.getAll');
-Route::get('/subcategories/{id}', [SubCategoryService::class, 'getSubCategoriesById'])->name('admin.subcategories.getById');
+Route::get('/subcategories/{category}', [SubCategoryService::class, 'getSubCategoriesByCategory'])->name('admin.subcategories.getByCategory');
 
 // Brand Routes
 Route::get('/brands', [CustomerBrandController::class, 'index'])->name('brands.index');

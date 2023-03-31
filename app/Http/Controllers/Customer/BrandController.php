@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Customer;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Product\SkuController;
 use App\Models\Brand;
+use App\Models\Sku;
 use App\Services\SkuService;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -31,13 +32,13 @@ class BrandController extends Controller
         ]);
     }
 
-    public function show($brand)
+    public function show(Brand $brand)
     {
-        $request = new Request();
-        $request->merge(['brand' => $brand]);
         return Inertia::render('Customer/Brands/Overview', [
-            'brand' => Brand::where('slug', $brand)->first(),
-            'skus' => $this->skuService->filter($request),
+            'brand' => $brand,
+            'skus' => Sku::whereHas('product', function ($query) use ($brand) {
+                $query->where('brand_id', $brand->id);
+            })->with('product')->paginate(48)
         ]);
     }
 }

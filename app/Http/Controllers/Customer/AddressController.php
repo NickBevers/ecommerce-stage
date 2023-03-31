@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Customer;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\AddressValidationRequest;
 use App\Models\Address;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -15,17 +16,8 @@ class AddressController extends Controller
         return Address::where('user_id', auth()->user()->id)->get();
     }
 
-    public function store(Request $request)
+    public function store(AddressValidationRequest $request)
     {
-        // TODO: validate the request and put it in a request class
-        $request->validate([
-            'address_line1' => 'required',
-            'city' => 'required',
-            'postal_code' => 'required',
-            'address_type' => 'required',
-            'country' => 'required',
-        ]);
-
         $request->merge(['user_id' => auth()->user()->id]);
         $address = Address::create($request->all());
 
@@ -35,16 +27,13 @@ class AddressController extends Controller
         ]);
     }
 
-    public function update(Request $request, Address $shippingAddress)
+    public function update(AddressValidationRequest $request, Address $shippingAddress)
     {
-        // TODO: validate the request and put it in a request class
-        
         $shippingAddress->update($request->all());
 
         return redirect()
             ->back()
             ->with('success', 'Shipping Address updated successfully');
-
     }
 
     public function destroy(Address $shippingAddress): RedirectResponse

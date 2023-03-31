@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\UserValidationRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -15,16 +16,8 @@ class UserController extends Controller
         return Inertia::render('Auth/Register');
     }
 
-    public function store(Request $request)
+    public function store(UserValidationRequest $request)
     {
-        // TODO: validate the request and put it in a request class
-        $request->validate([
-            'firstname' => 'required|string|max:255',
-            'lastname' => 'required|string|max:255',
-            'email' => 'required|unique:App\Models\User,email',
-            'password' => 'required|string|min:8|regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$/', // at least 1 lowercase, 1 uppercase, 1 number
-        ]);
-
         $user = new User();
         $user->firstname = $request->firstname;
         $user->lastname = $request->lastname;
@@ -39,16 +32,8 @@ class UserController extends Controller
         return User::findOrFail($user->id);
     }
 
-    public function update(Request $request, User $user)
+    public function update(UserValidationRequest $request, User $user)
     {
-        // TODO: validate the request and put it in a request class
-        $request->validate([
-            'firstname' => 'required',
-            'lastname' => 'required',
-            'email' => 'required|email',
-            'password' => 'required|string|min:8',
-        ]);
-
         $hashedPassword = User::where('id', $user->id)->first()->password;
 
         if (!password_verify($request->password, $hashedPassword)) {

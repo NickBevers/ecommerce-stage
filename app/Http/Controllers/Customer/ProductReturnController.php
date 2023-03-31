@@ -19,30 +19,15 @@ class ProductReturnController extends Controller
 
     public function store(Request $request)
     {
-        // TODO: validate the request and put it in a request class
-        $request->validate([
-            'user_id' => 'required',
-            'order_id' => 'required',
-            'sku_id' => 'required',
-            'quantity' => 'required',
-            'reason' => 'required',
-            'status' => 'required',
-        ]);
-
         $return = ProductReturn::create($request->all());
 
         return redirect()->route('returns.show', $return->id);
     }
 
-    public function show(Int $id)
+    public function show(ProductReturn $return)
     {
-        $return = ProductReturn::where('id', $id)
-            ->withSku()
-            ->first();
-
-
         return Inertia::render('Returns/Detail', [
-            'return' => $return,
+            'return' => $return->with('sku')->first(),
         ]);
     }
 }

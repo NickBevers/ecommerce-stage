@@ -73,7 +73,7 @@ class SkuController extends Controller
 
         $categories = Category::all();
         foreach ($categories as $category) {
-            $category->subCategories = $this->subCategoryService->getSubCategoriesById($category->id);
+            $category->subCategories = $this->subCategoryService->getSubCategoriesByCategory($category->id);
         }
 
        return Inertia::render('Admin/Products/Create', [

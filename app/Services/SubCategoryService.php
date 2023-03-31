@@ -13,14 +13,14 @@ class SubCategoryService
             return [
                 'id' => $category->id,
                 'name' => $category->name,
-                'subCategories' => array_values($this->getSubCategoriesById($category->id)->toArray()),
+                'subCategories' => array_values($this->getSubCategoriesByCategory($category)->toArray()),
             ];
         });
     }
 
-    public function getSubCategoriesById($id)
+    public function getSubCategoriesByCategory(Category $category)
     {
-        return SubCategory::all()->where('category_id', $id)->map(function ($subCategory) {
+        return SubCategory::all()->where('category_id', $category->id)->map(function ($subCategory) {
             return [
                 'id' => $subCategory->id,
                 'name' => $subCategory->name,

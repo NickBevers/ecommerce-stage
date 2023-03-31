@@ -19,15 +19,6 @@ class OrderController extends Controller
 
     public function store(Request $request)
     {
-        // TODO: validate the request and put it in a request class
-        $request->validate([
-            'user_id' => 'required',
-            'shipping_address_id' => 'required',
-            'preferred_delivery_date' => 'required',
-            'payment_method' => 'required',
-            'skus' => 'array|required',
-        ]);
-
         $order = Order::create($request->all());
 
         foreach ($request->skus as $sku) {
@@ -40,9 +31,8 @@ class OrderController extends Controller
         return redirect()->route('orders.show', $order->id);
     }
 
-    public function show(Int $id)
+    public function show(Order $order)
     {
-        $order = Order::find($id);
         return Inertia::render('Orders/Detail', [
             'order' => $order,
         ]);
@@ -55,9 +45,8 @@ class OrderController extends Controller
         ]);
     }
 
-    public function cancelOrder(Int $id)
+    public function cancelOrder(Order $order)
     {
-        $order = Order::find($id);
         $order->order_status = 'cancelled';
         $order->save();
         return redirect()->route('orders.show', $order->id);
