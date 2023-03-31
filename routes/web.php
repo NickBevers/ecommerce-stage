@@ -133,6 +133,9 @@ Route::middleware('auth')->group(function () {
 // Wishlist Routes
 Route::get('/wishlist/count', [WishlistController::class, 'getAmountOfItemsInWishlist'])->name('wishlist.getCount');
 
+// Cart Routes
+Route::get('/cart/count', [CartController::class, 'getAmountOfItemsInCart'])->name('cart.getCount');
+
 // Product Routes
 Route::get('/products', [ProductSkuController::class, 'index'])->name('products.index');
 Route::get('/product/{id}',  [ProductSkuController::class, 'show'])->name('product.show');
