@@ -17,6 +17,7 @@ import { StarIcon } from '@heroicons/vue/20/solid'
 const open = ref(true)
 const selectedColor = ref("")
 const selectedSize = ref("")
+const amount = ref(1)
 
 const emits = defineEmits(['closed', 'checked'])
 
@@ -28,7 +29,7 @@ const props = defineProps({
   },
 })
 
-console.log(props.product.sku)
+
 
 const error = {
   title: "There were errors with your submission",
@@ -36,7 +37,7 @@ const error = {
     message: "Select attributes"
   }]
 }
-
+console.log(props.product)
 let showError = ref(false)
 
 function toggleOpen() {
@@ -45,11 +46,7 @@ function toggleOpen() {
 }
 
 function submit() {
-  //check if color and size are selected
-  if (selectedColor.value == "" || selectedSize.value == "") {
-    showError.value = true
-  } else {
-    showError.value = false
+  if(props.product.sku.attribute_values.length===0){
     fetch('/cart', {
       method: 'POST',
       headers: {
@@ -57,7 +54,7 @@ function submit() {
       },
       body: JSON.stringify({
         sku_id: props.product.sku.id,
-        amount: 1,
+        amount: amount,
       })
     })
       .then(response => {
@@ -71,7 +68,33 @@ function submit() {
         console.log(error);
       });
   }
-}
+  else if(selectedColor.value==="" || selectedSize.value===""){
+    showError.value = true
+    console.log("error")
+  }
+  else{
+    fetch('/cart', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        sku_id: props.product.sku.id,
+        amount: amount,
+      })
+    })
+    .then(response => {
+        if (response.status == 200) {
+          console.log("success")
+          emits('checked')
+          emits('closed')
+        }
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  }
+  }
 
 </script>
 <template>
@@ -123,7 +146,7 @@ function submit() {
 
                       <form>
                         <!-- Color picker -->
-                        <div>
+                        <div v-if="props.product.sku.attribute_values.length > 0">
                           <h4 class="text-sm font-medium text-gray-900">Color</h4>
 
                           <RadioGroup v-model="selectedColor" class="mt-2">
@@ -144,7 +167,7 @@ function submit() {
                         </div>
 
                         <!-- Size picker -->
-                        <div class="mt-8">
+                        <div class="mt-8" v-if="props.product.sku.attribute_values.length > 1">
                           <div class="flex items-center justify-between">
                             <h4 class="text-sm font-medium text-gray-900">Size</h4>
                           </div>
@@ -165,9 +188,16 @@ function submit() {
                           </RadioGroup>
                         </div>
                         <Alert class="mt-4" :error="error" v-if="showError" />
+                       <div class="flex flex-row gap-4 mt-8">
                         <button @click.prevent="submit"
-                          class="mt-8 flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 py-3 px-8 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">Add
+                          class="w-[90%] flex items-center justify-center rounded-md border border-transparent bg-indigo-600 py-3 px-8 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">Add
                           to bag</button>
+                          <input :id="`quantity-${props.product.sku.id}`" :name="`quantity-${props.product.sku.id}`"
+                            type="number" min="1"
+                            :max="product.sku.amount"
+                            class="rounded-md border border-gray-300 text-left text-base font-medium text-gray-700 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 sm:text-sm"
+                            v-model="amount"/>
+                       </div>
                         <p class="absolute top-4 left-4 text-center sm:static sm:mt-8">
                           <Link :to="'/product/' + props.product.sku.sku" :href="'/product/' + props.product.sku.sku">
                           <a class="font-medium text-indigo-600 hover:text-indigo-500">View full details</a>
