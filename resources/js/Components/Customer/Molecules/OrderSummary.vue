@@ -1,5 +1,14 @@
 <script setup>
 import { QuestionMarkCircleIcon } from '@heroicons/vue/20/solid'
+
+const props = defineProps({
+  total: {
+    type: Number,
+    required: true,
+  },
+})
+
+console.log(props.total)
 </script>
 <template>
   <section aria-labelledby="summary-heading"
@@ -9,7 +18,7 @@ import { QuestionMarkCircleIcon } from '@heroicons/vue/20/solid'
     <dl class="mt-6 space-y-4">
       <div class="flex items-center justify-between">
         <dt class="text-sm text-gray-600">Subtotal</dt>
-        <dd class="text-sm font-medium text-gray-900">$99.00</dd>
+        <dd class="text-sm font-medium text-gray-900">€{{ props.total.toFixed(2) }}</dd>
       </div>
       <div class="flex items-center justify-between border-t border-gray-200 pt-4">
         <dt class="flex items-center text-sm text-gray-600">

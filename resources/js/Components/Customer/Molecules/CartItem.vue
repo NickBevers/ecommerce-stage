@@ -2,6 +2,7 @@
 import { ref } from 'vue'
 import { CheckIcon, ClockIcon, XMarkIcon } from '@heroicons/vue/20/solid'
 import { useCartStore } from '@/Stores/cart';
+import { getConstantType } from '@vue/compiler-core';
 
 const props = defineProps({
   products: {
@@ -10,15 +11,21 @@ const props = defineProps({
   },
 })
 
+const emit = defineEmits(['total'])
+
 const total = ref(0)
 
 function getTotal() {
-  
+  total.value = 0;
+  props.products.forEach((product) => {
+    total.value += product.sku.price * product.amount;
+  });
+  emit('total', total.value)
 }
 
 const cartStore = useCartStore()
 
-function removeFromCart(id) {
+function removeFromCart(id, product) {
   fetch('/cart/' + id, {
     method: 'DELETE',
     headers: {
@@ -27,6 +34,8 @@ function removeFromCart(id) {
   })
     .then((response) => {
       document.getElementById(id).remove();
+      product.sku.price = 0
+      getTotal()
       cartStore.decrement();
     })
     .catch((error) => {
@@ -46,7 +55,8 @@ function changeAmount(product, event) {
       }),
     })
       .then((response) => {
-
+        product.amount = parseInt(event.target.value);
+        getTotal()
       })
       .catch((error) => {
         console.error('There has been a problem with your fetch operation:', error);
@@ -58,7 +68,6 @@ function changeAmount(product, event) {
 
 </script>
 <template>
-  Total: €{{ total }}
   <ul role="list" class="divide-y divide-gray-200 border-t border-b border-gray-200">
     <li v-for="(product, productIdx) in props.products" :key="product.id" class="flex py-6 sm:py-10" :id="product.sku.id">
       <div class="flex-shrink-0">
@@ -86,10 +95,10 @@ function changeAmount(product, event) {
             <input :id="`quantity-${productIdx}`" :name="`quantity-${productIdx}`" type="number" min="1"
               :max="product.sku.amount"
               class="max-w-full rounded-md border border-gray-300 py-1.5 text-left text-base font-medium leading-5 text-gray-700 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 sm:text-sm"
-              :value="product.amount" @change="changeAmount(product, $event), getTotal" />
+              :value="product.amount" @change="changeAmount(product, $event)" />
             <div class="absolute top-0 right-0">
               <button type="button" class="-m-2 inline-flex p-2 text-gray-400 hover:text-gray-500"
-                @click="removeFromCart(product.sku.id)">
+                @click="removeFromCart(product.sku.id, product)">
                 <span class="sr-only">Remove</span>
                 <XMarkIcon class="h-5 w-5" aria-hidden="true" />
               </button>
