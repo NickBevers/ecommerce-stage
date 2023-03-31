@@ -27,7 +27,10 @@ class CartController extends Controller
             $cart->amount = $cart->amount + $request->amount;
             $cart->save();
 
-            return redirect()->route('customer.cart.index')->with('success', 'Product added to cart');
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Product added to cart',
+            ]);
         }
 
         Cart::create([
@@ -36,14 +39,17 @@ class CartController extends Controller
             'amount' => $request->amount,
         ]);
 
-        return redirect()->route('customer.cart.index')->with('success', 'Product added to cart');
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Product added to cart',
+        ]);
     }
 
     public function getProductsPerUser()
     {
         return Cart::where('user_id', auth()->user()->id)
             ->withSku()
-            ->first();
+            ->get();
     }
 
     public function show()

@@ -6,7 +6,6 @@ const props = defineProps({
   cart: Object,
 });
 
-console.log(props.cart)
 </script>
 <template>
   <GuestLayout>
@@ -18,7 +17,7 @@ console.log(props.cart)
             <h2 id="cart-heading" class="sr-only">Items in your shopping cart</h2>
             <CartItem :products="props.cart" />
           </section>
-          <OrderSummary />
+          <OrderSummary class="sticky top-40 right-0" />
         </form>
         <div v-else>
           <EmptyState title="No products" description="Get started by adding a product to your cart"
