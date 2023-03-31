@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Customer;
 use App\Http\Controllers\Controller;
 use App\Models\Cart;
 use App\Models\Sku;
+use App\Models\Wishlist;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -30,6 +31,7 @@ class CartController extends Controller
             return response()->json([
                 'status' => 'success',
                 'message' => 'Product added to cart',
+                'count' => $this->getAmountOfItemsInCart(),
             ]);
         }
 
@@ -42,6 +44,7 @@ class CartController extends Controller
         return response()->json([
             'status' => 'success',
             'message' => 'Product added to cart',
+            'count' => $this->getAmountOfItemsInCart(),
         ]);
     }
 
@@ -50,6 +53,22 @@ class CartController extends Controller
         return Cart::where('user_id', auth()->user()->id)
             ->withSku()
             ->get();
+    }
+
+    public function getAmountOfItemsInCart()
+    {
+        if (!auth()->user()) {
+            return response()->json([
+                'status' => 'success',
+                'count' => 0,
+            ]);
+        }
+
+        $count = Cart::where('user_id', auth()->user()->id)->count();
+        return response()->json([
+            'status' => 'success',
+            'count' => $count,
+        ]);
     }
 
     public function show()
@@ -65,7 +84,7 @@ class CartController extends Controller
         $cart->amount = $request->amount;
         $cart->save();
 
-        return redirect()->route('customer.cart.index')->with('success', 'Product updated in cart');
+        return redirect()->route('customer.cart.index')->with('success', 'Product updated in cart')->with('count', $this->getAmountOfItemsInCart());
     }
 
     public function destroy(Sku $sku)
