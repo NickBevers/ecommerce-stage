@@ -1,6 +1,7 @@
 <script setup>
 import { ref } from 'vue'
 import { CheckIcon, ClockIcon, XMarkIcon } from '@heroicons/vue/20/solid'
+import { useCartStore } from '@/Stores/cart';
 
 defineProps({
   products: {
@@ -10,6 +11,7 @@ defineProps({
 })
 
 const quantity = ref(1)
+const cartStore = useCartStore()
 
 function removeFromCart(id) {
   fetch('/cart/' + id, {
@@ -20,8 +22,7 @@ function removeFromCart(id) {
   })
     .then((response) => {
       document.getElementById(id).remove();
-
-      // wishlistStore.decrement();
+      cartStore.decrement();
     })
     .catch((error) => {
       console.error('There has been a problem with your fetch operation:', error);
