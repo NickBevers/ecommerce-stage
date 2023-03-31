@@ -84,7 +84,10 @@ class CartController extends Controller
         $cart->amount = $request->amount;
         $cart->save();
 
-        return redirect()->route('customer.cart.index')->with('success', 'Product updated in cart')->with('count', $this->getAmountOfItemsInCart());
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Product updated in cart',
+        ]);
     }
 
     public function destroy(Sku $sku)
