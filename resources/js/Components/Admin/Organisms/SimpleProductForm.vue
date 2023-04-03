@@ -13,8 +13,6 @@ function updateVariation(filter) {
     if (filter === 'sizes') {
         console.log('sizes')
     }
-
-
 }
 
 const form = useForm({
@@ -23,6 +21,7 @@ const form = useForm({
     sub_category_id: 1,
     brand_id: 1,
     description: "",
+    vat_id: 1,
     extra_info: "",
     variations: [
         {
