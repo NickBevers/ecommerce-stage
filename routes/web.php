@@ -57,7 +57,7 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::post('/admin/products', [AdminSkuController::class, 'store'])->name('admin.products.store');
     Route::post('/admin/products/search', [AdminSkuController::class, 'search'])->name('admin.products.search');
     Route::get('/admin/products/create', [AdminSkuController::class, 'create'])->name('admin.products.create');
-    Route::get('/admin/products/{sku}/edit', [AdminSkuController::class, 'edi t'])->name('admin.products.edit');
+    Route::get('/admin/products/{sku}/edit', [AdminSkuController::class, 'edit'])->name('admin.products.edit');
     Route::patch('/admin/products/{sku}', [AdminSkuController::class, 'update'])->name('admin.products.update');
     Route::delete('/admin/products/{sku}', [AdminSkuController::class, 'destroy'])->name('admin.products.destroy');
 
@@ -97,7 +97,7 @@ Route::middleware('auth')->group(function () {
     Route::patch('/cart/{sku}', [CartController::class, 'update'])->name('cart.update');
     Route::delete('/cart/{sku}', [CartController::class, 'destroy'])->name('cart.destroy');
 
-    Route::get('/checkout', function () {  return Inertia::render('Customer/Checkout/Index'); })->name('dashboard');
+    Route::get('/checkout', function () {  return Inertia::render('Customer/Checkout/Index'); })->name('checkout.index');
 
     // Wishlist Routes
     Route::get('/wishlist', [WishlistController::class, 'index'])->name('wishlist.index');
