@@ -1,8 +1,21 @@
 <script setup>
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 import { Switch } from '@headlessui/vue'
 
 const enabled = ref(false)
+
+const props = defineProps({
+  enabled: {
+    type: Boolean,
+    default: false,
+  },
+})
+
+onMounted(() => {
+  if (props.enabled) {
+    enabled.value = props.enabled
+  }
+})
 </script>
 
 <template>
