@@ -249,12 +249,23 @@ function selectCategory(category_id) {
                                             v-slot="{ open }">
                                             <div class="relative flex">
                                                 <PopoverButton @click="selectCategory(category.id)"
+                                                    v-if="category.id === 1 || category.id === 2 || category.id === 3"
                                                     :class="[open ? 'text-indigo-600' : 'text-gray-700 hover:text-gray-800', 'relative flex items-center justify-center text-sm font-medium transition-colors duration-200 ease-out']">
                                                     {{ category.name }}
                                                     <span
                                                         :class="[open ? 'bg-indigo-600' : '', 'absolute inset-x-0 -bottom-px z-20 h-0.5 transition duration-200 ease-out']"
                                                         aria-hidden="true" />
                                                 </PopoverButton>
+
+                                                <Link @click="selectCategory(category.id)" v-else
+                                                    :href="`/${category.name.toLowerCase()}`"
+                                                    :class="[open ? 'text-indigo-600' : 'text-gray-700 hover:text-gray-800', 'relative flex items-center justify-center text-sm font-medium transition-colors duration-200 ease-out']">
+                                                {{ category.name }}
+                                                <span
+                                                    :class="[open ? 'bg-indigo-600' : '', 'absolute inset-x-0 -bottom-px z-20 h-0.5 transition duration-200 ease-out']"
+                                                    aria-hidden="true" />
+                                                </Link>
+
                                             </div>
 
                                             <transition enter-active-class="transition ease-out duration-200"
@@ -378,8 +389,8 @@ function selectCategory(category_id) {
                                         <ShoppingBagIcon
                                             class="h-6 w-6 flex-shrink-0 text-gray-400 group-hover:text-gray-500"
                                             aria-hidden="true" />
-                                        <span
-                                            class="ml-2 text-sm font-medium text-gray-700 group-hover:text-gray-800">{{cartStore.count}}</span>
+                                        <span class="ml-2 text-sm font-medium text-gray-700 group-hover:text-gray-800">{{
+                                            cartStore.count }}</span>
                                         <span class="sr-only">items in cart, view bag</span>
                                         </Link>
                                     </div>
@@ -389,5 +400,6 @@ function selectCategory(category_id) {
                     </div>
                 </div>
             </nav>
-    </header>
-</div></template>
+        </header>
+    </div>
+</template>

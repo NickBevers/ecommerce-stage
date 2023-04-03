@@ -1,5 +1,6 @@
 <script setup>
 import { onMounted } from "vue";
+import GuestLayout from "@/Layouts/GuestLayout.vue";
 
 const props = defineProps({
     brand: Object,
@@ -11,4 +12,8 @@ onMounted(() => {
     console.log(props.skus)
 })
 </script>
-<template></template>
+<template>
+    <GuestLayout>
+
+    </GuestLayout>
+</template>
