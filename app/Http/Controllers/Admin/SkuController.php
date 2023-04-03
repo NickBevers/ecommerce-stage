@@ -83,12 +83,13 @@ class SkuController extends Controller
        ]);
     }
 
-    public function store(SkuValidationRequest $request)
+    public function store(ProductValidationRequest $request)
     {
         $productRequest = new ProductValidationRequest($request->only(['title', 'description', 'audience', 'brand_id', 'sub_category_id', 'product_type', 'extra_info']));
         $product = $this->productService->store($productRequest);
 
         foreach ($request->input('variations') as $variation) {
+
             $sku = Sku::create([
                 'sku' => $variation['sku'],
                 'price' => $variation['price'],

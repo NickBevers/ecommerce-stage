@@ -22,6 +22,8 @@ const form = useForm({
     audience: "Men",
     sub_category_id: 1,
     brand_id: 1,
+    product_type: "simple",
+    vat_id: 1,
     description: "",
     extra_info: "",
     variations: [
@@ -82,7 +84,26 @@ watch(() => {
 
 function submit() {
 
-    form.post(route('admin.products.store'))
+    // form.post(route('admin.products.store'))
+    fetch(route('admin.products.store'), {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+            'X-Requested-With': 'XMLHttpRequest'
+        },
+        body: JSON.stringify(form)
+    })
+        .then(response => response.json())
+        .then(data => {
+            if (data.status === 422) {
+                console.log("GOT AN ERROR");
+                console.log(data.errors);
+            } else {
+                console.log("SUCCESS");
+                console.log(data);
+            }
+        })
 }
 </script>
 <template>
