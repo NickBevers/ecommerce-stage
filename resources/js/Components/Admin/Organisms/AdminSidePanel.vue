@@ -13,12 +13,15 @@ import {
   TransitionChild,
   TransitionRoot,
 } from '@headlessui/vue'
-import { Bars3CenterLeftIcon, ChartPieIcon, ShoppingBagIcon, Bars4Icon, ClockIcon, HomeIcon, XMarkIcon } from '@heroicons/vue/24/outline'
+import { Bars3CenterLeftIcon, ChartPieIcon, ShoppingBagIcon, StarIcon, UsersIcon, ClipboardIcon, XMarkIcon } from '@heroicons/vue/24/outline'
 import { ChevronRightIcon, ChevronUpDownIcon, EllipsisVerticalIcon, MagnifyingGlassIcon } from '@heroicons/vue/20/solid'
 
 const navigation = [
   { name: 'Overview', href: '/admin/dashboard', icon: ChartPieIcon, current: false },
   { name: 'Products', href: '/admin/products', icon: ShoppingBagIcon, current: false },
+  { name: 'Orders', href: '/admin/products', icon: ClipboardIcon, current: false },
+  { name: 'Reviews', href: '/admin/products', icon: StarIcon, current: false },
+  { name: 'Customers', href: '/admin/products', icon: UsersIcon, current: false },
 ]
 
 let active = ref(false)
@@ -200,24 +203,25 @@ onMounted(() => {
               leave-to-class="transform opacity-0 scale-95">
               <MenuItems
                 class="absolute right-0 z-10 mt-2 w-48 origin-top-right divide-y divide-gray-200 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-              <div class="py-1">
-                <MenuItem v-slot="{ active }">
-                <Link :href="route('profile.edit')"
-                  :class="[active ? 'bg-gray-100 text-gray-900' : 'text-gray-700', 'block px-4 py-2 text-sm']">View
-                profile</Link>
-                </MenuItem>
-              </div>
-              <div class="py-1">
-                <MenuItem v-slot="{ active }">
-                <Link :href="route('logout')" method="POST" as="button"
-                  :class="[active ? 'bg-gray-100 text-gray-900' : 'text-gray-700', 'block px-4 py-2 text-sm']">Logout
-                </Link>
-                </MenuItem>
-              </div>
-            </MenuItems>
-          </transition>
-        </Menu>
+                <div class="py-1">
+                  <MenuItem v-slot="{ active }">
+                  <Link :href="route('profile.edit')"
+                    :class="[active ? 'bg-gray-100 text-gray-900' : 'text-gray-700', 'block px-4 py-2 text-sm']">View
+                  profile</Link>
+                  </MenuItem>
+                </div>
+                <div class="py-1">
+                  <MenuItem v-slot="{ active }">
+                  <Link :href="route('logout')" method="POST" as="button"
+                    :class="[active ? 'bg-gray-100 text-gray-900' : 'text-gray-700', 'block px-4 py-2 text-sm']">Logout
+                  </Link>
+                  </MenuItem>
+                </div>
+              </MenuItems>
+            </transition>
+          </Menu>
+        </div>
       </div>
     </div>
   </div>
-</div></template>
+</template>

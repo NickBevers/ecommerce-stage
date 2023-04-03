@@ -79,6 +79,7 @@ function isChecked(filter, value) {
 const form = useForm({
     title: "",
     audience: "Men",
+    vat_id: 1,
     sub_category_id: 1,
     brand_id: 1,
     description: "",
@@ -317,8 +318,8 @@ function submit() {
                                                         leave-from-class="transform opacity-100 scale-100"
                                                         leave-to-class="transform opacity-0 scale-95">
                                                         <PopoverPanel class="absolute right-0 z-10 mt-2 origin-top-right rounded-md bg-white p-4 shadow-2xl ring-1 ring-black ring-opacity-5 focus:outline-none
-                                                                                    max-h-60 overflow-y-auto
-                                                                                    ">
+                                                                                        max-h-60 overflow-y-auto
+                                                                                        ">
                                                             <div class="space-y-4">
                                                                 <div v-for="item in attribute.attributeValues"
                                                                     :key="item.id" class="flex items-center">
