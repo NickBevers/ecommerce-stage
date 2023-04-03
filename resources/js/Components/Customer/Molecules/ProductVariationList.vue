@@ -14,12 +14,12 @@ let showAll = ref(false);
 
 </script>
 <template>
-  <div class="flex flex-wrap gap-2">
+  <div class="flex flex-wrap justify-between">
     <div v-for="variation, index in props.variations" :key="variation.id" class="m-1 overflow-hidden rounded-md"
       :class="{ 'hidden': !showAll && index > 3 }">
       <div v-if="!showAll" class="overflow-hidden">
         <div class="h-32 w-20 inline hover:scale-125 duration-500 col-span-4 transition-all rounded-md object-cover">
-          <Link :href="`/product/${variation.sku}`">
+          <Link :href="`/product/${variation.id}`">
           <img class="h-32 w-20  inline hover:scale-125 duration-500 transition-all rounded-md object-cover"
             :src="variation.product_images[0].image_link" alt="variation.name" />
           </Link>
@@ -27,7 +27,7 @@ let showAll = ref(false);
       </div>
       <div v-else>
         <div class="h-32 w-20 inline hover:scale-125 duration-500 transition-all rounded-md object-cover">
-          <Link :href="`/product/${variation.sku}`">
+          <Link :href="`/product/${variation.id}`">
           <img class="h-32 w-20 inline hover:scale-125 duration-500 transition-all rounded-md object-cover"
             :src="variation.product_images[0].image_link" alt="variation.name" />
           </Link>
