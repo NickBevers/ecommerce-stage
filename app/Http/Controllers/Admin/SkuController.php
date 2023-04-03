@@ -73,7 +73,7 @@ class SkuController extends Controller
 
         $categories = Category::all();
         foreach ($categories as $category) {
-            $category->subCategories = $this->subCategoryService->getSubCategoriesByCategory($category->id);
+            $category->subCategories = $this->subCategoryService->getSubCategoriesByCategory($category);
         }
 
        return Inertia::render('Admin/Products/Create', [
@@ -156,7 +156,7 @@ class SkuController extends Controller
 
     public function destroy(Sku $sku)
     {
-        $sku->delete();
+        Sku::destroy($sku->id);
         return redirect()->route('admin.products.index');
     }
 }

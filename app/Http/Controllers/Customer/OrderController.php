@@ -17,9 +17,9 @@ class OrderController extends Controller
         ]);
     }
 
-    public function store(Request $request)
+    public function store(OrderValidationRequest $request)
     {
-        $order = Order::create($request->all());
+        $order = Order::create($request->validated());
 
         foreach ($request->skus as $sku) {
             $order->skus()->attach($sku['id'], [

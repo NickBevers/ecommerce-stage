@@ -17,6 +17,7 @@ class OrderValidationRequest extends FormRequest
             'user_id' => 'required',
             'shipping_address_id' => 'required',
             'preferred_delivery_date' => 'required',
+            'billing_adress_id' => 'String',
             'payment_method' => 'required',
             'skus' => 'array|required',
         ];

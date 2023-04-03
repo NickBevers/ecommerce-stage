@@ -64,7 +64,7 @@ class CartController extends Controller
             ]);
         }
 
-        $count = Cart::where('user_id', auth()->user()->id)->count();
+        $count = Cart::where('user_id', auth()->user()->id)->sum('amount');
         return response()->json([
             'status' => 'success',
             'count' => $count,

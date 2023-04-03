@@ -13,6 +13,8 @@ return new class extends Migration {
             $table->foreignId('order_id')->constrained();
             $table->integer('amount')->default(1);
             $table->integer('price');
+            $table->integer('discount')->nullable();
+            $table->string('product_name');
             $table->json('attributes')->nullable();
             $table->timestamps();
         });

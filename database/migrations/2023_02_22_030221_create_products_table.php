@@ -16,8 +16,9 @@ return new class extends Migration {
             $table->foreignId('sub_category_id')->constrained();
             $table->String('extra_info')->nullable();
             $table->boolean('is_active')->default(true);
-            $table->foreignId('user_id')->default(1)->constrained()->onDelete('cascade');
-            $table->foreignId('brand_id')->default(1)->constrained()->onDelete('cascade');
+            $table->foreignId('user_id')->default(1)->constrained();
+            $table->foreignId('brand_id')->default(1)->constrained();
+            $table->foreignId('vat_id')->default(1)->constrained();
             $table->timestamps();
         });
     }
