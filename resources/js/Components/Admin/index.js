@@ -21,6 +21,7 @@ export { default as Pagination } from "./Molecules/Pagination.vue";
 export { default as Stats } from "./Molecules/Stats.vue";
 export { default as UpdateProductModal } from "./Molecules/UpdateProductModal.vue";
 export { default as UploadFile } from "./Molecules/UploadFile.vue";
+export { default as Alert } from "./Molecules/Alert.vue";
 
 // Organisms
 export { default as AdminSidePanel } from "./Organisms/AdminSidePanel.vue";
