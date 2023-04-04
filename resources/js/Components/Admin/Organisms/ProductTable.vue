@@ -12,7 +12,8 @@ const props = defineProps({
 
 onMounted(() => {
   props.skus.forEach((sku) => {
-    sku.updated_at = moment(sku.updated_at).fromNow();
+    // sku.updated_at = moment(sku.updated_at).fromNow();
+    console.log(sku)
   });
 });
 
@@ -43,8 +44,10 @@ function deleteProduct() {
     .catch((error) => {
       console.error('There has been a problem with your fetch operation:', error);
     });
+}
 
-
+function toggleActive() {
+  console.log(selectedProduct.value)
 }
 
 </script>
@@ -93,7 +96,7 @@ function deleteProduct() {
                   <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500 w-1/6">€{{
                     product.price_incl_vat.toFixed(2) }}</td>
                   <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500 w-1/6">
-                    <Toggle enabled />
+                    <Toggle :on="product.product.is_active" @click="selectedProduct = product.id; toggleActive()" />
                   </td>
                   <td
                     class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right justify-end text-sm font-medium sm:pr-0 flex gap-2 w-fill">
