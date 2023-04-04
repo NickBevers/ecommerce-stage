@@ -8,6 +8,7 @@ use App\Http\Requests\SkuValidationRequest;
 use App\Models\AttributeType;
 use App\Models\AttributeValue;
 use App\Models\Category;
+use App\Models\ProductImage;
 use App\Models\Sku;
 use App\Models\Vat;
 use App\Services\CloudinaryService;
@@ -157,7 +158,7 @@ class SkuController extends Controller
 
     public function destroy(Sku $sku)
     {
-        Sku::destroy($sku->id);
-        return redirect()->route('admin.products.index');
+        $sku->delete();
+        return redirect()->route('admin.products.index')->with('success', 'Product deleted successfully');
     }
 }

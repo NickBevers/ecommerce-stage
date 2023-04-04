@@ -19,7 +19,7 @@ let showAll = ref(false);
       :class="{ 'hidden': !showAll && index > 3 }">
       <div v-if="!showAll" class="overflow-hidden">
         <div class="h-32 w-20 inline hover:scale-125 duration-500 col-span-4 transition-all rounded-md object-cover">
-          <Link :href="`/product/${variation.id}`">
+          <Link :href="`/product/${variation.sku}`">
           <img class="h-32 w-20  inline hover:scale-125 duration-500 transition-all rounded-md object-cover"
             :src="variation.product_images[0].image_link" alt="variation.name" />
           </Link>
@@ -27,7 +27,7 @@ let showAll = ref(false);
       </div>
       <div v-else>
         <div class="h-32 w-20 inline hover:scale-125 duration-500 transition-all rounded-md object-cover">
-          <Link :href="`/product/${variation.id}`">
+          <Link :href="`/product/${variation.sku}`">
           <img class="h-32 w-20 inline hover:scale-125 duration-500 transition-all rounded-md object-cover"
             :src="variation.product_images[0].image_link" alt="variation.name" />
           </Link>

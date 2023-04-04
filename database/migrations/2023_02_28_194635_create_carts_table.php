@@ -9,8 +9,8 @@ return new class extends Migration {
     {
         Schema::create('carts', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained();
-            $table->foreignId('sku_id')->constrained();
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->foreignId('sku_id')->constrained()->onDelete('cascade');
             $table->integer('amount')->default(1);
             $table->timestamps();
         });

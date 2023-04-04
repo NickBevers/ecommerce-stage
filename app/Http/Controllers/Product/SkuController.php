@@ -66,9 +66,8 @@ class SkuController extends Controller
 
     public function show(Sku $sku)
     {
-        $sku = Sku::where('id', $sku->id)->withAllRelations()->first();
-
-        $attributeValues = $sku->attributeValues;
+        $tempSku = Sku::where('sku', $sku->sku)->withAllRelations()->first();
+        $attributeValues = $tempSku->attributeValues;
         $material = $attributeValues->where('attribute_type_id', AttributeType::where('name', 'material')->first()->id)->first();
         $sizes = [];
         $colors = [];
@@ -83,21 +82,21 @@ class SkuController extends Controller
             }
         }
 
-        $variations = Sku::where('product_id', $sku->product_id)
-            ->whereNotIn('sku', [$sku->sku])
+        $variations = Sku::where('product_id', $tempSku->product_id)
+            ->whereNotIn('sku', [$tempSku->sku])
             ->with('productImages', function ($query) {
                 $query->where('image_type', 'thumbnail');
             })
             ->get();
 
-        $reviews = $sku->reviews;
+        $reviews = $tempSku->reviews;
         foreach ($reviews as $review) {
             $review->upvotes = $review->upvotes()->count();
             $review->userLikes = $review->upvotes()->where('user_id', Auth::id())->exists();
         }
 
         return Inertia::render('Customer/Product/Index', [
-            'sku' => $sku,
+            'sku' => $tempSku,
             'variations' => $variations,
             'sizes' => $sizes,
             'colors' => $colors,

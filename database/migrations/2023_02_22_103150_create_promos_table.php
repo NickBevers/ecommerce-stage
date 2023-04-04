@@ -9,7 +9,7 @@ return new class extends Migration {
     {
         Schema::create('promos', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('sku_id')->constrained();
+            $table->foreignId('sku_id')->nullable()->constrained()->onDelete('set null');
             $table->timestamp('start_date')->nullable();
             $table->timestamp('end_date')->nullable();
             $table->float('new_price');

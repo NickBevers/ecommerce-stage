@@ -8,9 +8,9 @@ return new class extends Migration {
     public function up(): void
     {
         Schema::create('attribute_value_sku', function (Blueprint $table) {
-            $table->foreignId('sku_id')->constrained();
+            $table->foreignId('sku_id')->nullable()->constrained()->onDelete('set null');
             $table->foreignId('attribute_value_id')->constrained();
-            $table->primary(['sku_id', 'attribute_value_id']);
+            $table->unique(['sku_id', 'attribute_value_id']);
         });
     }
 

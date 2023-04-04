@@ -41,7 +41,7 @@ function removeFromWishlist(id) {
         @closed="openCart = false" />
       <div class="grid grid-cols-1 gap-y-12 sm:grid-cols-2 sm:gap-x-6 lg:grid-cols-4 xl:gap-x-8">
         <div v-for="product in props.products" :key="product.id" class="mt-8" :id="product.sku.id">
-          <Link :to="'/product/' + product.sku.id" :href="'/product/' + product.sku.id">
+          <Link :to="'/product/' + product.sku.sku" :href="'/product/' + product.sku.sku">
           <div class="relative group">
             <div class=" relative h-72 w-full overflow-hidden rounded-lg">
               <img :src="product.sku.product_images[0].image_link" alt="placeholder"

@@ -9,9 +9,9 @@ return new class extends Migration {
     {
         Schema::create('product_returns', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained();
+            $table->foreignId('user_id')->nullable()->constrained()->onDelete('set null');
             $table->foreignId('order_id')->constrained();
-            $table->foreignId('sku_id')->constrained();
+            $table->foreignId('sku_id')->nullable()->constrained()->onDelete('set null');
             $table->String('reason');
             $table->String('status');
             $table->String('tracking_number')->nullable();

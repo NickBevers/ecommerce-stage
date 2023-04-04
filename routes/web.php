@@ -145,7 +145,7 @@ Route::get('/cart/count', [CartController::class, 'getAmountOfItemsInCart'])->na
 
 // Product Routes
 Route::get('/products', [ProductSkuController::class, 'index'])->name('products.index');
-Route::get('/product/{sku}',  [ProductSkuController::class, 'show'])->name('product.show');
+Route::get('/product/{sku:sku}',  [ProductSkuController::class, 'show'])->name('product.show');
 Route::get('/products/category/{categoryName}', [ProductSkuController::class, 'showByCategory'])->name('products.showByCategory');
 Route::get('/products/{subCategory}', [ProductSkuController::class, 'showBySubCategory'])->name('products.showBySubCategory');
 Route::get('/products/promos', [ProductSkuController::class, 'showPromos'])->name('promos');

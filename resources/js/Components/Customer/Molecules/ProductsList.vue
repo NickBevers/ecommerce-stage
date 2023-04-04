@@ -14,7 +14,7 @@ const props = defineProps({
     <div class="mx-auto max-w-2xl py-6 px-4 sm:py-6 sm:px-6 lg:max-w-7xl lg:px-8">
       <div class="grid grid-cols-1 gap-y-12 sm:grid-cols-2 sm:gap-x-6 lg:grid-cols-4 xl:gap-x-8">
         <div v-for="product in props.skus" :key="product.id" class="mt-8" :id="product.id">
-          <Link :to="'/product/' + product.id" :href="'/product/' + product.id">
+          <Link :to="'/product/' + product.sku" :href="'/product/' + product.sku">
           <div class="relative group">
             <div class="relative h-72 w-full overflow-hidden rounded-lg">
               <img :src="product.product_images[0].image_link" alt="placeholder"
