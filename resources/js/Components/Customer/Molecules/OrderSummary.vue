@@ -28,7 +28,7 @@ console.log(props.total)
             <QuestionMarkCircleIcon class="h-5 w-5" aria-hidden="true" />
           </a>
         </dt>
-        <dd class="text-sm font-medium text-gray-900">$5.00</dd>
+        <dd class="text-sm font-medium text-gray-900">€..</dd>
       </div>
       <div class="flex items-center justify-between border-t border-gray-200 pt-4">
         <dt class="flex text-sm text-gray-600">
@@ -38,11 +38,11 @@ console.log(props.total)
             <QuestionMarkCircleIcon class="h-5 w-5" aria-hidden="true" />
           </a>
         </dt>
-        <dd class="text-sm font-medium text-gray-900">$8.32</dd>
+        <dd class="text-sm font-medium text-gray-900">€..</dd>
       </div>
       <div class="flex items-center justify-between border-t border-gray-200 pt-4">
         <dt class="text-base font-medium text-gray-900">Order total</dt>
-        <dd class="text-base font-medium text-gray-900">$112.32</dd>
+        <dd class="text-base font-medium text-gray-900">€{{ props.total.toFixed(2) }}</dd>
       </div>
     </dl>
 
