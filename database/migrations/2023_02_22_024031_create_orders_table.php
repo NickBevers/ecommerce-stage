@@ -16,7 +16,7 @@ return new class extends Migration {
             $table->timestamp('order_date')->default(now());
             $table->string('order_status')->default('pending');
             $table->timestamp('preferred_delivery_date')->nullable();
-            $table->string('payment_method');
+            $table->foreignId('payment_type_id')->constrained('payment_types');
             $table->string('tracking_number')->nullable();
             $table->string('tracking_url')->nullable();
             $table->timestamp('shipped_at')->nullable();

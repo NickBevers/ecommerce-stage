@@ -7,17 +7,18 @@ use Illuminate\Support\Facades\Schema;
 return new class extends Migration {
     public function up(): void
     {
-        Schema::create('payment_options', function (Blueprint $table) {
+        Schema::create('payment_types', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained('users');
-            $table->String('payment_type');
-            $table->String('extra_info');
+            $table->string('name');
+            $table->string('description');
+            $table->string('icon');
+            $table->float('supplement');
             $table->timestamps();
         });
     }
 
     public function down(): void
     {
-        Schema::dropIfExists('payment_options');
+        Schema::dropIfExists('payment_types');
     }
 };

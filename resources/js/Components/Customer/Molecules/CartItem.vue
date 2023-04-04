@@ -18,7 +18,7 @@ const total = ref(0)
 function getTotal() {
   total.value = 0;
   props.products.forEach((product) => {
-    total.value += product.sku.price * product.amount;
+    total.value += product.sku.price_excl_vat * product.amount;
   });
   emit('total', total.value)
 }
@@ -34,7 +34,7 @@ function removeFromCart(id, product) {
   })
     .then((response) => {
       document.getElementById(id).remove();
-      product.sku.price = 0
+      product.sku.price_incl_vat = 0
       getTotal()
       cartStore.decrement();
     })
@@ -84,10 +84,10 @@ function changeAmount(product, event) {
               </h3>
             </div>
             <div class="mt-1 flex text-sm">
-              <p v-if="product.sku.attribute_values.length != 0" class="text-gray-500"><span
+              <p v-if="product.sku.attribute_values.length !== 0" class="text-gray-500"><span
                   v-for="attribute in product.sku.attribute_values">{{ attribute.name }}, </span></p>
             </div>
-            <p class="mt-1 text-sm font-medium text-gray-900">€{{ product.sku.price.toFixed(2) }}</p>
+            <p class="mt-1 text-sm font-medium text-gray-900">€{{ product.sku.price_incl_vat.toFixed(2) }}</p>
           </div>
 
           <div class="mt-4 sm:mt-0 sm:pr-9">

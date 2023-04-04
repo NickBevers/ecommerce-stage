@@ -3,14 +3,14 @@
 namespace App\Http\Controllers\Customer;
 
 use App\Http\Controllers\Controller;
-use App\Models\PaymentOption;
+use App\Models\PaymentMethod;
 use Illuminate\Http\Request;
 
 class PaymentOptionController extends Controller
 {
     public function getPaymentOptionsPerUser()
     {
-        $paymentOptions = PaymentOption::where('user_id', auth()->user()->id)->get();
+        $paymentOptions = PaymentMethod::where('user_id', auth()->user()->id)->get();
         return response()->json($paymentOptions);
     }
 
@@ -20,7 +20,7 @@ class PaymentOptionController extends Controller
             'payment_type' => 'required',
         ]);
 
-        PaymentOption::create([
+        PaymentMethod::create([
             'user_id' => auth()->user()->id,
             'payment_type' => $request->payment_type,
             'extra_info' => $request->extra_info,
@@ -29,10 +29,10 @@ class PaymentOptionController extends Controller
         return response()->json(['message' => 'Payment option added successfully']);
     }
 
-    public function destroy(PaymentOption $paymentOption)
+    public function destroy(PaymentMethod $paymentOption)
     {
         // check if the payment option exists for the user before deleting it
-        $payment = PaymentOption::where('user_id', auth()->user()->id)
+        $payment = PaymentMethod::where('user_id', auth()->user()->id)
             ->where('id', $paymentOption->id)
             ->first();
 

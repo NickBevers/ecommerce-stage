@@ -35,10 +35,10 @@ class BrandController extends Controller
     public function show(Brand $brand)
     {
         return Inertia::render('Customer/Brands/Overview', [
-            'brand' => $brand,
-            'skus' => Sku::whereHas('product', function ($query) use ($brand) {
-                $query->where('brand_id', $brand->id);
-            })->with('product')->paginate(48)
+            'brand' => Brand::where('id', $brand->id)->with('skus')->first(),
+            'skus' => Sku::whereHas('product.brand', function ($query) use ($brand) {
+                $query->where('id', $brand->id);
+            })->withAllRelations()->paginate(48),
         ]);
     }
 }

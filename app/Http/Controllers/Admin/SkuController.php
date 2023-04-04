@@ -9,6 +9,7 @@ use App\Models\AttributeType;
 use App\Models\AttributeValue;
 use App\Models\Category;
 use App\Models\Sku;
+use App\Models\Vat;
 use App\Services\CloudinaryService;
 use App\Services\GetAttributeValuesService;
 use App\Services\GetBrandsService;
@@ -22,7 +23,6 @@ use Inertia\Inertia;
 
 class SkuController extends Controller
 {
-    // implement the GetAttributeValuesService
     private GetAttributeValuesService $attributeValueService;
     private GetBrandsService $brandService;
     private SubCategoryService $subCategoryService;
@@ -48,8 +48,8 @@ class SkuController extends Controller
                 ->orderBy('created_at', 'desc')
                 ->paginate(10),
             'attributeValues' => AttributeValue::all(),
-            'minPrice' => Sku::min('price'),
-            'maxPrice' => Sku::max('price'),
+            'minPrice' => Sku::min('price_incl_vat'),
+            'maxPrice' => Sku::max('price_incl_vat'),
         ]);
     }
 
@@ -89,10 +89,11 @@ class SkuController extends Controller
         $product = $this->productService->store($productRequest);
 
         foreach ($request->input('variations') as $variation) {
-
+            $vat = Vat::where('id', $request->input('vat_id'))->first();
             $sku = Sku::create([
                 'sku' => $variation['sku'],
-                'price' => $variation['price'],
+                'price_excl_vat' => $variation['price'],
+                'price_incl_vat' => $variation['price'] * (1 + $vat->vat_percentage / 100),
                 'amount' => $variation['amount'],
                 'product_id' => $product->id,
             ]);
@@ -105,7 +106,6 @@ class SkuController extends Controller
             $this->skuService->attachAttributes($sku, $color, $material, $variation['sizes']);
         }
 
-//        return $product;
         return redirect()->route('admin.products.index');
     }
 
@@ -142,8 +142,8 @@ class SkuController extends Controller
         $sku->productImages()->delete();
         $this->uploadSkuImageService->upload($request->input('images'), $sku->id);
 
-
-        $sku->update([ 'sku' => $request->input('sku'), 'price' => $request->input('price'), 'amount' => $request->input('amount')]);
+        $vat = Vat::where('id', $request->input('vat_id'))->first();
+        $sku->update([ 'sku' => $request->input('sku'), 'price_excl_vat' => $request->input('price'), 'price_incl_vat' => $request->input('price') * (1 + $vat->vat_percentage / 100) , 'amount' => $request->input('amount')]);
 
         $sku->attributeValues()->detach();
         $color = AttributeValue::where('name', $request->input('color'))->first();

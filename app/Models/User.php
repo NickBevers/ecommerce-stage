@@ -87,7 +87,7 @@ class User extends Authenticatable implements CanResetPasswordContract
 
     public function paymentOptions(): HasMany
     {
-        return $this->hasMany(PaymentOption::class);
+        return $this->hasMany(PaymentMethod::class);
     }
 
     public function productReturns(): HasMany

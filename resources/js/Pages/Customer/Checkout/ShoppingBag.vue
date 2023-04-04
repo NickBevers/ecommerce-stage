@@ -17,7 +17,7 @@ function totalPrice(total){
 function getTotal() {
   subtotal.value = 0;
   props.cart.forEach((product) => {
-    subtotal.value += product.sku.price * product.amount;
+    subtotal.value += product.sku.price_excl_vat * product.amount;
   });
 }
 

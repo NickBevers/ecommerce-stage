@@ -12,6 +12,7 @@ return new class extends Migration {
             $table->string('vat');
             $table->string('vat_percentage');
             $table->string('country_code')->default('BE');
+            $table->boolean('default')->default(false);
             $table->unique(['vat', 'country_code']);
             $table->timestamps();
         });

@@ -20,7 +20,8 @@ class Sku extends Model
         'sku',
         'product_id',
         'amount',
-        'price',
+        'price_excl_vat',
+        'price_incl_vat',
     ];
 
     protected $casts = [
@@ -87,6 +88,11 @@ class Sku extends Model
     public function productReturns(): HasMany
     {
         return $this->hasMany(ProductReturn::class);
+    }
+
+    public function vat(): HasOneThrough
+    {
+        return $this->hasOneThrough(Vat::class, Product::class);
     }
 
     /*
