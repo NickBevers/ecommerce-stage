@@ -98,7 +98,7 @@ Route::middleware('auth')->group(function () {
     Route::patch('/cart/{sku}', [CartController::class, 'update'])->name('cart.update');
     Route::delete('/cart/{sku}', [CartController::class, 'destroy'])->name('cart.destroy');
 
-    Route::get('/checkout', function () {  return Inertia::render('Customer/Checkout/Index'); })->name('checkout.index');
+    // Route::get('/checkout', function () {  return Inertia::render('Customer/Checkout/Index'); })->name('checkout.index');
 
     // Wishlist Routes
     Route::get('/wishlist', [WishlistController::class, 'index'])->name('wishlist.index');
