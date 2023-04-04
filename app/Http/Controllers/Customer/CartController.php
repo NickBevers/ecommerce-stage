@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Customer;
 
 use App\Http\Controllers\Controller;
 use App\Models\Cart;
+use App\Models\UserPaymentMethod;
+use App\Models\PaymentType;
 use App\Models\Sku;
 use App\Models\Wishlist;
 use Illuminate\Http\Request;
@@ -15,6 +17,15 @@ class CartController extends Controller
     {
         return Inertia::render('Customer/Checkout/ShoppingBag', [
             'cart' => $this->getProductsPerUser(),
+        ]);
+    }
+
+    public function getCheckoutData()
+    {
+        return Inertia::render('Customer/Checkout/Checkout', [
+            'cart' => $this->getProductsPerUser(),
+            'addresses' => auth()->user()->addresses,
+            'paymentTypes' => PaymentType::all(),
         ]);
     }
 

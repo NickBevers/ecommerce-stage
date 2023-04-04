@@ -70,9 +70,9 @@ class User extends Authenticatable implements CanResetPasswordContract
         return $this->hasOne(Cart::class);
     }
 
-    public function addresses(): BelongsToMany
+    public function addresses(): HasMany
     {
-        return $this->belongsToMany(Address::class);
+        return $this->hasMany(Address::class);
     }
 
     public function reviews(): HasMany
@@ -85,9 +85,9 @@ class User extends Authenticatable implements CanResetPasswordContract
         return $this->hasOne(Wishlist::class);
     }
 
-    public function paymentOptions(): HasMany
+    public function paymentMethods(): HasMany
     {
-        return $this->hasMany(PaymentMethod::class);
+        return $this->hasMany(UserPaymentMethod::class);
     }
 
     public function productReturns(): HasMany

@@ -18,11 +18,6 @@ class CartFactory extends Factory
             'user_id' => User::all()->random()->id,
             'sku_id' => Sku::all()->random()->id,
             'amount' => $this->faker->numberBetween(1, 8),
-            'attributes' => [
-                AttributeValue::where('attribute_type_id', 1)->get()->random()->id,
-                AttributeValue::where('attribute_type_id', 2)->get()->random()->id,
-                AttributeValue::where('attribute_type_id', 3)->get()->random()->id
-            ],
             'created_at' => now(),
             'updated_at' => now(),
         ];

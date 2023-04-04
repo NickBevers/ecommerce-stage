@@ -12,7 +12,6 @@ return new class extends Migration {
             $table->foreignId('user_id')->constrained();
             $table->foreignId('sku_id')->constrained();
             $table->integer('amount')->default(1);
-            $table->json('attributes')->nullable();
             $table->timestamps();
         });
     }

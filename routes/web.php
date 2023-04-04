@@ -9,13 +9,14 @@ use App\Http\Controllers\Customer\AddressController;
 use App\Http\Controllers\Customer\BrandController as CustomerBrandController;
 use App\Http\Controllers\Customer\CartController;
 use App\Http\Controllers\Customer\OrderController as CustomerOrderController;
-use App\Http\Controllers\Customer\PaymentOptionController;
+use App\Http\Controllers\Customer\PaymentTypeController;
 use App\Http\Controllers\Customer\ProductReturnController as CustomerProductReturnController;
 use App\Http\Controllers\Customer\ReviewController as CustomerReviewController;
 use App\Http\Controllers\Customer\WishlistController;
 use App\Http\Controllers\Product\SkuController as ProductSkuController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
+use App\Models\PaymentType;
 use App\Services\SubCategoryService;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -110,16 +111,17 @@ Route::middleware('auth')->group(function () {
     Route::patch('/addresses/{address}', [AddressController::class, 'update'])->name('addresses.update');
     Route::delete('/addresses/{address}', [AddressController::class, 'destroy'])->name('addresses.destroy');
 
-    // PaymentMethod Routes
-    Route::get('/payment', [PaymentOptionController::class, 'getPaymentOptionsPerUser'])->name('payment.index');
-    Route::post('/payment', [PaymentOptionController::class, 'store'])->name('payment.store');
-    Route::delete('/payment/{paymentOption}', [PaymentOptionController::class, 'destroy'])->name('payment.destroy');
+    // UserPaymentMethod Routes
+    Route::get('/payment', [PaymentTypeController::class, 'index'])->name('payment.index');
+//    Route::post('/payment', [PaymentTypeController::class, 'store'])->name('payment.store');
+//    Route::delete('/payment/{paymentOption}', [PaymentTypeController::class, 'destroy'])->name('payment.destroy');
 
     // Order Routes
     Route::get('/orders', [CustomerOrderController::class, 'getOrdersByUser'])->name('orders.getOrdersByUser');
     Route::get('/orders/{order}', [CustomerOrderController::class, 'show'])->name('orders.show');
     Route::get('/orders/cancel/{order}', [CustomerOrderController::class, 'cancelOrder'])->name('orders.cancel');
     Route::post('/orders', [CustomerOrderController::class, 'store'])->name('orders.store');
+    Route::post('/orders/update/{order}', [AdminOrderController::class, 'update'])->name('orders.update');
 
     // Customer ProductReturn Routes
     Route::get('/returns', [CustomerProductReturnController::class, 'getReturnByUser'])->name('returns.getReturnByUser');
@@ -130,6 +132,9 @@ Route::middleware('auth')->group(function () {
     Route::patch('/users/{user}/bank', [UserController::class, 'updateBankAccount'])->name('users.updateBankAccount');
     Route::patch('/users/{user}', [UserController::class, 'update'])->name('users.update');
     Route::delete('/users/{user}', [UserController::class, 'destroy'])->name('users.destroy');
+
+    // Checkout Routes
+    Route::get('/checkout', [CartController::class, 'getCheckoutData'])->name('checkout.getCheckoutData');
 });
 
 // Wishlist Routes
