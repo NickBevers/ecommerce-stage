@@ -46,7 +46,9 @@ function submit() {
         })
             .then(response => {
                 if (response.status == 200) {
-                    cartStore.increment();
+                    let cart = cartStore.getCount
+                    cart = parseInt(cart)
+                    cartStore.setCount(cart + amount.value)
                     emits('checked')
                     emits('closed')
                 }
