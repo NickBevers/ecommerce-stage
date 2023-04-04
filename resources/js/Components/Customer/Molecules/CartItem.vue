@@ -20,7 +20,6 @@ function getTotal() {
   total.value = 0;
   totalStock.value = 0;
   props.products.forEach((product) => {
-    console.log(product.sku.amount, product.amount, product.sku.price_incl_vat)
     total.value += product.sku.price_incl_vat * product.amount;
     totalStock.value += product.amount;
   });
