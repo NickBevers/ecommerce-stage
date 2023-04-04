@@ -2,7 +2,6 @@
 import { ref } from 'vue'
 import { CheckIcon, ClockIcon, XMarkIcon } from '@heroicons/vue/20/solid'
 import { useCartStore } from '@/Stores/cart';
-import { getConstantType } from '@vue/compiler-core';
 
 const props = defineProps({
   products: {
@@ -14,16 +13,20 @@ const props = defineProps({
 const emit = defineEmits(['total'])
 
 const total = ref(0)
+const totalStock = ref(0)
+const cartStore = useCartStore();
 
 function getTotal() {
   total.value = 0;
+  totalStock.value = 0;
   props.products.forEach((product) => {
-    total.value += product.sku.price_excl_vat * product.amount;
+    console.log(product.sku.amount, product.amount, product.sku.price_incl_vat)
+    total.value += product.sku.price_incl_vat * product.amount;
+    totalStock.value += product.amount;
   });
   emit('total', total.value)
+  cartStore.setCount(totalStock.value)
 }
-
-const cartStore = useCartStore()
 
 function removeFromCart(id, product) {
   fetch('/cart/' + id, {
@@ -34,9 +37,10 @@ function removeFromCart(id, product) {
   })
     .then((response) => {
       document.getElementById(id).remove();
-      product.sku.price_incl_vat = 0
+      props.products.splice(props.products.indexOf(product), 1)
       getTotal()
-      cartStore.decrement();
+      cartStore.setCount(cartStore.count - product.amount)
+
     })
     .catch((error) => {
       console.error('There has been a problem with your fetch operation:', error);

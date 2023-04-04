@@ -1,5 +1,6 @@
 <script setup>
 import { QuestionMarkCircleIcon } from '@heroicons/vue/20/solid'
+import { Link } from '@inertiajs/vue3'
 
 const props = defineProps({
   total: {
@@ -46,9 +47,10 @@ console.log(props.total)
       </div>
     </dl>
 
-    <div class="mt-6">
-      <button type="submit"
-        class="w-full rounded-md border border-transparent bg-indigo-600 py-3 px-4 text-base font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-50">Checkout</button>
+    <div class="mt-6 flex text-center">
+      <Link href="/checkout"
+        class="w-full rounded-md border border-transparent bg-indigo-600 py-3 px-4 text-base font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-50">
+      Checkout</Link>
     </div>
   </section>
 </template>
