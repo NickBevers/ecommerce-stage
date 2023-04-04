@@ -5,15 +5,15 @@ import { Switch } from '@headlessui/vue'
 const enabled = ref(false)
 
 const props = defineProps({
-  enabled: {
-    type: Boolean,
-    default: false,
+  on: {
+    type: Number,
+    default: 0,
   },
 })
 
 onMounted(() => {
-  if (props.enabled) {
-    enabled.value = props.enabled
+  if (props.on === 1) {
+    enabled.value = true
   }
 })
 </script>

@@ -2,7 +2,7 @@
 import { Pagination, Alert, Toggle } from '@/Components/Admin'
 import { onMounted, ref } from 'vue';
 import moment from 'moment';
-import { Link, router } from '@inertiajs/vue3';
+import { Link } from '@inertiajs/vue3';
 import { PencilIcon, EyeIcon, TrashIcon } from '@heroicons/vue/20/solid'
 
 const props = defineProps({
@@ -31,11 +31,11 @@ const open = ref(false)
 const selectedProduct = ref(null)
 
 function deleteProduct() {
-    if (!selectedProduct.value) {
-        return
-    }
+  if (!selectedProduct.value) {
+    return
+  }
 
-    router.delete('/admin/products/' + selectedProduct.value);
+  router.delete('/admin/products/' + selectedProduct.value);
 }
 
 </script>
@@ -81,7 +81,8 @@ function deleteProduct() {
                     <span class="inline-flex rounded-full px-2 text-xs font-semibold leading-5 text-white"
                       :class="getBgClass(product.amount)">{{ product.amount }}</span>
                   </td>
-                  <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500 w-1/6">€{{ product.price_incl_vat.toFixed(2) }}</td>
+                  <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500 w-1/6">€{{
+                    product.price_incl_vat.toFixed(2) }}</td>
                   <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500 w-1/6">
                     <Toggle enabled />
                   </td>
