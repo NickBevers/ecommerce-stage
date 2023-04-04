@@ -74,7 +74,7 @@ function deleteProduct() {
                     <div class="flex items-center">
                       <div class="h-10 w-10 flex-shrink-0">
                         <img :src="product.product_images[0].image_link" alt="iMac Front Image"
-                          class="h-10 w-10 rounded-m object-cover object-center">
+                          class="h-10 w-10 rounded overflow-hidden object-cover object-center">
                       </div>
                       <div class="ml-4">
                         <div class="font-medium text-gray-900">{{ product.product.title }}</div>
@@ -90,7 +90,8 @@ function deleteProduct() {
                     <span class="inline-flex rounded-full px-2 text-xs font-semibold leading-5 text-white"
                       :class="getBgClass(product.amount)">{{ product.amount }}</span>
                   </td>
-                  <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500 w-1/6">€{{ product.price.toFixed(2) }}</td>
+                  <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500 w-1/6">€{{
+                    product.price_incl_vat.toFixed(2) }}</td>
                   <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500 w-1/6">
                     <Toggle enabled />
                   </td>
