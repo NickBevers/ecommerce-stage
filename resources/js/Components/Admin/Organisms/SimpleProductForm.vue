@@ -23,7 +23,6 @@ const form = useForm({
     product_type: "simple",
     vat_id: 1,
     description: "",
-    vat_id: 1,
     extra_info: "",
     variations: [
         {

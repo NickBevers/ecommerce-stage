@@ -110,7 +110,7 @@ Route::middleware('auth')->group(function () {
     Route::patch('/addresses/{address}', [AddressController::class, 'update'])->name('addresses.update');
     Route::delete('/addresses/{address}', [AddressController::class, 'destroy'])->name('addresses.destroy');
 
-    // PaymentOption Routes
+    // PaymentMethod Routes
     Route::get('/payment', [PaymentOptionController::class, 'getPaymentOptionsPerUser'])->name('payment.index');
     Route::post('/payment', [PaymentOptionController::class, 'store'])->name('payment.store');
     Route::delete('/payment/{paymentOption}', [PaymentOptionController::class, 'destroy'])->name('payment.destroy');
@@ -159,6 +159,6 @@ Route::get('/subcategories/{category}', [SubCategoryService::class, 'getSubCateg
 
 // Brand Routes
 Route::get('/brands', [CustomerBrandController::class, 'index'])->name('brands.index');
-Route::get('/brands/{brand}', [CustomerBrandController::class, 'show'])->name('brands.show');
+Route::get('/brands/{brand:slug}', [CustomerBrandController::class, 'show'])->name('brands.show');
 
 require __DIR__.'/auth.php';

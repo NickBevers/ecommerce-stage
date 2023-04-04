@@ -15,7 +15,8 @@ class SkuFactory extends Factory
             'sku' => $this->faker->unique()->randomNumber(8),
             'product_id' => $this->faker->numberBetween(1, 100),
             'amount' => $this->faker->numberBetween(1, 100),
-            'price' => $this->faker->randomFloat(2, 1, 100)
+            'price_excl_vat' => $this->faker->randomFloat(2, 1, 100),
+            'price_incl_vat' => $this->faker->randomFloat(2, 1, 100) * 1.21,
         ];
     }
 }

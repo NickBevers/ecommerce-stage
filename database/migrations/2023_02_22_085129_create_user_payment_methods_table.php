@@ -7,19 +7,17 @@ use Illuminate\Support\Facades\Schema;
 return new class extends Migration {
     public function up(): void
     {
-        Schema::create('skus', function (Blueprint $table) {
+        Schema::create('user_payment_methods', function (Blueprint $table) {
             $table->id();
-            $table->string('sku')->unique();
-            $table->foreignId('product_id')->constrained();
-            $table->integer('amount');
-            $table->float('price_excl_vat');
-            $table->float('price_incl_vat');
+            $table->foreignId('user_id')->constrained('users');
+            $table->foreignId('payment_type_id')->constrained('payment_types');
+            $table->String('extra_info');
             $table->timestamps();
         });
     }
 
     public function down(): void
     {
-        Schema::dropIfExists('skus');
+        Schema::dropIfExists('user_payment_methods');
     }
 };

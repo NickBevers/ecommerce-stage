@@ -6,11 +6,13 @@ import { ProductsFilter, ProductsList } from '@/Components/Customer'
 const props = defineProps({
     brand: Object,
     skus: Object,
+    sku: Object,
 })
 
 onMounted(() => {
     console.log(props.brand)
     console.log(props.skus)
+    console.log(props.sku)
 })
 </script>
 <template>

@@ -29,7 +29,7 @@ const props = defineProps({
             <div class="grade absolute inset-x-0 top-0 flex h-72 items-end justify-end overflow-hidden rounded-lg p-4">
               <div aria-hidden="true"
                 class="absolute inset-x-0 bottom-0 h-36 bg-gradient-to-t from-black opacity-50 group-hover:h-20 group-hover:opacity-20 duration-500" />
-              <p class="relative text-lg font-semibold text-white">€{{ product.price.toFixed(2) }}</p>
+              <p class="relative text-lg font-semibold text-white">€{{ product.price_incl_vat.toFixed(2) }}</p>
             </div>
             <div>
               <WishlistButton :product="product" class="absolute top-0 right-0 p-2 m-2 bg-white rounded-md group-odd" />

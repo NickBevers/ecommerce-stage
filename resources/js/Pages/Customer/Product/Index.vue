@@ -12,6 +12,8 @@ const props = defineProps({
   material: String,
 });
 
+console.log(props.sku)
+
 let checked = ref(false)
 
 function checkout() {
@@ -26,7 +28,7 @@ function checkout() {
         <div class="lg:col-span-5 lg:col-start-8">
           <div class="flex justify-between">
             <h1 class="text-xl font-medium text-gray-900">{{ props.sku.product.title }}</h1>
-            <p class="text-xl font-medium text-gray-900">€{{ props.sku.price }}</p>
+            <p class="text-xl font-medium text-gray-900">€{{ props.sku.price_incl_vat }}</p>
           </div>
           <ProductStars />
         </div>

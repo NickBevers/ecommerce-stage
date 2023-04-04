@@ -31,8 +31,8 @@ class SkuController extends Controller
                 ->orderBy('sku')
                 ->paginate(48),
             'attributeValues' => AttributeValue::all(),
-            'minPrice' => Sku::min('price'),
-            'maxPrice' => Sku::max('price'),
+            'minPrice' => Sku::min('price_incl_vat'),
+            'maxPrice' => Sku::max('price_incl_vat'),
         ]);
     }
 
@@ -42,8 +42,8 @@ class SkuController extends Controller
         return [
             'skus' => $skus,
             'subCategory' => $this->subCategoryService->getSubCategoryBySlug($request->input('subCategory', '')),
-            'minPrice' => $skus->min('price'),
-            'maxPrice' => $skus->max('price'),
+            'minPrice' => $skus->min('price_incl_vat'),
+            'maxPrice' => $skus->max('price_incl_vat'),
         ];
     }
 
@@ -66,7 +66,7 @@ class SkuController extends Controller
 
     public function show(Sku $sku)
     {
-        $sku = $sku->withAllRelations()->first();
+        $sku = Sku::where('id', $sku->id)->withAllRelations()->first();
 
         $attributeValues = $sku->attributeValues;
         $material = $attributeValues->where('attribute_type_id', AttributeType::where('name', 'material')->first()->id)->first();
