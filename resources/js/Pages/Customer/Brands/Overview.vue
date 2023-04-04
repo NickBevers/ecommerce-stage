@@ -1,6 +1,7 @@
 <script setup>
 import { onMounted } from "vue";
 import GuestLayout from "@/Layouts/GuestLayout.vue";
+import { ProductsFilter, ProductsList } from '@/Components/Customer'
 
 const props = defineProps({
     brand: Object,
@@ -14,6 +15,8 @@ onMounted(() => {
 </script>
 <template>
     <GuestLayout>
-
+        <ProductsFilter :title="props.brand.name" />
+        {{ skus.data }}
+        <!-- <ProductsList :skus="skus.data" :links="skus.links" /> -->
     </GuestLayout>
 </template>

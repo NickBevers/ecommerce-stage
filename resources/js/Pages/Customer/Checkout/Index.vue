@@ -235,7 +235,7 @@ const selectedDeliveryMethod = ref(deliveryMethods[0])
                                             </div>
                                             <div class="ml-3 text-sm leading-6">
                                                 <label for="candidates"
-                                                    class="font-medium text-gray-900 cursor-pointer">Remeber
+                                                    class="font-medium text-gray-900 cursor-pointer">Remember
                                                     address</label>
 
                                                 <span id="candidates-description" class="text-gray-500"></span>

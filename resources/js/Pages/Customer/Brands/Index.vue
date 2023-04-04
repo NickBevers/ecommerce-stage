@@ -1,6 +1,8 @@
 <script setup>
 import { onMounted, computed } from "vue";
 import GuestLayout from "@/Layouts/GuestLayout.vue";
+import { ChevronRightIcon } from '@heroicons/vue/20/solid'
+import { Link } from '@inertiajs/vue3';
 
 const props = defineProps({
     brands: Object,
@@ -11,10 +13,20 @@ const categories = computed(() => {
     for (let i = 65; i <= 90; i++) {
         result[String.fromCharCode(i)] = [];
     }
-    for (let brand of props.brands) {
-        let firstLetter = brand.name.charAt(0).toUpperCase();
-        if (result[firstLetter]) {
-            result[firstLetter].push(brand);
+    result["0-9"] = [];
+    result["+"] = [];
+    for (let i = 0; i < props.brands.length; i++) {
+        let brand = props.brands[i];
+        let firstChar = brand.name.charAt(0).toUpperCase();
+        if (/[0-9]/.test(firstChar)) {
+            result["0-9"].push(brand);
+        } else if (/[^A-Za-z0-9]/.test(firstChar)) {
+            result["+"].push(brand);
+        } else if (/[A-Za-z]/.test(firstChar)) {
+            if (!result[firstChar]) {
+                result[firstChar] = [];
+            }
+            result[firstChar].push(brand);
         }
     }
     return result;
@@ -27,15 +39,22 @@ onMounted(() => {
 <template>
     <GuestLayout>
         <div class="mx-auto max-w-7xl px-6 lg:px-8 pt-36">
-            <div class="mt-15">
-                <div v-for="(brands, category) in categories" :key="category" class=" grid grid-cols-3 gap-4 mt-16">
-                    <h2 class="text-lg font-medium text-gray-900 col-span-3">{{ category }}</h2>
-                    <div class="relative flex cursor-pointer rounded-lg border bg-white p-4 shadow-sm focus:outline-none"
-                        v-for="brand in brands">
-                        <span class="flex flex-col">
-                            {{ brand.name }}
-                        </span>
-                    </div>
+            <div class="flex justify-between">
+                <a class="text-indigo-600" :href="`#${category}`" v-for="(brands, category) in categories"
+                    :key="category">{{
+                        category }}</a>
+            </div>
+            <div class="">
+                <div v-for="(brands, category) in categories" :key="category" class="grid grid-cols-3 gap-4">
+                    <h2 class="text-4xl font-bold text-gray-900 col-span-3 pt-32" :id="category">{{ category }}</h2>
+                    <Link :href="`/brands/${brand.slug}`" v-for="brand in brands"
+                        class="relative flex cursor-pointer rounded-lg border justify-between bg-white p-4 shadow-sm focus:outline-none">
+                    <span class="flex flex-col">
+                        {{ brand.name }}
+                    </span>
+                    <ChevronRightIcon class="text-gray-500 w-6 h-6" />
+
+                    </Link>
                 </div>
             </div>
         </div>
