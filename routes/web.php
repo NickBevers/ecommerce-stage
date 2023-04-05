@@ -77,6 +77,9 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::post('/promos', [PromoController::class, 'store'])->name('promos.store');
     Route::patch('/promos/{promo}', [PromoController::class, 'update'])->name('promos.update');
     Route::delete('/promos/{promo}', [PromoController::class, 'destroy'])->name('promos.destroy');
+
+    // Admin Country Routes
+    Route::get('/admin/getVats/{code}', [VatService::class, 'getVatsByCountryCode'])->name('admin.countries.getVats');
 });
 
 // All routes where user has to be logged in
@@ -136,9 +139,10 @@ Route::middleware('auth')->group(function () {
 
     // Checkout Routes
     Route::get('/checkout', [CartController::class, 'getCheckoutData'])->name('checkout.getCheckoutData');
-});
 
-Route::get('/test/{code}', [VatService::class, 'getVatsByCountryCode']);
+    // Country Routes
+    Route::get('/countries', [VatService::class, 'getCountries'])->name('countries.index');
+});
 
 // Wishlist Routes
 Route::get('/wishlist/count', [WishlistController::class, 'getAmountOfItemsInWishlist'])->name('wishlist.getCount');

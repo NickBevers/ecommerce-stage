@@ -19,6 +19,7 @@ use App\Services\ProductService;
 use App\Services\SkuService;
 use App\Services\SubCategoryService;
 use App\Services\UploadSkuImageService;
+use App\Services\VatService;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -30,6 +31,7 @@ class SkuController extends Controller
     private ProductService $productService;
     private SkuService $skuService;
     private UploadSkuImageService $uploadSkuImageService;
+    private VatService $vatService;
 
     public function __construct()
     {
@@ -39,6 +41,7 @@ class SkuController extends Controller
         $this->productService = new ProductService();
         $this->skuService = new SkuService();
         $this->uploadSkuImageService = new UploadSkuImageService();
+        $this->vatService = new VatService();
     }
 
 
@@ -81,6 +84,7 @@ class SkuController extends Controller
            'brands' => $this->brandService->getBrands(),
            'categories' => $categories,
            'attributeTypes' => $attributeTypes,
+           'countries' => $this->vatService->getCountries(),
        ]);
     }
 
