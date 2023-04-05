@@ -1,12 +1,18 @@
 <script setup>
-import { onMounted } from 'vue'
+import { onMounted, onBeforeMount } from 'vue'
 import { Link } from '@inertiajs/vue3';
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/vue/20/solid'
 
 let props = defineProps({
     links: Array,
 })
-
+onBeforeMount(() => {
+    for (let i = 0; i < props.links.length; i++) {
+        if (props.links[i].url === null) {
+            props.links[i].url = ''
+        }
+    }
+})
 onMounted(() => {
     props.links[0].label = ''
     props.links[props.links.length - 1].label = ''

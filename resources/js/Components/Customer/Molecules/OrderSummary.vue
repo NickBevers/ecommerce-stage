@@ -1,5 +1,6 @@
 <script setup>
 import { QuestionMarkCircleIcon } from '@heroicons/vue/20/solid'
+import { Link } from '@inertiajs/vue3'
 
 const props = defineProps({
   total: {
@@ -28,7 +29,7 @@ console.log(props.total)
             <QuestionMarkCircleIcon class="h-5 w-5" aria-hidden="true" />
           </a>
         </dt>
-        <dd class="text-sm font-medium text-gray-900">$5.00</dd>
+        <dd class="text-sm font-medium text-gray-900">€..</dd>
       </div>
       <div class="flex items-center justify-between border-t border-gray-200 pt-4">
         <dt class="flex text-sm text-gray-600">
@@ -38,17 +39,18 @@ console.log(props.total)
             <QuestionMarkCircleIcon class="h-5 w-5" aria-hidden="true" />
           </a>
         </dt>
-        <dd class="text-sm font-medium text-gray-900">$8.32</dd>
+        <dd class="text-sm font-medium text-gray-900">€..</dd>
       </div>
       <div class="flex items-center justify-between border-t border-gray-200 pt-4">
         <dt class="text-base font-medium text-gray-900">Order total</dt>
-        <dd class="text-base font-medium text-gray-900">$112.32</dd>
+        <dd class="text-base font-medium text-gray-900">€{{ props.total.toFixed(2) }}</dd>
       </div>
     </dl>
 
-    <div class="mt-6">
-      <button type="submit"
-        class="w-full rounded-md border border-transparent bg-indigo-600 py-3 px-4 text-base font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-50">Checkout</button>
+    <div class="mt-6 flex text-center">
+      <Link href="/checkout"
+        class="w-full rounded-md border border-transparent bg-indigo-600 py-3 px-4 text-base font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-50">
+      Checkout</Link>
     </div>
   </section>
 </template>

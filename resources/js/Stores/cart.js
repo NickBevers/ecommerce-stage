@@ -24,6 +24,9 @@ export const useCartStore = defineStore({
     decrement() {
       this.count--;
     },
+    setIncrement(counter) {
+      this.count = this.count + counter;
+    },
   },
   getters: {
     getCount(state) {

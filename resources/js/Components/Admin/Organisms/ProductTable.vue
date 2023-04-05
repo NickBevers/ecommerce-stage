@@ -31,13 +31,15 @@ const open = ref(false)
 const selectedProduct = ref(null)
 
 function deleteProduct() {
-    if (!selectedProduct.value) {
-        return
-    }
-
-    router.delete('/admin/products/' + selectedProduct.value);
+  if (!selectedProduct.value) {
+    return
+  }
+  router.delete('/admin/products/' + selectedProduct.value);
 }
 
+function toggleActive() {
+  console.log(selectedProduct.value)
+}
 </script>
 <template>
   <Alert title="Delete product"
@@ -81,9 +83,10 @@ function deleteProduct() {
                     <span class="inline-flex rounded-full px-2 text-xs font-semibold leading-5 text-white"
                       :class="getBgClass(product.amount)">{{ product.amount }}</span>
                   </td>
-                  <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500 w-1/6">€{{ product.price_incl_vat.toFixed(2) }}</td>
+                  <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500 w-1/6">€{{
+                    product.price_incl_vat.toFixed(2) }}</td>
                   <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500 w-1/6">
-                    <Toggle enabled />
+                    <Toggle :on="product.product.is_active" @click="selectedProduct = product.id; toggleActive();" />
                   </td>
                   <td
                     class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right justify-end text-sm font-medium sm:pr-0 flex gap-2 w-fill">

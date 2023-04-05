@@ -49,7 +49,9 @@ function submit() {
           console.log("success")
           checkout.value = true
           emit('checkout')
-          cartStore.increment()
+          let cart = cartStore.getCount
+          cart = parseInt(cart)
+          cartStore.setCount(cart + amount.value)
         }
       })
       .catch(error => {
@@ -149,9 +151,11 @@ function submit() {
         Go to shopping bag</Link>
         <!-- continue shopping link -->
         <Link href="/"
-          class="w-full mt-3 flex items-center justify-center rounded-md border border-transparent bg-white py-3 px-8 text-base font-medium text-indigo-600 cursor-pointer hover:underline hover:text-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">Continue
-          shopping</Link>
+          class="w-full mt-3 flex items-center justify-center rounded-md border border-transparent bg-white py-3 px-8 text-base font-medium text-indigo-600 cursor-pointer hover:underline hover:text-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+        Continue
+        shopping</Link>
 
       </div>
-  </form>
-</section></template>
+    </form>
+  </section>
+</template>

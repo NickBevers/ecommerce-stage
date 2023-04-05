@@ -12,8 +12,6 @@ const props = defineProps({
   material: String,
 });
 
-console.log(props.sku)
-
 let checked = ref(false)
 
 function checkout() {

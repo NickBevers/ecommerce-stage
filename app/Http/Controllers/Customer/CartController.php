@@ -22,7 +22,7 @@ class CartController extends Controller
 
     public function getCheckoutData()
     {
-        return Inertia::render('Customer/Checkout/Checkout', [
+        return Inertia::render('Customer/Checkout/Index', [
             'cart' => $this->getProductsPerUser(),
             'addresses' => auth()->user()->addresses,
             'paymentTypes' => PaymentType::all(),
