@@ -82,13 +82,18 @@ function changeAmount(product, event) {
           <div>
             <div class="flex justify-between">
               <h3 class="text-sm">
-                <a :href="product.href" class="font-medium text-gray-700 hover:text-gray-800">{{ product.sku.product.title
+                <a :href="`/product/${product.sku.sku}`" class="font-medium text-gray-700 hover:text-gray-800">{{
+                  product.sku.product.title
                 }}</a>
               </h3>
             </div>
             <div class="mt-1 flex text-sm">
-              <p v-if="product.sku.attribute_values.length !== 0" class="text-gray-500"><span
-                  v-for="attribute in product.sku.attribute_values">{{ attribute.name }}, </span></p>
+              <p v-if="product.sku.attribute_values.length !== 0" class="text-gray-500">
+                <span v-for="(attribute, index) in product.sku.attribute_values">
+                  {{ attribute.name }}
+                  <span v-if="index !== product.sku.attribute_values.length - 1">, </span>
+                </span>
+              </p>
             </div>
             <p class="mt-1 text-sm font-medium text-gray-900">€{{ product.sku.price_incl_vat.toFixed(2) }}</p>
           </div>

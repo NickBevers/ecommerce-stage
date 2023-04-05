@@ -1,7 +1,7 @@
 //TODO : wait for backend to be ready 
 <script setup>
 import GuestLayout from '@/Layouts/GuestLayout.vue'
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 import {
     RadioGroup,
     RadioGroupDescription,
@@ -9,20 +9,23 @@ import {
     RadioGroupOption,
 } from '@headlessui/vue'
 import { CheckCircleIcon, ChevronDownIcon, PlusIcon } from '@heroicons/vue/20/solid'
+import { useCartStore } from '@/Stores/cart'
 
-const products = [
-    {
-        id: 1,
-        title: 'Basic Tee',
-        href: '#',
-        price: '32.00',
-        color: 'Black',
-        size: 'Large',
-        imageSrc: 'https://tailwindui.com/img/ecommerce-images/checkout-page-02-product-01.jpg',
-        imageAlt: "Front of men's Basic Tee in black.",
+const props = defineProps({
+    cart: {
+        type: Array,
+        required: true,
     },
+})
 
-]
+console.log(props.cart)
+
+const cartStore = useCartStore()
+
+let subTotal = ref(0)
+let taxes = ref(0)
+let total = ref(0)
+
 const deliveryMethods = [
     { id: 1, title: 'Home', turnaround: 'home adress', number: '12', city: 'city' },
     { id: 2, title: 'Point', turnaround: 'another adress', number: '12', city: 'city' },
@@ -32,32 +35,6 @@ const paymentMethods = [
     { id: 'paypal', title: 'PayPal' },
     { id: 'invoice', title: 'Invoice' },
 ]
-const footerNavigation = {
-    products: [
-        { name: 'Bags', href: '#' },
-        { name: 'Tees', href: '#' },
-        { name: 'Objects', href: '#' },
-        { name: 'Home Goods', href: '#' },
-        { name: 'Accessories', href: '#' },
-    ],
-    company: [
-        { name: 'Who we are', href: '#' },
-        { name: 'Sustainability', href: '#' },
-        { name: 'Press', href: '#' },
-        { name: 'Careers', href: '#' },
-        { name: 'Terms & Conditions', href: '#' },
-        { name: 'Privacy', href: '#' },
-    ],
-    customerService: [
-        { name: 'Contact', href: '#' },
-        { name: 'Shipping', href: '#' },
-        { name: 'Returns', href: '#' },
-        { name: 'Warranty', href: '#' },
-        { name: 'Secure Payments', href: '#' },
-        { name: 'FAQ', href: '#' },
-        { name: 'Find a store', href: '#' },
-    ],
-}
 
 const countries = [
     { name: 'Belgium', code: 'BE' },
@@ -76,6 +53,40 @@ const countries = [
 ]
 
 const selectedDeliveryMethod = ref(deliveryMethods[0])
+
+function getTotal() {
+    subTotal.value = 0
+    taxes.value = 0
+    total.value = 0
+    props.cart.forEach((product) => {
+        subTotal.value += product.sku.price_excl_vat * product.amount
+        total.value += product.sku.price_incl_vat * product.amount
+    })
+    taxes.value = total.value - subTotal.value
+}
+function removeFromCart(id, product) {
+    fetch('/cart/' + id, {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+    })
+        .then((response) => {
+            document.getElementById(id).remove();
+            cartStore.setCount(cartStore.count - product.amount)
+            props.cart.splice(props.cart.indexOf(product), 1)
+            getTotal()
+
+
+        })
+        .catch((error) => {
+            console.error('There has been a problem with your fetch operation:', error);
+        });
+}
+
+onMounted(() => {
+    getTotal()
+})
 </script>
 <template>
     <GuestLayout>
@@ -316,27 +327,46 @@ const selectedDeliveryMethod = ref(deliveryMethods[0])
 
                                 <div class="mt-4 rounded-lg border border-gray-200 bg-white shadow-sm">
                                     <h3 class="sr-only">Items in your cart</h3>
-                                    <ul role="list" class="divide-y divide-gray-200">
-                                        <li v-for="product in products" :key="product.id" class="flex px-4 py-6 sm:px-6">
+                                    <ul role="list"
+                                        class="divide-y divide-gray-200 max-h-96 overflow-y-auto  scrollbar-thin scrollbar-rounded-lg scrollbar-thumb-gray-300 scrollbar-track-gray-100">
+                                        <li v-for="product in props.cart" :key="product.id" class="flex px-4 py-6 sm:px-6"
+                                            :id="product.sku.id">
+
                                             <div class="flex-shrink-0">
-                                                <img :src="product.imageSrc" :alt="product.imageAlt"
-                                                    class="w-20 rounded-md" />
+                                                <img :src="product.sku.product_images[0].image_link"
+                                                    alt="shopping cart item"
+                                                    class="h-24 w-24 rounded-md object-cover object-center sm:h-32 sm:w-22" />
                                             </div>
 
                                             <div class="ml-6 flex flex-1 flex-col">
                                                 <div class="flex">
                                                     <div class="min-w-0 flex-1">
                                                         <h4 class="text-sm">
-                                                            <a :href="product.href"
+                                                            <a :href="`/product/${product.sku.sku}`"
                                                                 class="font-medium text-gray-700 hover:text-gray-800">{{
-                                                                    product.title }}</a>
+                                                                    product.sku.product.title }}</a>
                                                         </h4>
-                                                        <p class="mt-1 text-sm text-gray-500">{{ product.color }}</p>
-                                                        <p class="mt-1 text-sm text-gray-500">{{ product.size }}</p>
+                                                        <p class="mt-1 text-sm text-gray-500"
+                                                            v-if="product.sku.attribute_values.length > 0">
+                                                            <span
+                                                                v-for="(attribute, index) in product.sku.attribute_values">
+                                                                {{ attribute.name }}<span
+                                                                    v-if="index !== product.sku.attribute_values.length - 1">,
+                                                                </span>
+                                                            </span>
+                                                        </p>
+                                                        <p v-else>
+                                                            <span class="text-sm text-gray-500">{{
+                                                                product.sku.product.description.length > 30
+                                                                ? product.sku.product.description.slice(0, 30) + "..."
+                                                                : product.sku.product.description
+                                                            }}</span>
+                                                        </p>
                                                     </div>
 
                                                     <div class="ml-4 flow-root flex-shrink-0">
                                                         <button type="button"
+                                                            @click="removeFromCart(product.sku.id, product)"
                                                             class="-m-2.5 flex items-center justify-center bg-white p-2.5 text-gray-400 hover:text-gray-500">
                                                             <span class="sr-only">Remove</span>
                                                             <PlusIcon class="h-6 w-6 rotate-45" aria-hidden="true" />
@@ -345,12 +375,14 @@ const selectedDeliveryMethod = ref(deliveryMethods[0])
                                                 </div>
 
                                                 <div class="flex flex-1 items-end justify-between pt-2">
-                                                    <p class="mt-1 text-sm font-medium text-gray-900">€{{ product.price }}
+                                                    <p class="mt-1 text-sm font-medium text-gray-900">€{{
+                                                        product.sku.price_incl_vat.toFixed(2) }}
                                                     </p>
 
                                                     <div class="ml-4">
                                                         <label for="quantity" class="sr-only">Quantity</label>
-                                                        <p class="text-sm font-medium text-gray-900">x 2</p>
+                                                        <p class="text-sm font-medium text-gray-900">x {{ product.amount
+                                                        }}</p>
                                                     </div>
                                                 </div>
                                             </div>
@@ -359,19 +391,19 @@ const selectedDeliveryMethod = ref(deliveryMethods[0])
                                     <dl class="space-y-6 border-t border-gray-200 px-4 py-6 sm:px-6">
                                         <div class="flex items-center justify-between">
                                             <dt class="text-sm">Subtotal</dt>
-                                            <dd class="text-sm font-medium text-gray-900">$64.00</dd>
+                                            <dd class="text-sm font-medium text-gray-900">€{{ subTotal.toFixed(2) }}</dd>
                                         </div>
                                         <div class="flex items-center justify-between">
                                             <dt class="text-sm">Shipping</dt>
-                                            <dd class="text-sm font-medium text-gray-900">$5.00</dd>
+                                            <dd class="text-sm font-medium text-gray-900">€...</dd>
                                         </div>
                                         <div class="flex items-center justify-between">
                                             <dt class="text-sm">Taxes</dt>
-                                            <dd class="text-sm font-medium text-gray-900">$5.52</dd>
+                                            <dd class="text-sm font-medium text-gray-900">€{{ taxes.toFixed(2) }}</dd>
                                         </div>
                                         <div class="flex items-center justify-between border-t border-gray-200 pt-6">
                                             <dt class="text-base font-medium">Total</dt>
-                                            <dd class="text-base font-medium text-gray-900">$75.52</dd>
+                                            <dd class="text-base font-medium text-gray-900">€{{ total.toFixed(2) }}</dd>
                                         </div>
                                     </dl>
 
