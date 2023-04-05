@@ -38,22 +38,6 @@ let total = ref(0)
 const selected = ref()
 const showAddressModal = ref(false)
 
-const countries = [
-    { name: 'Belgium', code: 'BE' },
-    { name: 'United States', code: 'US' },
-    { name: 'Canada', code: 'CA' },
-    { name: 'France', code: 'FR' },
-    { name: 'Germany', code: 'DE' },
-    { name: 'Ireland', code: 'IE' },
-    { name: 'Italy', code: 'IT' },
-    { name: 'Mexico', code: 'MX' },
-    { name: 'Netherlands', code: 'NL' },
-    { name: 'Portugal', code: 'PT' },
-    { name: 'Spain', code: 'ES' },
-    { name: 'Switzerland', code: 'CH' },
-    { name: 'United Kingdom', code: 'GB' },
-]
-
 const selectedDeliveryMethod = ref(props.addresses[0])
 
 function getTotal() {
@@ -92,185 +76,86 @@ onMounted(() => {
 </script>
 <template>
     <GuestLayout>
-    <AddAddressModal class="z-20" v-if="showAddressModal" @closed="showAddressModal = false" />
-    <div class=" bg-gray-50 pt-24">
-        <main class="mx-auto max-w-7xl px-4 pb-24 pt-16 sm:px-6 lg:px-8">
-            <div class="mx-auto max-w-2xl lg:max-w-none">
-                <h1 class="sr-only">Checkout</h1>
+        <AddAddressModal class="z-20" v-if="showAddressModal" @closed="showAddressModal = false" />
+        <div class=" bg-gray-50 pt-24">
+            <main class="mx-auto max-w-7xl px-4 pb-24 pt-16 sm:px-6 lg:px-8">
+                <div class="mx-auto max-w-2xl lg:max-w-none">
+                    <h1 class="sr-only">Checkout</h1>
 
-                <form class="lg:grid lg:grid-cols-2 lg:gap-x-12 xl:gap-x-16">
-                    <div>
+                    <form class="lg:grid lg:grid-cols-2 lg:gap-x-12 xl:gap-x-16">
                         <div>
-                            <h2 class="text-lg font-medium text-gray-900">Contact information</h2>
+                            <div>
+                                <h2 class="text-lg font-medium text-gray-900">Contact information</h2>
 
-                            <div class="mt-4">
-                                <label for="email-address" class="block text-sm font-medium text-gray-700">Email
-                                    address</label>
-                                <div class="mt-1">
-                                    <input type="email" id="email-address" name="email-address" autocomplete="email"
-                                        class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" />
+                                <div class="mt-4">
+                                    <label for="email-address" class="block text-sm font-medium text-gray-700">Email
+                                        address</label>
+                                    <div class="mt-1">
+                                        <input type="email" id="email-address" name="email-address" autocomplete="email"
+                                            class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" />
+                                    </div>
+                                </div>
+                                <div class="sm:col-span-2 mt-8">
+                                    <label for="phone" class="block text-sm font-medium text-gray-700">Phone</label>
+                                    <div class="mt-1">
+                                        <input type="text" name="phone" id="phone" autocomplete="tel"
+                                            class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" />
+                                    </div>
                                 </div>
                             </div>
-                            <div class="sm:col-span-2 mt-8">
-                                <label for="phone" class="block text-sm font-medium text-gray-700">Phone</label>
-                                <div class="mt-1">
-                                    <input type="text" name="phone" id="phone" autocomplete="tel"
-                                        class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" />
-                                </div>
-                            </div>
-                        </div>
 
-                        <div>
-                            <div class="mt-10 border-t border-gray-200 pt-10">
-                                <RadioGroup v-model="selectedDeliveryMethod">
-                                    <RadioGroupLabel class="text-lg font-medium text-gray-900">Shipping information
-                                    </RadioGroupLabel>
+                            <div>
+                                <div class="mt-10 border-t border-gray-200 pt-10">
+                                    <RadioGroup v-model="selectedDeliveryMethod">
+                                        <RadioGroupLabel class="text-lg font-medium text-gray-900">Shipping information
+                                        </RadioGroupLabel>
 
-                                    <div class="mt-4 grid grid-cols-1 gap-y-6 sm:grid-cols-2 sm:gap-x-4">
-                                        <RadioGroupOption as="template" v-for="deliveryMethod in props.addresses"
-                                            :key="deliveryMethod.id" :value="deliveryMethod"
-                                            v-slot="{ checked, active }">
-                                            <div
-                                                :class="[checked ? 'border-transparent' : 'border-gray-300', active ? 'ring-2 ring-indigo-500' : '', 'relative flex cursor-pointer rounded-lg border bg-white p-4 shadow-sm focus:outline-none']">
-                                                <span class="flex flex-1">
-                                                    <span class="flex flex-col">
+                                        <div class="mt-4 grid grid-cols-1 gap-y-6 sm:grid-cols-2 sm:gap-x-4">
+                                            <RadioGroupOption as="template" v-for="deliveryMethod in props.addresses"
+                                                :key="deliveryMethod.id" :value="deliveryMethod"
+                                                v-slot="{ checked, active }">
+                                                <div
+                                                    :class="[checked ? 'border-transparent' : 'border-gray-300', active ? 'ring-2 ring-indigo-500' : '', 'relative flex cursor-pointer rounded-lg border bg-white p-4 shadow-sm focus:outline-none']">
+                                                    <span class="flex flex-1">
+                                                        <span class="flex flex-col">
+                                                            <RadioGroupLabel as="span"
+                                                                class="block text-sm font-medium text-gray-900">{{
+                                                                    deliveryMethod.address_type }}</RadioGroupLabel>
+                                                            <RadioGroupDescription as="span"
+                                                                class="mt-1 flex items-center text-sm text-gray-500">{{
+                                                                    deliveryMethod.address_line1 }}
+                                                            </RadioGroupDescription>
+                                                            <RadioGroupDescription as="span"
+                                                                class="mt-1 flex items-center text-sm text-gray-500">{{
+                                                                    deliveryMethod.city }}, {{ deliveryMethod.postal_code }}
+                                                            </RadioGroupDescription>
+                                                            <RadioGroupDescription as="span"
+                                                                class="mt-1 flex items-center text-sm text-gray-500">{{
+                                                                    deliveryMethod.country }}</RadioGroupDescription>
+                                                        </span>
+                                                    </span>
+                                                    <CheckCircleIcon v-if="checked" class="h-5 w-5 text-indigo-600"
+                                                        aria-hidden="true" />
+                                                    <span
+                                                        :class="[active ? 'border' : 'border-2', checked ? 'border-indigo-500' : 'border-transparent', 'pointer-events-none absolute -inset-px rounded-lg']"
+                                                        aria-hidden="true" />
+                                                </div>
+                                            </RadioGroupOption>
+                                            <div @click="showAddressModal = true"
+                                                class="relative flex cursor-pointer rounded-lg border border-indigo-200 bg-indigo-50 p-4 focus:outline-none text-indigo-700">
+                                                <span class="flex flex-1 self-center">
+                                                    <span class="flex flex-col w-full">
                                                         <RadioGroupLabel as="span"
-                                                            class="block text-sm font-medium text-gray-900">{{
-                                                                deliveryMethod.address_type }}</RadioGroupLabel>
-                                                        <RadioGroupDescription as="span"
-                                                            class="mt-1 flex items-center text-sm text-gray-500">{{
-                                                                deliveryMethod.address_line1 }}
-                                                        </RadioGroupDescription>
-                                                        <RadioGroupDescription as="span"
-                                                            class="mt-1 flex items-center text-sm text-gray-500">{{
-                                                                deliveryMethod.city }}, {{ deliveryMethod.postal_code }}
-                                                        </RadioGroupDescription>
-                                                        <RadioGroupDescription as="span"
-                                                            class="mt-1 flex items-center text-sm text-gray-500">{{
-                                                                deliveryMethod.country }}</RadioGroupDescription>
+                                                            class="block text-sm font-medium  self-center ">
+                                                            Add
+                                                            address</RadioGroupLabel>
                                                     </span>
                                                 </span>
-                                                <CheckCircleIcon v-if="checked" class="h-5 w-5 text-indigo-600"
-                                                    aria-hidden="true" />
-                                                <span
-                                                    :class="[active ? 'border' : 'border-2', checked ? 'border-indigo-500' : 'border-transparent', 'pointer-events-none absolute -inset-px rounded-lg']"
-                                                    aria-hidden="true" />
                                             </div>
-                                        </RadioGroupOption>
-                                        <div @click="showAddressModal = true"
-                                            class="relative flex cursor-pointer rounded-lg border border-indigo-200 bg-indigo-50 p-4 focus:outline-none text-indigo-700">
-                                            <span class="flex flex-1 self-center">
-                                                <span class="flex flex-col w-full">
-                                                    <RadioGroupLabel as="span"
-                                                        class="block text-sm font-medium  self-center ">
-                                                        Add
-                                                        address</RadioGroupLabel>
-                                                </span>
-                                            </span>
                                         </div>
-                                    </div>
-                                </RadioGroup>
-                            </div>
-                            <!-- <div class="mt-12 grid grid-cols-1 gap-y-6 sm:grid-cols-2 sm:gap-x-4">
-                                    <div>
-                                        <label for="first-name" class="block text-sm font-medium text-gray-700">First
-                                            name</label>
-                                        <div class="mt-1">
-                                            <input type="text" id="first-name" name="first-name" autocomplete="given-name"
-                                                class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" />
-                                        </div>
-                                                                                </div>
+                                    </RadioGroup>
+                                </div>
 
-                                                                                                                                            <div>
-                                                                                                                                                <label for="last-name" class="block text-sm font-medium text-gray-700">Last
-                                                                                                                                                    name</label>
-                                                                                                                                                <div class="mt-1">
-                                                                                                                                                    <input type="text" id="last-name" name="last-name" autocomplete="family-name"
-                                                                                                                                                        class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" />
-                                                                                                                                                </div>
-                                                                                                                                            </div>
-
-                                                                                                                                            <div class="sm:col-span-2">
-                                                                                                                                                <label for="company" class="block text-sm font-medium text-gray-700">Company</label>
-                                                                                                                                                <div class="mt-1">
-                                                                                                                                                    <input type="text" name="company" id="company"
-                                                                                                                                                        class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" />
-                                                                                                                                                </div>
-                                                                                                                                            </div>
-
-                                                                                                                                            <div class="sm:col-span-2">
-                                                                                                                                                <label for="address" class="block text-sm font-medium text-gray-700">Address</label>
-                                                                                                                                                <div class="mt-1">
-                                                                                                                                                    <input type="text" name="address" id="address" autocomplete="street-address"
-                                                                                                                                                        class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" />
-                                                                                                                                                </div>
-                                                                                                                                            </div>
-
-                                                                                                                                            <div class="sm:col-span-2">
-                                                                                                                                                <label for="apartment" class="block text-sm font-medium text-gray-700">Apartment,
-                                                                                                                                                    suite,
-                                                                                                                                                    etc.</label>
-                                                                                                                                                <div class="mt-1">
-                                                                                                                                                    <input type="text" name="apartment" id="apartment"
-                                                                                                                                                        class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" />
-                                                                                                                                                </div>
-                                                                                                                                            </div>
-
-                                                                                                                                            <div>
-                                                                                                                                                <label for="city" class="block text-sm font-medium text-gray-700">City</label>
-                                                                                                                                                <div class="mt-1">
-                                                                                                                                                    <input type="text" name="city" id="city" autocomplete="address-level2"
-                                                                                                                                                        class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" />
-                                                                                                                                                </div>
-                                                                                                                                            </div>
-
-                                                                                                                                            <div>
-                                                                                                                                                <label for="country" class="block text-sm font-medium text-gray-700">Country</label>
-                                                                                                                                                <div class="mt-1">
-                                                                                                                                                    <select id="country" name="country" autocomplete="country-name"
-                                                                                                                                                        class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
-                                                                                                                                                        <option v-for="country in countries">{{ country.name }}</option>
-                                                                                                                                                    </select>
-                                                                                                                                                </div>
-                                                                                                                                            </div>
-
-                                                                                                                                            <div>
-                                                                                                                                                <label for="region" class="block text-sm font-medium text-gray-700">State /
-                                                                                                                                                    Province</label>
-                                                                                                                                                <div class="mt-1">
-                                                                                                                                                    <input type="text" name="region" id="region" autocomplete="address-level1"
-                                                                                                                                                        class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" />
-                                                                                                                                                </div>
-                                                                                                                                            </div>
-
-                                                                                                                                            <div>
-                                                                                                                                                <label for="postal-code" class="block text-sm font-medium text-gray-700">Postal
-                                                                                                                                                    code</label>
-                                                                                                                                                <div class="mt-1">
-                                                                                                                                                    <input type="text" name="postal-code" id="postal-code"
-                                                                                                                                                        autocomplete="postal-code"
-                                                                                                                                                        class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" />
-                                                                                                                                                </div>
-                                                                                                                                            </div>
-
-                                                                                                                                            //remember checkbox 
-                                                                                                                                            <div>
-                                                                                                                                                <div class="relative flex items-start">
-                                                                                                                                                    <div class="flex h-6 items-center">
-                                                                                                                                                        <input id="candidates" aria-describedby="candidates-description"
-                                                                                                                                                            name="candidates" type="checkbox"
-                                                                                                                                                            class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600" />
-                                                                                                                                                    </div>
-                                                                                                                                                    <div class="ml-3 text-sm leading-6">
-                                                                                                                                                        <label for="candidates"
-                                                                                                                                                            class="font-medium text-gray-900 cursor-pointer">Remember
-                                                                                                                                                            address</label>
-
-                                                                                                                                                        <span id="candidates-description" class="text-gray-500"></span>
-                                                                                                                                                    </div>
-                                                                                                                                                </div>
-                                                                                                                                            </div>
-                                                                                                                                        </div> -->
                             </div>
 
 
