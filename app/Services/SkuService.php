@@ -54,8 +54,7 @@ class SkuService
             })
             ->when($sort && $order, function ($query) use ($sort, $order){
                 $query->orderBy($sort, $order);
-            })
-            ->paginate(48);
+            });
     }
 
     public function attachAttributes($sku, $color, $material, $sizes)
@@ -67,5 +66,29 @@ class SkuService
             $size = AttributeValue::where('name', $size)->first();
             $sku->attributeValues()->attach($size);
         }
+    }
+
+    public function getUniqueAttributeValues($skus, $attributeType): Array
+    {
+        $tempArr = [];
+        foreach ($skus as $sku => $value) {
+            foreach ($value->attributeValues as $attributeValue) {
+                if ($attributeValue->attributeType->name === $attributeType) {
+                    $tempArr[] = Array('id' => $attributeValue->id, 'name' => $attributeValue->name, 'color' => $attributeValue->color_value);
+                }
+            }
+        }
+
+        return collect($tempArr)->sortBy('id')->unique('id')->values()->all();
+    }
+
+    public function getUniqueBrands($skus): Array
+    {
+        $tempArr = [];
+        foreach ($skus as $sku => $value) {
+            $tempArr[] = Array('id' => $value->product->brand->id, 'name' => $value->product->brand->name, 'slug' => $value->product->brand->slug);
+        }
+
+        return collect($tempArr)->sortBy('id')->unique('id')->values()->all();
     }
 }

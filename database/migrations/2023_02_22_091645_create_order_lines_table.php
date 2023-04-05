@@ -10,7 +10,7 @@ return new class extends Migration {
         Schema::create('order_lines', function (Blueprint $table) {
             $table->id();
             $table->foreignId('sku_id')->nullable()->constrained()->onDelete('set null');
-            $table->foreignId('order_id')->constrained();
+            $table->foreignId('order_id')->constrained()->onDelete('cascade');
             $table->integer('amount')->default(1);
             $table->integer('price');
             $table->integer('discount')->nullable();

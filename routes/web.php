@@ -18,6 +18,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
 use App\Models\PaymentType;
 use App\Services\SubCategoryService;
+use App\Services\VatService;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -137,6 +138,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/checkout', [CartController::class, 'getCheckoutData'])->name('checkout.getCheckoutData');
 });
 
+Route::get('/test/{code}', [VatService::class, 'getVatsByCountryCode']);
+
 // Wishlist Routes
 Route::get('/wishlist/count', [WishlistController::class, 'getAmountOfItemsInWishlist'])->name('wishlist.getCount');
 
@@ -144,7 +147,6 @@ Route::get('/wishlist/count', [WishlistController::class, 'getAmountOfItemsInWis
 Route::get('/cart/count', [CartController::class, 'getAmountOfItemsInCart'])->name('cart.getCount');
 
 // Product Routes
-Route::get('/products', [ProductSkuController::class, 'index'])->name('products.index');
 Route::get('/product/{sku:sku}',  [ProductSkuController::class, 'show'])->name('product.show');
 Route::get('/products/category/{categoryName}', [ProductSkuController::class, 'showByCategory'])->name('products.showByCategory');
 Route::get('/products/{subCategory}', [ProductSkuController::class, 'showBySubCategory'])->name('products.showBySubCategory');

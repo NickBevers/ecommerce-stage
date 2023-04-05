@@ -9,11 +9,10 @@ return new class extends Migration {
     {
         Schema::create('vats', function (Blueprint $table) {
             $table->id();
-            $table->string('vat');
-            $table->string('vat_percentage');
-            $table->string('country_code')->default('BE');
-            $table->boolean('default')->default(false);
-            $table->unique(['vat', 'country_code']);
+            $table->string('country');
+            $table->string('country_code');
+            $table->string('vat_type');
+            $table->string('vat_rate');
             $table->timestamps();
         });
     }

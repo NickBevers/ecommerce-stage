@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\AttributeType;
 use App\Models\AttributeValue;
 use App\Models\Sku;
+use App\Services\GetAttributeValuesService;
 use App\Services\SkuService;
 use App\Services\SubCategoryService;
 use Illuminate\Http\Request;
@@ -16,18 +17,20 @@ class SkuController extends Controller
 {
     private SubCategoryService $subCategoryService;
     private SkuService $skuService;
+    private GetAttributeValuesService $attributeValueService;
 
     public function __construct()
     {
         $this->subCategoryService = new SubCategoryService();
         $this->skuService = new SkuService();
+        $this->attributeValueService = new GetAttributeValuesService();
     }
 
     public function index()
     {
         return Inertia::render('Products', [
             'skus' => Sku::with('attributeValues')
-                ->with('product')
+                ->withAllRelations()
                 ->orderBy('sku')
                 ->paginate(48),
             'attributeValues' => AttributeValue::all(),
@@ -39,11 +42,22 @@ class SkuController extends Controller
     public function filter(Request $request)
     {
         $skus = $this->skuService->filter($request);
+        $colors = $this->skuService->getUniqueAttributeValues($skus->get(), "color");
+        $sizes = $this->skuService->getUniqueAttributeValues($skus->get(), "size");
+        $materials = $this->skuService->getUniqueAttributeValues($skus->get(), "material");
+        $brands = $this->skuService->getUniqueBrands($skus->get());
+
+        $skus = $skus->paginate(48);
+
         return [
             'skus' => $skus,
             'subCategory' => $this->subCategoryService->getSubCategoryBySlug($request->input('subCategory', '')),
             'minPrice' => $skus->min('price_incl_vat'),
             'maxPrice' => $skus->max('price_incl_vat'),
+            'colors' => $colors,
+            'sizes' => $sizes,
+            'materials' => $materials,
+            'brands' => $brands,
         ];
     }
 

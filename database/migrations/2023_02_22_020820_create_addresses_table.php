@@ -9,12 +9,13 @@ return new class extends Migration {
     {
         Schema::create('addresses', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained();
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->string('address_line1');
             $table->string('address_line2')->nullable();
             $table->string('city');
             $table->string('postal_code');
             $table->String('address_type'); // billing or shipping
+            $table->string('state')->nullable();
             $table->string('country');
             $table->String('btw_number')->nullable();
             $table->timestamps();

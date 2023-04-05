@@ -11,8 +11,8 @@ return new class extends Migration {
             $table->id();
             $table->foreignId('user_id')->constrained();
             $table->integer('total_price');
-            $table->foreignId('shipping_address_id')->constrained('addresses');
-            $table->foreignId('billing_address_id')->nullable()->constrained('addresses');
+            $table->foreignId('shipping_address_id')->nullable()->constrained('addresses')->onDelete('set null');
+            $table->foreignId('billing_address_id')->nullable()->constrained('addresses')->onDelete('set null');
             $table->timestamp('order_date')->default(now());
             $table->string('order_status')->default('pending');
             $table->timestamp('preferred_delivery_date')->nullable();
@@ -20,6 +20,10 @@ return new class extends Migration {
             $table->string('tracking_number')->nullable();
             $table->string('tracking_url')->nullable();
             $table->timestamp('shipped_at')->nullable();
+            $table->string('firstname')->nullable();
+            $table->string('lastname')->nullable();
+            $table->string('phone_number')->nullable();
+            $table->string('email')->nullable();
             $table->timestamps();
         });
     }

@@ -1,0 +1,5330 @@
+[
+  {
+    "country": "Albania",
+    "country_code": "AL",
+    "percentage": "20",
+    "vat_type": "standard"
+  },
+  {
+    "country": "Albania",
+    "country_code": "AL",
+    "percentage": "6",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Albania",
+    "country_code": "AL",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Albania",
+    "country_code": "AL",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Algeria",
+    "country_code": "DZ",
+    "percentage": "19",
+    "vat_type": "standard"
+  },
+  {
+    "country": "Algeria",
+    "country_code": "DZ",
+    "percentage": "9",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Algeria",
+    "country_code": "DZ",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Algeria",
+    "country_code": "DZ",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "American Samoa",
+    "country_code": "AS",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Andorra",
+    "country_code": "AD",
+    "percentage": "9.50",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Andorra",
+    "country_code": "AD",
+    "percentage": "4.50",
+    "vat_type": "standard"
+  },
+  {
+    "country": "Andorra",
+    "country_code": "AD",
+    "percentage": "1",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Andorra",
+    "country_code": "AD",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Andorra",
+    "country_code": "AD",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Angola",
+    "country_code": "AO",
+    "percentage": "14",
+    "vat_type": "standard"
+  },
+  {
+    "country": "Angola",
+    "country_code": "AO",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Angola",
+    "country_code": "AO",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Angola",
+    "country_code": "AO",
+    "percentage": "7",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Angola",
+    "country_code": "AO",
+    "percentage": "5",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Anguilla",
+    "country_code": "AI",
+    "percentage": "13",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Antigua & Barbuda",
+    "country_code": "AG",
+    "percentage": "15",
+    "vat_type": "standard"
+  },
+  {
+    "country": "Antigua & Barbuda",
+    "country_code": "AG",
+    "percentage": "12.50",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Antigua & Barbuda",
+    "country_code": "AG",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Antigua & Barbuda",
+    "country_code": "AG",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Argentina",
+    "country_code": "AR",
+    "percentage": "27",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Argentina",
+    "country_code": "AR",
+    "percentage": "21",
+    "vat_type": "standard"
+  },
+  {
+    "country": "Argentina",
+    "country_code": "AR",
+    "percentage": "10.50",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Argentina",
+    "country_code": "AR",
+    "percentage": "3",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Argentina",
+    "country_code": "AR",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Armenia",
+    "country_code": "AM",
+    "percentage": "20",
+    "vat_type": "standard"
+  },
+  {
+    "country": "Armenia",
+    "country_code": "AM",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Armenia",
+    "country_code": "AM",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Aruba",
+    "country_code": "AW",
+    "percentage": "7",
+    "vat_type": "standard"
+  },
+  {
+    "country": "Aruba",
+    "country_code": "AW",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Australia",
+    "country_code": "AU",
+    "percentage": "10",
+    "vat_type": "standard"
+  },
+  {
+    "country": "Australia",
+    "country_code": "AU",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Australia",
+    "country_code": "AU",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Austria",
+    "country_code": "AT",
+    "percentage": "20",
+    "vat_type": "standard"
+  },
+  {
+    "country": "Austria",
+    "country_code": "AT",
+    "percentage": "13",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Austria",
+    "country_code": "AT",
+    "percentage": "13",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Austria",
+    "country_code": "AT",
+    "percentage": "10",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Austria",
+    "country_code": "AT",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Austria",
+    "country_code": "AT",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Austria",
+    "country_code": "AT",
+    "percentage": "5",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Azerbaijan",
+    "country_code": "AZ",
+    "percentage": "18",
+    "vat_type": "standard"
+  },
+  {
+    "country": "Azerbaijan",
+    "country_code": "AZ",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Azerbaijan",
+    "country_code": "AZ",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Bahamas",
+    "country_code": "BS",
+    "percentage": "10",
+    "vat_type": "standard"
+  },
+  {
+    "country": "Bahamas",
+    "country_code": "BS",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Bahamas",
+    "country_code": "BS",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Bahrain",
+    "country_code": "BH",
+    "percentage": "10",
+    "vat_type": "standard"
+  },
+  {
+    "country": "Bahrain",
+    "country_code": "BH",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Bahrain",
+    "country_code": "BH",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Bangladesh",
+    "country_code": "BD",
+    "percentage": "15",
+    "vat_type": "standard"
+  },
+  {
+    "country": "Bangladesh",
+    "country_code": "BD",
+    "percentage": "10",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Bangladesh",
+    "country_code": "BD",
+    "percentage": "7.50",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Bangladesh",
+    "country_code": "BD",
+    "percentage": "5",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Bangladesh",
+    "country_code": "BD",
+    "percentage": "4.50",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Bangladesh",
+    "country_code": "BD",
+    "percentage": "2",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Bangladesh",
+    "country_code": "BD",
+    "percentage": "1.50",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Bangladesh",
+    "country_code": "BD",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Bangladesh",
+    "country_code": "BD",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Barbados",
+    "country_code": "BB",
+    "percentage": "22",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Barbados",
+    "country_code": "BB",
+    "percentage": "17.5",
+    "vat_type": "standard"
+  },
+  {
+    "country": "Barbados",
+    "country_code": "BB",
+    "percentage": "10",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Barbados",
+    "country_code": "BB",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Belarus",
+    "country_code": "BY",
+    "percentage": "20",
+    "vat_type": "standard"
+  },
+  {
+    "country": "Belarus",
+    "country_code": "BY",
+    "percentage": "10",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Belarus",
+    "country_code": "BY",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Belarus",
+    "country_code": "BY",
+    "percentage": "26",
+    "vat_type": "higher"
+  },
+  {
+    "country": "Belarus",
+    "country_code": "BY",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Belgium",
+    "country_code": "BE",
+    "percentage": "21",
+    "vat_type": "standard"
+  },
+  {
+    "country": "Belgium",
+    "country_code": "BE",
+    "percentage": "12",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Belgium",
+    "country_code": "BE",
+    "percentage": "12",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Belgium",
+    "country_code": "BE",
+    "percentage": "6",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Belgium",
+    "country_code": "BE",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Belgium",
+    "country_code": "BE",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Belgium",
+    "country_code": "BE",
+    "percentage": "12",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Belize",
+    "country_code": "BZ",
+    "percentage": "12.50",
+    "vat_type": "standard"
+  },
+  {
+    "country": "Belize",
+    "country_code": "BZ",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Belize",
+    "country_code": "BZ",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Benin",
+    "country_code": "BJ",
+    "percentage": "18",
+    "vat_type": "standard"
+  },
+  {
+    "country": "Benin",
+    "country_code": "BJ",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Benin",
+    "country_code": "BJ",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Bermuda",
+    "country_code": "BM",
+    "percentage": "0",
+    "vat_type": "standard"
+  },
+  {
+    "country": "Bhutan",
+    "country_code": "BT",
+    "percentage": "20",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Bolivia",
+    "country_code": "BO",
+    "percentage": "13",
+    "vat_type": "standard"
+  },
+  {
+    "country": "Bolivia",
+    "country_code": "BO",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Bolivia",
+    "country_code": "BO",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Bonaire",
+    "country_code": "BQ",
+    "percentage": "8",
+    "vat_type": "standard"
+  },
+  {
+    "country": "Bonaire",
+    "country_code": "BQ",
+    "percentage": "6",
+    "vat_type": "standard"
+  },
+  {
+    "country": "Bonaire",
+    "country_code": "BQ",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Bosnia and Herzegovina",
+    "country_code": "BA",
+    "percentage": "17",
+    "vat_type": "standard"
+  },
+  {
+    "country": "Bosnia and Herzegovina",
+    "country_code": "BA",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Bosnia and Herzegovina",
+    "country_code": "BA",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Botswana",
+    "country_code": "BW",
+    "percentage": "14",
+    "vat_type": "standard"
+  },
+  {
+    "country": "Botswana",
+    "country_code": "BW",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Botswana",
+    "country_code": "BW",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Brazil",
+    "country_code": "BR",
+    "percentage": "18",
+    "vat_type": "standard"
+  },
+  {
+    "country": "Brazil",
+    "country_code": "BR",
+    "percentage": "12",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Brazil",
+    "country_code": "BR",
+    "percentage": "7",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Brazil",
+    "country_code": "BR",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Brazil",
+    "country_code": "BR",
+    "percentage": "3",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "British Virgin Islands",
+    "country_code": "VG",
+    "percentage": "0",
+    "vat_type": "standard"
+  },
+  {
+    "country": "Brunei",
+    "country_code": "BN",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Bulgaria",
+    "country_code": "BG",
+    "percentage": "20",
+    "vat_type": "standard"
+  },
+  {
+    "country": "Bulgaria",
+    "country_code": "BG",
+    "percentage": "9",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Bulgaria",
+    "country_code": "BG",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Bulgaria",
+    "country_code": "BG",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Bulgaria",
+    "country_code": "BG",
+    "percentage": "9",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Burkina Faso",
+    "country_code": "BF",
+    "percentage": "18",
+    "vat_type": "standard"
+  },
+  {
+    "country": "Burkina Faso",
+    "country_code": "BF",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Burundi",
+    "country_code": "BI",
+    "percentage": "18",
+    "vat_type": "standard"
+  },
+  {
+    "country": "Burundi",
+    "country_code": "BI",
+    "percentage": "10",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Cambodia",
+    "country_code": "KH",
+    "percentage": "10",
+    "vat_type": "standard"
+  },
+  {
+    "country": "Cambodia",
+    "country_code": "KH",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Cambodia",
+    "country_code": "KH",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Cameroon",
+    "country_code": "CM",
+    "percentage": "19.25",
+    "vat_type": "standard"
+  },
+  {
+    "country": "Cameroon",
+    "country_code": "CM",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Cameroon",
+    "country_code": "CM",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Canada",
+    "country_code": "CA",
+    "percentage": "5",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Canada",
+    "country_code": "CA",
+    "percentage": "12",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Canada",
+    "country_code": "CA",
+    "percentage": "12",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Canada",
+    "country_code": "CA",
+    "percentage": "15",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Canada",
+    "country_code": "CA",
+    "percentage": "5",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Canada",
+    "country_code": "CA",
+    "percentage": "15",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Canada",
+    "country_code": "CA",
+    "percentage": "15",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Canada",
+    "country_code": "CA",
+    "percentage": "13",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Canada",
+    "country_code": "CA",
+    "percentage": "15",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Canada",
+    "country_code": "CA",
+    "percentage": "14.98",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Canada",
+    "country_code": "CA",
+    "percentage": "11",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Canada",
+    "country_code": "CA",
+    "percentage": "5",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Canada",
+    "country_code": "CA",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Canada",
+    "country_code": "CA",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Canada",
+    "country_code": "CA",
+    "percentage": "5",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Canary Island",
+    "country_code": "ES",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Canary Islands",
+    "country_code": "ES",
+    "percentage": "7",
+    "vat_type": "standard"
+  },
+  {
+    "country": "Canary Islands",
+    "country_code": "ES",
+    "percentage": "3",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Canary Islands",
+    "country_code": "ES",
+    "percentage": "15",
+    "vat_type": "higher"
+  },
+  {
+    "country": "Canary Islands",
+    "country_code": "ES",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Canary Islands",
+    "country_code": "ES",
+    "percentage": "9.50",
+    "vat_type": "higher"
+  },
+  {
+    "country": "Canary Islands",
+    "country_code": "ES",
+    "percentage": "20",
+    "vat_type": "higher"
+  },
+  {
+    "country": "Cape Verde",
+    "country_code": "CV",
+    "percentage": "15",
+    "vat_type": "standard"
+  },
+  {
+    "country": "Cape Verde",
+    "country_code": "CV",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Cape Verde",
+    "country_code": "CV",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Cape Verde",
+    "country_code": "CV",
+    "percentage": "8",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Cayman Islands",
+    "country_code": "KY",
+    "percentage": "0",
+    "vat_type": "standard"
+  },
+  {
+    "country": "Central African Republic",
+    "country_code": "CF",
+    "percentage": "19",
+    "vat_type": "standard"
+  },
+  {
+    "country": "Central African Republic",
+    "country_code": "CF",
+    "percentage": "5",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Central African Republic",
+    "country_code": "CF",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Central African Republic",
+    "country_code": "CF",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Chad",
+    "country_code": "TD",
+    "percentage": "18",
+    "vat_type": "standard"
+  },
+  {
+    "country": "Chad",
+    "country_code": "TD",
+    "percentage": "9",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Chad",
+    "country_code": "TD",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Chad",
+    "country_code": "TD",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Chile",
+    "country_code": "CL",
+    "percentage": "19",
+    "vat_type": "standard"
+  },
+  {
+    "country": "Chile",
+    "country_code": "CL",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Chile",
+    "country_code": "CL",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "China",
+    "country_code": "CN",
+    "percentage": "13",
+    "vat_type": "standard"
+  },
+  {
+    "country": "China",
+    "country_code": "CN",
+    "percentage": "9",
+    "vat_type": "standard"
+  },
+  {
+    "country": "China",
+    "country_code": "CN",
+    "percentage": "6",
+    "vat_type": "standard"
+  },
+  {
+    "country": "China",
+    "country_code": "CN",
+    "percentage": "3",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "China",
+    "country_code": "CN",
+    "percentage": "2",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "China",
+    "country_code": "CN",
+    "percentage": "3",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "China",
+    "country_code": "CN",
+    "percentage": "5",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "China",
+    "country_code": "CN",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "China",
+    "country_code": "CN",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Colombia",
+    "country_code": "CO",
+    "percentage": "19",
+    "vat_type": "standard"
+  },
+  {
+    "country": "Colombia",
+    "country_code": "CO",
+    "percentage": "5",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Colombia",
+    "country_code": "CO",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Colombia",
+    "country_code": "CO",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Comoros",
+    "country_code": "KM",
+    "percentage": "10",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Congo",
+    "country_code": "CG",
+    "percentage": "16",
+    "vat_type": "standard"
+  },
+  {
+    "country": "Congo",
+    "country_code": "CG",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Congo",
+    "country_code": "CG",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Congo",
+    "country_code": "CG",
+    "percentage": "18.90",
+    "vat_type": "standard"
+  },
+  {
+    "country": "Congo",
+    "country_code": "CG",
+    "percentage": "5",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Congo",
+    "country_code": "CG",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Congo",
+    "country_code": "CG",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Cook Islands",
+    "country_code": "CK",
+    "percentage": "15",
+    "vat_type": "standard"
+  },
+  {
+    "country": "Cook Islands",
+    "country_code": "CK",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Cook Islands",
+    "country_code": "CK",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Costa Rica",
+    "country_code": "CR",
+    "percentage": "13",
+    "vat_type": "standard"
+  },
+  {
+    "country": "Costa Rica",
+    "country_code": "CR",
+    "percentage": "10",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Costa Rica",
+    "country_code": "CR",
+    "percentage": "4",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Costa Rica",
+    "country_code": "CR",
+    "percentage": "2",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Costa Rica",
+    "country_code": "CR",
+    "percentage": "1",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Costa Rica",
+    "country_code": "CR",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Costa Rica",
+    "country_code": "CR",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Costa Rica",
+    "country_code": "CR",
+    "percentage": "4",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Croatia",
+    "country_code": "HR",
+    "percentage": "25",
+    "vat_type": "standard"
+  },
+  {
+    "country": "Croatia",
+    "country_code": "HR",
+    "percentage": "13",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Croatia",
+    "country_code": "HR",
+    "percentage": "5",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Croatia",
+    "country_code": "HR",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Croatia",
+    "country_code": "HR",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Cuba",
+    "country_code": "CU",
+    "percentage": "10",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Curacao",
+    "country_code": "CW",
+    "percentage": "6",
+    "vat_type": "standard"
+  },
+  {
+    "country": "Curacao",
+    "country_code": "CW",
+    "percentage": "7",
+    "vat_type": "higher"
+  },
+  {
+    "country": "Curacao",
+    "country_code": "CW",
+    "percentage": "9",
+    "vat_type": "higher"
+  },
+  {
+    "country": "Curacao",
+    "country_code": "CW",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Cyprus",
+    "country_code": "CY",
+    "percentage": "19",
+    "vat_type": "standard"
+  },
+  {
+    "country": "Cyprus",
+    "country_code": "CY",
+    "percentage": "9",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Cyprus",
+    "country_code": "CY",
+    "percentage": "5",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Cyprus",
+    "country_code": "CY",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Cyprus",
+    "country_code": "CY",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Czech Republic",
+    "country_code": "CZ",
+    "percentage": "21",
+    "vat_type": "standard"
+  },
+  {
+    "country": "Czech Republic",
+    "country_code": "CZ",
+    "percentage": "15",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Czech Republic",
+    "country_code": "CZ",
+    "percentage": "10",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Czech Republic",
+    "country_code": "CZ",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Czech Republic",
+    "country_code": "CZ",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Denmark",
+    "country_code": "DK",
+    "percentage": "25",
+    "vat_type": "standard"
+  },
+  {
+    "country": "Denmark",
+    "country_code": "DK",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Denmark",
+    "country_code": "DK",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Djibouti",
+    "country_code": "DJ",
+    "percentage": "10",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Djibouti",
+    "country_code": "DJ",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Djibouti",
+    "country_code": "DJ",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Dominica",
+    "country_code": "DM",
+    "percentage": "15",
+    "vat_type": "standard"
+  },
+  {
+    "country": "Dominica",
+    "country_code": "DM",
+    "percentage": "10",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Dominica",
+    "country_code": "DM",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Dominican Republic",
+    "country_code": "DO",
+    "percentage": "18",
+    "vat_type": "standard"
+  },
+  {
+    "country": "Dominican Republic",
+    "country_code": "DO",
+    "percentage": "16",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Dominican Republic",
+    "country_code": "DO",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Dominican Republic",
+    "country_code": "DO",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Ecuador",
+    "country_code": "EC",
+    "percentage": "12",
+    "vat_type": "standard"
+  },
+  {
+    "country": "Ecuador",
+    "country_code": "EC",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Ecuador",
+    "country_code": "EC",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Egypt",
+    "country_code": "EG",
+    "percentage": "14",
+    "vat_type": "standard"
+  },
+  {
+    "country": "Egypt",
+    "country_code": "EG",
+    "percentage": "5",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Egypt",
+    "country_code": "EG",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Egypt",
+    "country_code": "EG",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "El Salvador",
+    "country_code": "SV",
+    "percentage": "13",
+    "vat_type": "standard"
+  },
+  {
+    "country": "El Salvador",
+    "country_code": "SV",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "El Salvador",
+    "country_code": "SV",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Equatorial Guinea",
+    "country_code": "GQ",
+    "percentage": "15",
+    "vat_type": "standard"
+  },
+  {
+    "country": "Equatorial Guinea",
+    "country_code": "GQ",
+    "percentage": "6",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Equatorial Guinea",
+    "country_code": "GQ",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Equatorial Guinea",
+    "country_code": "GQ",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Eritrea",
+    "country_code": "ER",
+    "percentage": "5",
+    "vat_type": "standard"
+  },
+  {
+    "country": "Eritrea",
+    "country_code": "ER",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Estonia",
+    "country_code": "EE",
+    "percentage": "20",
+    "vat_type": "standard"
+  },
+  {
+    "country": "Estonia",
+    "country_code": "EE",
+    "percentage": "9",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Estonia",
+    "country_code": "EE",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Estonia",
+    "country_code": "EE",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Eswatini",
+    "country_code": "SZ",
+    "percentage": "15",
+    "vat_type": "standard"
+  },
+  {
+    "country": "Eswatini",
+    "country_code": "SZ",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Eswatini",
+    "country_code": "SZ",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Ethiopia",
+    "country_code": "ET",
+    "percentage": "15",
+    "vat_type": "standard"
+  },
+  {
+    "country": "Ethiopia",
+    "country_code": "ET",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Ethiopia",
+    "country_code": "ET",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Fiji",
+    "country_code": "FJ",
+    "percentage": "9",
+    "vat_type": "standard"
+  },
+  {
+    "country": "Fiji",
+    "country_code": "FJ",
+    "percentage": "15",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Fiji",
+    "country_code": "FJ",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Fiji",
+    "country_code": "FJ",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Finland",
+    "country_code": "FI",
+    "percentage": "24",
+    "vat_type": "standard"
+  },
+  {
+    "country": "Finland",
+    "country_code": "FI",
+    "percentage": "14",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Finland",
+    "country_code": "FI",
+    "percentage": "10",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Finland",
+    "country_code": "FI",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Finland",
+    "country_code": "FI",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "France",
+    "country_code": "FR",
+    "percentage": "20",
+    "vat_type": "standard"
+  },
+  {
+    "country": "France",
+    "country_code": "FR",
+    "percentage": "10",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "France",
+    "country_code": "FR",
+    "percentage": "5.50",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "France",
+    "country_code": "FR",
+    "percentage": "2.10",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "France",
+    "country_code": "FR",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "France",
+    "country_code": "FR",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "French Guiana",
+    "country_code": "GF",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "French Polynesia",
+    "country_code": "PF",
+    "percentage": "16",
+    "vat_type": "standard"
+  },
+  {
+    "country": "French Polynesia",
+    "country_code": "PF",
+    "percentage": "13",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "French Polynesia",
+    "country_code": "PF",
+    "percentage": "5",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "French Polynesia",
+    "country_code": "PF",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Gabon",
+    "country_code": "GA",
+    "percentage": "18",
+    "vat_type": "standard"
+  },
+  {
+    "country": "Gabon",
+    "country_code": "GA",
+    "percentage": "10",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Gabon",
+    "country_code": "GA",
+    "percentage": "5",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Gabon",
+    "country_code": "GA",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Gabon",
+    "country_code": "GA",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Gambia",
+    "country_code": "GM",
+    "percentage": "15",
+    "vat_type": "standard"
+  },
+  {
+    "country": "Gambia",
+    "country_code": "GM",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Gambia",
+    "country_code": "GM",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Georgia",
+    "country_code": "GE",
+    "percentage": "18",
+    "vat_type": "standard"
+  },
+  {
+    "country": "Georgia",
+    "country_code": "GE",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Georgia",
+    "country_code": "GE",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Germany",
+    "country_code": "DE",
+    "percentage": "19",
+    "vat_type": "standard"
+  },
+  {
+    "country": "Germany",
+    "country_code": "DE",
+    "percentage": "7",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Germany",
+    "country_code": "DE",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Germany",
+    "country_code": "DE",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Germany",
+    "country_code": "DE",
+    "percentage": "7",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Ghana",
+    "country_code": "GH",
+    "percentage": "15",
+    "vat_type": "standard"
+  },
+  {
+    "country": "Ghana",
+    "country_code": "GH",
+    "percentage": "5",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Ghana",
+    "country_code": "GH",
+    "percentage": "3",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Ghana",
+    "country_code": "GH",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Ghana",
+    "country_code": "GH",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Gibraltar",
+    "country_code": "GI",
+    "percentage": "0",
+    "vat_type": "standard"
+  },
+  {
+    "country": "Greece",
+    "country_code": "GR",
+    "percentage": "24",
+    "vat_type": "standard"
+  },
+  {
+    "country": "Greece",
+    "country_code": "GR",
+    "percentage": "13",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Greece",
+    "country_code": "GR",
+    "percentage": "6",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Greece",
+    "country_code": "GR",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Greece",
+    "country_code": "GR",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Greece",
+    "country_code": "GR",
+    "percentage": "13",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Greenland",
+    "country_code": "GL",
+    "percentage": "0",
+    "vat_type": "standard"
+  },
+  {
+    "country": "Grenada",
+    "country_code": "GD",
+    "percentage": "15",
+    "vat_type": "standard"
+  },
+  {
+    "country": "Guadeloupe",
+    "country_code": "GP",
+    "percentage": "8.50",
+    "vat_type": "standard"
+  },
+  {
+    "country": "Guadeloupe",
+    "country_code": "GP",
+    "percentage": "2.10",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Guadeloupe",
+    "country_code": "GP",
+    "percentage": "1.05",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Guadeloupe",
+    "country_code": "GP",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Guam",
+    "country_code": "GU",
+    "percentage": "2",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Guatemala",
+    "country_code": "GT",
+    "percentage": "12",
+    "vat_type": "standard"
+  },
+  {
+    "country": "Guatemala",
+    "country_code": "GT",
+    "percentage": "5",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Guatemala",
+    "country_code": "GT",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Guatemala",
+    "country_code": "GT",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Guernsey",
+    "country_code": "GG",
+    "percentage": "0",
+    "vat_type": "standard"
+  },
+  {
+    "country": "Guinea",
+    "country_code": "GN",
+    "percentage": "18",
+    "vat_type": "standard"
+  },
+  {
+    "country": "Guinea",
+    "country_code": "GN",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Guinea",
+    "country_code": "GN",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Guinea-Bissau",
+    "country_code": "GW",
+    "percentage": "15",
+    "vat_type": "standard"
+  },
+  {
+    "country": "Guinea-Bissau",
+    "country_code": "GW",
+    "percentage": "10",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Guinea-Bissau",
+    "country_code": "GW",
+    "percentage": "15",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Guinea-Bissau",
+    "country_code": "GW",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Guinea-Bissau",
+    "country_code": "GW",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Guyana",
+    "country_code": "GY",
+    "percentage": "14",
+    "vat_type": "standard"
+  },
+  {
+    "country": "Guyana",
+    "country_code": "GY",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Guyana",
+    "country_code": "GY",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Haiti",
+    "country_code": "HT",
+    "percentage": "10",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Honduras",
+    "country_code": "HN",
+    "percentage": "15",
+    "vat_type": "standard"
+  },
+  {
+    "country": "Honduras",
+    "country_code": "HN",
+    "percentage": "18",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Honduras",
+    "country_code": "HN",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Honduras",
+    "country_code": "HN",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Hong Kong - China",
+    "country_code": "HK",
+    "percentage": "0",
+    "vat_type": "standard"
+  },
+  {
+    "country": "Hungary",
+    "country_code": "HU",
+    "percentage": "27",
+    "vat_type": "standard"
+  },
+  {
+    "country": "Hungary",
+    "country_code": "HU",
+    "percentage": "18",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Hungary",
+    "country_code": "HU",
+    "percentage": "5",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Hungary",
+    "country_code": "HU",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Hungary",
+    "country_code": "HU",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Hungary",
+    "country_code": "HU",
+    "percentage": "5",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Hungary",
+    "country_code": "HU",
+    "percentage": "5",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Iceland",
+    "country_code": "IS",
+    "percentage": "24",
+    "vat_type": "standard"
+  },
+  {
+    "country": "Iceland",
+    "country_code": "IS",
+    "percentage": "11",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Iceland",
+    "country_code": "IS",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Iceland",
+    "country_code": "IS",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Iceland",
+    "country_code": "IS",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "India",
+    "country_code": "IN",
+    "percentage": "18",
+    "vat_type": "standard"
+  },
+  {
+    "country": "India",
+    "country_code": "IN",
+    "percentage": "12",
+    "vat_type": "standard"
+  },
+  {
+    "country": "India",
+    "country_code": "IN",
+    "percentage": "5",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "India",
+    "country_code": "IN",
+    "percentage": "28",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "India",
+    "country_code": "IN",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Indonesia",
+    "country_code": "ID",
+    "percentage": "11",
+    "vat_type": "standard"
+  },
+  {
+    "country": "Indonesia",
+    "country_code": "ID",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Indonesia",
+    "country_code": "ID",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Iran",
+    "country_code": "IR",
+    "percentage": "9",
+    "vat_type": "standard"
+  },
+  {
+    "country": "Iraq",
+    "country_code": "IQ",
+    "percentage": "0",
+    "vat_type": "standard"
+  },
+  {
+    "country": "Ireland",
+    "country_code": "IE",
+    "percentage": "23",
+    "vat_type": "standard"
+  },
+  {
+    "country": "Ireland",
+    "country_code": "IE",
+    "percentage": "13.50",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Ireland",
+    "country_code": "IE",
+    "percentage": "13.50",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Ireland",
+    "country_code": "IE",
+    "percentage": "9",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Ireland",
+    "country_code": "IE",
+    "percentage": "4.80",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Ireland",
+    "country_code": "IE",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Ireland",
+    "country_code": "IE",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Ireland",
+    "country_code": "IE",
+    "percentage": "9",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Isle of Man",
+    "country_code": "IM",
+    "percentage": "20",
+    "vat_type": "standard"
+  },
+  {
+    "country": "Israel",
+    "country_code": "IL",
+    "percentage": "17",
+    "vat_type": "standard"
+  },
+  {
+    "country": "Israel",
+    "country_code": "IL",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Israel",
+    "country_code": "IL",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Italy",
+    "country_code": "IT",
+    "percentage": "22",
+    "vat_type": "standard"
+  },
+  {
+    "country": "Italy",
+    "country_code": "IT",
+    "percentage": "10",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Italy",
+    "country_code": "IT",
+    "percentage": "5",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Italy",
+    "country_code": "IT",
+    "percentage": "4",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Italy",
+    "country_code": "IT",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Italy",
+    "country_code": "IT",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Ivory Coast",
+    "country_code": "CI",
+    "percentage": "18",
+    "vat_type": "standard"
+  },
+  {
+    "country": "Ivory Coast",
+    "country_code": "CI",
+    "percentage": "21.31",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Ivory Coast",
+    "country_code": "CI",
+    "percentage": "9",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Ivory Coast",
+    "country_code": "CI",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Ivory Coast",
+    "country_code": "CI",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Jamaica",
+    "country_code": "JM",
+    "percentage": "15",
+    "vat_type": "standard"
+  },
+  {
+    "country": "Jamaica",
+    "country_code": "JM",
+    "percentage": "25",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Jamaica",
+    "country_code": "JM",
+    "percentage": "10",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Jamaica",
+    "country_code": "JM",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Jamaica",
+    "country_code": "JM",
+    "percentage": "100",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Japan",
+    "country_code": "JP",
+    "percentage": "10",
+    "vat_type": "standard"
+  },
+  {
+    "country": "Japan",
+    "country_code": "JP",
+    "percentage": "8",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Japan",
+    "country_code": "JP",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Jersey",
+    "country_code": "JE",
+    "percentage": "5",
+    "vat_type": "standard"
+  },
+  {
+    "country": "Jersey",
+    "country_code": "JE",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Jordan",
+    "country_code": "JO",
+    "percentage": "16",
+    "vat_type": "standard"
+  },
+  {
+    "country": "Jordan",
+    "country_code": "JO",
+    "percentage": "10",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Kazakhstan",
+    "country_code": "KZ",
+    "percentage": "12",
+    "vat_type": "standard"
+  },
+  {
+    "country": "Kazakhstan",
+    "country_code": "KZ",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Kazakhstan",
+    "country_code": "KZ",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Kenya",
+    "country_code": "KE",
+    "percentage": "16",
+    "vat_type": "standard"
+  },
+  {
+    "country": "Kenya",
+    "country_code": "KE",
+    "percentage": "3",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Kenya",
+    "country_code": "KE",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Kenya",
+    "country_code": "KE",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Kiribati",
+    "country_code": "KI",
+    "percentage": "12.5",
+    "vat_type": "standard"
+  },
+  {
+    "country": "Kosovo",
+    "country_code": "XK",
+    "percentage": "18",
+    "vat_type": "standard"
+  },
+  {
+    "country": "Kosovo",
+    "country_code": "XK",
+    "percentage": "8",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Kuwait",
+    "country_code": "KW",
+    "percentage": "5",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Kyrgyzstan",
+    "country_code": "KG",
+    "percentage": "12",
+    "vat_type": "standard"
+  },
+  {
+    "country": "Laos",
+    "country_code": "LA",
+    "percentage": "7",
+    "vat_type": "standard"
+  },
+  {
+    "country": "Latvia",
+    "country_code": "LV",
+    "percentage": "21",
+    "vat_type": "standard"
+  },
+  {
+    "country": "Latvia",
+    "country_code": "LV",
+    "percentage": "12",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Latvia",
+    "country_code": "LV",
+    "percentage": "5",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Latvia",
+    "country_code": "LV",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Latvia",
+    "country_code": "LV",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Lebanon",
+    "country_code": "LB",
+    "percentage": "11",
+    "vat_type": "standard"
+  },
+  {
+    "country": "Lesotho",
+    "country_code": "LS",
+    "percentage": "15",
+    "vat_type": "standard"
+  },
+  {
+    "country": "Lesotho",
+    "country_code": "LS",
+    "percentage": "12",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Lesotho",
+    "country_code": "LS",
+    "percentage": "10",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Lesotho",
+    "country_code": "LS",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Liberia",
+    "country_code": "LR",
+    "percentage": "10",
+    "vat_type": "standard"
+  },
+  {
+    "country": "Liberia",
+    "country_code": "LR",
+    "percentage": "10",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Libya",
+    "country_code": "LY",
+    "percentage": "0",
+    "vat_type": "standard"
+  },
+  {
+    "country": "Liechtenstein",
+    "country_code": "LI",
+    "percentage": "7.7",
+    "vat_type": "standard"
+  },
+  {
+    "country": "Lithuania",
+    "country_code": "LT",
+    "percentage": "21",
+    "vat_type": "standard"
+  },
+  {
+    "country": "Lithuania",
+    "country_code": "LT",
+    "percentage": "5",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Lithuania",
+    "country_code": "LT",
+    "percentage": "9",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Lithuania",
+    "country_code": "LT",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Lithuania",
+    "country_code": "LT",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Lithuania",
+    "country_code": "LT",
+    "percentage": "9",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Luxembourg",
+    "country_code": "LU",
+    "percentage": "17",
+    "vat_type": "standard"
+  },
+  {
+    "country": "Luxembourg",
+    "country_code": "LU",
+    "percentage": "14",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Luxembourg",
+    "country_code": "LU",
+    "percentage": "8",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Luxembourg",
+    "country_code": "LU",
+    "percentage": "3",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Luxembourg",
+    "country_code": "LU",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Luxembourg",
+    "country_code": "LU",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Macau",
+    "country_code": "MO",
+    "percentage": "0",
+    "vat_type": "standard"
+  },
+  {
+    "country": "Macedonia",
+    "country_code": "MK",
+    "percentage": "18",
+    "vat_type": "standard"
+  },
+  {
+    "country": "Macedonia",
+    "country_code": "MK",
+    "percentage": "10",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Macedonia",
+    "country_code": "MK",
+    "percentage": "5",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Macedonia",
+    "country_code": "MK",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Macedonia",
+    "country_code": "MK",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Madagascar",
+    "country_code": "MG",
+    "percentage": "20",
+    "vat_type": "standard"
+  },
+  {
+    "country": "Malawi",
+    "country_code": "MW",
+    "percentage": "16.5",
+    "vat_type": "standard"
+  },
+  {
+    "country": "Malaysia",
+    "country_code": "MY",
+    "percentage": "10",
+    "vat_type": "standard"
+  },
+  {
+    "country": "Malaysia",
+    "country_code": "MY",
+    "percentage": "6",
+    "vat_type": "standard"
+  },
+  {
+    "country": "Malaysia",
+    "country_code": "MY",
+    "percentage": "5",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Malaysia",
+    "country_code": "MY",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Maldives",
+    "country_code": "MV",
+    "percentage": "8",
+    "vat_type": "standard"
+  },
+  {
+    "country": "Mali",
+    "country_code": "ML",
+    "percentage": "18",
+    "vat_type": "standard"
+  },
+  {
+    "country": "Mali",
+    "country_code": "ML",
+    "percentage": "5",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Malta",
+    "country_code": "MT",
+    "percentage": "18",
+    "vat_type": "standard"
+  },
+  {
+    "country": "Malta",
+    "country_code": "MT",
+    "percentage": "7",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Malta",
+    "country_code": "MT",
+    "percentage": "5",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Malta",
+    "country_code": "MT",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Malta",
+    "country_code": "MT",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Marshall Islands",
+    "country_code": "MH",
+    "percentage": "0",
+    "vat_type": "standard"
+  },
+  {
+    "country": "Martinique",
+    "country_code": "MQ",
+    "percentage": "8.50",
+    "vat_type": "standard"
+  },
+  {
+    "country": "Martinique",
+    "country_code": "MQ",
+    "percentage": "2.10",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Martinique",
+    "country_code": "MQ",
+    "percentage": "1.05",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Mauritania",
+    "country_code": "MR",
+    "percentage": "16",
+    "vat_type": "standard"
+  },
+  {
+    "country": "Mauritania",
+    "country_code": "MR",
+    "percentage": "18",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Mauritius",
+    "country_code": "MU",
+    "percentage": "15",
+    "vat_type": "standard"
+  },
+  {
+    "country": "Mauritius",
+    "country_code": "MU",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Mexico",
+    "country_code": "MX",
+    "percentage": "16",
+    "vat_type": "standard"
+  },
+  {
+    "country": "Mexico",
+    "country_code": "MX",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Mexico",
+    "country_code": "MX",
+    "percentage": "8",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Mexico",
+    "country_code": "MX",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Mexico",
+    "country_code": "MX",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Moldova",
+    "country_code": "MD",
+    "percentage": "20",
+    "vat_type": "standard"
+  },
+  {
+    "country": "Moldova",
+    "country_code": "MD",
+    "percentage": "6",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Moldova",
+    "country_code": "MD",
+    "percentage": "8",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Moldova",
+    "country_code": "MD",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Moldova",
+    "country_code": "MD",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Monaco",
+    "country_code": "MC",
+    "percentage": "20",
+    "vat_type": "standard"
+  },
+  {
+    "country": "Monaco",
+    "country_code": "MC",
+    "percentage": "10",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Monaco",
+    "country_code": "MC",
+    "percentage": "5.50",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Monaco",
+    "country_code": "MC",
+    "percentage": "2.10",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Monaco",
+    "country_code": "MC",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Mongolia",
+    "country_code": "MN",
+    "percentage": "10",
+    "vat_type": "standard"
+  },
+  {
+    "country": "Monaco",
+    "country_code": "MC",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Montenegro",
+    "country_code": "ME",
+    "percentage": "21",
+    "vat_type": "standard"
+  },
+  {
+    "country": "Montenegro",
+    "country_code": "ME",
+    "percentage": "7",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Montenegro",
+    "country_code": "ME",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Montenegro",
+    "country_code": "ME",
+    "percentage": "7",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Morocco",
+    "country_code": "MA",
+    "percentage": "20",
+    "vat_type": "standard"
+  },
+  {
+    "country": "Morocco",
+    "country_code": "MA",
+    "percentage": "14",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Morocco",
+    "country_code": "MA",
+    "percentage": "10",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Morocco",
+    "country_code": "MA",
+    "percentage": "7",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Morocco",
+    "country_code": "MA",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Morocco",
+    "country_code": "MA",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Mozambique",
+    "country_code": "MZ",
+    "percentage": "16",
+    "vat_type": "standard"
+  },
+  {
+    "country": "Myanmar",
+    "country_code": "MM",
+    "percentage": "5",
+    "vat_type": "standard"
+  },
+  {
+    "country": "Namibia",
+    "country_code": "NA",
+    "percentage": "15",
+    "vat_type": "standard"
+  },
+  {
+    "country": "Nauru",
+    "country_code": "NR",
+    "percentage": "0",
+    "vat_type": "standard"
+  },
+  {
+    "country": "Nepal",
+    "country_code": "NP",
+    "percentage": "13",
+    "vat_type": "standard"
+  },
+  {
+    "country": "Netherlands",
+    "country_code": "NL",
+    "percentage": "21",
+    "vat_type": "standard"
+  },
+  {
+    "country": "Netherlands",
+    "country_code": "NL",
+    "percentage": "9",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Netherlands",
+    "country_code": "NL",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Netherlands",
+    "country_code": "NL",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Antilles",
+    "country_code": "AN",
+    "percentage": "8",
+    "vat_type": "standard"
+  },
+  {
+    "country": "Antilles",
+    "country_code": "AN",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "New Caledonia",
+    "country_code": "NC",
+    "percentage": "11",
+    "vat_type": "standard"
+  },
+  {
+    "country": "New Caledonia",
+    "country_code": "NC",
+    "percentage": "22",
+    "vat_type": "higher"
+  },
+  {
+    "country": "New Caledonia",
+    "country_code": "NC",
+    "percentage": "6",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "New Caledonia",
+    "country_code": "NC",
+    "percentage": "3",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "New Caledonia",
+    "country_code": "NC",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "New Caledonia",
+    "country_code": "NC",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "New Caledonia",
+    "country_code": "NC",
+    "percentage": "1",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "New Zealand",
+    "country_code": "NZ",
+    "percentage": "15",
+    "vat_type": "standard"
+  },
+  {
+    "country": "New Zealand",
+    "country_code": "NZ",
+    "percentage": "9",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "New Zealand",
+    "country_code": "NZ",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "New Zealand",
+    "country_code": "NZ",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Nicaragua",
+    "country_code": "NI",
+    "percentage": "15",
+    "vat_type": "standard"
+  },
+  {
+    "country": "Niger",
+    "country_code": "NE",
+    "percentage": "19",
+    "vat_type": "standard"
+  },
+  {
+    "country": "Niger",
+    "country_code": "NE",
+    "percentage": "10",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Nigeria",
+    "country_code": "NG",
+    "percentage": "7.50",
+    "vat_type": "standard"
+  },
+  {
+    "country": "Nigeria",
+    "country_code": "NG",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Niue",
+    "country_code": "NU",
+    "percentage": "12.5",
+    "vat_type": "standard"
+  },
+  {
+    "country": "North Korea",
+    "country_code": "KP",
+    "percentage": "15",
+    "vat_type": "standard"
+  },
+  {
+    "country": "Norway",
+    "country_code": "NO",
+    "percentage": "25",
+    "vat_type": "standard"
+  },
+  {
+    "country": "Norway",
+    "country_code": "NO",
+    "percentage": "15",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Norway",
+    "country_code": "NO",
+    "percentage": "11",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Norway",
+    "country_code": "NO",
+    "percentage": "12",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Norway",
+    "country_code": "NO",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Norway",
+    "country_code": "NO",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Norway",
+    "country_code": "NO",
+    "percentage": "6",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Oman",
+    "country_code": "OM",
+    "percentage": "5",
+    "vat_type": "standard"
+  },
+  {
+    "country": "Oman",
+    "country_code": "OM",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Oman",
+    "country_code": "OM",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Pakistan",
+    "country_code": "PK",
+    "percentage": "18",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Pakistan",
+    "country_code": "PK",
+    "percentage": "18",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Pakistan",
+    "country_code": "PK",
+    "percentage": "15",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Pakistan",
+    "country_code": "PK",
+    "percentage": "13",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Pakistan",
+    "country_code": "PK",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Pakistan",
+    "country_code": "PK",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Palau",
+    "country_code": "PW",
+    "percentage": "10",
+    "vat_type": "standard"
+  },
+  {
+    "country": "Panama",
+    "country_code": "PA",
+    "percentage": "7",
+    "vat_type": "standard"
+  },
+  {
+    "country": "Panama",
+    "country_code": "PA",
+    "percentage": "15",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Panama",
+    "country_code": "PA",
+    "percentage": "10",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Panama",
+    "country_code": "PA",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Panama",
+    "country_code": "PA",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Papua New Guinea",
+    "country_code": "PG",
+    "percentage": "10",
+    "vat_type": "standard"
+  },
+  {
+    "country": "Paraguay",
+    "country_code": "PY",
+    "percentage": "10",
+    "vat_type": "standard"
+  },
+  {
+    "country": "Paraguay",
+    "country_code": "PY",
+    "percentage": "5",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Peru",
+    "country_code": "PE",
+    "percentage": "18",
+    "vat_type": "standard"
+  },
+  {
+    "country": "Philippines",
+    "country_code": "PH",
+    "percentage": "12",
+    "vat_type": "standard"
+  },
+  {
+    "country": "Philippines",
+    "country_code": "PH",
+    "percentage": "18",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Philippines",
+    "country_code": "PH",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Poland",
+    "country_code": "PL",
+    "percentage": "23",
+    "vat_type": "standard"
+  },
+  {
+    "country": "Poland",
+    "country_code": "PL",
+    "percentage": "8",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Poland",
+    "country_code": "PL",
+    "percentage": "5",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Poland",
+    "country_code": "PL",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Poland",
+    "country_code": "PL",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Portugal",
+    "country_code": "PT",
+    "percentage": "23",
+    "vat_type": "standard"
+  },
+  {
+    "country": "Portugal",
+    "country_code": "PT",
+    "percentage": "13",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Portugal",
+    "country_code": "PT",
+    "percentage": "13",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Portugal",
+    "country_code": "PT",
+    "percentage": "6",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Portugal",
+    "country_code": "PT",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Portugal",
+    "country_code": "PT",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Puerto Rico",
+    "country_code": "PR",
+    "percentage": "11.5",
+    "vat_type": "standard"
+  },
+  {
+    "country": "Puerto Rico",
+    "country_code": "PR",
+    "percentage": "4",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Qatar",
+    "country_code": "QA",
+    "percentage": "5",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Réunion",
+    "country_code": "RE",
+    "percentage": "8.50",
+    "vat_type": "standard"
+  },
+  {
+    "country": "Réunion",
+    "country_code": "RE",
+    "percentage": "2.10",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Réunion",
+    "country_code": "RE",
+    "percentage": "1.05",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Romania",
+    "country_code": "RO",
+    "percentage": "19",
+    "vat_type": "standard"
+  },
+  {
+    "country": "Romania",
+    "country_code": "RO",
+    "percentage": "9",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Romania",
+    "country_code": "RO",
+    "percentage": "5",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Romania",
+    "country_code": "RO",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Romania",
+    "country_code": "RO",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Russia",
+    "country_code": "RU",
+    "percentage": "20",
+    "vat_type": "standard"
+  },
+  {
+    "country": "Russia",
+    "country_code": "RU",
+    "percentage": "10",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Russia",
+    "country_code": "RU",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Russia",
+    "country_code": "RU",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Russia",
+    "country_code": "RU",
+    "percentage": "16.67",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Rwanda",
+    "country_code": "RW",
+    "percentage": "18",
+    "vat_type": "standard"
+  },
+  {
+    "country": "Samoa",
+    "country_code": "WS",
+    "percentage": "15",
+    "vat_type": "standard"
+  },
+  {
+    "country": "San Marino",
+    "country_code": "SM",
+    "percentage": "0",
+    "vat_type": "standard"
+  },
+  {
+    "country": "São Tomé and Príncipe",
+    "country_code": "ST",
+    "percentage": "5",
+    "vat_type": "standard"
+  },
+  {
+    "country": "São Tomé and Príncipe",
+    "country_code": "ST",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "São Tomé and Príncipe",
+    "country_code": "ST",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Saudi Arabia",
+    "country_code": "SA",
+    "percentage": "15",
+    "vat_type": "standard"
+  },
+  {
+    "country": "Saudi Arabia",
+    "country_code": "SA",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Senegal",
+    "country_code": "SN",
+    "percentage": "18",
+    "vat_type": "standard"
+  },
+  {
+    "country": "Serbia",
+    "country_code": "RS",
+    "percentage": "20",
+    "vat_type": "standard"
+  },
+  {
+    "country": "Serbia",
+    "country_code": "RS",
+    "percentage": "10",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Seychelles",
+    "country_code": "SC",
+    "percentage": "15",
+    "vat_type": "standard"
+  },
+  {
+    "country": "Sierra Leone",
+    "country_code": "SL",
+    "percentage": "15",
+    "vat_type": "standard"
+  },
+  {
+    "country": "Singapore",
+    "country_code": "SG",
+    "percentage": "8",
+    "vat_type": "standard"
+  },
+  {
+    "country": "Singapore",
+    "country_code": "SG",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Slovakia",
+    "country_code": "SK",
+    "percentage": "20",
+    "vat_type": "standard"
+  },
+  {
+    "country": "Slovakia",
+    "country_code": "SK",
+    "percentage": "10",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Slovakia",
+    "country_code": "SK",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Slovakia",
+    "country_code": "SK",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Slovenia",
+    "country_code": "SI",
+    "percentage": "22",
+    "vat_type": "standard"
+  },
+  {
+    "country": "Slovenia",
+    "country_code": "SI",
+    "percentage": "9.50",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Slovenia",
+    "country_code": "SI",
+    "percentage": "5",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Slovenia",
+    "country_code": "SI",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Slovenia",
+    "country_code": "SI",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Solomon Island",
+    "country_code": "SB",
+    "percentage": "15",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Solomon Island",
+    "country_code": "SB",
+    "percentage": "10",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Solomon Island",
+    "country_code": "SB",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Somalia",
+    "country_code": "SO",
+    "percentage": "5",
+    "vat_type": "standard"
+  },
+  {
+    "country": "South Africa",
+    "country_code": "ZA",
+    "percentage": "15",
+    "vat_type": "standard"
+  },
+  {
+    "country": "South Africa",
+    "country_code": "ZA",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "South Korea",
+    "country_code": "KR",
+    "percentage": "10",
+    "vat_type": "standard"
+  },
+  {
+    "country": "South Korea",
+    "country_code": "KR",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "South Sudan",
+    "country_code": "SS",
+    "percentage": "15",
+    "vat_type": "standard"
+  },
+  {
+    "country": "Spain",
+    "country_code": "ES",
+    "percentage": "21",
+    "vat_type": "standard"
+  },
+  {
+    "country": "Spain",
+    "country_code": "ES",
+    "percentage": "10",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Spain",
+    "country_code": "ES",
+    "percentage": "4",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Spain",
+    "country_code": "ES",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Spain",
+    "country_code": "ES",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Spain",
+    "country_code": "ES",
+    "percentage": "10",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Sri Lanka",
+    "country_code": "LK",
+    "percentage": "15",
+    "vat_type": "standard"
+  },
+  {
+    "country": "St Kitts and Nevis",
+    "country_code": "KN",
+    "percentage": "17",
+    "vat_type": "standard"
+  },
+  {
+    "country": "St Lucia",
+    "country_code": "LC",
+    "percentage": "12.5",
+    "vat_type": "standard"
+  },
+  {
+    "country": "St Lucia",
+    "country_code": "LC",
+    "percentage": "10",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "St Martin",
+    "country_code": "MF",
+    "percentage": "5",
+    "vat_type": "standard"
+  },
+  {
+    "country": "Sudan",
+    "country_code": "SD",
+    "percentage": "17",
+    "vat_type": "standard"
+  },
+  {
+    "country": "Suriname",
+    "country_code": "SR",
+    "percentage": "10",
+    "vat_type": "standard"
+  },
+  {
+    "country": "Suriname",
+    "country_code": "SR",
+    "percentage": "10",
+    "vat_type": "standard"
+  },
+  {
+    "country": "Sweden",
+    "country_code": "SE",
+    "percentage": "25",
+    "vat_type": "standard"
+  },
+  {
+    "country": "Sweden",
+    "country_code": "SE",
+    "percentage": "12",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Sweden",
+    "country_code": "SE",
+    "percentage": "6",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Sweden",
+    "country_code": "SE",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Sweden",
+    "country_code": "SE",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Switzerland",
+    "country_code": "CH",
+    "percentage": "7.7",
+    "vat_type": "standard"
+  },
+  {
+    "country": "Switzerland",
+    "country_code": "CH",
+    "percentage": "3.7",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Switzerland",
+    "country_code": "CH",
+    "percentage": "2.5",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Switzerland",
+    "country_code": "CH",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Switzerland",
+    "country_code": "CH",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Syria",
+    "country_code": "SY",
+    "percentage": "0",
+    "vat_type": "standard"
+  },
+  {
+    "country": "Taiwan",
+    "country_code": "TW",
+    "percentage": "5",
+    "vat_type": "standard"
+  },
+  {
+    "country": "Taiwan",
+    "country_code": "TW",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Taiwan",
+    "country_code": "TW",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Tajikistan",
+    "country_code": "TJ",
+    "percentage": "18",
+    "vat_type": "standard"
+  },
+  {
+    "country": "Tanzania",
+    "country_code": "TZ",
+    "percentage": "18",
+    "vat_type": "standard"
+  },
+  {
+    "country": "Thailand",
+    "country_code": "TH",
+    "percentage": "7",
+    "vat_type": "standard"
+  },
+  {
+    "country": "Thailand",
+    "country_code": "TH",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Timor-Leste",
+    "country_code": "TL",
+    "percentage": "5",
+    "vat_type": "standard"
+  },
+  {
+    "country": "Timor-Leste",
+    "country_code": "TL",
+    "percentage": "2.5",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Togo",
+    "country_code": "TG",
+    "percentage": "18",
+    "vat_type": "standard"
+  },
+  {
+    "country": "Tonga",
+    "country_code": "TO",
+    "percentage": "15",
+    "vat_type": "standard"
+  },
+  {
+    "country": "Trinidad & Tobago",
+    "country_code": "TT",
+    "percentage": "12.5",
+    "vat_type": "standard"
+  },
+  {
+    "country": "Tunisia",
+    "country_code": "TN",
+    "percentage": "19",
+    "vat_type": "standard"
+  },
+  {
+    "country": "Tunisia",
+    "country_code": "TN",
+    "percentage": "13",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Tunisia",
+    "country_code": "TN",
+    "percentage": "7",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Tunisia",
+    "country_code": "TN",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Tunisia",
+    "country_code": "TN",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Turkey",
+    "country_code": "TR",
+    "percentage": "18",
+    "vat_type": "standard"
+  },
+  {
+    "country": "Turkey",
+    "country_code": "TR",
+    "percentage": "8",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Turkey",
+    "country_code": "TR",
+    "percentage": "1",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Turkey",
+    "country_code": "TR",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Turkey",
+    "country_code": "TR",
+    "percentage": "2",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Turkey",
+    "country_code": "TR",
+    "percentage": "8",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Turkey",
+    "country_code": "TR",
+    "percentage": "1",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Turkey",
+    "country_code": "TR",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Turkmenistan",
+    "country_code": "TM",
+    "percentage": "15",
+    "vat_type": "standard"
+  },
+  {
+    "country": "Turkmenistan",
+    "country_code": "TM",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Tuvalu",
+    "country_code": "TV",
+    "percentage": "7",
+    "vat_type": "standard"
+  },
+  {
+    "country": "Tuvalu",
+    "country_code": "TV",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Uganda",
+    "country_code": "UG",
+    "percentage": "18",
+    "vat_type": "standard"
+  },
+  {
+    "country": "Ukraine",
+    "country_code": "UA",
+    "percentage": "20",
+    "vat_type": "standard"
+  },
+  {
+    "country": "Ukraine",
+    "country_code": "UA",
+    "percentage": "7",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Ukraine",
+    "country_code": "UA",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Ukraine",
+    "country_code": "UA",
+    "percentage": "14",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Ukraine",
+    "country_code": "UA",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "United Arab Emirates",
+    "country_code": "AE",
+    "percentage": "5",
+    "vat_type": "standard"
+  },
+  {
+    "country": "United Arab Emirates",
+    "country_code": "AE",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "United Arab Emirates",
+    "country_code": "AE",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "United Kingdom",
+    "country_code": "GB",
+    "percentage": "20",
+    "vat_type": "standard"
+  },
+  {
+    "country": "United Kingdom",
+    "country_code": "GB",
+    "percentage": "5",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "United Kingdom",
+    "country_code": "GB",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "United Kingdom",
+    "country_code": "GB",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "United Kingdom",
+    "country_code": "GB",
+    "percentage": "12.50",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "United States",
+    "country_code": "US",
+    "percentage": "4.00",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "United States",
+    "country_code": "US",
+    "percentage": "0.00",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "United States",
+    "country_code": "US",
+    "percentage": "5.60",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "United States",
+    "country_code": "US",
+    "percentage": "6.5",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "United States",
+    "country_code": "US",
+    "percentage": "7.25",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "United States",
+    "country_code": "US",
+    "percentage": "2.9",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "United States",
+    "country_code": "US",
+    "percentage": "6.35",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "United States",
+    "country_code": "US",
+    "percentage": "0.00",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "United States",
+    "country_code": "US",
+    "percentage": "6.00",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "United States",
+    "country_code": "US",
+    "percentage": "4.00",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "United States",
+    "country_code": "US",
+    "percentage": "4.00",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "United States",
+    "country_code": "US",
+    "percentage": "6.00",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "United States",
+    "country_code": "US",
+    "percentage": "6.25",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "United States",
+    "country_code": "US",
+    "percentage": "7.00",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "United States",
+    "country_code": "US",
+    "percentage": "6.00",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "United States",
+    "country_code": "US",
+    "percentage": "6.50",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "United States",
+    "country_code": "US",
+    "percentage": "6.00",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "United States",
+    "country_code": "US",
+    "percentage": "4.45",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "United States",
+    "country_code": "US",
+    "percentage": "5.50",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "United States",
+    "country_code": "US",
+    "percentage": "5.00",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "United States",
+    "country_code": "US",
+    "percentage": "6.25",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "United States",
+    "country_code": "US",
+    "percentage": "6.00",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "United States",
+    "country_code": "US",
+    "percentage": "6.875",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "United States",
+    "country_code": "US",
+    "percentage": "7.00",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "United States",
+    "country_code": "US",
+    "percentage": "4.00",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "United States",
+    "country_code": "US",
+    "percentage": "0.00",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "United States",
+    "country_code": "US",
+    "percentage": "5.50",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "United States",
+    "country_code": "US",
+    "percentage": "6.85",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "United States",
+    "country_code": "US",
+    "percentage": "0.00",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "United States",
+    "country_code": "US",
+    "percentage": "5.00",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "United States",
+    "country_code": "US",
+    "percentage": "5.00",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "United States",
+    "country_code": "US",
+    "percentage": "4.00",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "United States",
+    "country_code": "US",
+    "percentage": "4.75",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "United States",
+    "country_code": "US",
+    "percentage": "5.00",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "United States",
+    "country_code": "US",
+    "percentage": "5.75",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "United States",
+    "country_code": "US",
+    "percentage": "4.50",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "United States",
+    "country_code": "US",
+    "percentage": "0.00",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "United States",
+    "country_code": "US",
+    "percentage": "6.00",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "United States",
+    "country_code": "US",
+    "percentage": "10.50",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "United States",
+    "country_code": "US",
+    "percentage": "7.00",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "United States",
+    "country_code": "US",
+    "percentage": "6.00",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "United States",
+    "country_code": "US",
+    "percentage": "4.50",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "United States",
+    "country_code": "US",
+    "percentage": "7.00",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "United States",
+    "country_code": "US",
+    "percentage": "6.25",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "United States",
+    "country_code": "US",
+    "percentage": "6.10",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "United States",
+    "country_code": "US",
+    "percentage": "6.00",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "United States",
+    "country_code": "US",
+    "percentage": "5.30",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "United States",
+    "country_code": "US",
+    "percentage": "6.50",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "United States",
+    "country_code": "US",
+    "percentage": "6.00",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "United States",
+    "country_code": "US",
+    "percentage": "6.00",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "United States",
+    "country_code": "US",
+    "percentage": "5.00",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "United States",
+    "country_code": "US",
+    "percentage": "4.00",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Uruguay",
+    "country_code": "UY",
+    "percentage": "22",
+    "vat_type": "standard"
+  },
+  {
+    "country": "Uruguay",
+    "country_code": "UY",
+    "percentage": "10",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Uruguay",
+    "country_code": "UY",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Uruguay",
+    "country_code": "UY",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Uruguay",
+    "country_code": "UY",
+    "percentage": "13",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Uzebekistan",
+    "country_code": "UZ",
+    "percentage": "12",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Uzebekistan",
+    "country_code": "UZ",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Vanuatu",
+    "country_code": "VU",
+    "percentage": "15",
+    "vat_type": "standard"
+  },
+  {
+    "country": "Vanuatu",
+    "country_code": "VU",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Venezuela",
+    "country_code": "VE",
+    "percentage": "15.00",
+    "vat_type": "standard"
+  },
+  {
+    "country": "Venezuela",
+    "country_code": "VE",
+    "percentage": "16.50",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Venezuela",
+    "country_code": "VE",
+    "percentage": "8",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Venezuela",
+    "country_code": "VE",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Venezuela",
+    "country_code": "VE",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Vietnam",
+    "country_code": "VN",
+    "percentage": "10",
+    "vat_type": "standard"
+  },
+  {
+    "country": "Vietnam",
+    "country_code": "VN",
+    "percentage": "5",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Vietnam",
+    "country_code": "VN",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Vietnam",
+    "country_code": "VN",
+    "percentage": "8",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Vietnam",
+    "country_code": "VN",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Vietnam",
+    "country_code": "VN",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Yemen",
+    "country_code": "YE",
+    "percentage": "5",
+    "vat_type": "standard"
+  },
+  {
+    "country": "Zambia",
+    "country_code": "ZM",
+    "percentage": "16",
+    "vat_type": "standard"
+  },
+  {
+    "country": "Zimbabwe",
+    "country_code": "ZW",
+    "percentage": "15",
+    "vat_type": "standard"
+  },
+  {
+    "country": "India",
+    "country_code": "IN",
+    "percentage": "3",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "India",
+    "country_code": "IN",
+    "percentage": "3",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Iran",
+    "country_code": "IR",
+    "percentage": "15",
+    "vat_type": "higher"
+  },
+  {
+    "country": "Iran",
+    "country_code": "IR",
+    "percentage": "25",
+    "vat_type": "higher"
+  },
+  {
+    "country": "Iran",
+    "country_code": "IR",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Ivory Coast",
+    "country_code": "CI",
+    "percentage": "21.31",
+    "vat_type": "higher"
+  },
+  {
+    "country": "Jamaica",
+    "country_code": "JM",
+    "percentage": "2",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Jamaica",
+    "country_code": "JM",
+    "percentage": "20",
+    "vat_type": "higher"
+  },
+  {
+    "country": "Japan",
+    "country_code": "JP",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Jersey",
+    "country_code": "JE",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Jordan",
+    "country_code": "JO",
+    "percentage": "5",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Jordan",
+    "country_code": "JO",
+    "percentage": "2",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Jordan",
+    "country_code": "JO",
+    "percentage": "6",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Jordan",
+    "country_code": "JO",
+    "percentage": "20",
+    "vat_type": "higher"
+  },
+  {
+    "country": "Jordan",
+    "country_code": "JO",
+    "percentage": "26",
+    "vat_type": "higher"
+  },
+  {
+    "country": "Jordan",
+    "country_code": "JO",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Jordan",
+    "country_code": "JO",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Kenya",
+    "country_code": "KE",
+    "percentage": "5",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Kiribati",
+    "country_code": "KI",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Kiribati",
+    "country_code": "KI",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Kosovo",
+    "country_code": "XK",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Kosovo",
+    "country_code": "XK",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Kosovo",
+    "country_code": "XK",
+    "percentage": "8",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Kyrgyzstan",
+    "country_code": "KG",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Kyrgyzstan",
+    "country_code": "KG",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Laos",
+    "country_code": "LA",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Laos",
+    "country_code": "LA",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Lebanon",
+    "country_code": "LB",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Lebanon",
+    "country_code": "LB",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Lesotho",
+    "country_code": "LS",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Liberia",
+    "country_code": "LR",
+    "percentage": "7",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Liberia",
+    "country_code": "LR",
+    "percentage": "15",
+    "vat_type": "higher"
+  },
+  {
+    "country": "Liberia",
+    "country_code": "LR",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Liberia",
+    "country_code": "LR",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Liechtenstein",
+    "country_code": "LI",
+    "percentage": "3.7",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Liechtenstein",
+    "country_code": "LI",
+    "percentage": "2.5",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Liechtenstein",
+    "country_code": "LI",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Liechtenstein",
+    "country_code": "LI",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Afganistan",
+    "country_code": "AF",
+    "percentage": "4",
+    "vat_type": "standard"
+  },
+  {
+    "country": "Afganistan",
+    "country_code": "AF",
+    "percentage": "5",
+    "vat_type": "higher"
+  },
+  {
+    "country": "Afganistan",
+    "country_code": "AF",
+    "percentage": "10",
+    "vat_type": "higher"
+  },
+  {
+    "country": "Afganistan",
+    "country_code": "AF",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Madagascar",
+    "country_code": "MG",
+    "percentage": "5",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Madagascar",
+    "country_code": "MG",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Madagascar",
+    "country_code": "MG",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Malawi",
+    "country_code": "MW",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Malawi",
+    "country_code": "MW",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Maldives",
+    "country_code": "MV",
+    "percentage": "16",
+    "vat_type": "higher"
+  },
+  {
+    "country": "Maldives",
+    "country_code": "MV",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Maldives",
+    "country_code": "MV",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Mali",
+    "country_code": "ML",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Martinique",
+    "country_code": "MQ",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Mauritania",
+    "country_code": "MR",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Mauritania",
+    "country_code": "MR",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Mauritius",
+    "country_code": "MU",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Mongolia",
+    "country_code": "MN",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Mongolia",
+    "country_code": "MN",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Mozambique",
+    "country_code": "MZ",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Mozambique",
+    "country_code": "MZ",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Myanmar",
+    "country_code": "MM",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Micronesia",
+    "country_code": "FM",
+    "percentage": "0",
+    "vat_type": "standard"
+  },
+  {
+    "country": "Italy",
+    "country_code": "IT",
+    "percentage": "5",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Myanmar",
+    "country_code": "MM",
+    "percentage": "8",
+    "vat_type": "higher"
+  },
+  {
+    "country": "Myanmar",
+    "country_code": "MM",
+    "percentage": "3",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Myanmar",
+    "country_code": "MM",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Montserrat",
+    "country_code": "MS",
+    "percentage": "0",
+    "vat_type": "standard"
+  },
+  {
+    "country": "Namibia",
+    "country_code": "NA",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Namibia",
+    "country_code": "NA",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Nepal",
+    "country_code": "NP",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Nepal",
+    "country_code": "NP",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Northern Mariana Islands",
+    "country_code": "MP",
+    "percentage": "0",
+    "vat_type": "standard"
+  },
+  {
+    "country": "Nicaragua",
+    "country_code": "NI",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Nicaragua",
+    "country_code": "NI",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Niger",
+    "country_code": "NE",
+    "percentage": "5",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Niger",
+    "country_code": "NE",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Niger",
+    "country_code": "NE",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Cape Verde",
+    "country_code": "CV",
+    "percentage": "10",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Niue",
+    "country_code": "NU",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Niue",
+    "country_code": "NU",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Palestine",
+    "country_code": "PS",
+    "percentage": "16",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Palestine",
+    "country_code": "PS",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Palestine",
+    "country_code": "PS",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Papua New Guinea",
+    "country_code": "PG",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Papua New Guinea",
+    "country_code": "PG",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Paraguay",
+    "country_code": "PY",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Paraguay",
+    "country_code": "PY",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Peru",
+    "country_code": "PE",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Peru",
+    "country_code": "PE",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Philippines",
+    "country_code": "PH",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Puerto Rico",
+    "country_code": "PR",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Rwanda",
+    "country_code": "RW",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Rwanda",
+    "country_code": "RW",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "San Marino",
+    "country_code": "SM",
+    "percentage": "17",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "San Marino",
+    "country_code": "SM",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "St Lucia",
+    "country_code": "LC",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "St Lucia",
+    "country_code": "LC",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Belgium",
+    "country_code": "BE",
+    "percentage": "6",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Poland",
+    "country_code": "PL",
+    "percentage": "8",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Poland",
+    "country_code": "PL",
+    "percentage": "5",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Poland",
+    "country_code": "PL",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Tajikistan",
+    "country_code": "TJ",
+    "percentage": "15",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Tajikistan",
+    "country_code": "TJ",
+    "percentage": "7",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Tajikistan",
+    "country_code": "TJ",
+    "percentage": "5",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Tajikistan",
+    "country_code": "TJ",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Tajikistan",
+    "country_code": "TJ",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "French Polynesia",
+    "country_code": "PF",
+    "percentage": "1.5",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Netherlands",
+    "country_code": "NL",
+    "percentage": "9",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Macedonia",
+    "country_code": "MK",
+    "percentage": "5",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Macedonia",
+    "country_code": "MK",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Macedonia",
+    "country_code": "MK",
+    "percentage": "10",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Croatia",
+    "country_code": "HR",
+    "percentage": "5",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Turkey",
+    "country_code": "TR",
+    "percentage": "1",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Turkey",
+    "country_code": "TR",
+    "percentage": "8",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Romania",
+    "country_code": "RO",
+    "percentage": "5",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "United Kingdom",
+    "country_code": "GB",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Sri Lanka",
+    "country_code": "LK",
+    "percentage": "18",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Somalia",
+    "country_code": "SO",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Somalia",
+    "country_code": "SO",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Taiwan",
+    "country_code": "TW",
+    "percentage": "5",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Tanzania",
+    "country_code": "TZ",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Tanzania",
+    "country_code": "TZ",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Thailand",
+    "country_code": "TH",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Togo",
+    "country_code": "TG",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Tonga",
+    "country_code": "TO",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Trinidad & Tobago",
+    "country_code": "TT",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Trinidad & Tobago",
+    "country_code": "TT",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Estonia",
+    "country_code": "EE",
+    "percentage": "5",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Ireland",
+    "country_code": "IE",
+    "percentage": "9",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Peru",
+    "country_code": "PE",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Lithuania",
+    "country_code": "LT",
+    "percentage": "9",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "China",
+    "country_code": "CN",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Faroe Island",
+    "country_code": "FO",
+    "percentage": "25",
+    "vat_type": "standard"
+  },
+  {
+    "country": "Yemen",
+    "country_code": "YE",
+    "percentage": "10",
+    "vat_type": "higher"
+  },
+  {
+    "country": "Yemen",
+    "country_code": "YE",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Anguilla",
+    "country_code": "AI",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Botswana",
+    "country_code": "BW",
+    "percentage": "12",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Germany",
+    "country_code": "DE",
+    "percentage": "7",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Slovenia",
+    "country_code": "SI",
+    "percentage": "9.5",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Paraguay",
+    "country_code": "PY",
+    "percentage": "10",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Palestine region",
+    "country_code": "PS",
+    "percentage": "16",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Senegal",
+    "country_code": "SN",
+    "percentage": "10",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Burundi",
+    "country_code": "BI",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Burundi",
+    "country_code": "BI",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Finland",
+    "country_code": "FI",
+    "percentage": "10",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Bulgaria",
+    "country_code": "BG",
+    "percentage": "9",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Slovakia",
+    "country_code": "SK",
+    "percentage": "10",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Finland",
+    "country_code": "FI",
+    "percentage": "0",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Portugal",
+    "country_code": "PT",
+    "percentage": "6",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Mozambique",
+    "country_code": "MZ",
+    "percentage": "5",
+    "vat_type": "reduced"
+  },
+  {
+    "country": "Pakistan",
+    "country_code": "PK",
+    "percentage": "25",
+    "vat_type": "reduced"
+  }
+]

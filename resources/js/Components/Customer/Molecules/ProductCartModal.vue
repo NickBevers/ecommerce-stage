@@ -68,7 +68,7 @@ function toggleOpen() {
                     <section aria-labelledby="information-heading" class="mt-1">
                       <h3 id="information-heading" class="sr-only">Product information</h3>
 
-                      <p class="font-medium text-gray-900">€{{ props.product.sku.price.toFixed(2) }}</p>
+                      <p class="font-medium text-gray-900">€{{ props.product.sku.price_incl_vat.toFixed(2) }}</p>
                     </section>
 
                     <AddProductCart :product="props.product" @closed="toggleOpen" />

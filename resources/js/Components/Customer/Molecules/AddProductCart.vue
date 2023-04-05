@@ -134,11 +134,11 @@ function submit() {
             <Alert class="mt-4" :error="error" v-if="showError" />
             <div class="flex flex-row gap-4 mt-8">
                 <button @click.prevent="submit"
-                    class="w-[90%] flex items-center justify-center rounded-md border border-transparent bg-indigo-600 py-3 px-8 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">Add
+                    class="w-[90%] flex items-center justify-center rounded-md border border-transparent bg-indigo-600 py-3 px-3 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">Add
                     to bag</button>
                 <input :id="`quantity-${props.product.sku.id}`" :name="`quantity-${props.product.sku.id}`" type="number"
                     min="1" :max="product.sku.amount"
-                    class="rounded-md border border-gray-300 text-left text-base font-medium text-gray-700 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 sm:text-sm"
+                    class="rounded-md border border-gray-300 w-[20%] text-left text-base font-medium text-gray-700 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 sm:text-sm"
                     v-model="amount" />
             </div>
             <p class="absolute top-4 left-4 text-center sm:static sm:mt-8">
