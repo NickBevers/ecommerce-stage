@@ -13,12 +13,20 @@ import { useCartStore } from '@/Stores/cart'
 
 const props = defineProps({
     cart: {
-        type: Array,
+        type: Object,
+        required: true,
+    },
+    addresses: {
+        type: Object,
+        required: true,
+    },
+    paymentTypes: {
+        type: Object,
         required: true,
     },
 })
 
-console.log(props.cart)
+console.log(props.paymentTypes)
 
 const cartStore = useCartStore()
 
@@ -26,15 +34,7 @@ let subTotal = ref(0)
 let taxes = ref(0)
 let total = ref(0)
 
-const deliveryMethods = [
-    { id: 1, title: 'Home', turnaround: 'home adress', number: '12', city: 'city' },
-    { id: 2, title: 'Point', turnaround: 'another adress', number: '12', city: 'city' },
-]
-const paymentMethods = [
-    { id: 'credit-card', title: 'Credit card' },
-    { id: 'paypal', title: 'PayPal' },
-    { id: 'invoice', title: 'Invoice' },
-]
+const selected = ref()
 
 const countries = [
     { name: 'Belgium', code: 'BE' },
@@ -52,7 +52,7 @@ const countries = [
     { name: 'United Kingdom', code: 'GB' },
 ]
 
-const selectedDeliveryMethod = ref(deliveryMethods[0])
+const selectedDeliveryMethod = ref(props.addresses[0])
 
 function getTotal() {
     subTotal.value = 0
@@ -125,7 +125,7 @@ onMounted(() => {
                                         </RadioGroupLabel>
 
                                         <div class="mt-4 grid grid-cols-1 gap-y-6 sm:grid-cols-2 sm:gap-x-4">
-                                            <RadioGroupOption as="template" v-for="deliveryMethod in deliveryMethods"
+                                            <RadioGroupOption as="template" v-for="deliveryMethod in props.addresses"
                                                 :key="deliveryMethod.id" :value="deliveryMethod"
                                                 v-slot="{ checked, active }">
                                                 <div
@@ -134,14 +134,18 @@ onMounted(() => {
                                                         <span class="flex flex-col">
                                                             <RadioGroupLabel as="span"
                                                                 class="block text-sm font-medium text-gray-900">{{
-                                                                    deliveryMethod.title }}</RadioGroupLabel>
+                                                                    deliveryMethod.address_type }}</RadioGroupLabel>
                                                             <RadioGroupDescription as="span"
                                                                 class="mt-1 flex items-center text-sm text-gray-500">{{
-                                                                    deliveryMethod.turnaround }}, {{ deliveryMethod.number }}
+                                                                    deliveryMethod.address_line1 }}
                                                             </RadioGroupDescription>
                                                             <RadioGroupDescription as="span"
                                                                 class="mt-1 flex items-center text-sm text-gray-500">{{
-                                                                    deliveryMethod.city }}</RadioGroupDescription>
+                                                                    deliveryMethod.city }}, {{ deliveryMethod.postal_code }}
+                                                            </RadioGroupDescription>
+                                                            <RadioGroupDescription as="span"
+                                                                class="mt-1 flex items-center text-sm text-gray-500">{{
+                                                                    deliveryMethod.country }}</RadioGroupDescription>
                                                         </span>
                                                     </span>
                                                     <CheckCircleIcon v-if="checked" class="h-5 w-5 text-indigo-600"
@@ -264,59 +268,33 @@ onMounted(() => {
 
                                 <fieldset class="mt-4">
                                     <legend class="sr-only">Payment type</legend>
-                                    <div class="space-y-4 sm:flex sm:items-center sm:space-x-10 sm:space-y-0">
-                                        <div v-for="(paymentMethod, paymentMethodIdx) in paymentMethods"
-                                            :key="paymentMethod.id" class="flex items-center">
-                                            <input v-if="paymentMethodIdx === 0" :id="paymentMethod.id" name="payment-type"
-                                                type="radio" checked=""
-                                                class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-500" />
-                                            <input v-else :id="paymentMethod.id" name="payment-type" type="radio"
-                                                class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-500" />
-                                            <label :for="paymentMethod.id"
-                                                class="ml-3 block text-sm font-medium text-gray-700">{{ paymentMethod.title
-                                                }}</label>
+
+                                    <RadioGroup v-model="selected">
+                                        <RadioGroupLabel class="sr-only"> Payment </RadioGroupLabel>
+                                        <div class="relative -space-y-px rounded-md bg-white">
+                                            <RadioGroupOption as="template" v-for="(plan, planIdx) in props.paymentTypes"
+                                                :key="plan.id" :value="plan" v-slot="{ checked, active }">
+                                                <div
+                                                    :class="[planIdx === 0 ? 'rounded-tl-md rounded-tr-md text-right' : '', planIdx === props.paymentTypes.length - 1 ? 'rounded-bl-md rounded-br-md' : '', checked ? 'z-10 border-indigo-200 bg-indigo-50' : 'border-gray-200', 'relative flex cursor-pointer flex-col border p-4 focus:outline-none md:grid md:grid-cols-2 md:pl-4 md:pr-6']">
+                                                    <span class="flex items-center text-sm">
+                                                        <span
+                                                            :class="[checked ? 'bg-indigo-600 border-transparent' : 'bg-white border-gray-300', active ? 'ring-2 ring-offset-2 ring-indigo-600' : '', 'h-4 w-4 rounded-full border flex items-center justify-center']"
+                                                            aria-hidden="true">
+                                                            <span class="rounded-full bg-white w-1.5 h-1.5" />
+                                                        </span>
+                                                        <RadioGroupLabel as="span"
+                                                            :class="[checked ? 'text-indigo-900' : 'text-gray-900', 'ml-3 font-medium']">
+                                                            {{ plan.name }}</RadioGroupLabel>
+                                                    </span>
+                                                    <RadioGroupDescription as="span"
+                                                        :class="[checked ? 'text-indigo-700' : 'text-gray-500', 'ml-6 pl-1 text-sm md:ml-0 md:pl-0 md:text-right']">
+                                                        {{ plan.description }}
+                                                    </RadioGroupDescription>
+                                                </div>
+                                            </RadioGroupOption>
                                         </div>
-                                    </div>
+                                    </RadioGroup>
                                 </fieldset>
-
-                                <div class="mt-6 grid grid-cols-4 gap-x-4 gap-y-6">
-                                    <div class="col-span-4">
-                                        <label for="card-number" class="block text-sm font-medium text-gray-700">Card
-                                            number</label>
-                                        <div class="mt-1">
-                                            <input type="text" id="card-number" name="card-number" autocomplete="cc-number"
-                                                class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" />
-                                        </div>
-                                    </div>
-
-                                    <div class="col-span-4">
-                                        <label for="name-on-card" class="block text-sm font-medium text-gray-700">Name on
-                                            card</label>
-                                        <div class="mt-1">
-                                            <input type="text" id="name-on-card" name="name-on-card" autocomplete="cc-name"
-                                                class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" />
-                                        </div>
-                                    </div>
-
-                                    <div class="col-span-3">
-                                        <label for="expiration-date"
-                                            class="block text-sm font-medium text-gray-700">Expiration
-                                            date (MM/YY)</label>
-                                        <div class="mt-1">
-                                            <input type="text" name="expiration-date" id="expiration-date"
-                                                autocomplete="cc-exp"
-                                                class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" />
-                                        </div>
-                                    </div>
-
-                                    <div>
-                                        <label for="cvc" class="block text-sm font-medium text-gray-700">CVC</label>
-                                        <div class="mt-1">
-                                            <input type="text" name="cvc" id="cvc" autocomplete="csc"
-                                                class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" />
-                                        </div>
-                                    </div>
-                                </div>
                             </div>
                         </div>
 
