@@ -21,10 +21,7 @@ class AddressController extends Controller
         $request->merge(['user_id' => auth()->user()->id]);
         $address = Address::create($request->all());
 
-        return Inertia::render('Customer/Address/Address', [
-            'address' => $address,
-            'success' => 'Address created successfully',
-        ]);
+        return $address;
     }
 
     public function update(AddressValidationRequest $request, Address $shippingAddress)

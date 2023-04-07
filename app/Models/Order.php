@@ -12,10 +12,20 @@ class Order extends Model
 {
     protected $fillable = [
         'user_id',
+        'total_price',
         'shipping_address_id',
         'billing_address_id',
-        'payment_method',
-        'status',
+        'order_date',
+        'order_status',
+        'preferred_delivery_date',
+        'payment_type_id',
+        'tracking_number',
+        'tracking_url',
+        'shipped_at',
+        'firstname',
+        'lastname',
+        'phone_number',
+        'email',
     ];
 
     protected $casts = [

@@ -16,7 +16,7 @@ class OrderValidationRequest extends FormRequest
         return [
             'user_id' => 'required',
             'total_price' => 'required',
-            'preferred_delivery_date' => 'required',
+            'shipping_address_id' => 'required|String',
             'billing_address_id' => 'String|nullable',
             'payment_type_id' => 'required',
             'skus' => 'array|required',

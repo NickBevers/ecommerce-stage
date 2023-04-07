@@ -20,4 +20,32 @@ class OrderController extends Controller
 
         return redirect()->route('orders.show', $order->id);
     }
+
+    public function updateTracking(Request $request, Order $order)
+    {
+        $request->validate([
+            'tracking_number' => 'required',
+            'tracking_url' => 'required',
+        ]);
+
+        $order->update([
+            'tracking_number' => $request->tracking_number,
+            'tracking_url' => $request->tracking_url,
+        ]);
+
+        return redirect()->route('orders.show', $order->id);
+    }
+
+    public function updateShippedAt(Request $request, Order $order)
+    {
+        $request->validate([
+            'shipped_at' => 'required',
+        ]);
+
+        $order->update([
+            'shipped_at' => $request->shipped_at,
+        ]);
+
+        return redirect()->route('orders.show', $order->id);
+    }
 }
