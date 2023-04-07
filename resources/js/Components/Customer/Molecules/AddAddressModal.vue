@@ -25,8 +25,6 @@ const countries = [
 ]
 
 const form = useForm({
-    first_name: '',
-    last_name: '',
     btw_number: '',
     address_line1: '',
     address_line2: '',
@@ -50,7 +48,6 @@ function submit() {
   })
   .then(response => response.json())
   .then(data => {
-    console.log('Success:', data);
     closed()
     emit('submitted', data)
   })
@@ -85,27 +82,6 @@ function submit() {
                                 </div>
                                 <h2 class="mt-4 text-lg font-medium text-gray-900">Add a new address</h2>
                                 <div class="mt-4 grid grid-cols-1 gap-y-6 sm:grid-cols-2 sm:gap-x-4">
-
-                                    <div>
-                                        <label for="first-name" class="block text-sm font-medium text-gray-700">First
-                                            name*</label>
-                                        <div class="mt-1">
-                                            <input type="text" id="first-name" name="first-name" autocomplete="given-name" required
-                                             v-model="form.first_name"
-                                                class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" />
-                                        </div>
-                                    </div>
-
-                                    <div>
-                                        <label for="last-name" class="block text-sm font-medium text-gray-700">Last
-                                            name*</label>
-                                        <div class="mt-1">
-                                            <input type="text" id="last-name" name="last-name" autocomplete="family-name" required
-                                            v-model="form.last_name"
-                                                class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" />
-                                        </div>
-                                    </div>
-
                                     <div class="sm:col-span-2">
                                         <label for="company" class="block text-sm font-medium text-gray-700">Company VAT</label>
                                         <div class="mt-1">
@@ -183,8 +159,7 @@ function submit() {
                             </div>
                             <div class="mt-5 sm:mt-6">
                                 <button type="submit"
-                                    class="inline-flex w-full justify-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                                    @click="submit();">Save</button>
+                                    class="inline-flex w-full justify-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Save</button>
                             </div>
                            </form>
                         </DialogPanel>

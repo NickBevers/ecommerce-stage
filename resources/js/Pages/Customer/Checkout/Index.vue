@@ -8,9 +8,10 @@ import {
     RadioGroupLabel,
     RadioGroupOption,
 } from '@headlessui/vue'
-import { CheckCircleIcon, ChevronDownIcon, PlusIcon } from '@heroicons/vue/20/solid'
+import { CheckCircleIcon, XCircleIcon, ChevronDownIcon, PlusIcon } from '@heroicons/vue/20/solid'
 import { useCartStore } from '@/Stores/cart'
 import { AddAddressModal } from '@/Components/Customer'
+import { useForm, usePage} from '@inertiajs/vue3'
 
 const props = defineProps({
     cart: {
@@ -27,7 +28,22 @@ const props = defineProps({
     },
 })
 
-console.log(props.addresses)
+const page = usePage()
+
+console.log(props.cart)
+
+const form = useForm({
+    total_price: '',
+    user_id: page.props.auth.user.id,
+    shipping_address_id: '',
+    billing_address_id: '',
+    payment_type_id: '',
+    first_name: '',
+    last_name: '',
+    skus: props.cart,
+    phone_number: '',
+    email: '',
+})
 
 const cartStore = useCartStore()
 
@@ -38,7 +54,9 @@ let total = ref(0)
 const selected = ref()
 const showAddressModal = ref(false)
 
-const selectedDeliveryMethod = ref(props.addresses[0])
+let errorShow = ref(false)
+let shippingError = ref(false)
+let paymentSelectError = ref(false)
 
 function getTotal() {
     subTotal.value = 0
@@ -68,40 +86,116 @@ function removeFromCart(id, product) {
         });
 }
 
-function handleNewAdress(address){
-   console.log('new adress'+ address)
-   props.addresses.push(address)
+function handleNewAdress(address) {
+    console.log('new adress' + address)
+    props.addresses.push(address)
 }
 
 onMounted(() => {
     getTotal()
+
+    if (props.addresses[0]) {
+        form.shipping_address_id = props.addresses[0].id.toString()
+        form.billing_address_id = props.addresses[0].id.toString()
+    }
 })
+
+function submit() {
+    errorShow.value=false
+    shippingError.value = false
+    paymentSelectError.value = false
+    if (form.shipping_address_id === '') {
+        window.scrollTo(0, 0)
+        shippingError.value = true
+        errorShow.value = true
+    }
+    if(form.payment_type_id === ''){
+        window.scrollTo(0, 0)
+        paymentSelectError.value = true
+        errorShow.value = true
+    }
+    
+    if(errorShow.value === false){
+        form.total_price = total.value
+
+
+        form.post(route('orders.store'), {
+            preserveScroll: true,
+            onSuccess: () => {
+              console.log('success')
+            },
+        })
+    }
+  
+ 
+}
 </script>
 <template>
     <GuestLayout>
-        <AddAddressModal class="z-20" v-if="showAddressModal" @closed="showAddressModal = false" @submitted="handleNewAdress"/>
+        <AddAddressModal class="z-20" v-if="showAddressModal" @closed="showAddressModal = false"
+            @submitted="handleNewAdress" />
         <div class=" bg-gray-50 pt-24">
             <main class="mx-auto max-w-7xl px-4 pb-24 pt-16 sm:px-6 lg:px-8">
                 <div class="mx-auto max-w-2xl lg:max-w-none">
                     <h1 class="sr-only">Checkout</h1>
 
-                    <form class="lg:grid lg:grid-cols-2 lg:gap-x-12 xl:gap-x-16">
+                    <div class="rounded-md bg-red-50 p-4 mb-8" v-if="errorShow">
+                        <div class="flex">
+                            <div class="flex-shrink-0">
+                                <XCircleIcon class="h-5 w-5 text-red-400" aria-hidden="true" />
+                            </div>
+                            <div class="ml-3">
+                                <h3 class="text-sm font-medium text-red-800">There were errors with your submission</h3>
+                                <div class="mt-2 text-sm text-red-700">
+                                    <ul role="list" class="list-disc space-y-1 pl-5">
+                                        <li v-if="shippingError">Select a shipping address</li>
+                                        <li v-if="paymentSelectError">Select a payment method</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+             
+                    <form class="lg:grid lg:grid-cols-2 lg:gap-x-12 xl:gap-x-16" @submit.prevent="submit">
                         <div>
                             <div>
                                 <h2 class="text-lg font-medium text-gray-900">Contact information</h2>
-                                {{ selectedDeliveryMethod.id }}
+                                <div class="grid grid-cols-2 gap-4">
+                                    <div class="mt-4">
+                                    <label for="first-name" class="block text-sm font-medium text-gray-700">First
+                                        name*</label>
+                                    <div class="mt-1">
+                                        <input type="text" id="first-name" name="first-name" autocomplete="given-name"
+                                            required v-model="form.first_name"
+                                            class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" />
+                                    </div>
+                                </div>
+
+                                <div class="mt-4">
+                                    <label for="last-name" class="block text-sm font-medium text-gray-700">Last
+                                        name*</label>
+                                    <div class="mt-1">
+                                        <input type="text" id="last-name" name="last-name" autocomplete="family-name"
+                                            required v-model="form.last_name"
+                                            class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" />
+                                    </div>
+                                </div>
+                                </div>
                                 <div class="mt-4">
                                     <label for="email-address" class="block text-sm font-medium text-gray-700">Email
                                         address</label>
                                     <div class="mt-1">
                                         <input type="email" id="email-address" name="email-address" autocomplete="email"
+                                            required v-model="form.email"
                                             class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" />
                                     </div>
                                 </div>
-                                <div class="sm:col-span-2 mt-8">
+                                <div class="sm:col-span-2 mt-4">
                                     <label for="phone" class="block text-sm font-medium text-gray-700">Phone</label>
                                     <div class="mt-1">
-                                        <input type="text" name="phone" id="phone" autocomplete="tel"
+                                        <input type="text" name="phone" id="phone" autocomplete="tel" required
+                                            v-model="form.phone_number"
+                                            pattern="\d{2,4}[\s-]?\d{6,8}"
                                             class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" />
                                     </div>
                                 </div>
@@ -109,14 +203,14 @@ onMounted(() => {
 
                             <div>
                                 <div class="mt-10 border-t border-gray-200 pt-10">
-                                    <RadioGroup v-model="selectedDeliveryMethod">
+                                    <RadioGroup v-model="form.shipping_address_id">
                                         <RadioGroupLabel class="text-lg font-medium text-gray-900">Shipping information
                                         </RadioGroupLabel>
 
                                         <div class="mt-4 grid grid-cols-1 gap-y-6 sm:grid-cols-2 sm:gap-x-4">
                                             <RadioGroupOption as="template" v-for="deliveryMethod in props.addresses"
-                                                :key="deliveryMethod.id" :value="deliveryMethod" v-if="props.addresses.length>0" 
-                                                v-slot="{ checked, active }">
+                                                :key="deliveryMethod.id" :value="deliveryMethod.id.toString()"
+                                                v-if="props.addresses.length > 0" v-slot="{ checked, active }">
                                                 <div
                                                     :class="[checked ? 'border-transparent' : 'border-gray-300', active ? 'ring-2 ring-indigo-500' : '', 'relative flex cursor-pointer rounded-lg border bg-white p-4 shadow-sm focus:outline-none']">
                                                     <span class="flex flex-1">
@@ -169,12 +263,11 @@ onMounted(() => {
 
                                 <fieldset class="mt-4">
                                     <legend class="sr-only">Payment type</legend>
-
-                                    <RadioGroup v-model="selected">
+                                    <RadioGroup v-model="form.payment_type_id">
                                         <RadioGroupLabel class="sr-only"> Payment </RadioGroupLabel>
                                         <div class="relative -space-y-px rounded-md bg-white">
                                             <RadioGroupOption as="template" v-for="(plan, planIdx) in props.paymentTypes"
-                                                :key="plan.id" :value="plan" v-slot="{ checked, active }">
+                                                :key="plan.id" :value="plan.id" v-slot="{ checked, active }">
                                                 <div
                                                     :class="[planIdx === 0 ? 'rounded-tl-md rounded-tr-md text-right' : '', planIdx === props.paymentTypes.length - 1 ? 'rounded-bl-md rounded-br-md' : '', checked ? 'z-10 border-indigo-200 bg-indigo-50' : 'border-gray-200', 'relative flex cursor-pointer flex-col border p-4 focus:outline-none md:grid md:grid-cols-2 md:pl-4 md:pr-6']">
                                                     <span class="flex items-center text-sm">
