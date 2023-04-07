@@ -3,7 +3,7 @@
 import { ref } from 'vue'
 import { Dialog, DialogPanel, DialogTitle, TransitionChild, TransitionRoot } from '@headlessui/vue'
 import { HomeIcon } from '@heroicons/vue/24/outline'
-import { Link, useForm } from '@inertiajs/vue3';
+import { Link, useForm, router } from '@inertiajs/vue3';
 
 const open = ref(true)
 const emit = defineEmits(['closed'])
@@ -27,11 +27,13 @@ const countries = [
 const form = useForm({
     first_name: '',
     last_name: '',
-    company: '',
+    btw_number: '',
     address_line1: '',
     address_line2: '',
+    address_type: 'shipping',
     city: '',
     postal_code: '',
+    country: countries[0].code,
 })
 
 function closed() {
@@ -40,6 +42,10 @@ function closed() {
 
 function submit() {
     console.log("submit")
+    console.log(form)
+
+    //submit form to backend using Inertia
+    router.post(route('addresses.store'), form)
 }
 
 </script>
@@ -61,8 +67,8 @@ function submit() {
                         leave-to="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95">
                         <DialogPanel
                             class="relative transform overflow-hidden rounded-lg bg-white px-4 pb-4 pt-5 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg sm:p-6">
+                            <form>
                             <div>
-
                                 <div class="flex h-12 w-12 items-center justify-center rounded-full bg-indigo-100">
                                     <HomeIcon class="h-6 w-6 text-indigo-600" aria-hidden="true" />
                                 </div>
@@ -73,7 +79,8 @@ function submit() {
                                         <label for="first-name" class="block text-sm font-medium text-gray-700">First
                                             name*</label>
                                         <div class="mt-1">
-                                            <input type="text" id="first-name" name="first-name" autocomplete="given-name"
+                                            <input type="text" id="first-name" name="first-name" autocomplete="given-name" required
+                                             v-model="form.first_name"
                                                 class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" />
                                         </div>
                                     </div>
@@ -82,15 +89,17 @@ function submit() {
                                         <label for="last-name" class="block text-sm font-medium text-gray-700">Last
                                             name*</label>
                                         <div class="mt-1">
-                                            <input type="text" id="last-name" name="last-name" autocomplete="family-name"
+                                            <input type="text" id="last-name" name="last-name" autocomplete="family-name" required
+                                            v-model="form.last_name"
                                                 class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" />
                                         </div>
                                     </div>
 
                                     <div class="sm:col-span-2">
-                                        <label for="company" class="block text-sm font-medium text-gray-700">Company</label>
+                                        <label for="company" class="block text-sm font-medium text-gray-700">Company VAT</label>
                                         <div class="mt-1">
-                                            <input type="text" name="company" id="company"
+                                            <input type="text" name="company" id="company" 
+                                            v-model="form.btw_number"
                                                 class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" />
                                         </div>
                                     </div>
@@ -100,6 +109,7 @@ function submit() {
                                             class="block text-sm font-medium text-gray-700">Address*</label>
                                         <div class="mt-1">
                                             <input type="text" name="address" id="address" autocomplete="street-address"
+                                            v-model="form.address_line1" required
                                                 class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" />
                                         </div>
                                     </div>
@@ -111,6 +121,7 @@ function submit() {
                                             etc.*</label>
                                         <div class="mt-1">
                                             <input type="text" name="apartment" id="apartment"
+                                            v-model="form.address_line2" required
                                                 class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" />
                                         </div>
                                     </div>
@@ -119,6 +130,7 @@ function submit() {
                                         <label for="city" class="block text-sm font-medium text-gray-700">City*</label>
                                         <div class="mt-1">
                                             <input type="text" name="city" id="city" autocomplete="address-level2"
+                                            v-model="form.city" required
                                                 class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" />
                                         </div>
                                     </div>
@@ -127,9 +139,10 @@ function submit() {
                                         <label for="country"
                                             class="block text-sm font-medium text-gray-700">Country*</label>
                                         <div class="mt-1">
-                                            <select id="country" name="country" autocomplete="country-name"
+                                            <select id="country" name="country" autocomplete="country-name" v-model="form.country"
+                                            required
                                                 class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
-                                                <option v-for="country in countries">{{ country.name }}</option>
+                                                <option v-for="country in countries" :value="country.code">{{ country.name }}</option>
                                             </select>
                                         </div>
                                     </div>
@@ -139,6 +152,7 @@ function submit() {
                                             Province</label>
                                         <div class="mt-1">
                                             <input type="text" name="region" id="region" autocomplete="address-level1"
+                                            v-model="form.state"
                                                 class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" />
                                         </div>
                                     </div>
@@ -147,18 +161,21 @@ function submit() {
                                         <label for="postal-code" class="block text-sm font-medium text-gray-700">Postal
                                             code*</label>
                                         <div class="mt-1">
-                                            <input type="text" name="postal-code" id="postal-code"
+                                            <input type="number" name="postal-code" id="postal-code"
                                                 autocomplete="postal-code"
+                                                required
+                                                v-model="form.postal_code"
                                                 class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" />
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <div class="mt-5 sm:mt-6">
-                                <button type="button"
+                                <button type="submit"
                                     class="inline-flex w-full justify-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                                     @click="submit();">Save</button>
                             </div>
+                           </form>
                         </DialogPanel>
                     </TransitionChild>
                 </div>

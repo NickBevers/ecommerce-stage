@@ -27,7 +27,7 @@ const props = defineProps({
     },
 })
 
-console.log(props.paymentTypes)
+console.log(props.addresses)
 
 const cartStore = useCartStore()
 
@@ -62,8 +62,6 @@ function removeFromCart(id, product) {
             cartStore.setCount(cartStore.count - product.amount)
             props.cart.splice(props.cart.indexOf(product), 1)
             getTotal()
-
-
         })
         .catch((error) => {
             console.error('There has been a problem with your fetch operation:', error);
