@@ -6,7 +6,7 @@ import { HomeIcon } from '@heroicons/vue/24/outline'
 import { Link, useForm, router } from '@inertiajs/vue3';
 
 const open = ref(true)
-const emit = defineEmits(['closed'])
+const emit = defineEmits(['closed', 'submitted'])
 
 const countries = [
     { name: 'Belgium', code: 'BE' },
@@ -41,11 +41,22 @@ function closed() {
 }
 
 function submit() {
-    console.log("submit")
-    console.log(form)
-
-    //submit form to backend using Inertia
-    router.post(route('addresses.store'), form)
+  fetch('/addresses', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(form)
+  })
+  .then(response => response.json())
+  .then(data => {
+    console.log('Success:', data);
+    closed()
+    emit('submitted', data)
+  })
+  .catch(error => {
+    console.error('Error:', error);
+  })
 }
 
 </script>
@@ -67,7 +78,7 @@ function submit() {
                         leave-to="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95">
                         <DialogPanel
                             class="relative transform overflow-hidden rounded-lg bg-white px-4 pb-4 pt-5 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg sm:p-6">
-                            <form>
+                            <form @submit.prevent="submit">
                             <div>
                                 <div class="flex h-12 w-12 items-center justify-center rounded-full bg-indigo-100">
                                     <HomeIcon class="h-6 w-6 text-indigo-600" aria-hidden="true" />

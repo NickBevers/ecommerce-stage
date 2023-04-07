@@ -21,7 +21,7 @@ class AddressController extends Controller
         $request->merge(['user_id' => auth()->user()->id]);
         $address = Address::create($request->all());
 
-        return $address;
+        return response()->json($address);
     }
 
     public function update(AddressValidationRequest $request, Address $shippingAddress)

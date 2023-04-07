@@ -68,13 +68,18 @@ function removeFromCart(id, product) {
         });
 }
 
+function handleNewAdress(address){
+   console.log('new adress'+ address)
+   props.addresses.push(address)
+}
+
 onMounted(() => {
     getTotal()
 })
 </script>
 <template>
     <GuestLayout>
-        <AddAddressModal class="z-20" v-if="showAddressModal" @closed="showAddressModal = false" />
+        <AddAddressModal class="z-20" v-if="showAddressModal" @closed="showAddressModal = false" @submitted="handleNewAdress"/>
         <div class=" bg-gray-50 pt-24">
             <main class="mx-auto max-w-7xl px-4 pb-24 pt-16 sm:px-6 lg:px-8">
                 <div class="mx-auto max-w-2xl lg:max-w-none">
@@ -84,7 +89,7 @@ onMounted(() => {
                         <div>
                             <div>
                                 <h2 class="text-lg font-medium text-gray-900">Contact information</h2>
-
+                                {{ selectedDeliveryMethod.id }}
                                 <div class="mt-4">
                                     <label for="email-address" class="block text-sm font-medium text-gray-700">Email
                                         address</label>
@@ -110,7 +115,7 @@ onMounted(() => {
 
                                         <div class="mt-4 grid grid-cols-1 gap-y-6 sm:grid-cols-2 sm:gap-x-4">
                                             <RadioGroupOption as="template" v-for="deliveryMethod in props.addresses"
-                                                :key="deliveryMethod.id" :value="deliveryMethod"
+                                                :key="deliveryMethod.id" :value="deliveryMethod" v-if="props.addresses.length>0" 
                                                 v-slot="{ checked, active }">
                                                 <div
                                                     :class="[checked ? 'border-transparent' : 'border-gray-300', active ? 'ring-2 ring-indigo-500' : '', 'relative flex cursor-pointer rounded-lg border bg-white p-4 shadow-sm focus:outline-none']">
