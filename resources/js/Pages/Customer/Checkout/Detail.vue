@@ -12,20 +12,31 @@ const props = defineProps({
         type: Object,
         required: true,
     },
+    shipping_address: {
+        type: Object,
+        required: true,
+    },
+    billing_address: {
+        type: Object,
+        required: true,
+    },
 })
 
 let subTotal = ref(0)
 
 onMounted(() => {
-    //loop through props.order.skus and add the amount to subTotal
     props.order.skus.forEach((sku) => {
-        subTotal.value += sku.amount
+        subTotal.value += (sku.pivot.amount * sku.price_excl_vat)
     })
 })
 
 console.log(props.order)
 
 console.log(props.skus)
+
+console.log(props.shipping_address)
+
+console.log(props.billing_address)
 </script>
 <template>
     <GuestLayout>
@@ -45,28 +56,37 @@ console.log(props.skus)
                             hang
                             tight and we’ll send you confirmation very soon!</p>
 
-                        <!-- <dl class="mt-16 text-sm font-medium">
-                                                                                                        <dt class="text-gray-900">Tracking number</dt>
-                                                                                                                        <dd class="mt-2 text-indigo-600">51547878755545848512</dd>
-                                                                                                                        </dl> -->
+                        <dl class="mt-16 text-sm font-medium">
+                            <dt class="text-gray-900">Tracking number</dt>
+                            <dd class="mt-2 text-indigo-600">..</dd>
+                        </dl>
 
                         <ul role="list"
                             class="mt-6 divide-y divide-gray-200 border-t border-gray-200 text-sm font-medium text-gray-500">
                             <li v-for="product in props.skus" :key="product.id" class="flex space-x-6 py-6">
                                 <img :src="product.product_images[0].image_link" :alt="product.product_images[0].alt"
                                     class="h-24 w-24 flex-none rounded-md bg-gray-100 object-cover object-center" />
-                                <div class="flex-auto space-y-1">
-                                    <h3 class="text-gray-900">
-                                        <Link :href="'/product/' + product.sku">{{ product.product.title }}</Link>
-                                    </h3>
-                                    <span class="text-sm text-gray-500">{{
-                                        product.product.description.length > 30
-                                        ? product.product.description.slice(0, 30) + "..."
-                                        : product.product.description
-                                    }}</span>
+                                <div class="flex flex-col justify-between w-full">
+                                    <div class="flex flex-row ">
+                                        <div class="flex-auto space-y-1">
+                                            <h3 class="text-gray-900">
+                                                <Link :href="'/product/' + product.sku">{{ product.product.title }}</Link>
+                                            </h3>
+                                            <span class="text-sm text-gray-500">{{
+                                                product.product.description.length > 30
+                                                ? product.product.description.slice(0, 30) + "..."
+                                                : product.product.description
+                                            }}</span>
+                                        </div>
+                                        <p class="flex-none font-medium text-gray-900">€{{ product.price_incl_vat.toFixed(2)
+                                        }}
+                                        </p>
+                                    </div>
+                                    <div class="w-full text-right">
+                                        <span class="text-gray-900">Quantity: {{ product.pivot.amount }}</span>
+                                    </div>
                                 </div>
-                                <p class="flex-none font-medium text-gray-900">€{{ product.price_incl_vat.toFixed(2) }}
-                                </p>
+
 
                             </li>
                         </ul>
@@ -74,7 +94,7 @@ console.log(props.skus)
                         <dl class="space-y-6 border-t border-gray-200 pt-6 text-sm font-medium text-gray-500">
                             <div class="flex justify-between">
                                 <dt>Subtotal</dt>
-                                <dd class="text-gray-900">{{ subTotal }}</dd>
+                                <dd class="text-gray-900">€{{ subTotal.toFixed(2) }}</dd>
                             </div>
 
                             <div class="flex justify-between">
@@ -84,7 +104,7 @@ console.log(props.skus)
 
                             <div class="flex justify-between">
                                 <dt>Taxes</dt>
-                                <dd class="text-gray-900">..</dd>
+                                <dd class="text-gray-900">€{{ (props.order.total_price - subTotal).toFixed(2) }}</dd>
                             </div>
 
                             <div class="flex items-center justify-between border-t border-gray-200 pt-6 text-gray-900">
@@ -98,36 +118,36 @@ console.log(props.skus)
                                 <dt class="font-medium text-gray-900">Shipping Address</dt>
                                 <dd class="mt-2">
                                     <address class="not-italic">
-                                        <span class="block">Kristin Watson</span>
-                                        <span class="block">7363 Cynthia Pass</span>
-                                        <span class="block">Toronto, ON N3Y 4H8</span>
+                                        <span class="block">{{ props.shipping_address.address_line1 }}</span>
+                                        <span class="block">{{ props.shipping_address.address_line2 }}</span>
+                                        <span class="block">{{ props.shipping_address.city }}, {{
+                                            props.shipping_address.postal_code
+                                        }}, {{ props.shipping_address.country }}</span>
                                     </address>
                                 </dd>
                             </div>
                             <div>
-                                <dt class="font-medium text-gray-900">Payment Information</dt>
-                                <dd class="mt-2 space-y-2 sm:flex sm:space-x-4 sm:space-y-0">
-                                    <div class="flex-none">
-                                        <svg aria-hidden="true" width="36" height="24" viewBox="0 0 36 24"
-                                            class="h-6 w-auto">
-                                            <rect width="36" height="24" rx="4" fill="#224DBA" />
-                                            <path
-                                                d="M10.925 15.673H8.874l-1.538-6c-.073-.276-.228-.52-.456-.635A6.575 6.575 0 005 8.403v-.231h3.304c.456 0 .798.347.855.75l.798 4.328 2.05-5.078h1.994l-3.076 7.5zm4.216 0h-1.937L14.8 8.172h1.937l-1.595 7.5zm4.101-5.422c.057-.404.399-.635.798-.635a3.54 3.54 0 011.88.346l.342-1.615A4.808 4.808 0 0020.496 8c-1.88 0-3.248 1.039-3.248 2.481 0 1.097.969 1.673 1.653 2.02.74.346 1.025.577.968.923 0 .519-.57.75-1.139.75a4.795 4.795 0 01-1.994-.462l-.342 1.616a5.48 5.48 0 002.108.404c2.108.057 3.418-.981 3.418-2.539 0-1.962-2.678-2.077-2.678-2.942zm9.457 5.422L27.16 8.172h-1.652a.858.858 0 00-.798.577l-2.848 6.924h1.994l.398-1.096h2.45l.228 1.096h1.766zm-2.905-5.482l.57 2.827h-1.596l1.026-2.827z"
-                                                fill="#fff" />
-                                        </svg>
-                                        <p class="sr-only">Visa</p>
-                                    </div>
-                                    <div class="flex-auto">
-                                        <p class="text-gray-900">Ending with 4242</p>
-                                        <p>Expires 12 / 21</p>
-                                    </div>
+                                <dt class="font-medium text-gray-900">Billing Address</dt>
+                                <dd class="mt-2">
+                                    <address class="not-italic">
+                                        <span class="block">{{ props.billing_address.address_line1 }}</span>
+                                        <span class="block">{{ props.billing_address.address_line2 }}</span>
+                                        <span class="block">{{ props.billing_address.city }}, {{
+                                            props.billing_address.postal_code
+                                        }}, {{ props.billing_address.country }}</span>
+                                    </address>
                                 </dd>
                             </div>
+
                         </dl>
 
-                        <div class="mt-16 border-t border-gray-200 py-6 text-right">
-                            <a href="#" class="text-sm font-medium text-indigo-600 hover:text-indigo-500">
-                                Continue Shopping
+                        <div class="mt-6 border-t border-gray-200 py-6 flex justify-between">
+                            <Link href="/" class="text-sm font-medium text-indigo-600 hover:text-indigo-500">
+                            <span aria-hidden="true"> &larr; </span>
+                            Continue Shopping
+                            </Link>
+                            <a href="/orders" class="text-sm font-medium text-indigo-600 hover:text-indigo-500">
+                                Check your order status
                                 <span aria-hidden="true"> &rarr;</span>
                             </a>
                         </div>
