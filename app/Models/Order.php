@@ -59,4 +59,15 @@ class Order extends Model
         return $this->hasMany(ProductReturn::class);
     }
 
+    /*
+     * --------------------------------------------------------------------------
+     * SCOPES
+     * --------------------------------------------------------------------------
+     */
+
+    public function scopeWithRelations($query)
+    {
+        return $query->with('user', 'addresses', 'skus', 'productReturns');
+    }
+
 }
