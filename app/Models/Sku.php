@@ -82,7 +82,7 @@ class Sku extends Model
 
     public function orders(): BelongsToMany
     {
-        return $this->belongsToMany(Order::class, 'order_lines', 'sku_id', 'order_id');
+        return $this->belongsToMany(Order::class, 'order_lines', 'sku_id', 'order_id')->withPivot('amount', 'price', 'discount', 'product_name');
     }
 
     public function productReturns(): HasMany

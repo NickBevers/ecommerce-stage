@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Customer;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\OrderValidationRequest;
 use App\Models\Order;
+use App\Models\Address;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -31,9 +32,15 @@ class OrderController extends Controller
             ]);
         }
 
+        // return Inertia::render('Customer/Checkout/Detail', [
+        //     'order' => $order,
+        //     'skus' => $order->skus->load('productImages', 'product'), 
+        // ]);
         return Inertia::render('Customer/Checkout/Detail', [
             'order' => $order,
-            'skus' => $order->skus->load('productImages', 'product'), 
+            'shipping_address' => Address::where('id', $order->shipping_address_id)->first(),
+            'billing_address' => Address::where('id', $order->billing_address_id)->first(),
+            'skus' => $order->skus->load('productImages', 'product'),
         ]);
     }
 
