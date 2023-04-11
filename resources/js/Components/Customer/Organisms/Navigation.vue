@@ -208,27 +208,6 @@ function selectCategory(category_id) {
 
         <header class="relative">
             <nav aria-label="Top">
-                <!-- Top navigation -->
-                <div class="bg-gray-900">
-                    <div class="mx-auto flex h-10 max-w-7xl items-center justify-end px-4 sm:px-6 lg:px-8">
-                        <div class="flex items-center space-x-6">
-                            <div>
-                                <Link v-if="$page.props.auth.user" :href="route('dashboard')"
-                                    class="text-sm font-medium text-white hover:text-gray-100">
-                                Dashboard</Link>
-                                <template v-else>
-                                    <Link :href="route('register')"
-                                        class="text-sm font-medium mr-4 text-white hover:text-gray-100">
-                                    Create an account</Link>
-                                    <Link :href="route('login')"
-                                        class="text-sm  font-medium text-white hover:text-gray-100">
-                                    Sign in</Link>
-                                </template>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
                 <!-- Secondary navigation -->
                 <div class="bg-white">
                     <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -243,15 +222,15 @@ function selectCategory(category_id) {
 
                             <div class="hidden h-full lg:flex">
                                 <!-- Flyout menus -->
-                                <PopoverGroup class="inset-x-0 bottom-0 px-4">
-                                    <div class="flex h-full justify-center space-x-8">
-                                        <Popover v-for="category in categories" :key="category.name" class="flex"
-                                            v-slot="{ open }">
+                            <PopoverGroup class="inset-x-0 bottom-0 px-4">
+                                <div class="flex h-full justify-center space-x-8">
+                                    <Popover v-for="category in categories" :key="category.name" class="flex"
+                                        v-slot="{ open }">
                                             <div class="relative flex">
-                                            <PopoverButton @click="selectCategory(category.id)"
-                                                v-if="category.id === 1 || category.id === 2 || category.id === 3"
-                                                :class="[open ? 'text-indigo-600' : 'text-gray-700 hover:text-gray-800', 'relative flex items-center justify-center text-sm font-medium transition-colors duration-200 ease-out']">
-                                                {{ category.name }}
+                                                <PopoverButton @click="selectCategory(category.id)"
+                                                    v-if="category.id === 1 || category.id === 2 || category.id === 3"
+                                                    :class="[open ? 'text-indigo-600' : 'text-gray-700 hover:text-gray-800', 'relative flex items-center justify-center text-sm font-medium transition-colors duration-200 ease-out']">
+                                                    {{ category.name }}
                                                     <span
                                                         :class="[open ? 'bg-indigo-600' : '', 'absolute inset-x-0 -bottom-px z-20 h-0.5 transition duration-200 ease-out']"
                                                         aria-hidden="true" />
@@ -366,21 +345,16 @@ function selectCategory(category_id) {
                                     class="hidden text-sm font-medium text-gray-700 hover:text-gray-800 lg:block">Search</a>
 
                                 <div class="flex items-center lg:ml-8">
-                                    <!-- Help -->
-                                    <a href="#" class="p-2 text-gray-400 hover:text-gray-500 lg:hidden">
-                                        <span class="sr-only">Help</span>
-                                        <QuestionMarkCircleIcon class="h-6 w-6" aria-hidden="true" />
-                                    </a>
-                                    <a href="#"
-                                        class="hidden text-sm font-medium text-gray-700 hover:text-gray-800 lg:block">Help</a>
 
-                                    <div class="flow-root  lg:ml-8">
+
+
+                                    <div class="flow-root lg:ml-8">
                                         <!-- <Link href="/cart" class="group -m-2 flex items-center p-2">
-                                            <UserIcon class="h-6 w-6 flex-shrink-0 text-gray-400 group-hover:text-gray-500"
-                                                aria-hidden="true" />
-                                            <span class="sr-only">items in cart, view bag</span>
-                                            </Link> -->
-                                        <UserIconModal />
+                                                                        <UserIcon class="h-6 w-6 flex-shrink-0 text-gray-400 group-hover:text-gray-500"
+                                                                            aria-hidden="true" />
+                                                                        <span class="sr-only">items in cart, view bag</span>
+                                                                        </Link> -->
+                                        <UserIconModal class="group -m-2 flex items-center" :user="$page.props.auth.user" />
                                     </div>
                                     <div class="flow-root ml-4 ">
                                         <Link href="/wishlist" class="group -m-2 flex items-center p-2">
