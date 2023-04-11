@@ -20,6 +20,7 @@ export { default as ProductCartModal } from "./Molecules/ProductCartModal.vue";
 export { default as AddProductCart } from "./Molecules/AddProductCart.vue";
 export { default as DetailCart } from "./Molecules/DetailCart.vue";
 export { default as AddAddressModal } from "./Molecules/AddAddressModal.vue";
+export { default as AddBillingModal } from "./Molecules/AddBillingModal.vue";
 
 // Organisms
 export { default as CategoryPreview } from "./Organisms/CategoryPreview.vue";

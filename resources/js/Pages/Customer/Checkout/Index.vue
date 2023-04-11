@@ -10,8 +10,8 @@ import {
 } from '@headlessui/vue'
 import { CheckCircleIcon, XCircleIcon, ChevronDownIcon, PlusIcon } from '@heroicons/vue/20/solid'
 import { useCartStore } from '@/Stores/cart'
-import { AddAddressModal } from '@/Components/Customer'
-import { useForm, usePage} from '@inertiajs/vue3'
+import { AddAddressModal, AddBillingModal } from '@/Components/Customer'
+import { useForm, usePage } from '@inertiajs/vue3'
 
 const props = defineProps({
     cart: {
@@ -51,8 +51,9 @@ let subTotal = ref(0)
 let taxes = ref(0)
 let total = ref(0)
 
-const selected = ref()
+const billing = ref("Same as shipping address")
 const showAddressModal = ref(false)
+const showBillingModal = ref(false)
 
 let errorShow = ref(false)
 let shippingError = ref(false)
@@ -101,7 +102,7 @@ onMounted(() => {
 })
 
 function submit() {
-    errorShow.value=false
+    errorShow.value = false
     shippingError.value = false
     paymentSelectError.value = false
     if (form.shipping_address_id === '') {
@@ -109,31 +110,32 @@ function submit() {
         shippingError.value = true
         errorShow.value = true
     }
-    if(form.payment_type_id === ''){
+    if (form.payment_type_id === '') {
         window.scrollTo(0, 0)
         paymentSelectError.value = true
         errorShow.value = true
     }
-    
-    if(errorShow.value === false){
+
+    if (errorShow.value === false) {
         form.total_price = total.value
 
 
         form.post(route('orders.store'), {
             preserveScroll: true,
             onSuccess: () => {
-              console.log('success')
+                console.log('success')
             },
         })
     }
-  
- 
+
+
 }
 </script>
 <template>
     <GuestLayout>
         <AddAddressModal class="z-20" v-if="showAddressModal" @closed="showAddressModal = false"
             @submitted="handleNewAdress" />
+        <AddBillingModal class="z-20" v-if="showBillingModal" @closed="showBillingModal = false" />
         <div class=" bg-gray-50 pt-24">
             <main class="mx-auto max-w-7xl px-4 pb-24 pt-16 sm:px-6 lg:px-8">
                 <div class="mx-auto max-w-2xl lg:max-w-none">
@@ -155,31 +157,30 @@ function submit() {
                             </div>
                         </div>
                     </div>
-             
                     <form class="lg:grid lg:grid-cols-2 lg:gap-x-12 xl:gap-x-16" @submit.prevent="submit">
                         <div>
                             <div>
                                 <h2 class="text-lg font-medium text-gray-900">Contact information</h2>
                                 <div class="grid grid-cols-2 gap-4">
                                     <div class="mt-4">
-                                    <label for="first-name" class="block text-sm font-medium text-gray-700">First
-                                        name*</label>
-                                    <div class="mt-1">
-                                        <input type="text" id="first-name" name="first-name" autocomplete="given-name"
-                                            required v-model="form.first_name"
-                                            class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" />
+                                        <label for="first-name" class="block text-sm font-medium text-gray-700">First
+                                            name*</label>
+                                        <div class="mt-1">
+                                            <input type="text" id="first-name" name="first-name" autocomplete="given-name"
+                                                required v-model="form.first_name"
+                                                class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" />
+                                        </div>
                                     </div>
-                                </div>
 
-                                <div class="mt-4">
-                                    <label for="last-name" class="block text-sm font-medium text-gray-700">Last
-                                        name*</label>
-                                    <div class="mt-1">
-                                        <input type="text" id="last-name" name="last-name" autocomplete="family-name"
-                                            required v-model="form.last_name"
-                                            class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" />
+                                    <div class="mt-4">
+                                        <label for="last-name" class="block text-sm font-medium text-gray-700">Last
+                                            name*</label>
+                                        <div class="mt-1">
+                                            <input type="text" id="last-name" name="last-name" autocomplete="family-name"
+                                                required v-model="form.last_name"
+                                                class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" />
+                                        </div>
                                     </div>
-                                </div>
                                 </div>
                                 <div class="mt-4">
                                     <label for="email-address" class="block text-sm font-medium text-gray-700">Email
@@ -194,8 +195,7 @@ function submit() {
                                     <label for="phone" class="block text-sm font-medium text-gray-700">Phone</label>
                                     <div class="mt-1">
                                         <input type="text" name="phone" id="phone" autocomplete="tel" required
-                                            v-model="form.phone_number"
-                                            pattern="\d{2,4}[\s-]?\d{6,8}"
+                                            v-model="form.phone_number" pattern="\d{2,4}[\s-]?\d{6,8}"
                                             class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" />
                                     </div>
                                 </div>
@@ -217,10 +217,10 @@ function submit() {
                                                         <span class="flex flex-col">
                                                             <RadioGroupLabel as="span"
                                                                 class="block text-sm font-medium text-gray-900">{{
-                                                                    deliveryMethod.address_type }}</RadioGroupLabel>
+                                                                    deliveryMethod.address_line1 }},
+                                                                {{ deliveryMethod.address_line2 }}</RadioGroupLabel>
                                                             <RadioGroupDescription as="span"
-                                                                class="mt-1 flex items-center text-sm text-gray-500">{{
-                                                                    deliveryMethod.address_line1 }}
+                                                                class="mt-1 flex items-center text-sm text-gray-500">
                                                             </RadioGroupDescription>
                                                             <RadioGroupDescription as="span"
                                                                 class="mt-1 flex items-center text-sm text-gray-500">{{
@@ -252,7 +252,9 @@ function submit() {
                                         </div>
                                     </RadioGroup>
                                 </div>
-
+                                <div class="mt-10 text-center w-full">Billing address: <button
+                                        @click="showBillingModal = true" class="text-indigo-600">{{ billing }}</button>
+                                </div>
                             </div>
 
 
