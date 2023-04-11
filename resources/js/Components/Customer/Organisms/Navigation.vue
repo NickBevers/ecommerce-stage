@@ -99,7 +99,7 @@ const open = ref(false)
 const categories = ref([]);
 let selectedCategory = ref(null);
 
-onBeforeMount(async () => {
+onMounted(async () => {
     const response = await fetch('/subcategories');
     const categoriesData = await response.json();
     categoriesData.forEach(category => {
@@ -350,10 +350,10 @@ function selectCategory(category_id) {
 
                                     <div class="flow-root lg:ml-8">
                                         <!-- <Link href="/cart" class="group -m-2 flex items-center p-2">
-                                                                        <UserIcon class="h-6 w-6 flex-shrink-0 text-gray-400 group-hover:text-gray-500"
-                                                                            aria-hidden="true" />
-                                                                        <span class="sr-only">items in cart, view bag</span>
-                                                                        </Link> -->
+                                                                                    <UserIcon class="h-6 w-6 flex-shrink-0 text-gray-400 group-hover:text-gray-500"
+                                                                                        aria-hidden="true" />
+                                                                                    <span class="sr-only">items in cart, view bag</span>
+                                                                                    </Link> -->
                                         <UserIconModal class="group -m-2 flex items-center" :user="$page.props.auth.user" />
                                     </div>
                                     <div class="flow-root ml-4 ">
