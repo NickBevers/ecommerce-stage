@@ -51,6 +51,8 @@ Route::middleware(['auth', 'verified'])->group(function (){
 
 // All Admin Routes with middleware
 Route::middleware(['auth', 'admin'])->group(function () {
+
+    Route::get('/admin/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     // Admin Order Routes
     Route::post('/admin/orders/{order}', [AdminOrderController::class, 'update'])->name('admin.orders.update');
 
@@ -84,9 +86,11 @@ Route::middleware(['auth', 'admin'])->group(function () {
 
 // All routes where user has to be logged in
 Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::get('/profile', [ProfileController::class, 'userEdit'])->name('profile.userEdit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+    Route::get('/profile/password', [ProfileController::class, 'editPassword'])->name('profile.editPassword');
 
     // Customer Review Routes
     Route::post('/reviews', [CustomerReviewController::class, 'store'])->name('reviews.store');

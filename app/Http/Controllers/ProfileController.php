@@ -60,4 +60,24 @@ class ProfileController extends Controller
 
         return Redirect::to('/');
     }
+
+    /**
+     * Edit user 
+     */
+
+     public function userEdit(Request $request): Response
+    {
+        return Inertia::render('Customer/Profile/Index', [
+            'mustVerifyEmail' => $request->user() instanceof MustVerifyEmail,
+            'status' => session('status'),
+        ]);
+    }
+
+    public function editPassword(Request $request): Response
+    {
+        return Inertia::render('Customer/Profile/Details/Password', [
+            'mustVerifyEmail' => $request->user() instanceof MustVerifyEmail,
+            'status' => session('status'),
+        ]);
+    }
 }
