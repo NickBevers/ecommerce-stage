@@ -5,9 +5,29 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Order;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
 
 class OrderController extends Controller
 {
+    public function index()
+    {
+        $orders = Order::all();
+        foreach ($orders as $order) {
+            $order->withRelations();
+        }
+
+        return Inertia::render('Admin/Orders/Index', [
+            'orders' => $orders,
+        ]);
+    }
+
+    public function show(Order $order)
+    {
+        return Inertia::render('Admin/Orders/Detail', [
+            'order' => $order->withRelations(),
+        ]);
+    }
+
     public function update(Request $request, Order $order)
     {
         $request->validate([

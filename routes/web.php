@@ -16,6 +16,7 @@ use App\Http\Controllers\Customer\WishlistController;
 use App\Http\Controllers\Product\SkuController as ProductSkuController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\Admin\UserController as AdminUserController;
 use App\Models\PaymentType;
 use App\Services\SubCategoryService;
 use App\Services\VatService;
@@ -70,6 +71,12 @@ Route::middleware(['auth', 'admin'])->group(function () {
     // Admin Review Routes
     Route::get('/admin/reviews/{sku}', [AdminReviewController::class, 'getAllReviews'])->name('reviews.index');
     Route::get('/admin/reviews/toggle/{sku}', [AdminReviewController::class, 'toggleInactive'])->name('reviews.create');
+
+    // Admin User Routes
+    Route::get('/admin/users', [AdminUserController::class, 'index'])->name('admin.users.index');
+
+    // Admin Order Routes
+    Route::get('/admin/orders', [AdminOrderController::class, 'index'])->name('admin.orders.index');
 
     // Admin Promo Routes
     Route::get('/promos/create', [PromoController::class, 'create'])->name('promos.create');
