@@ -16,6 +16,9 @@ const props = defineProps({
     brands: Array,
     categories: Array,
     attributeTypes: Array,
+    sizeVar: Boolean,
+    colorVar: Boolean,
+    materialVar: Boolean,
 });
 
 let checkedFilters = reactive([])
@@ -323,16 +326,14 @@ function submit() {
                                                             <div class="space-y-4">
                                                                 <div v-for="item in attribute.attributeValues"
                                                                     :key="item.id" class="flex items-center">
-
-
-                                                                    <input v-if="attribute.name === 'Size'"
+                                                                    <input v-if="attribute.name === 'size'"
                                                                         :id="`filter-${item.id}`" :name="`${item.id}`"
                                                                         :value="item.name" type="checkbox"
                                                                         @click.self="addCheckedFilter(attribute.name, item.name)"
                                                                         v-model="variationForm.sizes" required
                                                                         :checked="isChecked(attribute.name, item.name)"
                                                                         class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500" />
-                                                                    <input v-else-if="attribute.name === 'Color'"
+                                                                    <input v-else-if="attribute.name === 'color'"
                                                                         :id="`filter-${item.id}`" :name="`${item.id}`"
                                                                         :value="item.name" type="radio"
                                                                         v-model="variationForm.color" required
@@ -367,12 +368,12 @@ function submit() {
                                     <div class="-m-1 flex flex-wrap items-center">
                                         <span v-for="(select, key) in checkedFilters" :key="key"
                                             class="m-1 inline-flex items-center rounded-lg border border-gray-200 bg-gray-50 py-1.5 pl-3 pr-2 text-sm font-medium text-gray-900">
-                                            <span v-if="select.Size !== undefined">Size: {{ select.Size.join(', ')
+                                            <span v-if="select.size !== undefined">Size: {{ select.size.join(', ')
                                             }}</span>
-                                            <span v-if="select.Color !== undefined">Color: {{
-                                                select.Color.join(',') }}</span>
-                                            <span v-if="select.Material !== undefined">Material: {{
-                                                select.Material.join(',') }}</span>
+                                            <span v-if="select.color !== undefined">Color: {{
+                                                select.color.join(',') }}</span>
+                                            <span v-if="select.material !== undefined">Material: {{
+                                                select.material.join(',') }}</span>
                                         </span>
                                     </div>
                                 </div>
