@@ -80,4 +80,12 @@ class ProfileController extends Controller
             'status' => session('status'),
         ]);
     }
+
+    public function editAdvanced(Request $request): Response
+    {
+        return Inertia::render('Customer/Profile/Details/Advanced', [
+            'mustVerifyEmail' => $request->user() instanceof MustVerifyEmail,
+            'status' => session('status'),
+        ]);
+    }
 }

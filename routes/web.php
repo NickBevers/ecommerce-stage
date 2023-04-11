@@ -91,6 +91,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     Route::get('/profile/password', [ProfileController::class, 'editPassword'])->name('profile.editPassword');
+    Route::get('/profile/advanced', [ProfileController::class, 'editAdvanced'])->name('profile.editAdvanced');
 
     // Customer Review Routes
     Route::post('/reviews', [CustomerReviewController::class, 'store'])->name('reviews.store');
