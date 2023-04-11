@@ -23,13 +23,17 @@ class OrderController extends Controller
         $order = Order::create($request->validated());
 
         foreach ($request->skus as $sku) {
+            $product_name = $sku['sku']['product']['title'];
             $order->skus()->attach($sku['id'], [
                 'amount' => $sku['amount'],
-                'price' => $sku['price'],
+                'product_name' => $product_name,
+//                'price' => $sku['price'],
             ]);
         }
 
-        return redirect()->route('orders.show', $order->id);
+        return Inertia::render('Orders/Detail', [
+            'order' => $order,
+        ]);
     }
 
     public function show(Order $order)

@@ -10,6 +10,9 @@ const props = defineProps({
 });
 
 let variation = ref(false);
+let sizeVariation = ref(false);
+let colorVariation = ref(false);
+let materialVariation = ref(false);
 
 </script>
 <template>
@@ -26,6 +29,6 @@ let variation = ref(false);
         <SimpleProductForm v-if="!variation" :brands="props.brands" :categories="props.categories"
             :attributeTypes="props.attributeTypes" />
         <VariationForm v-else :brands="props.brands" :categories="props.categories"
-            :attributeTypes="props.attributeTypes" />
+            :attributeTypes="props.attributeTypes" :sizeVar="sizeVariation" :colorVar="colorVariation" :materialVar="materialVariation" />
     </AuthenticatedLayout>
 </template>
