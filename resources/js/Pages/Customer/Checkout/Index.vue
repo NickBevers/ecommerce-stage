@@ -92,6 +92,12 @@ function handleNewAdress(address) {
     props.addresses.push(address)
 }
 
+function handleBillingAdress(address) {
+    console.log('new billing ' + address)
+    form.billing_address_id = address.id.toString()
+    billing.value = address.address_line1 + ' ' + address.address_line2 + ', ' + address.city + ', ' + address.country
+}
+
 onMounted(() => {
     getTotal()
 
@@ -135,7 +141,8 @@ function submit() {
     <GuestLayout>
         <AddAddressModal class="z-20" v-if="showAddressModal" @closed="showAddressModal = false"
             @submitted="handleNewAdress" />
-        <AddBillingModal class="z-20" v-if="showBillingModal" @closed="showBillingModal = false" />
+        <AddBillingModal class="z-20" v-if="showBillingModal" @closed="showBillingModal = false"
+            @submitted="handleBillingAdress" :addresses="props.addresses" />
         <div class=" bg-gray-50 pt-24">
             <main class="mx-auto max-w-7xl px-4 pb-24 pt-16 sm:px-6 lg:px-8">
                 <div class="mx-auto max-w-2xl lg:max-w-none">
