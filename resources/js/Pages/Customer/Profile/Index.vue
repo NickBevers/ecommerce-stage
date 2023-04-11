@@ -8,14 +8,13 @@ import {
     KeyIcon,
     SquaresPlusIcon,
     UserCircleIcon,
+    CogIcon,
 } from '@heroicons/vue/24/outline'
 
 const subNavigation = [
     { name: 'User', href: '/profile', icon: UserCircleIcon, current: false },
     { name: 'Password', href: '/profile/password', icon: KeyIcon, current: false },
-    { name: 'Notifications', href: '#', icon: BellIcon, current: false },
-    { name: 'Plan & Billing', href: '/profile/billing', icon: CreditCardIcon, current: false },
-    { name: 'Integrations', href: '#', icon: SquaresPlusIcon, current: false },
+    { name: 'Advanced', href: '/profile/advanced', icon: CogIcon, current: false },
 ]
 
 const currentPath = window.location.pathname;
