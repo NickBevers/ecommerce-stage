@@ -31,8 +31,9 @@ class OrderController extends Controller
             ]);
         }
 
-        return Inertia::render('Orders/Detail', [
+        return Inertia::render('Customer/Checkout/Detail', [
             'order' => $order,
+            'skus' => $order->skus->load('productImages', 'product'), 
         ]);
     }
 

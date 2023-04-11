@@ -259,7 +259,7 @@ function submit() {
                                         </div>
                                     </RadioGroup>
                                 </div>
-                                <div class="mt-10 text-center w-full">Billing address: <button
+                                <div class="mt-10 text-left w-full">Billing address: <button
                                         @click="showBillingModal = true" class="text-indigo-600">{{ billing }}</button>
                                 </div>
                             </div>
