@@ -19,7 +19,7 @@ import { ChevronRightIcon, ChevronUpDownIcon, EllipsisVerticalIcon, MagnifyingGl
 const navigation = [
   { name: 'Overview', href: '/admin/dashboard', icon: ChartPieIcon, current: false },
   { name: 'Products', href: '/admin/products', icon: ShoppingBagIcon, current: false },
-  { name: 'Orders', href: '/admin/products', icon: ClipboardIcon, current: false },
+  { name: 'Orders', href: '/admin/orders', icon: ClipboardIcon, current: false },
   { name: 'Reviews', href: '/admin/products', icon: StarIcon, current: false },
   { name: 'Customers', href: '/admin/products', icon: UsersIcon, current: false },
 ]

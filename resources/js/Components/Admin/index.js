@@ -29,3 +29,4 @@ export { default as ProductTable } from "./Organisms/ProductTable.vue";
 export { default as SimpleProductForm } from "./Organisms/SimpleProductForm.vue";
 export { default as SkuTable } from "./Organisms/SkuTable.vue";
 export { default as VariationForm } from "./Organisms/VariationForm.vue";
+export { default as OrderTable } from "./Organisms/OrderTable.vue";

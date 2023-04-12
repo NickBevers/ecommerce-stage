@@ -9,7 +9,6 @@ const props = defineProps({
   }
 })
 
-
 let showAll = ref(false);
 
 </script>
