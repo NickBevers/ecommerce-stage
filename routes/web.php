@@ -110,6 +110,7 @@ Route::middleware('auth')->group(function () {
 
     // Cart Routes
     Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
+    Route::get('/cart/products', [CartController::class, 'getProductsPerUser'])->name('cart.getProductsPerUser');
     Route::post('/cart', [CartController::class, 'store'])->name('cart.store');
     Route::patch('/cart/{sku}', [CartController::class, 'update'])->name('cart.update');
     Route::delete('/cart/{sku}', [CartController::class, 'destroy'])->name('cart.destroy');
