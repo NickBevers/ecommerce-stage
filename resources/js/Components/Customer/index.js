@@ -22,6 +22,7 @@ export { default as DetailCart } from "./Molecules/DetailCart.vue";
 export { default as AddAddressModal } from "./Molecules/AddAddressModal.vue";
 export { default as AddBillingModal } from "./Molecules/AddBillingModal.vue";
 export { default as UserIconModal } from "./Molecules/UserIconModal.vue";
+export { default as ShoppingCartModal } from "./Molecules/ShoppingCartModal.vue";
 
 // Organisms
 export { default as CategoryPreview } from "./Organisms/CategoryPreview.vue";
