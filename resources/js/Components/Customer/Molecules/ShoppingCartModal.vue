@@ -4,28 +4,7 @@ import { Popover, PopoverButton, PopoverPanel } from '@headlessui/vue'
 import { useProductStore } from '@/Stores/product.js';
 import { Link } from '@inertiajs/vue3'
 import { useCartStore } from '@/Stores/cart';
-import { onMounted, ref, reactive } from 'vue'
-
-const products = [
-    {
-        id: 1,
-        name: 'Throwback Hip Bag',
-        href: '#',
-        color: 'Salmon',
-        imageSrc: 'https://tailwindui.com/img/ecommerce-images/shopping-cart-page-04-product-01.jpg',
-        imageAlt: 'Salmon orange fabric pouch with match zipper, gray zipper pull, and adjustable hip belt.',
-    },
-    {
-        id: 2,
-        name: 'Medium Stuff Satchel',
-        href: '#',
-        color: 'Blue',
-        imageSrc: 'https://tailwindui.com/img/ecommerce-images/shopping-cart-page-04-product-02.jpg',
-        imageAlt:
-            'Front of satchel with blue canvas body, black straps and handle, drawstring top, and front zipper pouch.',
-    },
-    // More products...
-]
+import { onMounted } from 'vue'
 
 let allowCart = true;
 
@@ -51,7 +30,6 @@ function fetchCart() {
         cartToggle = true;
         try {
             productStore.getProducts
-            console.log(productStore.getProducts)
         } catch (error) {
             console.error('Error:', error);
         }
@@ -69,13 +47,11 @@ function removeFromCart(id, product) {
     })
         .then((response) => {
             document.getElementById(id).remove();
-
             cartStore.setCount(cartStore.count - product.amount)
         })
         .catch((error) => {
             console.error('There has been a problem with your fetch operation:', error);
         });
-
 }
 </script>
 
