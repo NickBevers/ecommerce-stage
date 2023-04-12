@@ -1,8 +1,10 @@
 <script setup>
 import { MagnifyingGlassIcon, ShoppingBagIcon } from '@heroicons/vue/24/outline'
 import { Popover, PopoverButton, PopoverPanel } from '@headlessui/vue'
+import { useProductStore } from '@/Stores/product.js';
+import { Link } from '@inertiajs/vue3'
 import { useCartStore } from '@/Stores/cart';
-import { onMounted, ref } from 'vue'
+import { onMounted, ref, reactive } from 'vue'
 
 const products = [
     {
@@ -25,22 +27,55 @@ const products = [
     // More products...
 ]
 
+let allowCart = true;
+
 const cartStore = useCartStore();
+const productStore = useProductStore();
 
 onMounted(() => {
     cartStore.fetchCount();
-})
-
-let cartToggle = ref(false);
-
-function fetchCart() {
-    if (cartToggle) {
-        cartToggle = false;
-
+    productStore.fetchProducts();
+    const path = window.location.pathname.split('/').pop()
+    if (path === 'cart' || path === 'checkout') {
+        allowCart = false;
     }
     else {
-        cartToggle = true;
+        allowCart = true;
     }
+})
+
+let cartToggle = false;
+
+function fetchCart() {
+    if (!cartToggle) {
+        cartToggle = true;
+        try {
+            productStore.getProducts
+            console.log(productStore.getProducts)
+        } catch (error) {
+            console.error('Error:', error);
+        }
+    } else {
+        cartToggle = false;
+    }
+}
+
+function removeFromCart(id, product) {
+    fetch('/cart/' + id, {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+    })
+        .then((response) => {
+            document.getElementById(id).remove();
+
+            cartStore.setCount(cartStore.count - product.amount)
+        })
+        .catch((error) => {
+            console.error('There has been a problem with your fetch operation:', error);
+        });
+
 }
 </script>
 
@@ -60,30 +95,64 @@ function fetchCart() {
                     <transition enter-active-class="transition ease-out duration-200" enter-from-class="opacity-0"
                         enter-to-class="opacity-100" leave-active-class="transition ease-in duration-150"
                         leave-from-class="opacity-100" leave-to-class="opacity-0">
-                        <PopoverPanel
-                            class="absolute inset-x-0 -left-36 top-16 mt-px bg-white pb-6 shadow-lg sm:px-2 lg:top-full lg:-mr-1.5 lg:mt-3 lg:w-80 lg:rounded-lg lg:ring-1 lg:ring-black lg:ring-opacity-5">
+                        <PopoverPanel v-if="allowCart"
+                            class="absolute inset-x-0 -left-36 top-16 mt-px bg-white pb-6 shadow-lg sm:px-2 lg:top-full lg:-mr-1.5 lg:mt-3 w-80 lg:rounded-lg lg:ring-1 lg:ring-black lg:ring-opacity-5">
                             <h2 class="sr-only">Shopping Cart</h2>
 
                             <form class="mx-auto max-w-2xl px-4">
-                                <ul role="list" class="divide-y divide-gray-200">
-                                    <li v-for="product in products" :key="product.id" class="flex items-center py-6">
-                                        <img :src="product.imageSrc" :alt="product.imageAlt"
-                                            class="h-16 w-16 flex-none rounded-md border border-gray-200" />
+                                <ul role="list" class="divide-y divide-gray-200 max-h-96 overflow-y-auto no-scrollbar">
+                                    <li v-for="product in productStore.getProducts" :key="product.id" :id="product.sku.id"
+                                        class="flex items-center py-6">
+
+                                        <img :src="product.sku.product_images[0].image_link"
+                                            :alt="product.sku.product_images[0].alt"
+                                            class="h-16 w-16 flex-none rounded-md border border-gray-200 object-cover" />
                                         <div class="ml-4 flex-auto">
-                                            <h3 class="font-medium text-gray-900">
-                                                <a :href="product.href">{{ product.name }}</a>
+                                            <h3 class="font-medium text-sm flex justify-between text-gray-900">
+                                                <Link :href="`/product/${product.sku.sku}`" class="break-words w-32">{{
+                                                    product.sku.product.title
+                                                }}
+                                                </Link>
+                                                <span>€{{
+                                                    product.sku.price_incl_vat.toFixed(2)
+                                                }}
+                                                </span>
                                             </h3>
                                             <p class="text-gray-500">{{ product.color }}</p>
+                                            <p class="mt-1 text-xs text-gray-500 w-36"
+                                                v-if="product.sku.attribute_values.length > 0">
+                                                <span v-for="(attribute, index) in product.sku.attribute_values">
+                                                    {{ attribute.name }}<span
+                                                        v-if="index !== product.sku.attribute_values.length - 1">,
+                                                    </span>
+                                                </span>
+                                            </p>
+                                            <div class="flex justify-between">
+                                                <p class="text-xs"
+                                                    :class="{ 'mt-6': !product.sku.attribute_values.length > 0, 'mt-2': product.sku.attribute_values.length > 0 }">
+                                                    Quantity: {{ product.amount }}
+                                                </p>
+                                                <button type="button" class="text-xs text-indigo-600 hover:text-gray-500"
+                                                    :class="{ 'mt-6': !product.sku.attribute_values.length > 0, 'mt-2': product.sku.attribute_values.length > 0 }"
+                                                    @click="removeFromCart(product.sku.id, product)">
+                                                    <span>Remove</span>
+                                                    <XMarkIcon class="h-5 w-5" aria-hidden="true" />
+
+                                                </button>
+
+                                            </div>
                                         </div>
                                     </li>
                                 </ul>
 
-                                <button type="submit"
-                                    class="w-full rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-50">Checkout</button>
+                                <Link type="submit" href="/checkout"
+                                    class="w-full mt-8 rounded-md border text-center border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-50">
+                                Checkout</Link>
 
                                 <p class="mt-6 text-center">
-                                    <a href="#" class="text-sm font-medium text-indigo-600 hover:text-indigo-500">View
-                                        Shopping Bag</a>
+                                    <Link href="/cart" class="text-sm font-medium text-indigo-600 hover:text-indigo-500">
+                                    View
+                                    Shopping Bag</Link>
                                 </p>
                             </form>
                         </PopoverPanel>
