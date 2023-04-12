@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Order;
+use App\Models\Address;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -11,14 +12,22 @@ class OrderController extends Controller
 {
     public function index()
     {
-        $orders = Order::all();
-        foreach ($orders as $order) {
-            $order->withRelations();
-        }
+        $orders = Order::orderBy('created_at', 'desc')->get();
 
+        $ordersWithAddresses = [];
+
+        foreach ($orders as $order) {
+            $ordersWithAddresses[] = [
+                'order' => $order,
+                'shipping_address' => Address::where('id', $order->shipping_address_id)->first(),
+                'billing_address' => Address::where('id', $order->billing_address_id)->first(),
+            ];
+        }
+        
         return Inertia::render('Admin/Orders/Index', [
-            'orders' => $orders,
+            'orders' => $ordersWithAddresses,
         ]);
+        
     }
 
     public function show(Order $order)
