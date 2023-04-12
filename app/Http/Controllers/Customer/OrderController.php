@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Customer;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\OrderValidationRequest;
+use App\Models\Address;
 use App\Models\Order;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -31,8 +32,14 @@ class OrderController extends Controller
             ]);
         }
 
+        // get all skus with their product and images and return them to the frontend
+        $order->load('skus.product.images');
+
         return Inertia::render('Orders/Detail', [
             'order' => $order,
+            'shipping_address' => Address::where('id', $order->shipping_address_id)->first(),
+            'billing_address' => Address::where('id', $order->billing_address_id)->first(),
+            'skus' => $order->skus->load('productImages', 'product'),
         ]);
     }
 

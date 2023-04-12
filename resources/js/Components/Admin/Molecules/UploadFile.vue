@@ -10,6 +10,10 @@ const props = defineProps({
     type: Boolean,
     required: true,
   },
+    index: {
+        type: Number,
+        required: false,
+    }
 });
 
 const imagePreviews = ref([]);
@@ -46,23 +50,18 @@ const removeImage = (index) => {
 };
 
 function submit() {
-  emit('imagePreviews', imagePreviews.value)
+  emit('imagePreviews', imagePreviews.value, props.index)
 }
 
 watch(
-
   () => props.formSubmitted,
-
   (newValue) => {
     if (newValue) {
-
       imagePreviews.value = [];
     }
   }
 );
-
 </script>
-
 <template>
   <div class="mt-6">
     <label class="block text-sm font-medium leading-6 text-gray-900">Cover photo</label>
@@ -87,7 +86,6 @@ watch(
         <p class="text-xs text-gray-500">PNG, JPG, GIF up to 10MB</p>
       </div>
     </div>
-
   </div>
   <div class="mt-6 flex gap-6 flex-wrap">
 
