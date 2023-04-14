@@ -29,14 +29,6 @@ onMounted(() => {
         subTotal.value += (sku.pivot.amount * sku.price_excl_vat)
     })
 })
-
-console.log(props.order)
-
-console.log(props.skus)
-
-console.log(props.shipping_address)
-
-console.log(props.billing_address)
 </script>
 <template>
     <GuestLayout>
@@ -62,7 +54,7 @@ console.log(props.billing_address)
                         </dl>
 
                         <ul role="list"
-                            class="mt-6 divide-y divide-gray-200 border-t border-gray-200 text-sm font-medium text-gray-500">
+                            class="mt-6 divide-y divide-gray-200 border-t border-gray-200 text-sm font-medium text-gray-500 max-h-[32rem] overflow-y-auto no-scrollbar">
                             <li v-for="product in props.skus" :key="product.id" class="flex space-x-6 py-6">
                                 <img :src="product.product_images[0].image_link" :alt="product.product_images[0].alt"
                                     class="h-24 w-24 flex-none rounded-md bg-gray-100 object-cover object-center" />

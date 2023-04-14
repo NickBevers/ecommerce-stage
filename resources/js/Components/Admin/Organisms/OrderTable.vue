@@ -6,15 +6,15 @@ import { Link, router } from '@inertiajs/vue3';
 import { PencilIcon, EyeIcon, TrashIcon } from '@heroicons/vue/20/solid'
 
 const props = defineProps({
-    orders: Object,
-});
-console.log(props.orders)
+    orders: Object,   
+});      
+  
 onMounted(() => {
     props.orders.forEach((order) => {
         order.order_date = moment(order.order_date).format('MMMM Do YYYY, h:mm:ss a');
     });
 });
-
+ 
 </script>
 <template>
     <section class="my-8">
@@ -44,8 +44,8 @@ onMounted(() => {
                             </thead>
                             <tbody class="divide-y divide-gray-200 bg-white">
                                 <tr v-for="order in orders" :key="order.id">
-                                    <td class="whitespace-nowrap py-2 pl-4 pr-3 text-sm sm:pl-0t">
-                                        <div class="flex items-center">
+                                    <td class="whitespace-nowrap py-2 pr-3 text-sm sm:pl-0t">
+                                        <div class="flex items-left ">
                                             <div class="font-medium text-gray-900">#{{ order.order.id }}</div>
                                         </div>
                                     </td>
@@ -56,20 +56,20 @@ onMounted(() => {
                                         <div class="font-medium text-gray-900" v-if="order.billing_address">{{
                                             order.order.firstname }}
                                             {{ order.order.lastname }}
-                                            {{ order.lastname }}{{ order.billing_address.address_line1 }} {{
-                                                order.billing_address.address_line2 }}, {{
-        order.billing_address.city }} {{
-        order.billing_address.country }}, {{
-        order.billing_address.postal_code }}
+                                            {{ order.lastname }}{{ order.billing_address.address_line1 }} 
+                                            {{  order.billing_address.address_line2 }}, {{
+                                                order.billing_address.city }} {{
+                                                order.billing_address.country }}, {{
+                                                order.billing_address.postal_code }}
                                         </div>
                                         <div class="font-medium text-gray-900" v-else> {{
                                             order.order.firstname }}
                                             {{ order.order.lastname }}
                                             {{ order.lastname }}{{ order.shipping_address.address_line1 }} {{
-                                                order.shipping_address.address_line2 }}, {{
-        order.shipping_address.city }} {{
-        order.shipping_address.country }}, {{
-        order.shipping_address.postal_code }}
+                                                order.shipping_address.address_line2 }}, 
+                                                {{ order.shipping_address.city }} {{
+                                                order.shipping_address.country }}, {{
+                                                order.shipping_address.postal_code }}
                                         </div>
                                     </td>
                                     <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
