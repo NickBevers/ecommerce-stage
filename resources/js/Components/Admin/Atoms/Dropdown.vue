@@ -57,11 +57,18 @@ const props = defineProps({
   place: {
     type: String,
     default: null
+  },
+  selected: {
+    type: String,
+    default: null
   }
 })
 
 onMounted(() => {
-  if (props.place) {
+ if(props.selected!=null){
+    selected.value = props.selected
+ }
+ else if (props.place) {
     selected.value = props.place
   }
   else {
