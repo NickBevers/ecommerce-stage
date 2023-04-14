@@ -79,6 +79,7 @@ Route::middleware(['auth', 'admin'])->group(function () {
 
     // Admin Order Routes
     Route::get('/admin/orders', [AdminOrderController::class, 'index'])->name('admin.orders.index');
+    Route::get('/admin/orders/{order}', [AdminOrderController::class, 'show'])->name('admin.orders.show');
 
     // Admin Promo Routes
     Route::get('/promos/create', [PromoController::class, 'create'])->name('promos.create');

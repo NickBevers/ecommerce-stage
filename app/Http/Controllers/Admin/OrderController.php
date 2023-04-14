@@ -32,8 +32,9 @@ class OrderController extends Controller
 
     public function show(Order $order)
     {
+//        return response()->json($order->withRelations()->get());
         return Inertia::render('Admin/Orders/Detail', [
-            'order' => $order->withRelations(),
+            'order' => $order->withRelations()->get(),
         ]);
     }
 

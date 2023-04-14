@@ -44,9 +44,9 @@ class Order extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function addresses(): HasOne
+    public function addresses(): BelongsTo
     {
-        return $this->hasOne(Address::class);
+        return $this->belongsTo(Address::class);
     }
 
     public function skus(): BelongsToMany
@@ -67,7 +67,12 @@ class Order extends Model
 
     public function scopeWithRelations($query)
     {
-        return $query->with('user', 'addresses', 'skus', 'productReturns');
+        return $query->with([
+            'user',
+            'addresses',
+            'skus',
+            'productReturns',
+        ]);
     }
 
 }
