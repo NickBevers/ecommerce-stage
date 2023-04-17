@@ -43,6 +43,32 @@ onBeforeMount(() => {
     console.log(selectedStatus.value)
 })
 
+function changeAmount(product, event) {
+    console.log(product, event)
+    console.log(product.id)
+    console.log(event.target.value, product)
+    if (event.target.value > 0 && event.target.value <= product.amount) {
+        fetch('/admin/orders/product/' + props.order.id, {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                sku_id: product.id,
+                amount: event.target.value,
+            }),
+        })
+            .then((response) => {
+                product.pivot.amount = parseInt(event.target.value);
+                console.log(response)
+            })
+            .catch((error) => {
+                console.error('There has been a problem with your fetch operation:', error);
+            });
+    } else {
+        event.target.value = product.pivot.amount;
+    }
+}
 
 </script>
 <template>
