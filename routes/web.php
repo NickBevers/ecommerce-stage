@@ -100,6 +100,7 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
+    Route::get('/profile/orders', [ProfileController::class, 'orders'])->name('profile.orders');
     Route::get('/profile/password', [ProfileController::class, 'editPassword'])->name('profile.editPassword');
     Route::get('/profile/advanced', [ProfileController::class, 'editAdvanced'])->name('profile.editAdvanced');
 

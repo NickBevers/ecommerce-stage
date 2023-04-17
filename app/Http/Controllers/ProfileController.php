@@ -61,6 +61,14 @@ class ProfileController extends Controller
         return Redirect::to('/');
     }
 
+    public function orders(Request $request): Response
+    {
+        return Inertia::render('Customer/Profile/Details/Orders', [
+            'mustVerifyEmail' => $request->user() instanceof MustVerifyEmail,
+            'status' => session('status'),
+        ]);
+    }
+
     /**
      * Edit user 
      */
