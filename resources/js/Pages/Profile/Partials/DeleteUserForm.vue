@@ -30,17 +30,33 @@ const closeModal = () => {
 
     form.reset();
 };
+
+const props = defineProps({
+    user_type: {
+        type: String,
+        default: 'admin',
+    },
+});
 </script>
 
 <template>
     <section class="space-y-6">
-        <header>
+        <header v-if="props.user_type != 'customer'">
             <h2 class="text-lg font-medium text-gray-900">Delete Account</h2>
 
             <p class="mt-1 text-sm text-gray-600">
                 Once your account is deleted, all of its resources and data will be permanently deleted. Before deleting
                 your account, please download any data or information that you wish to retain.
             </p>
+        </header>
+        <header v-else>
+            <div class="mx-auto max-w-2xl px-4 lg:max-w-4xl lg:px-0">
+                <h1 class="text-2xl font-bold tracking-tight text-gray-900 sm:text-3xl">Delete Account</h1>
+                <p class="mt-2 text-sm text-gray-500">
+                    Once your account is deleted, all of its resources and data will be permanently deleted. Before deleting
+                    your account, please download any data or information that you wish to retain.
+                </p>
+            </div>
         </header>
 
         <DangerButton @click="confirmUserDeletion">Delete Account</DangerButton>

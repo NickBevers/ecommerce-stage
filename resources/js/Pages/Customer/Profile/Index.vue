@@ -30,11 +30,11 @@ subNavigation.forEach((item) => {
 <template>
     <GuestLayout class="bg-gray-50">
         <main class="mx-auto max-w-7xl pb-10 lg:px-8 lg:py-12 mt-16 ">
-            <div class="lg:grid lg:grid-cols-12 lg:gap-x-5">
-                <aside class="px-2 py-6 sm:px-6 lg:col-span-3 lg:px-0 lg:py-0 ">
+            <div class="flex gap-x-24 flex-col sm:flex-row">
+                <aside class="px-2 py-6 sm:px-6 lg:col-span-3 lg:px-0 lg:py-0 w-40">
                     <nav class="space-y-1">
                         <Link v-for="item in subNavigation" :key="item.name" :href="item.href"
-                            :class="[item.current ? 'bg-gray-50 text-indigo-600 hover:bg-white' : 'text-gray-900 hover:bg-gray-50 hover:text-gray-900', 'group flex items-center rounded-md px-3 py-2 text-sm font-medium']"
+                            :class="[item.current ? 'bg-gray-50 text-indigo-600' : 'text-gray-900 hover:bg-gray-50 hover:text-gray-900', 'group flex items-center rounded-md px-3 py-2 text-sm font-medium']"
                             :aria-current="item.current ? 'page' : undefined">
                         <component :is="item.icon"
                             :class="[item.current ? 'text-indigo-500' : 'text-gray-400 group-hover:text-gray-500', '-ml-1 mr-3 h-6 w-6 flex-shrink-0']"
@@ -44,7 +44,7 @@ subNavigation.forEach((item) => {
                     </nav>
                 </aside>
                 <div v-if="currentPath === '/profile'" class="px-2 py-6 sm:px-6 lg:col-span-6 lg:px-0 lg:py-0">
-                    <UpdateProfileInformationForm />
+                    <UpdateProfileInformationForm user_type="customer" />
                 </div>
                 <slot v-else>
 

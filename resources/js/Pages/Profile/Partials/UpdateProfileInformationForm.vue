@@ -6,6 +6,10 @@ import { onMounted } from "vue";
 const props = defineProps({
   mustVerifyEmail: Boolean,
   status: String,
+  user_type: {
+    type: String,
+    default: "admin",
+  },
 });
 
 const user = usePage().props.auth.user;
@@ -43,12 +47,18 @@ const updateProfile = () => {
 
 <template>
   <section>
-    <header>
+    <header v-if="props.user_type != 'customer'">
       <h2 class="text-lg font-medium text-gray-900">Profile Information</h2>
 
       <p class="mt-1 text-sm text-gray-600">
         Update your account's profile information and email address.
       </p>
+    </header>
+    <header v-else>
+      <div class="mx-auto max-w-2xl px-4 lg:max-w-4xl lg:px-0">
+        <h1 class="text-2xl font-bold tracking-tight text-gray-900 sm:text-3xl">Profile Information</h1>
+        <p class="mt-2 text-sm text-gray-500"> Update your account's profile information and email address.</p>
+      </div>
     </header>
 
     <form @submit.prevent="updateProfile" class="mt-6 space-y-6">
