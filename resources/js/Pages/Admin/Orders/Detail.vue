@@ -1,100 +1,298 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
-import { Dropdown,InputLabel } from '@/Components/Admin';
+import { Dropdown, InputLabel } from '@/Components/Admin';
 import moment from 'moment';
 import { Listbox, ListboxButton, ListboxLabel, ListboxOption, ListboxOptions } from '@headlessui/vue'
-import { CheckIcon, ChevronUpDownIcon } from '@heroicons/vue/20/solid'
+import { CheckIcon, ChevronUpDownIcon, XMarkIcon } from '@heroicons/vue/20/solid'
 import { Head, Link } from '@inertiajs/vue3';
 import { reactive, ref, onMounted, onBeforeMount } from 'vue';
 
 const props = defineProps({
     order: Object,
+    shipping_address: Object,
+    billing_address: Object,
 });
 
+const countries = [
+    { name: 'Belgium', code: 'BE' },
+    { name: 'United States', code: 'US' },
+    { name: 'Canada', code: 'CA' },
+    { name: 'France', code: 'FR' },
+    { name: 'Germany', code: 'DE' },
+    { name: 'Ireland', code: 'IE' },
+    { name: 'Italy', code: 'IT' },
+    { name: 'Mexico', code: 'MX' },
+    { name: 'Netherlands', code: 'NL' },
+    { name: 'Portugal', code: 'PT' },
+    { name: 'Spain', code: 'ES' },
+    { name: 'Switzerland', code: 'CH' },
+    { name: 'United Kingdom', code: 'GB' },
+]
 
 
 const orderStatuses = [
- "Pending", "Processing", "Shipped", "Delivered", "Cancelled"
+    "Pending", "Processing", "Shipped", "Delivered", "Cancelled"
 ];
 
 const selectedStatus = ref(orderStatuses[2])
 
 onBeforeMount(() => {
-  console.log(selectedStatus.value) 
+    console.log(selectedStatus.value)
     props.order.order_status = props.order.order_status.charAt(0).toUpperCase() + props.order.order_status.slice(1)
     selectedStatus.value = props.order.order_status
-    console.log(selectedStatus.value) 
+    console.log(selectedStatus.value)
 })
+
 
 </script>
 <template>
     <Head title="Products" />
     <AuthenticatedLayout>
-        <div class="mt-8">
+        <div class="py-8">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="sm:flex sm:items-center">
                     <div class="sm:flex-auto">
                         <h1 class="text-xl font-semibold leading-6 text-gray-900">Order Details</h1>
+
                     </div>
+
                 </div>
-                <div class=" bg-white shadow sm:rounded-lg mt-8">
+                <div class="bg-white shadow sm:rounded-lg mt-8">
                     <div class="px-4 py-5 sm:p-6">
                         <div class="flex justify-between w-full">
-                            <div>  <span class="text-sm">Order ID:&nbsp;</span><span class="text-sm font-bold">#{{ props.order.id }}</span></div>
-                          <div>  <span class="text-sm">Order placed on:&nbsp;</span><span class="text-sm font-bold">{{ props.order.order_date }}</span></div>
+                            <div> <span class="text-sm">Order ID:&nbsp;</span><span class="text-sm font-bold">#{{
+                                props.order.id }}</span></div>
+                            <div> <span class="text-sm">Order placed on:&nbsp;</span><span class="text-sm font-bold">{{
+                                props.order.order_date }}</span></div>
                         </div>
-                        <div class="mt-8 flex items-center gap-2">
-                                <div class="mt-2">
-                                    <InputLabel for="status" value="Order status:" />
-                                </div>
-                                <div class="rounded-md">
-                                    <Dropdown :items="orderStatuses" :selected="selectedStatus" class="w-64"/>
-                                </div>
+                        <div class="py-8 flex items-center gap-2">
+                            <div class="mt-2">
+                                <InputLabel for="status" value="Order status:" />
+                            </div>
+                            <div class="rounded-md">
+                                <Dropdown :items="orderStatuses" :selected="selectedStatus" class="w-64" />
+                            </div>
                         </div>
                         <div>
                             <div>
-                                    <div class="my-6 flow-root">
-                                    <ul role="list" class="-my-5 divide-y pr-4 divide-gray-200 h-[24rem] overflow-y-auto scrollbar-thin   scrollbar-thumb-gray-100 scrollbar-track-gray-50">
+                                <div class="my-6 flow-root">
+                                    <ul role="list"
+                                        class="-my-5 divide-y pr-4 divide-gray-200 max-h-[24rem] overflow-y-auto scrollbar-thin   scrollbar-thumb-gray-100 scrollbar-track-gray-50">
                                         <li v-for="product in props.order.skus" :key="product.id" class="py-4">
-                                        <div class="flex items-center space-x-4">
-                                            <div class="flex-shrink-0">
-                                            <!-- <img class="h-8 w-8 rounded-full" :src="person.imageUrl" alt="" /> -->
-                                            </div>
-                                            <div class="min-w-0 flex-1">
-                                            <p class="truncate text-sm font-medium text-gray-900">{{ product.pivot.product_name }}</p>
-                                            <p class="truncate text-sm text-gray-500">{{ '€' + product.price_incl_vat }}</p>
-                                            </div>
-                                            <div>
-                                                <div class="mt-4 sm:mt-0 sm:pr-9">
-                                                    <label :for="`quantity-${productIdx}`" class="sr-only">Quantity, {{ product.sku.title }}</label>
-                                                    <input :id="`quantity-${productIdx}`" :name="`quantity-${productIdx}`" type="number" min="1"
-                                                    :max="product.amount"
-                                                    class="max-w-full rounded-md border border-gray-300 py-1.5 text-left text-base font-medium leading-5 text-gray-700 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 sm:text-sm"
-                                                    :value="product.pivot.amount" @change="changeAmount(product, $event)" />
-                                                    <div class="">
-                                                    <button type="button" class="-m-2 inline-flex p-2 text-gray-400 bg-red-300 hover:text-gray-500"
-                                                        @click="removeFromOrder(product.id, product)">
-                                                        <span class="sr-only">Remove</span>
-                                                        <XMarkIcon class="h-5 w-5" aria-hidden="true" />
-                                                    </button>
+                                            <div class="flex items-center">
+                                                <div class="flex-shrink-0">
+                                                    <!-- <img class="h-8 w-8 rounded-full" :src="person.imageUrl" alt="" /> -->
+                                                </div>
+                                                <div class="min-w-0 flex-1">
+                                                    <p class="truncate text-sm font-medium text-gray-900">{{
+                                                        product.pivot.product_name }}</p>
+                                                    <p class="truncate text-sm text-gray-500">{{ '€' +
+                                                        product.price_incl_vat }}</p>
+                                                </div>
+                                                <div>
+                                                    <div class="mt-4 sm:mt-0 flex flex-row">
+                                                        <label :for="`amount-${product.id}`" class="sr-only">Quantity, {{
+                                                            product.sku.title }}</label>
+                                                        <div class="flex gap-4">
+                                                            <input :id="`amount-${product.id}`"
+                                                                :name="`amount-${product.id}`" type="number" min="1"
+                                                                :max="product.amount"
+                                                                class="max-w-full rounded-md border border-gray-300 py-1.5 text-left text-base font-medium leading-5 text-gray-700 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 sm:text-sm"
+                                                                :value="product.pivot.amount"
+                                                                @change="changeAmount(product, $event)" />
+
+                                                            <button type=" button"
+                                                                class=" inline-flex p-2 bg-red-500 rounded-md text-xs font-semibold text-white shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-red-600"
+                                                                @click="removeFromOrder(product.id, product)">
+                                                                <span class="sr-only">Remove</span>
+                                                                <XMarkIcon class="h-5 w-5" aria-hidden="true" />
+                                                            </button>
+                                                        </div>
+
                                                     </div>
                                                 </div>
+                                                <div>
+
+                                                </div>
                                             </div>
-                                            <div>
-                                            <a href="#" class="inline-flex items-center rounded-full bg-white px-2.5 py-1 text-xs font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">View</a>
-                                            </div>
-                                        </div>
                                         </li>
                                     </ul>
-                                    </div>
                                 </div>
+                            </div>
                         </div>
                     </div>
-                    
                 </div>
-             
+
+                <div class="grid grid-cols-1 space-x-0 sm:space-x-8 sm:grid-cols-2">
+                    <div class="bg-white shadow rounded-lg mt-8 " v-if="props.shipping_address">
+                        <div class="px-4 sm:p-6">
+                            <h2 class="mt-4 text-lg font-medium text-gray-900">Shipping address</h2>
+                            <div class="flex w-full">
+                                <div class="mt-4 grid grid-cols-1 w-full gap-y-6 sm:grid-cols-2 sm:gap-x-4">
+                                    <div class="sm:col-span-2">
+                                        <label for="company" class="block text-sm font-medium text-gray-700">Company
+                                            VAT</label>
+                                        <div class="mt-1">
+                                            <input type="text" name="company" id="company"
+                                                class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                                                v-model="props.shipping_address.btw_number" />
+                                        </div>
+                                    </div>
+
+                                    <div class="sm:col-span-2">
+                                        <label for="address"
+                                            class="block text-sm font-medium text-gray-700">Address*</label>
+                                        <div class="mt-1">
+                                            <input type="text" name="address" id="address" autocomplete="street-address"
+                                                required v-model="props.shipping_address.address_line1"
+                                                class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" />
+                                        </div>
+                                    </div>
+
+                                    <div class="sm:col-span-2">
+                                        <label for="apartment" class="block text-sm font-medium text-gray-700">Number,
+                                            apartment,
+                                            suite,
+                                            etc.*</label>
+                                        <div class="mt-1">
+                                            <input type="text" name="apartment" id="apartment" required
+                                                v-model="props.shipping_address.address_line2"
+                                                class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" />
+                                        </div>
+                                    </div>
+
+                                    <div>
+                                        <label for="city" class="block text-sm font-medium text-gray-700">City*</label>
+                                        <div class="mt-1">
+                                            <input type="text" name="city" id="city" autocomplete="address-level2" required
+                                                v-model="props.shipping_address.city"
+                                                class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" />
+                                        </div>
+                                    </div>
+
+                                    <div>
+                                        <label for="country"
+                                            class="block text-sm font-medium text-gray-700">Country*</label>
+                                        <div class="mt-1">
+                                            <select id="country" name="country" autocomplete="country-name" required
+                                                class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                                                v-model="props.shipping_address.country">
+                                                <option v-for="country in countries" :value="country.code">{{ country.name
+                                                }}</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div>
+                                        <label for="region" class="block text-sm font-medium text-gray-700">State /
+                                            Province</label>
+                                        <div class="mt-1">
+                                            <input type="text" name="region" id="region" autocomplete="address-level1"
+                                                v-model="props.shipping_address.state"
+                                                class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" />
+                                        </div>
+                                    </div>
+
+                                    <div>
+                                        <label for="postal-code" class="block text-sm font-medium text-gray-700">Postal
+                                            code*</label>
+                                        <div class="mt-1">
+                                            <input type="number" name="postal-code" id="postal-code"
+                                                autocomplete="postal-code" required
+                                                v-model="props.shipping_address.postal_code"
+                                                class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-white shadow rounded-lg mt-8 " v-if="props.billing_address">
+                        <div class="px-4 sm:p-6">
+                            <h2 class="mt-4 text-lg font-medium text-gray-900">Billing address</h2>
+                            <div class="flex w-full">
+                                <div class="mt-4 grid grid-cols-1 w-full gap-y-6 sm:grid-cols-2 sm:gap-x-4">
+                                    <div class="sm:col-span-2">
+                                        <label for="company" class="block text-sm font-medium text-gray-700">Company
+                                            VAT</label>
+                                        <div class="mt-1">
+                                            <input type="text" name="company" id="company"
+                                                class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                                                v-model="props.billing_address.btw_number" />
+                                        </div>
+                                    </div>
+
+                                    <div class="sm:col-span-2">
+                                        <label for="address"
+                                            class="block text-sm font-medium text-gray-700">Address*</label>
+                                        <div class="mt-1">
+                                            <input type="text" name="address" id="address" autocomplete="street-address"
+                                                required v-model="props.billing_address.address_line1"
+                                                class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" />
+                                        </div>
+                                    </div>
+
+                                    <div class="sm:col-span-2">
+                                        <label for="apartment" class="block text-sm font-medium text-gray-700">Number,
+                                            apartment,
+                                            suite,
+                                            etc.*</label>
+                                        <div class="mt-1">
+                                            <input type="text" name="apartment" id="apartment" required
+                                                v-model="props.billing_address.address_line2"
+                                                class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" />
+                                        </div>
+                                    </div>
+
+                                    <div>
+                                        <label for="city" class="block text-sm font-medium text-gray-700">City*</label>
+                                        <div class="mt-1">
+                                            <input type="text" name="city" id="city" autocomplete="address-level2" required
+                                                v-model="props.billing_address.city"
+                                                class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" />
+                                        </div>
+                                    </div>
+
+                                    <div>
+                                        <label for="country"
+                                            class="block text-sm font-medium text-gray-700">Country*</label>
+                                        <div class="mt-1">
+                                            <select id="country" name="country" autocomplete="country-name" required
+                                                class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                                                v-model="props.billing_address.country">
+                                                <option v-for="country in countries" :value="country.code">{{ country.name
+                                                }}</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div>
+                                        <label for="region" class="block text-sm font-medium text-gray-700">State /
+                                            Province</label>
+                                        <div class="mt-1">
+                                            <input type="text" name="region" id="region" autocomplete="address-level1"
+                                                v-model="props.billing_address.state"
+                                                class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" />
+                                        </div>
+                                    </div>
+
+                                    <div>
+                                        <label for="postal-code" class="block text-sm font-medium text-gray-700">Postal
+                                            code*</label>
+                                        <div class="mt-1">
+                                            <input type="number" name="postal-code" id="postal-code"
+                                                autocomplete="postal-code" required
+                                                v-model="props.billing_address.postal_code"
+                                                class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-     
+
     </AuthenticatedLayout>
 </template>

@@ -30,7 +30,7 @@ class OrderController extends Controller
         
     }
 
-    public function updateOrderLine(Request $request, Order $order)
+    public function updateOrderLine(Order $order, Request $request)
     {
         $order->skus()->updateExistingPivot($request->sku_id, [
             'amount' => $request->amount,
@@ -40,7 +40,7 @@ class OrderController extends Controller
         ]);
     }
     
-    public function deleteOrderLine(Request $request, Order $order)
+    public function deleteOrderLine(Order $order, Request $request)
     {
         $order->skus()->detach($request->sku_id);
         return response()->json([
