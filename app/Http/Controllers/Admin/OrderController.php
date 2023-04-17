@@ -68,7 +68,8 @@ class OrderController extends Controller
             'order_status' => $request->order_status,
         ]);
 
-        return redirect()->route('orders.show', $order->id);
+      
+        return redirect()->route('admin.orders.index');
     }
 
     public function updateTracking(Request $request, Order $order)
@@ -96,6 +97,6 @@ class OrderController extends Controller
             'shipped_at' => $request->shipped_at,
         ]);
 
-        return redirect()->route('orders.show', $order->id);
+        $this->index();
     }
 }
