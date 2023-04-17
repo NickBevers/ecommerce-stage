@@ -6,13 +6,14 @@ import {
     BellIcon,
     CreditCardIcon,
     KeyIcon,
-    SquaresPlusIcon,
+    ShoppingBagIcon,
     UserCircleIcon,
     CogIcon,
 } from '@heroicons/vue/24/outline'
 
 const subNavigation = [
     { name: 'User', href: '/profile', icon: UserCircleIcon, current: false },
+    { name: 'Orders', href: '/profile/orders', icon: ShoppingBagIcon, current: false },
     { name: 'Password', href: '/profile/password', icon: KeyIcon, current: false },
     { name: 'Advanced', href: '/profile/advanced', icon: CogIcon, current: false },
 ]
