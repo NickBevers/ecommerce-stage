@@ -1,5 +1,5 @@
 <script setup>
-import { ref, reactive, watch, onMounted } from 'vue'
+import {ref, reactive, watch, onMounted, capitalize} from 'vue'
 import { InputLabel, TextInput, Dropdown, PrimaryButton, UploadFile, InputError, SearchDropdown } from '@/Components/Admin'
 import { Link, useForm } from '@inertiajs/vue3';
 import {
@@ -128,7 +128,15 @@ function handleVariationCreation(){
     // remove all variations
     variations.value = [];
     generated = true;
-    generateVariations({}, 0)
+    generateVariations({}, 0);
+    props.attributeTypes.forEach((attribute, index) => {
+        if (variationAttribute.indexOf(attribute.name) === -1) {
+            console.log(attribute.name);
+            variations.value.forEach((variation) => {
+                variation[attribute.name] = props.attributeTypes[index]['attributeValues'][0].name
+            })
+        }
+    })
 }
 
 function generateVariations(currentCombination, index) {
@@ -208,6 +216,17 @@ function submit() {
         formVariationError.value = true
         return
     }
+
+    // loop through variations and check if they have all the attributes
+    props.attributeTypes.forEach((attribute) => {
+        if (!variations[0][attribute]) {
+            variations.value.forEach((variation) => {
+                variation[attribute] = attribute['attributeValues'][0];
+            })
+        }
+    })
+    form.variations = variations.value
+
     formVariationError.value = false
     form.post(route('admin.products.store'))
 }
@@ -215,8 +234,8 @@ function submit() {
 <template>
     <div class="mt-8">
         <form class="max-w-7xl mx-auto sm:px-6 lg:px-8 my-5" @submit.prevent="submit">
-            {{ variations }} <br>
-            {{ attributes}}
+        {{ variations }}<br>
+        {{ variationAttribute }}
             <div class="bg-white px-4 py-5 shadow sm:rounded-lg mb-4 sm:p-6">
                 <div class="md:grid md:grid-cols-3 md:gap-6">
                     <div class="md:col-span-1">
@@ -352,33 +371,14 @@ function submit() {
                             <div v-for="(type, index) in attributeTypes" class="flex flex-row"  :class="variationAttribute.includes(type.name) ? 'hidden' : 'block'">
                                 <div v-if="variationAttribute.includes(type.name) === false" class="max-w-[23.5rem] w-[23.5rem]">
                                     <div>
-                                        <p class="text-sm font-medium mb-2">{{ type.name }}</p>
+                                        <p class="text-sm font-medium mb-2">{{ capitalize(type.name) }}</p>
                                         <div class="flex rounded-md shadow-sm">
                                             <Dropdown class="w-full" :type="type.name" :items="type.attributeValues" @change-value="applyAttribute"></Dropdown>
-                                        <!-- create a select option for each value of the type -->
-<!--                                            <select class="relative w-full cursor-default rounded-md bg-white py-1.5 pl-3 pr-10 text-left text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6 border-0 border-transparent" -->
-<!--                                                    @change="applyAttribute(type.name, $event.target)">-->
-<!--                                                <option value="" disabled selected>Select {{ type.name }}</option>-->
-<!--                                                <option v-for="attribute in type.attributeValues" :value="attribute.name">{{ attribute.name }}</option>-->
-<!--                                            </select>-->
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-
-                        <!-- Show dropdown for attributes not selected as variation -->
-<!--                        <div class="mt-4">-->
-<!--                            <div v-for="(type, index) in attributeTypes" >-->
-<!--                                <div v-if="variationAttribute.includes(type.name) === false">-->
-<!--                                    {{ type.name }}-->
-<!--                                    <div class="flex rounded-md shadow-sm">-->
-<!--                                        <Dropdown class="w-full" :items="type.attributeValues" v-model="material"></Dropdown>-->
-<!--                                        <InputError class="mt-2" :message="form.errors.audience" />-->
-<!--                                    </div>-->
-<!--                                </div>-->
-<!--                            </div>-->
-<!--                        </div>-->
 
                         <div>
                             <InputLabel for="description">Description</InputLabel>
@@ -467,6 +467,7 @@ function submit() {
                     </div>
                 </div>
             </div>
+            <InputError class="mt-2" v-if="formVariationError" message="Please create at least one variation" />
             <div class="pointer-events-none mb-4" v-for="(variation, index) in variations" :key="variation">
                 <transition enter-active-class="transform ease-out duration-300 transition"
                     enter-from-class="translate-y-2 opacity-0 sm:translate-y-0 sm:translate-x-2"
@@ -483,16 +484,16 @@ function submit() {
                             </div>
                             <div class="flex flex-row gap-6 flex-wrap overflow-hidden items-end">
                                 <div>
-                                    <InputLabel for="title" value="sku" />
-                                    <TextInput id="title" type="text" class="mt-2 flex rounded-md shadow-sm mt-1 block w-full pl-3" name="title" v-model="variations[index]['sku']" required placeholder="SKU" />
+                                    <InputLabel for="skuInput" value="sku" />
+                                    <TextInput id="skuInput" type="text" class="mt-2 flex rounded-md shadow-sm mt-1 block w-full pl-3" name="title" v-model="variations[index]['sku']" required placeholder="SKU" />
                                 </div>
                                 <div>
-                                    <InputLabel for="title" value="stock" />
-                                    <TextInput id="title" type="number" class="mt-2 flex rounded-md shadow-sm mt-1 block w-full pl-3" name="title" v-model="variations[index]['amount']" required placeholder="50" />
+                                    <InputLabel for="stockInput" value="stock" />
+                                    <TextInput id="stockInput" type="number" class="mt-2 flex rounded-md shadow-sm mt-1 block w-full pl-3" name="title" v-model="variations[index]['amount']" required placeholder="50" />
                                 </div>
                                 <div>
-                                    <InputLabel for="title" value="price" />
-                                    <TextInput id="title" pattern="^\d*(\.\d{0,2})?$" @blur="handlePrice" type="number" class="mt-2 flex rounded-md shadow-sm mt-1 block w-full pl-3" name="title" v-model="variations[index]['price']" required placeholder="19.99" />
+                                    <InputLabel for="priceInput" value="price" />
+                                    <TextInput id="priceInput" pattern="^\d*(\.\d{0,2})?$" @blur="handlePrice" type="float" class="mt-2 flex rounded-md shadow-sm mt-1 block w-full pl-3" name="title" v-model="variations[index]['price']" required placeholder="19.99" />
                                 </div>
                             </div>
 
