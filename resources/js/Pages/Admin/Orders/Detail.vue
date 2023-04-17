@@ -4,7 +4,7 @@ import { Dropdown, InputLabel } from '@/Components/Admin';
 import moment from 'moment';
 import { Listbox, ListboxButton, ListboxLabel, ListboxOption, ListboxOptions } from '@headlessui/vue'
 import { CheckIcon, ChevronUpDownIcon, XMarkIcon } from '@heroicons/vue/20/solid'
-import { Head, Link } from '@inertiajs/vue3';
+import { Head, Link, useForm } from '@inertiajs/vue3';
 import { reactive, ref, onMounted, onBeforeMount } from 'vue';
 
 const props = defineProps({
@@ -41,10 +41,11 @@ onBeforeMount(() => {
     selectedStatus.value = props.order.order_status
 })
 
+function changeStatus(event) {
+    selectedStatus.value = event.target.innerText.toLowerCase()
+}
+
 function changeAmount(product, event) {
-    console.log(product, event)
-    console.log(product.id)
-    console.log(event.target.value, product)
     if (event.target.value > 0 && event.target.value <= product.amount) {
         fetch('/admin/orders/product/' + props.order.id, {
             method: 'PATCH',
@@ -85,6 +86,46 @@ function removeFromOrder(id, product) {
         });
 }
 
+function submit() {
+    // fetch('/admin/orders/' + props.order.id, {
+    //     method: 'POST',
+    //     headers: {
+    //         'Content-Type': 'application/json',
+    //     },
+    //     body: JSON.stringify({
+    //         order_status: selectedStatus.value,
+    //     }),
+    // })
+    //     .then((response) => {
+    //         console.log(response)
+    //     })
+    //     .catch((error) => {
+    //         console.error('There has been a problem with your fetch operation:', error);
+    //     });
+
+
+    // fetch('/addresses/' + props.shipping_address.id, {
+    //     method: 'PATCH',
+    //     headers: {
+    //         'Content-Type': 'application/json',
+    //     },
+    //     body: JSON.stringify(props.shipping_address),
+    // })
+    //     .then((response) => {
+    //         console.log(response)
+    //     })
+    fetch('/addresses/' + props.billing_address.id, {
+        method: 'PATCH',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(props.billing_address),
+    })
+        .then((response) => {
+            console.log(response)
+        })
+}
+
 </script>
 <template>
     <Head title="Products" />
@@ -111,7 +152,8 @@ function removeFromOrder(id, product) {
                                 <InputLabel for="status" value="Order status:" />
                             </div>
                             <div class="rounded-md">
-                                <Dropdown :items="orderStatuses" :selected="selectedStatus" class="w-64" />
+                                <Dropdown :items="orderStatuses" :selected="selectedStatus" class="w-64"
+                                    @click="changeStatus($event)" />
                             </div>
                         </div>
                         <div>
@@ -143,7 +185,7 @@ function removeFromOrder(id, product) {
                                                                 :value="product.pivot.amount"
                                                                 @change="changeAmount(product, $event)" />
 
-                                                            <button type=" button"
+                                                            <button type="button"
                                                                 class=" inline-flex p-2 bg-red-500 rounded-md text-xs font-semibold text-white shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-red-600"
                                                                 @click="removeFromOrder(product.id, product)">
                                                                 <span class="sr-only">Remove</span>
@@ -168,7 +210,7 @@ function removeFromOrder(id, product) {
                 <div class="grid grid-cols-1 space-x-0 sm:space-x-8 sm:grid-cols-2">
                     <div class="bg-white shadow rounded-lg mt-8 " v-if="props.shipping_address">
                         <div class="px-4 sm:p-6">
-                            <h2 class="mt-4 text-lg font-medium text-gray-900">Shipping address</h2>
+                            <h2 class="text-lg font-medium text-gray-900">Shipping address</h2>
                             <div class="flex w-full">
                                 <div class="mt-4 grid grid-cols-1 w-full gap-y-6 sm:grid-cols-2 sm:gap-x-4">
                                     <div class="sm:col-span-2">
@@ -219,7 +261,8 @@ function removeFromOrder(id, product) {
                                             <select id="country" name="country" autocomplete="country-name" required
                                                 class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                                                 v-model="props.shipping_address.country">
-                                                <option v-for="country in countries" :value="country.code">{{ country.name
+                                                <option v-for="country in countries" :value="country.code">{{
+                                                    country.name
                                                 }}</option>
                                             </select>
                                         </div>
@@ -251,7 +294,7 @@ function removeFromOrder(id, product) {
                     </div>
                     <div class="bg-white shadow rounded-lg mt-8 " v-if="props.billing_address">
                         <div class="px-4 sm:p-6">
-                            <h2 class="mt-4 text-lg font-medium text-gray-900">Billing address</h2>
+                            <h2 class="text-lg font-medium text-gray-900">Billing address</h2>
                             <div class="flex w-full">
                                 <div class="mt-4 grid grid-cols-1 w-full gap-y-6 sm:grid-cols-2 sm:gap-x-4">
                                     <div class="sm:col-span-2">
@@ -332,8 +375,20 @@ function removeFromOrder(id, product) {
                             </div>
                         </div>
                     </div>
+
+                </div>
+                <div class="flex justify-end mt-4">
+                    <button @click="submit"
+                        class="rounded-md bg-indigo-600 py-2 px-3 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+                        Save
+                    </button>
                 </div>
             </div>
+
+
+
+
+
         </div>
 
     </AuthenticatedLayout>
