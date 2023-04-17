@@ -30,11 +30,31 @@ class OrderController extends Controller
         
     }
 
+    public function updateOrderLine(Request $request, Order $order)
+    {
+        $order->skus()->updateExistingPivot($request->sku_id, [
+            'amount' => $request->amount,
+        ]);
+        return response()->json([
+            'message' => 'Order line updated',
+        ]);
+    }
+    
+    public function deleteOrderLine(Request $request, Order $order)
+    {
+        $order->skus()->detach($request->sku_id);
+        return response()->json([
+            'message' => 'Order line deleted',
+        ]);
+    }
+
     public function show(Order $order)
     {
 //        return response()->json($order->withRelations()->get());
             return Inertia::render('Admin/Orders/Detail', [
                 'order' => Order::where('id', $order->id)->withRelations()->get()->first(),
+                'shipping_address' => Address::where('id', $order->shipping_address_id)->first(),
+                'billing_address' => Address::where('id', $order->billing_address_id)->first(),
             ]);
     }
 
