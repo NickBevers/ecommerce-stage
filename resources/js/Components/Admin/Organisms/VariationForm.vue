@@ -1,7 +1,7 @@
 <script setup>
 import { ref, reactive, watch, onMounted } from 'vue'
 import { InputLabel, TextInput, Dropdown, PrimaryButton, UploadFile, InputError, SearchDropdown } from '@/Components/Admin'
-import { Head, Link, useForm } from '@inertiajs/vue3';
+import { Link, useForm } from '@inertiajs/vue3';
 import {
     Popover,
     PopoverButton,
@@ -24,7 +24,6 @@ const props = defineProps({
 });
 
 let checkedFilters = reactive([])
-
 let submitImage = ref(false)
 
 function addCheckedFilter(filter, value) {
@@ -43,11 +42,6 @@ function addCheckedFilter(filter, value) {
             values.splice(valueIndex, 1)
         }
     }
-}
-
-function removeCheckedFilters() {
-    // remove all checked filters
-    checkedFilters = reactive([])
 }
 
 function addRadioFilter(filter, value) {
@@ -75,13 +69,7 @@ function isChecked(filter, value) {
             return false
         }
         const valueIndex = values.indexOf(value)
-        if (valueIndex === -1) {
-            // Value not present in the attribute
-            return false
-        } else {
-            // Value already present in the attribute
-            return true
-        }
+        return valueIndex !== -1;
     }
 }
 
@@ -107,9 +95,7 @@ const variationForm = useForm({
     images: [],
 })
 
-const audience = reactive(
-    ["Men", "Women", "Kids", "Unisex"]
-);
+const audience = reactive(["Men", "Women", "Kids", "Unisex"]);
 
 let selectedHeadCategoryIndex = ref(0);
 let selectedHeadCategory = ref(0);
@@ -123,39 +109,19 @@ let formVariationError = ref(false);
 let variationAttribute = reactive([]);
 let generated = false;
 
+let material = ref("");
+let attributes = ref([]);
+let variationsMade = ref(false);
+
 function updateSubCategories() {
     selectedHeadCategory.value = selectedHeadCategoryIndex.value.id - 1
 }
 
 function addVariation() {
-    if (!variationForm.color || !variationForm.size || !variationForm.material) {
-        variationError.value = true
-        return
-    }
-    variationError.value = false
-    formVariationError.value = false
-    submitImage.value = true
 
-    const newVariation = {
-        sku: variationForm.sku,
-        amount: variationForm.amount,
-        price: variationForm.price,
-        color: variationForm.color,
-        size: variationForm.size,
-        material: variationForm.material,
-        images: variationForm.images
-    };
-
-    variations.value.push(newVariation);
-
-    variationForm.images = []
-
-    variationForm.reset();
-
-    checkedFilters = reactive([])
 }
 
-function test(){
+function handleVariationCreation(){
     if (generated) {
         return
     }
@@ -178,6 +144,7 @@ function generateVariations(currentCombination, index) {
     variations.value.push(currentCombination);
     variations.value = variations.value.filter((variation) => Object.keys(variation).length === checkedFilters.length);
     generated = false;
+    variationsMade.value = true;
 }
 
 function removeVariation(index) {
@@ -194,10 +161,23 @@ watch(() => {
     form.variations = variations.value
 })
 
-// watch(variationAttribute, () => { removeCheckedFilters() })
 
 function updateImages(images, index) {
+    // console.log(images)
     variations.value[index].images = images;
+}
+
+function removeImage(index, imageIndex) {
+    fetch('/admin/products/removeVariationImage', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            public_id: variations.value[index].images[imageIndex].public_id
+        })
+    })
+    variations.value[index].images.splice(imageIndex, 1)
 }
 
 function updateVariationAttribute(attribute) {
@@ -213,6 +193,15 @@ function updateVariationAttribute(attribute) {
     }
 }
 
+function applyAttribute(attribute, value){
+    variations.value.forEach((variation) => {
+        variation[attribute] = value;
+    })
+}
+
+function handlePrice(e){
+    e.target.value = parseFloat(e.target.value).toFixed(2);
+}
 
 function submit() {
     if (variations.value.length === 0) {
@@ -226,7 +215,8 @@ function submit() {
 <template>
     <div class="mt-8">
         <form class="max-w-7xl mx-auto sm:px-6 lg:px-8 my-5" @submit.prevent="submit">
-<!--            {{ variations }}-->
+            {{ variations }} <br>
+            {{ attributes}}
             <div class="bg-white px-4 py-5 shadow sm:rounded-lg mb-4 sm:p-6">
                 <div class="md:grid md:grid-cols-3 md:gap-6">
                     <div class="md:col-span-1">
@@ -291,7 +281,7 @@ function submit() {
                             </div>
 
                             <div class="flex mt-auto mb-auto rounded-md bg-indigo-600 py-2 px-3 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
-                                <p @click="() => { variations.value = []; test() }" class="cursor-pointer">Make my variations</p>
+                                <p @click="() => { variations.value = []; handleVariationCreation() }" class="cursor-pointer">Make my variations</p>
 <!--                                <p @click="generateVariations({}, 0)">Make my variations</p>-->
                             </div>
                         </div>
@@ -342,7 +332,7 @@ function submit() {
                             </div>
                         </div>
 
-                        <div class="mt-6">
+                        <div class="">
                             <div class="sm:mt-0">
                                 <div class="-m-1 flex flex-wrap items-center">
                                         <span v-for="(select, key) in checkedFilters" :key="key"
@@ -357,6 +347,38 @@ function submit() {
                                 </div>
                             </div>
                         </div>
+
+                        <div class="mt-6" v-if="variationsMade">
+                            <div v-for="(type, index) in attributeTypes" class="flex flex-row"  :class="variationAttribute.includes(type.name) ? 'hidden' : 'block'">
+                                <div v-if="variationAttribute.includes(type.name) === false" class="max-w-[23.5rem] w-[23.5rem]">
+                                    <div>
+                                        <p class="text-sm font-medium mb-2">{{ type.name }}</p>
+                                        <div class="flex rounded-md shadow-sm">
+                                            <Dropdown class="w-full" :type="type.name" :items="type.attributeValues" @change-value="applyAttribute"></Dropdown>
+                                        <!-- create a select option for each value of the type -->
+<!--                                            <select class="relative w-full cursor-default rounded-md bg-white py-1.5 pl-3 pr-10 text-left text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6 border-0 border-transparent" -->
+<!--                                                    @change="applyAttribute(type.name, $event.target)">-->
+<!--                                                <option value="" disabled selected>Select {{ type.name }}</option>-->
+<!--                                                <option v-for="attribute in type.attributeValues" :value="attribute.name">{{ attribute.name }}</option>-->
+<!--                                            </select>-->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Show dropdown for attributes not selected as variation -->
+<!--                        <div class="mt-4">-->
+<!--                            <div v-for="(type, index) in attributeTypes" >-->
+<!--                                <div v-if="variationAttribute.includes(type.name) === false">-->
+<!--                                    {{ type.name }}-->
+<!--                                    <div class="flex rounded-md shadow-sm">-->
+<!--                                        <Dropdown class="w-full" :items="type.attributeValues" v-model="material"></Dropdown>-->
+<!--                                        <InputError class="mt-2" :message="form.errors.audience" />-->
+<!--                                    </div>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </div>-->
 
                         <div>
                             <InputLabel for="description">Description</InputLabel>
@@ -453,7 +475,12 @@ function submit() {
                     leave-to-class="opacity-0">
                     <div class="pointer-events-auto relative flex flex-row flex-wrap justify-between rounded-lg bg-white shadow-lg ring-1 ring-black ring-opacity-5 p-4 items-center">
                         <div>
-                            <p class="text-sm font-medium text-gray-900">Variation {{ index + 1 }}</p>
+                            <div class="flex flex-row space-x-4 mb-2">
+                                <p class="text-base font-large text-gray-900 mr-3 items-end">Variation {{ index + 1 }}:</p>
+                                <div class="bg-gray-100 flex flex-row shadow">
+                                    <p v-for="(type, index) in checkedFilters" class="text-base font-large text-gray-900 mx-2 items-end">{{ variation[variationAttribute[index]] }}</p>
+                                </div>
+                            </div>
                             <div class="flex flex-row gap-6 flex-wrap overflow-hidden items-end">
                                 <div>
                                     <InputLabel for="title" value="sku" />
@@ -465,36 +492,36 @@ function submit() {
                                 </div>
                                 <div>
                                     <InputLabel for="title" value="price" />
-                                    <TextInput id="title" type="number" class="mt-2 flex rounded-md shadow-sm mt-1 block w-full pl-3" name="title" v-model="variations[index]['price']" required placeholder="19.99" />
+                                    <TextInput id="title" pattern="^\d*(\.\d{0,2})?$" @blur="handlePrice" type="number" class="mt-2 flex rounded-md shadow-sm mt-1 block w-full pl-3" name="title" v-model="variations[index]['price']" required placeholder="19.99" />
                                 </div>
                             </div>
-                            <div class="flex flex-row gap-6 justify-between overflow-hidden pt-4">
-                                <div>
-                                    <p class="text-sm font-medium text-gray-900">{{ variation.size }}</p>
+
+                            <div class="flex flex-row gap-6 overflow-hidden pt-4">
+                                <UploadFile @image-previews="updateImages" :images="variation.images" :formSubmitted="submitImage" :index="index" />
+                                <div class="mt-6 flex gap-6 flex-wrap">
+                                    <div v-for="(preview, imageIndex) in variation.images" :key="imageIndex" class="relative">
+                                        <div class="bg-indigo-600 p-0.5 cursor-pointer absolute right-0 top-0 rounded-bl-md rounded-tr-md"
+                                             @click="removeImage(index, imageIndex)">
+                                            <XMarkIcon class="h-6 w-6 text-white" />
+                                        </div>
+                                        <img :src="preview.url" alt="Uploaded Image" class="mx-auto h-24 rounded-md w-24 object-cover" />
+                                    </div>
                                 </div>
-                                <p class="text-sm font-medium text-gray-900">{{ variation.color }}</p>
-                                <p class="text-sm font-medium text-gray-900">{{ variation.material }}</p>
-                                <UploadFile @image-previews="updateImages" :formSubmitted="submitImage" :index="index"/>
                             </div>
                         </div>
 
-
-                        <div class="mt-2">
-                            <button type="button" @click="removeVariation(variation)"
-                                class="absolute top-0 right-0 mt-4 mr-4 rounded-md bg-white text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
-                                <XMarkIcon class="h-6 w-6 text-red-500" />
-                            </button>
-                        </div>
                     </div>
                 </transition>
             </div>
             <div class="flex justify-end px-4 sm:px-0">
                 <Link href="/admin/products" to="/admin/products"
                     class="rounded-md bg-white py-2 px-3 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">
-                Cancel
+                    Cancel
                 </Link>
                 <button type="submit"
-                    class="ml-3 inline-flex justify-center rounded-md bg-indigo-600 py-2 px-3 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500">Save</button>
+                    class="ml-3 inline-flex justify-center rounded-md bg-indigo-600 py-2 px-3 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500">
+                    Save
+                </button>
             </div>
         </form>
 </div></template>

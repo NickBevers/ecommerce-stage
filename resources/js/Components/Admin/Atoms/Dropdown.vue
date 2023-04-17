@@ -18,6 +18,7 @@
           <ListboxOption as="template" v-for="item in props.items" :key="item" :value="item.item ? item.item : item"
             v-slot="{ active, selected }">
             <li
+              @click="handleChange(item)"
               :class="[active ? 'bg-indigo-600 text-white' : 'text-gray-900', 'relative cursor-default select-none py-2 pl-8 pr-4']">
               <span :class="[selected ? 'font-semibold' : 'font-normal', 'block truncate']">
                 {{ item.name ? item.name : item.item ? item.item : item }}
@@ -42,7 +43,7 @@
   </select>
 </template>
 <script setup>
-import { ref, computed, watch, onMounted } from 'vue'
+import { ref, computed, watch, onMounted, defineEmits } from 'vue'
 import { Listbox, ListboxButton, ListboxOption, ListboxOptions } from '@headlessui/vue'
 import { CheckIcon, ChevronUpDownIcon } from '@heroicons/vue/20/solid'
 
@@ -57,8 +58,15 @@ const props = defineProps({
   place: {
     type: String,
     default: null
+  },
+  type: {
+    type: String,
+    required: false,
+    default: null
   }
 })
+
+const emit = defineEmits(['changeValue'])
 
 onMounted(() => {
   if (props.place) {
@@ -68,6 +76,13 @@ onMounted(() => {
     selected.value = props.items[0]
   }
 })
+
+function handleChange(item) {
+  selected.value = item.name
+  emit('changeValue', props.type, selected.value)
+
+  // emit('selectValue', )
+}
 
 const selected = ref("test")
 

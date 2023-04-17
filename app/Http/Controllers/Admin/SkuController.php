@@ -114,6 +114,22 @@ class SkuController extends Controller
         return redirect()->route('admin.products.index');
     }
 
+    public function uploadImages(Request $request)
+    {
+//        ray($request['files']);
+        ray($request->index);
+        $urls = $this->uploadSkuImageService->uploadVariationImage($request['files'], []);
+        return response()->json([
+            'urls' => $urls,
+            'index' => $request['index'],
+        ]);
+    }
+
+    public function deleteVariationImage(Request $request)
+    {
+        return $this->uploadSkuImageService->deleteVariationImage($request->input('public_id'));
+    }
+
     public function sortClothing(Array $data): array
     {
 //        $sizes = [ 'One Size', 'XXS', 'XS', 'S', 'M', 'L', 'XL', 'XXL', '3XL', '4XL', '5XL', '6XL', '7XL', '8XL', '23', '24', '25', '26', '27', '28', '29', '30', '31', '32', '33', '34', '35', '36', '37', '38', '39', '40', '41', '42', '43', '44', '45', '46', '47', '48', '49', '50', '52', '54', '56', '58', '60', '62', '64', '66', '68', '70', '90', '94', '98', '102','106', '110',];
