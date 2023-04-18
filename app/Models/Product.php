@@ -52,9 +52,4 @@ class Product extends Model
     {
         return $this->hasMany(Sku::class);
     }
-
-    public function vat(): BelongsTo
-    {
-        return $this->belongsTo(Vat::class);
-    }
 }

@@ -89,6 +89,7 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('/promos/create', [PromoController::class, 'create'])->name('promos.create');
     Route::get('/promos/{promo}/edit', [PromoController::class, 'edit'])->name('promos.edit');
     Route::post('/promos', [PromoController::class, 'store'])->name('promos.store');
+    Route::post('/promos/allVariations', [PromoController::class, 'storeAllVariations'])->name('promos.storeAllVariations');
     Route::patch('/promos/{promo}', [PromoController::class, 'update'])->name('promos.update');
     Route::delete('/promos/{promo}', [PromoController::class, 'destroy'])->name('promos.destroy');
 

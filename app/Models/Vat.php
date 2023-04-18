@@ -25,4 +25,16 @@ class Vat extends Model
         'created_at',
         'updated_at',
     ];
+
+    /*
+     * --------------------------------------------------------------------------
+     * RELATIONS
+     * --------------------------------------------------------------------------
+     */
+
+    public function skus(): HasMany
+    {
+        return $this->hasMany(Sku::class);
+    }
+
 }

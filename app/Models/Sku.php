@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\HasOneThrough;
 use Illuminate\Support\Facades\Auth;
 
@@ -90,9 +91,9 @@ class Sku extends Model
         return $this->hasMany(ProductReturn::class);
     }
 
-    public function vat(): HasOneThrough
+    public function vat(): HasOne
     {
-        return $this->hasOneThrough(Vat::class, Product::class);
+        return $this->hasOne(Vat::class);
     }
 
     /*

@@ -20,7 +20,41 @@ class PromoController extends Controller
 
     public function store(PromoValidationRequest $request)
     {
+        $sku = Sku::where('id', $request->sku_id)->first();
+        $vat = $sku->vat->vat_rate;
+
+        $priceExclVat = $request->new_price;
+        $priceInclVat = $priceExclVat * (1 + floatval($vat));
+
+        $request->merge([
+            'price_excl_vat' => $priceExclVat,
+            'price_incl_vat' => $priceInclVat,
+        ]);
+
         Promo::create($request->all());
+
+        return redirect()
+            ->route('products.index')
+            ->with('success', 'Promo created successfully.');
+    }
+
+    public function storeAllVariations(PromoValidationRequest $request){
+        $sku = Sku::where('id', $request->sku_id)->first();
+        $skus = $sku->product->skus;
+        $vat = $sku->vat->vat_rate;
+
+        foreach($skus as $sku){
+            $priceExclVat = $request->new_price;
+            $priceInclVat = $priceExclVat * (1 + floatval($vat));
+
+            $request->merge([
+                'sku_id' => $sku->id,
+                'price_excl_vat' => $priceExclVat,
+                'price_incl_vat' => $priceInclVat,
+            ]);
+
+            Promo::create($request->all());
+        }
 
         return redirect()
             ->route('products.index')
