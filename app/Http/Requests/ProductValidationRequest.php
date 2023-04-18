@@ -29,6 +29,7 @@ class ProductValidationRequest extends FormRequest
             'vat_id' => 'required',
             'brand_id' => 'required',
             'sub_category_id' => 'required',
+            'variations' => 'required',
         ];
     }
 }

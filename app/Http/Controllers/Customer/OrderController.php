@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Customer;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\OrderValidationRequest;
+use App\Models\Address;
 use App\Models\Order;
 use App\Models\Address;
 use Illuminate\Http\Request;
@@ -34,7 +35,7 @@ class OrderController extends Controller
 
         // return Inertia::render('Customer/Checkout/Detail', [
         //     'order' => $order,
-        //     'skus' => $order->skus->load('productImages', 'product'), 
+        //     'skus' => $order->skus->load('productImages', 'product'),
         // ]);
         return Inertia::render('Customer/Checkout/Detail', [
             'order' => $order,

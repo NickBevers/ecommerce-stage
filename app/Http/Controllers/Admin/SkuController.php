@@ -88,8 +88,12 @@ class SkuController extends Controller
        ]);
     }
 
+//    public function store(ProductValidationRequest $request)
     public function store(ProductValidationRequest $request)
     {
+//        ray($request->all());
+//        dd($request->all());
+
         $productRequest = new ProductValidationRequest($request->only(['title', 'description', 'audience', 'brand_id', 'sub_category_id', 'product_type', 'extra_info']));
         $product = $this->productService->store($productRequest);
 
@@ -98,20 +102,46 @@ class SkuController extends Controller
             $sku = Sku::create([
                 'sku' => $variation['sku'],
                 'price_excl_vat' => $variation['price'],
-                'price_incl_vat' => $variation['price'] * (1 + $vat->vat_percentage / 100),
+                'price_incl_vat' => $variation['price'] * (1 + floatval($vat->vat_rate) / 100),
                 'amount' => $variation['amount'],
                 'product_id' => $product->id,
             ]);
 
-            $this->uploadSkuImageService->upload($variation['images'], $sku->id);
 
-            $color = AttributeValue::where('name', $variation['color'])->first();
-            $material = AttributeValue::where('name', $variation['material'])->first();
+            foreach ($variation['images'] as $image) {
+                ProductImage::create([
+                    'image_type' => explode('/', $image['public_id'])[0],
+                    'image_link' => $image['url'],
+                    'image_public_id' => $image['public_id'],
+                    'sku_id' => $sku->id,
+                    'alt' => $variation['sku'].'-'.$image['public_id'],
+                ]);
+            }
 
-            $this->skuService->attachAttributes($sku, $color, $material, $variation['sizes']);
+            // loop through the attributes and attach them to the sku
+            foreach ($variation['attributes'] as $attribute) {
+                $attributeValue = AttributeValue::where('name', $attribute)->first();
+                $sku->attributeValues()->attach($attributeValue);
+            }
         }
 
         return redirect()->route('admin.products.index');
+    }
+
+    public function uploadImages(Request $request)
+    {
+//        ray($request['files']);
+        ray($request->index);
+        $urls = $this->uploadSkuImageService->uploadVariationImage($request['files'], []);
+        return response()->json([
+            'urls' => $urls,
+            'index' => $request['index'],
+        ]);
+    }
+
+    public function deleteVariationImage(Request $request)
+    {
+        return $this->uploadSkuImageService->deleteVariationImage($request->input('public_id'));
     }
 
     public function sortClothing(Array $data): array
@@ -151,11 +181,10 @@ class SkuController extends Controller
         $sku->update([ 'sku' => $request->input('sku'), 'price_excl_vat' => $request->input('price'), 'price_incl_vat' => $request->input('price') * (1 + $vat->vat_percentage / 100) , 'amount' => $request->input('amount')]);
 
         $sku->attributeValues()->detach();
-        $color = AttributeValue::where('name', $request->input('color'))->first();
-        $material = AttributeValue::where('name', $request->input('material'))->first();
-        $sizes = $this->sortClothing($request->input('sizes'));
-
-        $this->skuService->attachAttributes($sku, $color, $material, $sizes);
+        foreach ($request->input('attributes') as $attribute) {
+            $attributeValue = AttributeValue::where('name', $attribute)->first();
+            $sku->attributeValues()->attach($attributeValue);
+        }
 
         return redirect()->route('admin.products.index')->with('success', 'Product updated successfully');
     }

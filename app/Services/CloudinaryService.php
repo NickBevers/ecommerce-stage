@@ -19,4 +19,13 @@ class CloudinaryService
             'secure_url' => $uploadedFile->getSecurePath(),
         ];
     }
+
+    public function deleteImage($publicId)
+    {
+        try {
+            Cloudinary::destroy($publicId);
+        } catch (\Exception $e) {
+            return $e->getMessage();
+        }
+    }
 }
