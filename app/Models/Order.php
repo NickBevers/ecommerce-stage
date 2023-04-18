@@ -44,9 +44,14 @@ class Order extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function addresses(): BelongsTo
+    public function shippingAddress(): BelongsTo
     {
-        return $this->belongsTo(Address::class);
+        return $this->belongsTo(Address::class, 'shipping_address_id');
+    }
+
+    public function billingAddress(): BelongsTo
+    {
+        return $this->belongsTo(Address::class, 'billing_address_id');
     }
 
     public function skus(): BelongsToMany
@@ -69,7 +74,6 @@ class Order extends Model
     {
         return $query->with([
             'user',
-            'addresses',
             'skus',
             'productReturns',
         ]);

@@ -6,6 +6,8 @@ import { Head, Link } from '@inertiajs/vue3';
 const props = defineProps({
     orders: Object,
 });
+
+console.log(props.orders);
 </script>
 <template>
     <Head title="Products" />

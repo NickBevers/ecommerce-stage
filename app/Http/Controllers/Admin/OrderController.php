@@ -12,20 +12,13 @@ class OrderController extends Controller
 {
     public function index()
     {
-        $orders = Order::orderBy('created_at', 'desc')->get();
-
-        $ordersWithAddresses = [];
-
-        foreach ($orders as $order) {
-            $ordersWithAddresses[] = [
-                'order' => $order,
-                'shipping_address' => Address::where('id', $order->shipping_address_id)->first(),
-                'billing_address' => Address::where('id', $order->billing_address_id)->first(),
-            ];
-        }
+        $orders = Order::orderBy('created_at', 'desc')
+            ->with('shippingAddress', 'billingAddress')
+            ->withRelations()
+            ->paginate(10);
         
         return Inertia::render('Admin/Orders/Index', [
-            'orders' => $ordersWithAddresses,
+            'orders' => $orders,
         ]);
         
     }
