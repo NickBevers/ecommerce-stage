@@ -81,7 +81,13 @@ const props = defineProps({
     type: String,
     required: true,
   },
+  filters: {
+    type: Array,
+    required: true,
+  }
 })
+
+console.log(props.filters)
 </script>
 <template>
   <div class="bg-gray-50 pt-24">
@@ -109,7 +115,7 @@ const props = defineProps({
               </div>
               <!-- Filters -->
               <form class="mt-4">
-                <Disclosure as="div" v-for="section in filters" :key="section.name"
+                <Disclosure as="div" v-for="section in props.filters" :key="section.name"
                   class="border-t border-gray-200 px-4 py-6" v-slot="{ open }">
                   <h3 class="-mx-2 -my-3 flow-root">
                     <DisclosureButton
@@ -181,7 +187,7 @@ const props = defineProps({
             @click="open = true">Filters</button>
 
           <PopoverGroup class="hidden sm:flex sm:items-baseline sm:space-x-8">
-            <Popover as="div" v-for="(section, sectionIdx) in filters" :key="section.name"
+            <Popover as="div" v-for="(section, sectionIdx) in props.filters" :key="section.name"
               :id="`desktop-menu-${sectionIdx}`" class="relative inline-block text-left">
               <div>
                 <PopoverButton
@@ -203,7 +209,8 @@ const props = defineProps({
                       <input :id="`filter-${section.id}-${optionIdx}`" :name="`${section.id}[]`" :value="option.value"
                         type="checkbox" class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500" />
                       <label :for="`filter-${section.id}-${optionIdx}`"
-                        class="ml-3 whitespace-nowrap pr-6 text-sm font-medium text-gray-900">{{ option.label }}</label>
+                        class="ml-3 whitespace-nowrap pr-6 text-sm font-medium text-gray-900">{{ option.label.name
+                        }}</label>
                     </div>
                   </form>
                 </PopoverPanel>
