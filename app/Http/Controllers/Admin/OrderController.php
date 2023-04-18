@@ -30,12 +30,32 @@ class OrderController extends Controller
         
     }
 
+    public function updateOrderLine(Order $order, Request $request)
+    {
+        $order->skus()->updateExistingPivot($request->sku_id, [
+            'amount' => $request->amount,
+        ]);
+        return response()->json([
+            'message' => 'Order line updated',
+        ]);
+    }
+    
+    public function deleteOrderLine(Order $order, Request $request)
+    {
+        $order->skus()->detach($request->sku_id);
+        return response()->json([
+            'message' => 'Order line deleted',
+        ]);
+    }
+
     public function show(Order $order)
     {
 //        return response()->json($order->withRelations()->get());
-        return Inertia::render('Admin/Orders/Detail', [
-            'order' => $order->withRelations()->get(),
-        ]);
+            return Inertia::render('Admin/Orders/Detail', [
+                'order' => Order::where('id', $order->id)->withRelations()->get()->first(),
+                'shipping_address' => Address::where('id', $order->shipping_address_id)->first(),
+                'billing_address' => Address::where('id', $order->billing_address_id)->first(),
+            ]);
     }
 
     public function update(Request $request, Order $order)
@@ -48,7 +68,8 @@ class OrderController extends Controller
             'order_status' => $request->order_status,
         ]);
 
-        return redirect()->route('orders.show', $order->id);
+      
+        return redirect()->route('admin.orders.index');
     }
 
     public function updateTracking(Request $request, Order $order)
@@ -76,6 +97,6 @@ class OrderController extends Controller
             'shipped_at' => $request->shipped_at,
         ]);
 
-        return redirect()->route('orders.show', $order->id);
+        $this->index();
     }
 }

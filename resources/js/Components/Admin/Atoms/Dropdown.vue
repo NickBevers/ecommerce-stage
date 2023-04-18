@@ -69,7 +69,10 @@ const props = defineProps({
 const emit = defineEmits(['changeValue'])
 
 onMounted(() => {
-  if (props.place) {
+ if(props.selected!=null){
+    selected.value = props.selected
+ }
+ else if (props.place) {
     selected.value = props.place
   }
   else {

@@ -109,7 +109,7 @@ onMounted(() => {
                             <div>
                                 <dt class="font-medium text-gray-900">Shipping Address</dt>
                                 <dd class="mt-2">
-                                    <address class="not-italic">
+                                    <address class="not-italic" v-if="props.shipping_address">
                                         <span class="block">{{ props.shipping_address.address_line1 }}</span>
                                         <span class="block">{{ props.shipping_address.address_line2 }}</span>
                                         <span class="block">{{ props.shipping_address.city }}, {{
@@ -121,7 +121,7 @@ onMounted(() => {
                             <div>
                                 <dt class="font-medium text-gray-900">Billing Address</dt>
                                 <dd class="mt-2">
-                                    <address class="not-italic">
+                                    <address class="not-italic" v-if="props.billing_address">
                                         <span class="block">{{ props.billing_address.address_line1 }}</span>
                                         <span class="block">{{ props.billing_address.address_line2 }}</span>
                                         <span class="block">{{ props.billing_address.city }}, {{
@@ -138,10 +138,10 @@ onMounted(() => {
                             <span aria-hidden="true"> &larr; </span>
                             Continue Shopping
                             </Link>
-                            <a href="/orders" class="text-sm font-medium text-indigo-600 hover:text-indigo-500">
-                                Check your order status
-                                <span aria-hidden="true"> &rarr;</span>
-                            </a>
+                            <Link href="/profile/orders" class="text-sm font-medium text-indigo-600 hover:text-indigo-500">
+                            Check your order status
+                            <span aria-hidden="true"> &rarr;</span>
+                            </Link>
                         </div>
                     </div>
                 </div>

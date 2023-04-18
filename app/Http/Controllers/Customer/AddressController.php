@@ -28,9 +28,7 @@ class AddressController extends Controller
     {
         $shippingAddress->update($request->all());
 
-        return redirect()
-            ->back()
-            ->with('success', 'Shipping Address updated successfully');
+        return response()->json($shippingAddress);
     }
 
     public function destroy(Address $shippingAddress): RedirectResponse

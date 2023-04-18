@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProfileUpdateRequest;
+use App\Models\Order;
+use App\Models\Address;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -59,6 +61,27 @@ class ProfileController extends Controller
         $request->session()->regenerateToken();
 
         return Redirect::to('/');
+    }
+
+    public function orders(Request $request): Response
+    {
+        $orders = Order::orderBy('created_at', 'desc')->get();
+
+        $ordersWithAddresses = [];
+
+        foreach ($orders as $order) {
+            $ordersWithAddresses[] = [
+                'order' => $order->withRelations()->get()->first(),
+                'shipping_address' => Address::where('id', $order->shipping_address_id)->first(),
+                'billing_address' => Address::where('id', $order->billing_address_id)->first(),
+            ];
+        }
+
+        return Inertia::render('Customer/Profile/Details/Orders', [
+            'mustVerifyEmail' => $request->user() instanceof MustVerifyEmail,
+            'status' => session('status'),
+            'orders' => $ordersWithAddresses,
+        ]);
     }
 
     /**

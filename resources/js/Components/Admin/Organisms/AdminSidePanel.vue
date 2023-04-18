@@ -21,7 +21,7 @@ const navigation = [
   { name: 'Products', href: '/admin/products', icon: ShoppingBagIcon, current: false },
   { name: 'Orders', href: '/admin/orders', icon: ClipboardIcon, current: false },
   { name: 'Reviews', href: '/admin/products', icon: StarIcon, current: false },
-  { name: 'Customers', href: '/admin/products', icon: UsersIcon, current: false },
+  { name: 'Customers', href: '/admin/customers', icon: UsersIcon, current: false },
 ]
 
 let active = ref(false)

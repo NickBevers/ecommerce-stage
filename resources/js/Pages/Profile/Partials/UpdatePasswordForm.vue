@@ -12,6 +12,13 @@ const form = useForm({
     password_confirmation: '',
 });
 
+const props = defineProps({
+    user_type: {
+        type: String,
+        default: 'admin',
+    },
+});
+
 const updatePassword = () => {
     form.put(route('password.update'), {
         preserveScroll: true,
@@ -32,12 +39,19 @@ const updatePassword = () => {
 
 <template>
     <section>
-        <header>
+        <header v-if="props.user_type != 'customer'">
             <h2 class="text-lg font-medium text-gray-900">Update Password</h2>
 
             <p class="mt-1 text-sm text-gray-600">
                 Ensure your account is using a long, random password to stay secure.
             </p>
+        </header>
+        <header v-else>
+            <div class="mx-auto max-w-2xl px-4 lg:max-w-4xl lg:px-0">
+                <h1 class="text-2xl font-bold tracking-tight text-gray-900 sm:text-3xl">Update Password</h1>
+                <p class="mt-2 text-sm text-gray-500"> Ensure your account is using a long, random password to stay secure.
+                </p>
+            </div>
         </header>
 
         <form @submit.prevent="updatePassword" class="mt-6 space-y-6">

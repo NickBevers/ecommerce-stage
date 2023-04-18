@@ -56,6 +56,8 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('/admin/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     // Admin Order Routes
     Route::post('/admin/orders/{order}', [AdminOrderController::class, 'update'])->name('admin.orders.update');
+    Route::patch('/admin/orders/product/{order}', [AdminOrderController::class, 'updateOrderLine'])->name('admin.orders.updateOrderLine');
+    Route::delete('/admin/orders/product/{order}', [AdminOrderController::class, 'deleteOrderLine'])->name('admin.orders.deleteOrderLine');
 
     // Admin Product Routes
     Route::get('/admin/products', [AdminSkuController::class, 'index'])->name('admin.products.index');
@@ -77,7 +79,7 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('/admin/reviews/toggle/{sku}', [AdminReviewController::class, 'toggleInactive'])->name('reviews.create');
 
     // Admin User Routes
-    Route::get('/admin/users', [AdminUserController::class, 'index'])->name('admin.users.index');
+    Route::get('/admin/customers', [AdminUserController::class, 'index'])->name('admin.customers.index');
 
     // Admin Order Routes
     Route::get('/admin/orders', [AdminOrderController::class, 'index'])->name('admin.orders.index');
@@ -100,6 +102,7 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
+    Route::get('/profile/orders', [ProfileController::class, 'orders'])->name('profile.orders');
     Route::get('/profile/password', [ProfileController::class, 'editPassword'])->name('profile.editPassword');
     Route::get('/profile/advanced', [ProfileController::class, 'editAdvanced'])->name('profile.editAdvanced');
 
