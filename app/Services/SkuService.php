@@ -57,16 +57,6 @@ class SkuService
             });
     }
 
-    public function attachAttributes($sku, $color, $material, $sizes)
-    {
-        $sku->attributeValues()->attach($color);
-        $sku->attributeValues()->attach($material);
-
-        foreach ($sizes as $size) {
-            $size = AttributeValue::where('name', $size)->first();
-            $sku->attributeValues()->attach($size);
-        }
-    }
 
     public function getUniqueAttributeValues($skus, $attributeType): Array
     {

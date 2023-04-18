@@ -77,8 +77,9 @@ function isChecked(filter, value) {
 const form = useForm({
     title: "",
     audience: "Men",
-    vat_id: 1,
+    vat_id: 72,
     sub_category_id: 1,
+    product_type: "variable",
     brand_id: 1,
     description: "",
     extra_info: "",
@@ -117,25 +118,29 @@ function updateSubCategories() {
     selectedHeadCategory.value = selectedHeadCategoryIndex.value.id - 1
 }
 
-function addVariation() {
-
-}
-
 function handleVariationCreation(){
     if (generated) {
         return
     }
-    // remove all variations
     variations.value = [];
     generated = true;
     generateVariations({}, 0);
     props.attributeTypes.forEach((attribute, index) => {
         if (variationAttribute.indexOf(attribute.name) === -1) {
-            console.log(attribute.name);
             variations.value.forEach((variation) => {
                 variation[attribute.name] = props.attributeTypes[index]['attributeValues'][0].name
             })
         }
+    })
+
+    variations.value.forEach((variation) => {
+        variation.attributes = [];
+        props.attributeTypes.forEach((attribute) => {
+            if (variation[attribute.name]) {
+                variation.attributes.push({[attribute.name]: variation[attribute.name]})
+                variation[attribute.name] = undefined
+            }
+        })
     })
 }
 
@@ -201,14 +206,34 @@ function updateVariationAttribute(attribute) {
     }
 }
 
-function applyAttribute(attribute, value){
+function applyAttribute(type, value){
     variations.value.forEach((variation) => {
-        variation[attribute] = value;
+        const index = variation.attributes.findIndex(item => Object.keys(item)[0] === type)
+        if (index !== -1) {
+            variation.attributes[index][type] = value
+        } else {
+            // if it doesn't exist add it
+            variation.attributes.push({[type]: value})
+        }
     })
 }
 
+function getAttribute(variation, attributeType){
+    const index = variation.attributes.findIndex(item => Object.keys(item)[0] === Object.keys(attributeType)[0])
+    if (index !== -1) {
+        return Object.values(variation.attributes[index])[0]
+    }
+    return null
+}
+
 function handlePrice(e){
-    e.target.value = parseFloat(e.target.value).toFixed(2);
+    if (e.target.value === "" || e.target.value === null || e.target.value === undefined || e.target.value === " ") {
+        e.target.value = 0.00
+    }
+
+    isNaN(e.target.value)
+    ?e.target.value = 0.00
+    :e.target.value = parseFloat(e.target.value).toFixed(2)
 }
 
 function submit() {
@@ -217,17 +242,16 @@ function submit() {
         return
     }
 
-    // loop through variations and check if they have all the attributes
-    props.attributeTypes.forEach((attribute) => {
-        if (!variations[0][attribute]) {
+    props.attributeTypes.forEach((attribute, index) => {
+        if (variationAttribute.indexOf(attribute.name) === -1) {
             variations.value.forEach((variation) => {
-                variation[attribute] = attribute['attributeValues'][0];
+                variation[attribute.name] = props.attributeTypes[index]['attributeValues'][0].name
             })
         }
     })
     form.variations = variations.value
-
     formVariationError.value = false
+
     form.post(route('admin.products.store'))
 }
 </script>
@@ -479,7 +503,7 @@ function submit() {
                             <div class="flex flex-row space-x-4 mb-2">
                                 <p class="text-base font-large text-gray-900 mr-3 items-end">Variation {{ index + 1 }}:</p>
                                 <div class="bg-gray-100 flex flex-row shadow">
-                                    <p v-for="(type, index) in checkedFilters" class="text-base font-large text-gray-900 mx-2 items-end">{{ variation[variationAttribute[index]] }}</p>
+                                    <p v-for="(type, index) in checkedFilters" class="text-base font-large text-gray-900 mx-2 items-end">{{ getAttribute(variation, type) }}</p>
                                 </div>
                             </div>
                             <div class="flex flex-row gap-6 flex-wrap overflow-hidden items-end">
