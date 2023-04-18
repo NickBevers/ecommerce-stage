@@ -55,9 +55,6 @@ onMounted(() => {
 function selectCategory(category_id) {
     selectedCategory.value = category_id;
 }
-
-//u
-
 </script>
 <template>
     <div class="bg-white fixed top-0 left-0 z-20 w-full">
@@ -145,7 +142,7 @@ function selectCategory(category_id) {
                             <!-- Links -->
                             <TabGroup as="div" class="mt-2">
                                 <div class="border-b border-gray-200">
-                                    <TabList class="-mb-px flex space-x-8 px-4 overflow-x-auto">
+                                    <TabList class="-mb-px flex space-x-8 px-4 overflow-x-auto no-scrollbar">
                                         <Tab as="template" v-for="category in categories.slice(0, 3)" :key="category.name"
                                             v-slot="{ selected }">
                                             <button
