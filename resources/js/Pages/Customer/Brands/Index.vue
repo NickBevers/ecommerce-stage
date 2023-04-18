@@ -24,7 +24,7 @@ const categories = computed(() => {
             result["+"].push(brand);
         } else if (/[A-Za-z]/.test(firstChar)) {
             if (!result[firstChar]) {
-                result[firstChar] = [];
+                result[firstChar] = undefined;
             }
             result[firstChar].push(brand);
         }
@@ -40,22 +40,19 @@ onMounted(() => {
     <GuestLayout>
         <div class="mx-auto max-w-7xl px-6 lg:px-8 pt-36">
             <div class="flex justify-between">
-                <a class="text-indigo-600" :href="`#${category}`" v-for="(brands, category) in categories"
-                    :key="category">{{
-                        category }}</a>
+                <a class="text-indigo-600" :href="`#${category}`" v-for="(brands, category) in categories" :class="brands.length > 0 ? 'block' :'hidden' "
+                    :key="category">{{ category }}</a>
             </div>
-            <div class="">
-                <div v-for="(brands, category) in categories" :key="category" class="grid grid-cols-3 gap-4">
-                    <h2 class="text-4xl font-bold text-gray-900 col-span-3 pt-32" :id="category">{{ category }}</h2>
-                    <Link :href="`/brands/${brand.slug}`" v-for="brand in brands"
-                        class="relative flex cursor-pointer rounded-lg border justify-between bg-white p-4 shadow-sm focus:outline-none">
-                    <span class="flex flex-col">
-                        {{ brand.name }}
-                    </span>
-                    <ChevronRightIcon class="text-gray-500 w-6 h-6" />
+            <div v-for="(brands, category) in categories" :key="category" class="grid grid-cols-3 gap-4">
+                <h2 class="text-4xl font-bold text-gray-900 col-span-3 pt-32" :id="category" v-if="brands.length > 0">{{ category }}</h2>
+                <Link :href="`/brands/${brand.slug}`" v-for="brand in brands"
+                    class="relative flex cursor-pointer rounded-lg border justify-between bg-white p-4 shadow-sm focus:outline-none">
+                <span class="flex flex-col">
+                    {{ brand.name }}
+                </span>
+                <ChevronRightIcon class="text-gray-500 w-6 h-6" />
 
-                    </Link>
-                </div>
+                </Link>
             </div>
         </div>
     </GuestLayout>
