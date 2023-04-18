@@ -12,7 +12,8 @@ return new class extends Migration {
             $table->foreignId('sku_id')->nullable()->constrained()->onDelete('set null');
             $table->timestamp('start_date')->nullable();
             $table->timestamp('end_date')->nullable();
-            $table->float('new_price');
+            $table->float('new_price_excl_vat')->nullable();
+            $table->float('new_price_incl_vat')->nullable();
             $table->String('extra_info')->nullable();
             $table->timestamps();
         });

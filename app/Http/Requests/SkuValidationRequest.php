@@ -26,6 +26,7 @@ class SkuValidationRequest extends FormRequest
             'product_id' => 'required|integer',
             'amount' => 'required|integer',
             'price' => 'required|numeric',
+            'vat_id' => 'integer',
         ];
     }
 }

@@ -18,7 +18,6 @@ return new class extends Migration {
             $table->boolean('is_active')->default(true);
             $table->foreignId('user_id')->nullable()->default(1)->constrained()->onDelete('set null');
             $table->foreignId('brand_id')->nullable()->default(1)->constrained()->onDelete('set null');
-            $table->foreignId('vat_id')->default(1)->constrained();
             $table->timestamps();
         });
     }

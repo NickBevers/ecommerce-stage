@@ -12,6 +12,7 @@ return new class extends Migration {
             $table->string('sku')->unique();
             $table->foreignId('product_id')->constrained();
             $table->integer('amount');
+            $table->foreignId('vat_id')->default(27)->constrained();
             $table->float('price_excl_vat');
             $table->float('price_incl_vat');
             $table->timestamps();
