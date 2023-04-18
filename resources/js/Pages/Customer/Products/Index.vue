@@ -14,9 +14,6 @@ const props = defineProps({
   brands: Object,
 });
 
-onMounted(() => {
-
-});
 </script>
 <template>
   <GuestLayout>
