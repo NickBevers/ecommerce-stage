@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\OrderValidationRequest;
 use App\Models\Address;
 use App\Models\Order;
-use App\Models\Address;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
