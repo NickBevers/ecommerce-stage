@@ -258,8 +258,6 @@ function submit() {
 <template>
     <div class="mt-8">
         <form class="max-w-7xl mx-auto sm:px-6 lg:px-8 my-5" @submit.prevent="submit">
-        {{ variations }}<br>
-        {{ variationAttribute }}
             <div class="bg-white px-4 py-5 shadow sm:rounded-lg mb-4 sm:p-6">
                 <div class="md:grid md:grid-cols-3 md:gap-6">
                     <div class="md:col-span-1">
@@ -522,7 +520,7 @@ function submit() {
                             </div>
 
                             <div class="flex flex-row gap-6 overflow-hidden pt-4">
-                                <UploadFile @image-previews="updateImages" :images="variation.images" :formSubmitted="submitImage" :index="index" />
+                                <UploadFile @image-previews="updateImages" :images="variation.images" :index="index" />
                                 <div class="mt-6 flex gap-6 flex-wrap">
                                     <div v-for="(preview, imageIndex) in variation.images" :key="imageIndex" class="relative">
                                         <div class="bg-indigo-600 p-0.5 cursor-pointer absolute right-0 top-0 rounded-bl-md rounded-tr-md"

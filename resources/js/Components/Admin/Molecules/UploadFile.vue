@@ -5,10 +5,6 @@ const emit = defineEmits(['imagePreviews'])
 const images = ref(null);
 
 const props = defineProps({
-  formSubmitted: {
-    type: Boolean,
-    required: true,
-  },
   index: {
       type: Number,
       required: false,

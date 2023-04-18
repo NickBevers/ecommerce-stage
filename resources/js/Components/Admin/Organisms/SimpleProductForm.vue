@@ -1,19 +1,14 @@
 <script setup>
-import { ref, reactive, watch } from 'vue'
+import {ref, reactive, watch, capitalize} from 'vue'
 import { Head, Link, useForm } from '@inertiajs/vue3';
 import { InputLabel, TextInput, UploadFile, InputError, Dropdown, SearchDropdown } from '@/Components/Admin';
+import {XMarkIcon} from "@heroicons/vue/20/solid";
 
 const props = defineProps({
     brands: Array,
     categories: Array,
     attributeTypes: Array,
 });
-
-function updateVariation(filter) {
-    if (filter === 'sizes') {
-        console.log('sizes')
-    }
-}
 
 const form = useForm({
     title: "",
@@ -29,9 +24,7 @@ const form = useForm({
             sku: "",
             amount: "",
             price: "",
-            color: "",
-            sizes: [],
-            material: "",
+            attributes: [],
             images: [],
         }
     ]
@@ -54,6 +47,19 @@ function updateImages(images) {
     form.variations[0].images = images
 }
 
+function removeImage(imageIndex) {
+    fetch('/admin/products/removeVariationImage', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            public_id: form.variations[0].images[imageIndex].public_id
+        })
+    })
+    form.variations[0].images.splice(imageIndex, 1)
+}
+
 function updateSubCategories() {
     selectedHeadCategory.value = selectedHeadCategoryIndex.value.id - 1
 }
@@ -62,46 +68,44 @@ function onSelectedOption(option) {
     form.brand_id = option.id
 }
 
-watch(() => {
-    if (selectedSubCategory.value) {
-        form.sub_category_id = selectedSubCategory.value.id
+function handlePrice(e){
+    if (e.target.value === "" || e.target.value === null || e.target.value === undefined || e.target.value === " ") {
+        e.target.value = 0.00
     }
 
-    if (formSize.value) {
-        form.variations[0].sizes = [formSize.value.name]
-    }
+    isNaN(e.target.value)
+        ?e.target.value = 0.00
+        :e.target.value = parseFloat(e.target.value).toFixed(2)
+}
 
-    if (formColor.value) {
-        form.variations[0].color = formColor.value.name
-    }
 
-    if (formMaterial.value) {
-        form.variations[0].material = formMaterial.value.name
-    }
-})
-
+function updateVariation(event, attribute) {
+    const obj = {}
+    obj[attribute] = event.target.textContent
+    form.variations[0].attributes.push(obj);
+}
 function submit() {
 
-    // form.post(route('admin.products.store'))
-    fetch(route('admin.products.store'), {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'Accept': 'application/json',
-            'X-Requested-With': 'XMLHttpRequest'
-        },
-        body: JSON.stringify(form)
-    })
-        .then(response => response.json())
-        .then(data => {
-            if (data.status === 422) {
-                console.log("GOT AN ERROR");
-                console.log(data.errors);
-            } else {
-                console.log("SUCCESS");
-                console.log(data);
-            }
-        })
+    form.post(route('admin.products.store'))
+    // fetch(route('admin.products.store'), {
+    //     method: 'POST',
+    //     headers: {
+    //         'Content-Type': 'application/json',
+    //         'Accept': 'application/json',
+    //         'X-Requested-With': 'XMLHttpRequest'
+    //     },
+    //     body: JSON.stringify(form)
+    // })
+    //     .then(response => response.json())
+    //     .then(data => {
+    //         if (data.status === 422) {
+    //             console.log("GOT AN ERROR");
+    //             console.log(data.errors);
+    //         } else {
+    //             console.log("SUCCESS");
+    //             console.log(data);
+    //         }
+    //     })
 }
 </script>
 <template>
@@ -172,7 +176,9 @@ function submit() {
                                 <div class="mt-2 flex rounded-md shadow-sm">
                                     <TextInput id="price" type="number" class="mt-1 block w-full pl-3" name="price"
                                         pattern="^\d*(\.\d{0,2})?$" step="0.01" v-model="form.variations[0].price" required
-                                        autocomplete="title" placeholder="19.99" />
+                                        placeholder="19.99"
+                                        @blur="handlePrice"
+                                    />
                                     <InputError class="mt-2" :message="form.variations.error" />
                                 </div>
                             </div>
@@ -189,18 +195,9 @@ function submit() {
                         <div class="col-span-6 sm:col-span-6">
                             <InputLabel for="attributes" value="Attributes" />
                             <div class="flex flex-row gap-6 flex-wrap">
-                                <div class="mt-1 flex rounded-md shadow-sm">
-                                    <Dropdown :items="props.attributeTypes[0].attributeValues" class="min-w-[150px]"
-                                        v-model="formSize" @click="updateVariation('sizes')" place="Select Size" />
-                                </div>
-
-                                <div class="mt-1 flex rounded-md shadow-sm">
-                                    <Dropdown :items="props.attributeTypes[1].attributeValues" v-model="formColor"
-                                        class="min-w-[150px]" place="Select Color" />
-                                </div>
-                                <div class="mt-1 flex rounded-md shadow-sm">
-                                    <Dropdown :items="props.attributeTypes[2].attributeValues" v-model="formMaterial"
-                                        class="min-w-[180px]" place="Select Material" />
+                                <div class="mt-1 flex rounded-md shadow-sm"  v-for="attribute in props.attributeTypes">
+                                    <Dropdown :items="attribute.attributeValues" class="min-w-[150px]"
+                                        v-model="form.variations[0].attributes[attribute]" @click="e => updateVariation(e, attribute.name)" :place="capitalize(attribute.name)" />
                                 </div>
 
                             </div>
@@ -223,9 +220,17 @@ function submit() {
                                     v-model="form.extra_info">  </textarea>
                             </div>
                         </div>
-                        {{ images }}
-                        <div class="mt-5 md:col-span-2 md:mt-0">
-                            <UploadFile class="mt-6" @image-previews="updateImages" />
+                        <div class="flex flex-row gap-6 overflow-hidden pt-4">
+                            <UploadFile @image-previews="updateImages" :images="form.variations[0].images" :index="0" />
+                            <div class="mt-6 flex gap-6 flex-wrap">
+                                <div v-for="(preview, imageIndex) in form.variations[0].images" :key="imageIndex" class="relative">
+                                    <div class="bg-indigo-600 p-0.5 cursor-pointer absolute right-0 top-0 rounded-bl-md rounded-tr-md"
+                                         @click="removeImage(imageIndex)">
+                                        <XMarkIcon class="h-6 w-6 text-white" />
+                                    </div>
+                                    <img :src="preview.url" alt="Uploaded Image" class="mx-auto h-24 rounded-md w-24 object-cover" />
+                                </div>
+                            </div>
                         </div>
                     </div>
 
