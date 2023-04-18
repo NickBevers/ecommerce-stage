@@ -45,14 +45,9 @@ Route::get('/', function () {
     ]);
 });
 
-Route::middleware(['auth', 'verified'])->group(function (){
-    Route::get('/admin/dashboard', function () {  return Inertia::render('Admin/Dashboard'); })->name('dashboard');
-    Route::get('/overview', function () {  return Inertia::render('Dashboard/Overview'); })->name('overview');
-});
-
 // All Admin Routes with middleware
 Route::middleware(['auth', 'admin'])->group(function () {
-
+    Route::get('/admin/dashboard', function () {  return Inertia::render('Admin/Dashboard'); })->name('dashboard');
     Route::get('/admin/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/admin/users/{user}', [ProfileController::class, 'updateUserLevel'])->name('profile.updateUserLevel');
 
