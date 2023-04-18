@@ -37,11 +37,7 @@ const audience = reactive(
 let selectedHeadCategoryIndex = ref(0);
 let selectedHeadCategory = ref(0);
 let selectedSubCategory = ref(null);
-let selectedBrand = ref(null);
-
-let formSize = ref("");
-let formColor = ref("");
-let formMaterial = ref("");
+let attributeError = ref("");
 
 function updateImages(images) {
     form.variations[0].images = images
@@ -85,27 +81,12 @@ function updateVariation(event, attribute) {
     form.variations[0].attributes.push(obj);
 }
 function submit() {
-
+    if (form.variations[0].attributes.length === 0) {
+        // show error message
+        attributeError.value = "Please select at least one attribute";
+        return;
+    }
     form.post(route('admin.products.store'))
-    // fetch(route('admin.products.store'), {
-    //     method: 'POST',
-    //     headers: {
-    //         'Content-Type': 'application/json',
-    //         'Accept': 'application/json',
-    //         'X-Requested-With': 'XMLHttpRequest'
-    //     },
-    //     body: JSON.stringify(form)
-    // })
-    //     .then(response => response.json())
-    //     .then(data => {
-    //         if (data.status === 422) {
-    //             console.log("GOT AN ERROR");
-    //             console.log(data.errors);
-    //         } else {
-    //             console.log("SUCCESS");
-    //             console.log(data);
-    //         }
-    //     })
 }
 </script>
 <template>
@@ -199,7 +180,7 @@ function submit() {
                                     <Dropdown :items="attribute.attributeValues" class="min-w-[150px]"
                                         v-model="form.variations[0].attributes[attribute]" @click="e => updateVariation(e, attribute.name)" :place="capitalize(attribute.name)" />
                                 </div>
-
+                                <span v-if="attributeError.length > 0" class="text-red-500 -mt-4"> {{ attributeError }} </span>
                             </div>
                         </div>
                         <div>
