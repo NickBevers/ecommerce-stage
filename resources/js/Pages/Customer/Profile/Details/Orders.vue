@@ -22,6 +22,13 @@ const props = defineProps({
     },
 })
 
+console.log(props.orders)
+
+function showProducts(orderId) {
+    console.log(orderId)
+
+}
+
 </script>
 <template>
     <Index>
@@ -37,27 +44,27 @@ const props = defineProps({
                 <h2 id="recent-heading" class="sr-only">Recent orders</h2>
                 <div class="mx-auto max-w-7xl">
                     <div class="mx-auto space-y-8 sm:px-4 lg:px-0 w-full">
-                        <div v-for="order in props.orders" :key="order.order.id"
-                            class="border-b border-t border-gray-200 bg-white shadow-sm sm:rounded-lg sm:border">
+                        <div v-for="order in props.orders" :key="order.id" @click="showProducts(order.id)"
+                            class="border-b border-t border-gray-200 bg-white shadow-sm sm:rounded-lg sm:border cursor-pointer">
                             <h3 class="sr-only">
-                                Order placed on <time :datetime="order.order.order_date">{{ order.order.order_date }}</time>
+                                Order placed on <time :datetime="order.order_date">{{ order.order_date }}</time>
                             </h3>
                             <div class="flex items-center border-b border-gray-200 p-4  sm:p-6 flex-row ">
                                 <dl class="grid flex-1 grid-cols-2 gap-x-6 text-sm sm:grid-cols-5">
                                     <div>
                                         <dt class="font-medium text-gray-900">Order number</dt>
-                                        <dd class="mt-1 text-gray-500">#{{ order.order.id }}</dd>
+                                        <dd class="mt-1 text-gray-500">#{{ order.id }}</dd>
                                     </div>
                                     <div class="hidden sm:block">
                                         <dt class="font-medium text-gray-900">Date placed</dt>
                                         <dd class="mt-1 text-gray-500">
-                                            <p>{{ moment(order.order.order_date).format('LLL') }}</p>
+                                            <p>{{ moment(order.order_date).format('LLL') }}</p>
 
                                         </dd>
                                     </div>
                                     <div>
                                         <dt class="font-medium text-gray-900">Total amount</dt>
-                                        <dd class="mt-1 font-medium text-gray-500">€{{ order.order.total_price.toFixed(2) }}
+                                        <dd class="mt-1 font-medium text-gray-500">€{{ order.total_price.toFixed(2) }}
                                         </dd>
                                     </div>
                                     <div v-if="order.shipping_address">
@@ -84,7 +91,7 @@ const props = defineProps({
                             <!-- Products -->
                             <h4 class="sr-only">Items</h4>
                             <ul role="list" class="divide-y divide-gray-200">
-                                <li v-for="product in order.order.skus" :key="product.id" class="p-4 sm:p-6">
+                                <li v-for="product in order.skus" :key="product.id" class="p-4 sm:p-6">
                                     <div class="flex items-center sm:items-start">
                                         <div
                                             class="h-20 w-20 flex-shrink-0 overflow-hidden rounded-lg bg-gray-200 sm:h-20 sm:w-20">
