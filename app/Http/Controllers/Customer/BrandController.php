@@ -22,7 +22,6 @@ class BrandController extends Controller
 
     public function index()
     {
-        // get all brands where there is at least one sku tied to the product of the brand
         $brands = Brand::whereHas('products.skus')->get();
         return Inertia::render('Customer/Brands/Index', [
             'brands' => $brands->map(function ($brand) {

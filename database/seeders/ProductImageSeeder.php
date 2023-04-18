@@ -28,7 +28,7 @@ class ProductImageSeeder extends Seeder
         Sku::all()->each(function (Sku $sku) use ($images, $alt) {
             for ($i = 0; $i < 3; $i++) {
                 $sku->productImages()->create([
-                    'image_type' => $i === 0 ? 'thumbnail' : 'image',
+                    'image_type' => $i === 0 ? 'thumbnail' : 'product',
                     'image_link' => $images[array_rand($images)],
                     'image_public_id' => 'public_id',
                     'alt' => $alt[array_rand($alt)],

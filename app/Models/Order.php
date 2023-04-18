@@ -72,11 +72,12 @@ class Order extends Model
 
     public function scopeWithRelations($query)
     {
-        return $query->with([
-            'user',
-            'skus',
-            'productReturns',
-        ]);
+        return $query
+            ->with('user')
+            ->with('skus', function ($query) {
+                $query->withAllRelations();
+            })
+            ->with('productReturns');
     }
 
 }
