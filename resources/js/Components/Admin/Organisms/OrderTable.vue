@@ -6,15 +6,15 @@ import { Link, router } from '@inertiajs/vue3';
 import { PencilIcon, EyeIcon, TrashIcon } from '@heroicons/vue/20/solid'
 
 const props = defineProps({
-    orders: Object,   
-});      
-  
+    orders: Object,
+});
+
 onMounted(() => {
     props.orders.forEach((order) => {
         order.order_date = moment(order.order_date).format('MMMM Do YYYY, h:mm:ss a');
     });
 });
- 
+
 </script>
 <template>
     <section class="my-8">
@@ -38,7 +38,8 @@ onMounted(() => {
                                     <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
                                         Status
                                     </th>
-                                    <th scope="col" class="px-3 py-3.5 text-right text-sm font-semibold text-gray-900">Action
+                                    <th scope="col" class="px-3 py-3.5 text-right text-sm font-semibold text-gray-900">
+                                        Action
                                     </th>
                                 </tr>
                             </thead>
@@ -56,20 +57,20 @@ onMounted(() => {
                                         <div class="font-medium text-gray-900" v-if="order.billing_address">{{
                                             order.order.firstname }}
                                             {{ order.order.lastname }}
-                                            {{ order.lastname }}{{ order.billing_address.address_line1 }} 
-                                            {{  order.billing_address.address_line2 }}, {{
+                                            {{ order.lastname }}{{ order.billing_address.address_line1 }}
+                                            {{ order.billing_address.address_line2 }}, {{
                                                 order.billing_address.city }} {{
-                                                order.billing_address.country }}, {{
-                                                order.billing_address.postal_code }}
+        order.billing_address.country }}, {{
+        order.billing_address.postal_code }}
                                         </div>
                                         <div class="font-medium text-gray-900" v-else> {{
                                             order.order.firstname }}
                                             {{ order.order.lastname }}
                                             {{ order.lastname }}{{ order.shipping_address.address_line1 }} {{
-                                                order.shipping_address.address_line2 }}, 
-                                                {{ order.shipping_address.city }} {{
+                                                order.shipping_address.address_line2 }},
+                                            {{ order.shipping_address.city }} {{
                                                 order.shipping_address.country }}, {{
-                                                order.shipping_address.postal_code }}
+        order.shipping_address.postal_code }}
                                         </div>
                                     </td>
                                     <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
@@ -85,7 +86,7 @@ onMounted(() => {
                                         class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right justify-end text-sm font-medium sm:pr-0 flex gap-2">
                                         <Link :href="route('admin.orders.show', order.order.id)"
                                             class="rounded-full bg-indigo-600 p-2 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
-                                            <EyeIcon class="h-3 w-3" aria-hidden="true" />
+                                        <EyeIcon class="h-3 w-3" aria-hidden="true" />
                                         </Link>
                                         <button type="button" @click="open = true;"
                                             class="rounded-full bg-red-600 p-2 text-white shadow-sm hover:bg-red-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
