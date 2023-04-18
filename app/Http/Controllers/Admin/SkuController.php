@@ -126,9 +126,12 @@ class SkuController extends Controller
 
     public function toggleActive(Sku $sku)
     {
-        $sku->active = !$sku->active;
+        $sku->is_active = !$sku->is_active;
         $sku->save();
-        return redirect()->route('admin.products.index');
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Product status updated',
+        ]);
     }
 
     public function uploadImages(Request $request)

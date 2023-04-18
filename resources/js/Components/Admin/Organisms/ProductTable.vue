@@ -38,7 +38,19 @@ function deleteProduct() {
 }
 
 function toggleActive() {
-  console.log(selectedProduct.value)
+  console.log(selectedProduct.value);
+  fetch('/admin/products/toggle/' + selectedProduct.value, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  })
+    .then((response) => response.json())
+    .then((response) => {
+      if (response.status === 'success') {
+        // TODO: SHOW SUCCESS MESSAGE
+      }
+    });
 }
 </script>
 <template>
@@ -86,7 +98,7 @@ function toggleActive() {
                   <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500 w-1/6">€{{
                     product.price_incl_vat.toFixed(2) }}</td>
                   <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500 w-1/6">
-                    <Toggle :on="product.product.is_active" @click="selectedProduct = product.id; toggleActive();" />
+                    <Toggle :on="product.is_active" @click="selectedProduct = product.id; toggleActive();" />
                   </td>
                   <td
                     class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right justify-end text-sm font-medium sm:pr-0 flex gap-2 w-fill">

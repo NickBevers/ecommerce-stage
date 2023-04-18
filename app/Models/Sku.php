@@ -111,7 +111,7 @@ class Sku extends Model
 
     public function scopeWithAllRelations($query)
     {
-        return $query->where('is_active', true)
+        return $query
             ->with('product')
             ->with('product.subCategory')
             ->with('product.subCategory.category')
