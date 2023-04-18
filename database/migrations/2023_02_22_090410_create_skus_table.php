@@ -15,6 +15,7 @@ return new class extends Migration {
             $table->foreignId('vat_id')->default(27)->constrained();
             $table->float('price_excl_vat');
             $table->float('price_incl_vat');
+            $table->boolean('is_active')->default(true);
             $table->timestamps();
         });
     }

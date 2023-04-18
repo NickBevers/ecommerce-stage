@@ -58,6 +58,7 @@ Route::middleware(['auth', 'admin'])->group(function () {
 
     // Admin Product Routes
     Route::get('/admin/products', [AdminSkuController::class, 'index'])->name('admin.products.index');
+    Route::get('/admin/products/toggle/{sku}', [AdminSkuController::class, 'toggleActive'])->name('admin.products.toggleActive');
     Route::post('/admin/products', [AdminSkuController::class, 'store'])->name('admin.products.store');
     Route::post('/admin/products/images', [AdminSkuController::class, 'uploadImages'])->name('admin.products.images');
     Route::post('/admin/products/removeVariationImage', [AdminSkuController::class, 'deleteVariationImage'])->name('admin.products.images.deleteVariationImage');

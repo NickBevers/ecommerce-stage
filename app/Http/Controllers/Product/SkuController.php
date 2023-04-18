@@ -29,7 +29,7 @@ class SkuController extends Controller
     public function index()
     {
         return Inertia::render('Products', [
-            'skus' => Sku::with('attributeValues')
+            'skus' => Sku::where('is_active', true)
                 ->withAllRelations()
                 ->orderBy('sku')
                 ->paginate(48),

@@ -88,12 +88,8 @@ class SkuController extends Controller
        ]);
     }
 
-//    public function store(ProductValidationRequest $request)
     public function store(ProductValidationRequest $request)
     {
-//        ray($request->all());
-//        dd($request->all());
-
         $productRequest = new ProductValidationRequest($request->only(['title', 'description', 'audience', 'brand_id', 'sub_category_id', 'product_type', 'extra_info']));
         $product = $this->productService->store($productRequest);
 
@@ -125,6 +121,13 @@ class SkuController extends Controller
             }
         }
 
+        return redirect()->route('admin.products.index');
+    }
+
+    public function toggleActive(Sku $sku)
+    {
+        $sku->active = !$sku->active;
+        $sku->save();
         return redirect()->route('admin.products.index');
     }
 

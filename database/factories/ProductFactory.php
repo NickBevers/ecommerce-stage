@@ -44,7 +44,6 @@ class ProductFactory extends Factory
             'sub_category_id' => SubCategory::all()->random()->id,
             'product_type' => $this->faker->randomElement(['simple', 'variable']),
             'extra_info' => $this->faker->word(),
-            'is_active' => $this->faker->boolean(),
             'user_id' => 1,
             'brand_id' => Brand::all()->random()->id,
             'created_at' => Carbon::now(),

@@ -19,7 +19,7 @@ class SkuService
         $sort = $request->input('sort', 'created_at');
         $order = $request->input('order', 'asc');
 
-        return Sku::withAllRelations()
+        return Sku::where('is_active', true)->withAllRelations()
             ->when($category, function ($query) use ($category){
                 $query->whereHas('product.subCategory.category', function ($query) use ($category) {
                     $query->where('name', $category);
