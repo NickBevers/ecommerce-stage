@@ -72,7 +72,7 @@ function removeFromCart(id, product) {
                         enter-to-class="opacity-100" leave-active-class="transition ease-in duration-150"
                         leave-from-class="opacity-100" leave-to-class="opacity-0">
                         <PopoverPanel v-if="allowCart"
-                            class="absolute inset-x-0 -left-36 top-16 mt-px bg-white pb-6 shadow-lg sm:px-2 lg:top-full lg:-mr-1.5 lg:mt-3 w-80 lg:rounded-lg lg:ring-1 lg:ring-black lg:ring-opacity-5">
+                            class="absolute inset-x-0 -left-64 top-16 mt-px bg-white pb-6 shadow-lg sm:px-2 lg:top-full lg:-mr-1.5 lg:mt-3 w-80 rounded-lg lg:ring-1 lg:ring-black lg:ring-opacity-5">
                             <h2 class="sr-only">Shopping Cart</h2>
 
                             <form class="mx-auto max-w-2xl px-4">
