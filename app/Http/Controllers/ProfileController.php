@@ -65,17 +65,13 @@ class ProfileController extends Controller
 
     public function orders(Request $request): Response
     {
-        $orders = Order::orderBy('created_at', 'desc')->get();
-
-        $ordersWithAddresses = [];
-
-        foreach ($orders as $order) {
-            $ordersWithAddresses[] = [
-                'order' => $order->withRelations()->get()->first(),
-                'shipping_address' => Address::where('id', $order->shipping_address_id)->first(),
-                'billing_address' => Address::where('id', $order->billing_address_id)->first(),
-            ];
-        }
+        $orders = Order::orderBy('created_at', 'desc')->withRelations()->get();
+        $ordersWithAddresses = $orders->map(function ($order) {
+            $order->shipping_address = Address::where('id', $order->shipping_address_id)->first();
+            $order->billing_address = Address::where('id', $order->billing_address_id)->first();
+            
+            return $order;
+        });
 
         return Inertia::render('Customer/Profile/Details/Orders', [
             'mustVerifyEmail' => $request->user() instanceof MustVerifyEmail,
