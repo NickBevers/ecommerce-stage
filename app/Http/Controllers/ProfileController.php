@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\ProfileUpdateRequest;
 use App\Models\Order;
 use App\Models\Address;
+use App\Models\User;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -38,6 +39,16 @@ class ProfileController extends Controller
         }
 
         $request->user()->save();
+
+        return Redirect::route('profile.edit');
+    }
+
+    public function updateUserLevel(Request $request)
+    {
+        // update the user's user_type depending on the value of the select
+        $user = User::where('id', $request->user_id)->first();
+        $user->user_type = $request->user_type;
+        $user->save();
 
         return Redirect::route('profile.edit');
     }

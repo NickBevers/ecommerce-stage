@@ -54,6 +54,8 @@ Route::middleware(['auth', 'verified'])->group(function (){
 Route::middleware(['auth', 'admin'])->group(function () {
 
     Route::get('/admin/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/admin/users/{user}', [ProfileController::class, 'updateUserLevel'])->name('profile.updateUserLevel');
+
     // Admin Order Routes
     Route::post('/admin/orders/{order}', [AdminOrderController::class, 'update'])->name('admin.orders.update');
     Route::patch('/admin/orders/product/{order}', [AdminOrderController::class, 'updateOrderLine'])->name('admin.orders.updateOrderLine');
