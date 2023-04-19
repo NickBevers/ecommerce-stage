@@ -38,6 +38,7 @@ let selectedHeadCategoryIndex = ref(0);
 let selectedHeadCategory = ref(0);
 let selectedSubCategory = ref(null);
 let attributeError = ref("");
+let imageError = ref("");
 
 function updateImages(images) {
     form.variations[0].images = images
@@ -74,6 +75,22 @@ function handlePrice(e){
         :e.target.value = parseFloat(e.target.value).toFixed(2)
 }
 
+watch(attributeError, (value) => {
+    if (value !== "") {
+        setTimeout(() => {
+            attributeError.value = "";
+        }, 5000);
+    }
+})
+
+watch(imageError, (value) => {
+    if (value !== "") {
+        setTimeout(() => {
+            imageError.value = "";
+        }, 5000);
+    }
+})
+
 
 function updateVariation(event, attribute) {
     const obj = {}
@@ -86,6 +103,13 @@ function submit() {
         attributeError.value = "Please select at least one attribute";
         return;
     }
+
+    if (form.variations[0].images.length === 0) {
+        // show error message
+        imageError.value = "Please upload at least one image";
+        return;
+    }
+
     form.post(route('admin.products.store'))
 }
 </script>
@@ -201,9 +225,9 @@ function submit() {
                                     v-model="form.extra_info">  </textarea>
                             </div>
                         </div>
-                        <div class="flex flex-row gap-6 overflow-hidden pt-4">
+                        <div class="flex flex-row overflow-hidden">
                             <UploadFile @image-previews="updateImages" :images="form.variations[0].images" :index="0" />
-                            <div class="mt-6 flex gap-6 flex-wrap">
+                            <div class="flex gap-6 flex-wrap">
                                 <div v-for="(preview, imageIndex) in form.variations[0].images" :key="imageIndex" class="relative">
                                     <div class="bg-indigo-600 p-0.5 cursor-pointer absolute right-0 top-0 rounded-bl-md rounded-tr-md"
                                          @click="removeImage(imageIndex)">
@@ -213,6 +237,7 @@ function submit() {
                                 </div>
                             </div>
                         </div>
+                        <span v-if="imageError.length > 0" class="text-red-500 -mt-4"> {{ imageError }} </span>
                     </div>
 
                 </div>

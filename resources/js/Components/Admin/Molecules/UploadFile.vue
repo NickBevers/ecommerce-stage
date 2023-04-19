@@ -48,7 +48,7 @@ const uploadImages = () => {
 };
 </script>
 <template>
-  <div class="mt-6">
+  <div>
     <label class="block text-sm font-medium leading-6 text-gray-900">Cover photo</label>
     <div class="mt-2 flex justify-center rounded-md border-2 border-dashed border-gray-300 px-6 pt-5 pb-6"
       :class="{ 'border-indigo-300': dragging }" @dragover.prevent @drop="handleDrop">
