@@ -20,6 +20,7 @@ import {
 } from '@headlessui/vue'
 import { XMarkIcon } from '@heroicons/vue/24/outline'
 import { ChevronDownIcon } from '@heroicons/vue/20/solid'
+import {router} from "@inertiajs/vue3";
 
 const sortOptions = [
   { name: 'Most Popular', href: '#' },
@@ -27,7 +28,17 @@ const sortOptions = [
   { name: 'Newest', href: '#' },
 ]
 
-let selectedFilters = []
+const emit = defineEmits(['updateSkus'])
+
+let selectedFilters = {
+  attributes: {
+      "size": [
+          "small",
+          "medium",
+          "large",
+      ],
+  },
+}
 
 const open = ref(false)
 
@@ -39,27 +50,74 @@ const props = defineProps({
   filters: {
     type: Array,
     required: true,
-  }
+  },
+  attributeTypes: {
+    type: Array,
+    required: true,
+  },
 })
 
-console.log(props.filters)
-
-function isChecked(value) {
-  return selectedFilters.includes(value)
+function isChecked(attribute, value) {
+  // if (props.attributeTypes.includes(attribute)) {
+  //   return props.attributes.includes(value)
+  // } else {
+  //   // check if the value is in the checkedFilters object and if the attribute is in the object
+  //   let values = selectedFilters.attributes
+  //   if (values) {
+  //     return values.includes(value)
+  //   } else {
+  //     return false
+  //   }
+  // }
 }
 
-function addFilters(value) {
+function addFilters(filterName, value) {
+  // loop through the attributeTypes array and check if the filterName is in any of the objects.name
+  let isAttribute = false;
 
-  const idx = selectedFilters.indexOf(value)
-  if (idx === -1) {
-    // Checkbox is not selected, so add it to selectedFilters
-    selectedFilters.push(value)
-  } else {
-    // Checkbox is already selected, so remove it from selectedFilters
-    selectedFilters.splice(idx, 1)
-  }
 
-  console.log(selectedFilters)
+
+  // for (let i = 0; i < props.attributeTypes.length; i++) {
+  //   if (props.attributeTypes[i].name === filterName.toLowerCase()) {
+  //       isAttribute = true;
+  //   }
+  // }
+  //
+  // if (isAttribute) {
+  //   if (selectedFilters.attributes.includes(value)) {
+  //     selectedFilters.attributes.splice(selectedFilters.attributes.indexOf(value), 1)
+  //   } else {
+  //     selectedFilters.attributes.push(value)
+  //   }
+  // } else {
+  //   // check if the filter is in the checkedFilters object
+  //   let values = selectedFilters[filterName.toLowerCase()]
+  //   if (values) {
+  //     // check if the value is in the array
+  //     if (values.includes(value)) {
+  //       values.splice(values.indexOf(value), 1)
+  //     } else {
+  //       values.push(value)
+  //     }
+  //   } else {
+  //     // add the value to the array
+  //     selectedFilters[filterName] = [value]
+  //   }
+  // }
+
+
+  fetch(route('products.filter'), {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({...selectedFilters}),
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      console.log(data);
+      emit('updateSkus', data.skus)
+    });
 }
 
 </script>
@@ -183,10 +241,10 @@ function addFilters(value) {
                       <input :id="`filter-${section.id}-${optionIdx}`" :name="`${section.id}[]`"
                         :value="option.label.name" type="checkbox"
                         class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
-                        :checked="isChecked(option.label.name)" @change="() => {
+                        :checked="isChecked(section.id, option.label.name)" @change="() => {
                           if (option.label.slug) {
-                            addFilters(option.label.slug)
-                          } else { addFilters(option.label.name) }
+                            addFilters(section.name, option.label.slug)
+                          } else { addFilters(section.name, option.label.name) }
                         }" />
                       <label :for="`filter-${section.id}-${optionIdx}`"
                         class="ml-3 whitespace-nowrap pr-6 text-sm font-medium text-gray-900">{{ option.label.name

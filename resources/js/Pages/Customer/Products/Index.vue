@@ -5,6 +5,7 @@ import { onMounted, ref } from "vue";
 
 const props = defineProps({
   skus: Object,
+  attributeTypes: Object,
   minPrice: Number,
   maxPrice: Number,
   subCategory: Object,
@@ -46,11 +47,20 @@ onMounted(() => {
   }
 });
 
+const skuRef = ref(props.skus);
+
+console.log(skuRef.value.data);
+
+async function updateSkus(skus) {
+  skuRef.value.data = skus.data
+  skuRef.value.links = skus.links
+}
+
 
 </script>
 <template>
   <GuestLayout>
-    <ProductsFilter :title="props.subCategory.name" :filters="filters" />
-    <ProductsList :skus="skus.data" :links="skus.links" />
+    <ProductsFilter :title="props.subCategory.name" :filters="filters" :attributeTypes="props.attributeTypes" @update-skus="updateSkus"/>
+    <ProductsList :skus="skuRef.data" :links="skuRef.links"/>
   </GuestLayout>
 </template>

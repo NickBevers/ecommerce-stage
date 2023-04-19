@@ -2,11 +2,20 @@
 import { Pagination } from '@/Components/Admin'
 import { WishlistButton } from '@/Components/Customer'
 import { Link } from '@inertiajs/vue3';
+import {getCurrentInstance, watch} from "vue";
 
 const props = defineProps({
   skus: Object,
   links: Object,
-});
+})
+
+watch(() => props.skus, (value) => {
+  console.log("skus", value)
+})
+
+watch(() => props.links, (value) => {
+  console.log("links", value)
+})
 
 </script>
 <template>
