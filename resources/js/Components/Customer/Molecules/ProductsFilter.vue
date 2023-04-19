@@ -45,21 +45,33 @@ const props = defineProps({
 console.log(props.filters)
 
 function isChecked(value) {
-  return selectedFilters.includes(value)
+  return selectedFilters.includes(value);
 }
-
 function addFilters(value) {
 
   const idx = selectedFilters.indexOf(value)
   if (idx === -1) {
-    // Checkbox is not selected, so add it to selectedFilters
     selectedFilters.push(value)
   } else {
-    // Checkbox is already selected, so remove it from selectedFilters
     selectedFilters.splice(idx, 1)
   }
 
-  console.log(selectedFilters)
+  fetch('/filter', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: {
+      attributes: selectedFilters
+    }
+  })
+    .then(response => response.json())
+    .then(data => {
+      console.log('Success:', data);
+    })
+    .catch((error) => {
+      console.error('Error:', error);
+    });
 }
 
 </script>
@@ -183,7 +195,7 @@ function addFilters(value) {
                       <input :id="`filter-${section.id}-${optionIdx}`" :name="`${section.id}[]`"
                         :value="option.label.name" type="checkbox"
                         class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
-                        :checked="isChecked(option.label.name)" @change="() => {
+                        :checked="isChecked(option.label.slug ? option.label.slug : option.label.name)" @change="() => {
                           if (option.label.slug) {
                             addFilters(option.label.slug)
                           } else { addFilters(option.label.name) }
