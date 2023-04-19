@@ -17,8 +17,7 @@
           class="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
           <ListboxOption as="template" v-for="item in props.items" :key="item" :value="item.item ? item.item : item"
             v-slot="{ active, selected }">
-            <li
-              @click="handleChange(item)"
+            <li @click="handleChange(item)"
               :class="[active ? 'bg-indigo-600 text-white' : 'text-gray-900', 'relative cursor-default select-none py-2 pl-8 pr-4']">
               <span :class="[selected ? 'font-semibold' : 'font-normal', 'block truncate']">
                 {{ item.name ? item.name : item.item ? item.item : item }}
@@ -63,16 +62,21 @@ const props = defineProps({
     type: String,
     required: false,
     default: null
+  },
+  selected: {
+    type: String,
+    required: false,
+    default: null
   }
 })
 
 const emit = defineEmits(['changeValue'])
 
 onMounted(() => {
- if(props.selected!=null){
+  if (props.selected != null) {
     selected.value = props.selected
- }
- else if (props.place) {
+  }
+  else if (props.place) {
     selected.value = props.place
   }
   else {
