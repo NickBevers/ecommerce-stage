@@ -26,53 +26,8 @@ const sortOptions = [
   { name: 'Best Rating', href: '#' },
   { name: 'Newest', href: '#' },
 ]
-const filters = [
-  {
-    id: 'brand',
-    name: 'Brand',
-    options: [
-      { value: 'clothing-company', label: 'Clothing Company' },
-      { value: 'fashion-inc', label: 'Fashion Inc.' },
-      { value: 'shoes-n-more', label: "Shoes 'n More" },
-    ],
-  },
-  {
-    id: 'color',
-    name: 'Color',
-    options: [
-      { value: 'white', label: 'White' },
-      { value: 'black', label: 'Black' },
-      { value: 'grey', label: 'Grey' },
-    ],
-  },
-  {
-    id: 'sizes',
-    name: 'Sizes',
-    options: [
-      { value: 's', label: 'S' },
-      { value: 'm', label: 'M' },
-      { value: 'l', label: 'L' },
-    ],
-  },
-  {
-    id: 'material',
-    name: 'Material',
-    options: [
-      { value: 'cotton', label: 'Cotton' },
-      { value: 'wool', label: 'Wool' },
-      { value: 'polyester', label: 'Polyester' },
-    ],
-  },
-  {
-    id: 'price',
-    name: 'Price',
-    options: [
-      { value: '0-50', label: '$0-50' },
-      { value: '50-100', label: '$50-100' },
-      { value: '100-150', label: '$100-150' },
-    ],
-  }
-]
+
+let selectedFilters = []
 
 const open = ref(false)
 
@@ -81,7 +36,32 @@ const props = defineProps({
     type: String,
     required: true,
   },
+  filters: {
+    type: Array,
+    required: true,
+  }
 })
+
+console.log(props.filters)
+
+function isChecked(value) {
+  return selectedFilters.includes(value)
+}
+
+function addFilters(value) {
+
+  const idx = selectedFilters.indexOf(value)
+  if (idx === -1) {
+    // Checkbox is not selected, so add it to selectedFilters
+    selectedFilters.push(value)
+  } else {
+    // Checkbox is already selected, so remove it from selectedFilters
+    selectedFilters.splice(idx, 1)
+  }
+
+  console.log(selectedFilters)
+}
+
 </script>
 <template>
   <div class="bg-gray-50 pt-24">
@@ -109,7 +89,7 @@ const props = defineProps({
               </div>
               <!-- Filters -->
               <form class="mt-4">
-                <Disclosure as="div" v-for="section in filters" :key="section.name"
+                <Disclosure as="div" v-for="section in props.filters" :key="section.name"
                   class="border-t border-gray-200 px-4 py-6" v-slot="{ open }">
                   <h3 class="-mx-2 -my-3 flow-root">
                     <DisclosureButton
@@ -181,7 +161,7 @@ const props = defineProps({
             @click="open = true">Filters</button>
 
           <PopoverGroup class="hidden sm:flex sm:items-baseline sm:space-x-8">
-            <Popover as="div" v-for="(section, sectionIdx) in filters" :key="section.name"
+            <Popover as="div" v-for="(section, sectionIdx) in props.filters" :key="section.name"
               :id="`desktop-menu-${sectionIdx}`" class="relative inline-block text-left">
               <div>
                 <PopoverButton
@@ -200,10 +180,17 @@ const props = defineProps({
                   class="absolute right-0 z-10 mt-2 origin-top-right rounded-md bg-white p-4 shadow-2xl ring-1 ring-black ring-opacity-5 focus:outline-none">
                   <form class="space-y-4">
                     <div v-for="(option, optionIdx) in section.options" :key="option.value" class="flex items-center">
-                      <input :id="`filter-${section.id}-${optionIdx}`" :name="`${section.id}[]`" :value="option.value"
-                        type="checkbox" class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500" />
+                      <input :id="`filter-${section.id}-${optionIdx}`" :name="`${section.id}[]`"
+                        :value="option.label.name" type="checkbox"
+                        class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
+                        :checked="isChecked(option.label.name)" @change="() => {
+                          if (option.label.slug) {
+                            addFilters(option.label.slug)
+                          } else { addFilters(option.label.name) }
+                        }" />
                       <label :for="`filter-${section.id}-${optionIdx}`"
-                        class="ml-3 whitespace-nowrap pr-6 text-sm font-medium text-gray-900">{{ option.label }}</label>
+                        class="ml-3 whitespace-nowrap pr-6 text-sm font-medium text-gray-900">{{ option.label.name
+                        }}</label>
                     </div>
                   </form>
                 </PopoverPanel>
