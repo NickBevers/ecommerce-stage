@@ -1,10 +1,10 @@
 <script setup>
 import { ApplicationLogo, UserIconModal, ShoppingCartModal } from '@/Components/Customer';
 import { onBeforeMount, ref, onMounted, computed } from "vue";
-import { Link } from '@inertiajs/vue3';
+import { Link, usePage } from '@inertiajs/vue3';
 import { useWishlistStore } from '@/Stores/wishlist';
 import { useCartStore } from '@/Stores/cart';
-import { Popover, PopoverButton, PopoverGroup, PopoverPanel } from '@headlessui/vue'
+import { Popover, PopoverButton, PopoverGroup, PopoverPanel, Menu, MenuItems, MenuItem } from '@headlessui/vue'
 import { MagnifyingGlassIcon, ShoppingBagIcon, UserIcon } from '@heroicons/vue/24/outline'
 import {
     Dialog,
@@ -23,74 +23,6 @@ import {
     XMarkIcon,
     HeartIcon,
 } from '@heroicons/vue/24/outline'
-
-const navigation = {
-    categories: [
-        {
-            name: 'Women',
-            featured: [
-                {
-                    name: 'New Arrivals',
-                    href: '#',
-                    imageSrc: 'https://tailwindui.com/img/ecommerce-images/mega-menu-category-01.jpg',
-                    imageAlt: 'Models sitting back to back, wearing Basic Tee in black and bone.',
-                },
-                {
-                    name: 'Basic Tees',
-                    href: '#',
-                    imageSrc: 'https://tailwindui.com/img/ecommerce-images/mega-menu-category-02.jpg',
-                    imageAlt: 'Close up of Basic Tee fall bundle with off-white, ochre, olive, and black tees.',
-                },
-                {
-                    name: 'Accessories',
-                    href: '#',
-                    imageSrc: 'https://tailwindui.com/img/ecommerce-images/mega-menu-category-03.jpg',
-                    imageAlt: 'Model wearing minimalist watch with black wristband and white watch face.',
-                },
-                {
-                    name: 'Carry',
-                    href: '#',
-                    imageSrc: 'https://tailwindui.com/img/ecommerce-images/mega-menu-category-04.jpg',
-                    imageAlt: 'Model opening tan leather long wallet with credit card pockets and cash pouch.',
-                },
-            ],
-        },
-        {
-            name: 'Men',
-            featured: [
-                {
-                    name: 'New Arrivals',
-                    href: '#',
-                    imageSrc: 'https://tailwindui.com/img/ecommerce-images/mega-menu-01-men-category-01.jpg',
-                    imageAlt: 'Hats and sweaters on wood shelves next to various colors of t-shirts on hangers.',
-                },
-                {
-                    name: 'Basic Tees',
-                    href: '#',
-                    imageSrc: 'https://tailwindui.com/img/ecommerce-images/mega-menu-01-men-category-02.jpg',
-                    imageAlt: 'Model wearing light heather gray t-shirt.',
-                },
-                {
-                    name: 'Accessories',
-                    href: '#',
-                    imageSrc: 'https://tailwindui.com/img/ecommerce-images/mega-menu-01-men-category-03.jpg',
-                    imageAlt:
-                        'Grey 6-panel baseball hat with black brim, black mountain graphic on front, and light heather gray body.',
-                },
-                {
-                    name: 'Carry',
-                    href: '#',
-                    imageSrc: 'https://tailwindui.com/img/ecommerce-images/mega-menu-01-men-category-04.jpg',
-                    imageAlt: 'Model putting folded cash into slim card holder olive leather wallet with hand stitching.',
-                },
-            ],
-        },
-    ],
-    pages: [
-        { name: 'Company', href: '#' },
-        { name: 'Stores', href: '#' },
-    ],
-}
 
 
 const open = ref(false)
@@ -123,8 +55,6 @@ onMounted(() => {
 function selectCategory(category_id) {
     selectedCategory.value = category_id;
 }
-
-
 </script>
 <template>
     <div class="bg-white fixed top-0 left-0 z-20 w-full">
@@ -152,11 +82,68 @@ function selectCategory(category_id) {
                                     <XMarkIcon class="h-6 w-6" aria-hidden="true" />
                                 </button>
                             </div>
+                            <div class="space-y-6 border-b border-gray-200 py-6 px-4">
+                                <Menu>
+                                    <MenuItems
+                                        class="absolute -right-24 top-10 z-10 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                                        <div class="px-4 py-3" v-if="props.user">
+                                            <p class="text-sm">Signed in as</p>
+                                            <p class="truncate text-sm font-medium text-gray-900">{{ props.user.email }}</p>
+                                        </div>
+                                        <div class="px-4 py-3" v-else>
+                                            <p class="text-sm">Hi, Guest</p>
+                                            <p class="truncate text-sm font-medium text-gray-900"></p>
+                                        </div>
+                                        <div class="py-1" v-if="props.user">
+                                            <MenuItem v-slot="{ active }" v-if="props.user.user_type === 'admin'">
+                                            <Link :href="route('dashboard')"
+                                                :class="[active ? 'bg-gray-100 text-gray-900' : 'text-gray-700', 'block px-4 py-2 text-sm']">
+                                            Dashboard</Link>
+                                            </MenuItem>
+                                            <MenuItem v-slot="{ active }" v-if="props.user.user_type === 'admin'">
+                                            <Link href="/admin/profile"
+                                                :class="[active ? 'bg-gray-100 text-gray-900' : 'text-gray-700', 'block px-4 py-2 text-sm']">
+                                            Account
+                                            settings</Link>
+                                            </MenuItem>
+                                            <MenuItem v-slot="{ active }" v-else>
+                                            <Link href="/profile"
+                                                :class="[active ? 'bg-gray-100 text-gray-900' : 'text-gray-700', 'block px-4 py-2 text-sm']">
+                                            Account
+                                            settings</Link>
+                                            </MenuItem>
+                                        </div>
+                                        <div class="py-1" v-else>
+                                            <MenuItem v-slot="{ active }">
+                                            <Link href="/login"
+                                                :class="[active ? 'bg-gray-100 text-gray-900' : 'text-gray-700', 'block px-4 py-2 text-sm']">
+                                            Sign
+                                            in</Link>
+                                            </MenuItem>
+                                            <MenuItem v-slot="{ active }">
+                                            <Link href="/register"
+                                                :class="[active ? 'bg-gray-100 text-gray-900' : 'text-gray-700', 'block px-4 py-2 text-sm']">
+                                            Create account
+                                            </Link>
+                                            </MenuItem>
+                                        </div>
+                                        <div class="py-1" v-if="props.user">
+
+                                            <MenuItem v-slot="{ active }">
+                                            <Link :href="route('logout')" method="post" as="button"
+                                                :class="[active ? 'bg-gray-100 text-gray-900' : 'text-gray-700', 'block w-full px-4 py-2 text-left text-sm']">
+                                            Sign out
+                                            </Link>
+                                            </MenuItem>
+                                        </div>
+                                    </MenuItems>
+                                </Menu>
+                            </div>
                             <!-- Links -->
                             <TabGroup as="div" class="mt-2">
                                 <div class="border-b border-gray-200">
-                                    <TabList class="-mb-px flex space-x-8 px-4">
-                                        <Tab as="template" v-for="category in navigation.categories" :key="category.name"
+                                    <TabList class="-mb-px flex space-x-8 px-4 overflow-x-auto no-scrollbar">
+                                        <Tab as="template" v-for="category in categories.slice(0, 3)" :key="category.name"
                                             v-slot="{ selected }">
                                             <button
                                                 :class="[selected ? 'border-indigo-600 text-indigo-600' : 'border-transparent text-gray-900', 'flex-1 whitespace-nowrap border-b-2 py-4 px-1 text-base font-medium']">{{
@@ -165,39 +152,27 @@ function selectCategory(category_id) {
                                     </TabList>
                                 </div>
                                 <TabPanels as="template">
-                                    <TabPanel v-for="category in navigation.categories" :key="category.name"
-                                        class="space-y-12 px-4 py-6">
-                                        <div class="grid grid-cols-1 gap-x-4 gap-y-10">
-                                            <div v-for="item in category.featured" :key="item.name" class="group relative">
-                                                <div
-                                                    class="aspect-w-1 aspect-h-1 overflow-hidden rounded-md bg-gray-100 group-hover:opacity-75">
-                                                    <img :src="item.imageSrc" :alt="item.imageAlt"
-                                                        class="object-cover object-center" />
-                                                </div>
-                                                <a :href="item.href" class="mt-6 block text-sm font-medium text-gray-900">
-                                                    <span class="absolute inset-0 z-10" aria-hidden="true" />
-                                                    {{ item.name }}
+                                    <TabPanel v-for="category in categories" :key="category.name" class="space-y-12 px-4">
+                                        <!-- Add a nested loop for subCategories -->
+                                        <div class="grid grid-cols-1 gap-x-4">
+                                            <div v-for="subCategory in category.subCategories" :key="subCategory.name"
+                                                class="group relative py-8 border-b">
+                                                <a :href="subCategory.href" class="block text-sm font-medium text-gray-900">
+                                                    <span class="absolute inset-0 z-10" aria-hidden="true"></span>
+                                                    {{ subCategory.name }}
                                                 </a>
-                                                <p aria-hidden="true" class="mt-1 text-sm text-gray-500">Shop now</p>
                                             </div>
                                         </div>
                                     </TabPanel>
                                 </TabPanels>
+
                             </TabGroup>
 
                             <div class="space-y-6 border-t border-gray-200 py-6 px-4">
-                                <div v-for="page in navigation.pages" :key="page.name" class="flow-root">
-                                    <a :href="page.href" class="-m-2 block p-2 font-medium text-gray-900">{{ page.name
-                                    }}</a>
-                                </div>
-                            </div>
-
-                            <div class="space-y-6 border-t border-gray-200 py-6 px-4">
-                                <div class="flow-root">
-                                    <a href="#" class="-m-2 block p-2 font-medium text-gray-900">Create an account</a>
-                                </div>
-                                <div class="flow-root">
-                                    <a href="#" class="-m-2 block p-2 font-medium text-gray-900">Sign in</a>
+                                <div v-for="category in categories.slice(3)" :key="category.name" class="flow-root">
+                                    <Link :href="category.name.toLowerCase()"
+                                        class="-m-2 block p-2 font-medium text-gray-900">{{ category.name
+                                        }}</Link>
                                 </div>
                             </div>
                         </DialogPanel>
@@ -222,10 +197,10 @@ function selectCategory(category_id) {
 
                             <div class="hidden h-full lg:flex">
                                 <!-- Flyout menus -->
-                            <PopoverGroup class="inset-x-0 bottom-0 px-4">
-                                <div class="flex h-full justify-center space-x-8">
-                                    <Popover v-for="category in categories" :key="category.name" class="flex"
-                                        v-slot="{ open }">
+                                <PopoverGroup class="inset-x-0 bottom-0 px-4">
+                                    <div class="flex h-full justify-center space-x-8">
+                                        <Popover v-for="category in categories" :key="category.name" class="flex"
+                                            v-slot="{ open }">
                                             <div class="relative flex">
                                                 <PopoverButton @click="selectCategory(category.id)"
                                                     v-if="category.id === 1 || category.id === 2 || category.id === 3"
@@ -334,11 +309,11 @@ function selectCategory(category_id) {
                             </div>
 
                             <!-- Logo (lg-) -->
-                            <a href="#" class="lg:hidden">
-                                <span class="sr-only">Your Company</span>
-                                <img src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600" alt=""
-                                    class="h-8 w-auto" />
-                            </a>
+                            <div class="lg:hidden">
+                                <Link href="/">
+                                <ApplicationLogo class="block h-8 w-auto" />
+                                </Link>
+                            </div>
 
                             <div class="flex flex-1 items-center justify-end">
                                 <a href="#"
@@ -349,11 +324,6 @@ function selectCategory(category_id) {
 
 
                                     <div class="flow-root lg:ml-8">
-                                        <!-- <Link href="/cart" class="group -m-2 flex items-center p-2">
-                                                                                                    <UserIcon class="h-6 w-6 flex-shrink-0 text-gray-400 group-hover:text-gray-500"
-                                                                                                        aria-hidden="true" />
-                                                                                                    <span class="sr-only">items in cart, view bag</span>
-                                                                                                    </Link> -->
                                         <UserIconModal class="group -m-2 flex items-center" :user="$page.props.auth.user" />
                                     </div>
                                     <div class="flow-root ml-4 ">

@@ -1,26 +1,19 @@
 <script setup>
 import GuestLayout from '@/Layouts/GuestLayout.vue'
 import { ProductsFilter, ProductsList } from '@/Components/Customer'
-import {onMounted} from "vue";
+import { onMounted } from "vue";
 
 const props = defineProps({
   skus: Object,
   minPrice: Number,
   maxPrice: Number,
   subCategory: Object,
-    colors: Object,
-    sizes: Object,
-    materials: Object,
-    brands: Object,
+  colors: Object,
+  sizes: Object,
+  materials: Object,
+  brands: Object,
 });
 
-onMounted(() => {
-    console.log('hello');
-    console.log(props.colors);
-    console.log(props.sizes);
-    console.log(props.materials);
-    console.log(props.brands);
-});
 </script>
 <template>
   <GuestLayout>
