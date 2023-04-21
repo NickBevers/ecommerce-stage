@@ -20,6 +20,7 @@ import {
 } from '@headlessui/vue'
 import { XMarkIcon } from '@heroicons/vue/24/outline'
 import { ChevronDownIcon } from '@heroicons/vue/20/solid'
+import {router} from "@inertiajs/vue3";
 
 const sortOptions = [
   { name: 'Most Popular', href: '#' },
@@ -27,7 +28,11 @@ const sortOptions = [
   { name: 'Newest', href: '#' },
 ]
 
-let selectedFilters = []
+const emit = defineEmits(['updateSkus'])
+
+let selectedFilters = {
+  attributes: {},
+}
 
 const open = ref(false)
 
@@ -39,38 +44,74 @@ const props = defineProps({
   filters: {
     type: Array,
     required: true,
-  }
+  },
+  attributeTypes: {
+    type: Array,
+    required: true,
+  },
 })
 
-console.log(props.filters)
-
-function isChecked(value) {
-  return selectedFilters.includes(value);
-}
-function addFilters(value) {
-
-  const idx = selectedFilters.indexOf(value)
-  if (idx === -1) {
-    selectedFilters.push(value)
+function isChecked(attribute, value) {
+  if (isAttribute(attribute)){
+    let values = selectedFilters.attributes[attribute]
+    if (values) {
+      return values.includes(value)
+    } else {
+      return false
+    }
   } else {
-    selectedFilters.splice(idx, 1)
+    return selectedFilters[attribute] && selectedFilters[attribute].includes(value)
+  }
+}
+
+function isAttribute(attribute) {
+  let isAttribute = false;
+  for (let i = 0; i < props.attributeTypes.length; i++) {
+    if(props.attributeTypes[i].name === attribute){
+      isAttribute = true;
+    }
+  }
+  return isAttribute;
+}
+
+function addFilters(filterName, value) {
+  filterName = filterName.toLowerCase();
+  let attr = isAttribute(filterName);
+  if (attr) {
+    let values = selectedFilters.attributes[filterName]
+    if (values) {
+      if (values.includes(value)) {
+        values.splice(values.indexOf(value), 1)
+      } else {
+        values.push(value)
+      }
+    } else {
+      selectedFilters.attributes[filterName] = [value]
+    }
+  } else {
+    if (Object.keys(selectedFilters).includes(filterName)) {
+      if (selectedFilters[filterName].includes(value)) {
+        selectedFilters[filterName].splice(selectedFilters[filterName].indexOf(value), 1)
+      } else {
+        selectedFilters[filterName].push(value)
+      }
+    } else {
+      selectedFilters[filterName] = [value]
+    }
   }
 
-  fetch('/filter', {
+
+  fetch(route('products.filter'), {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
     },
-    body: {
-      attributes: selectedFilters
-    }
+    body: JSON.stringify({...selectedFilters}),
   })
-    .then(response => response.json())
-    .then(data => {
-      console.log('Success:', data);
-    })
-    .catch((error) => {
-      console.error('Error:', error);
+    .then((response) => response.json())
+    .then((data) => {
+      console.log(data);
+      emit('updateSkus', data.skus)
     });
 }
 
@@ -195,10 +236,10 @@ function addFilters(value) {
                       <input :id="`filter-${section.id}-${optionIdx}`" :name="`${section.id}[]`"
                         :value="option.label.name" type="checkbox"
                         class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
-                        :checked="isChecked(option.label.slug ? option.label.slug : option.label.name)" @change="() => {
+                        :checked="isChecked(section.id, option.label.name)" @change="() => {
                           if (option.label.slug) {
-                            addFilters(option.label.slug)
-                          } else { addFilters(option.label.name) }
+                            addFilters(section.name, option.label.slug)
+                          } else { addFilters(section.name, option.label.name) }
                         }" />
                       <label :for="`filter-${section.id}-${optionIdx}`"
                         class="ml-3 whitespace-nowrap pr-6 text-sm font-medium text-gray-900">{{ option.label.name

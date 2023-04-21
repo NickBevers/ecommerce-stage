@@ -41,19 +41,20 @@ class SkuController extends Controller
 
     public function filter(Request $request)
     {
-        $skus = $this->skuService->filter($request);
-        $colors = $this->skuService->getUniqueAttributeValues($skus->get(), "color");
-        $sizes = $this->skuService->getUniqueAttributeValues($skus->get(), "size");
-        $materials = $this->skuService->getUniqueAttributeValues($skus->get(), "material");
-        $brands = $this->skuService->getUniqueBrands($skus->get());
+        $filter = $this->skuService->filter($request);
+        $colors = $this->skuService->getUniqueAttributeValues($filter['skus']->get(), "color");
+        $sizes = $this->skuService->getUniqueAttributeValues($filter['skus']->get(), "size");
+        $materials = $this->skuService->getUniqueAttributeValues($filter['skus']->get(), "material");
+        $brands = $this->skuService->getUniqueBrands($filter['skus']->get());
 
-        $skus = $skus->paginate(48);
+        $filter['skus'] = $filter['skus']->paginate(48);
 
         return [
-            'skus' => $skus,
+            'skus' => $filter['skus'],
+            'attributeTypes' => $filter['attributeTypes'],
             'subCategory' => $this->subCategoryService->getSubCategoryBySlug($request->input('subCategory', '')),
-            'minPrice' => $skus->min('price_incl_vat'),
-            'maxPrice' => $skus->max('price_incl_vat'),
+            'minPrice' => $filter['skus']->min('price_incl_vat'),
+            'maxPrice' => $filter['skus']->max('price_incl_vat'),
             'colors' => $colors,
             'sizes' => $sizes,
             'materials' => $materials,

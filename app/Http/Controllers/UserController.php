@@ -49,11 +49,13 @@ class UserController extends Controller
         return redirect()->route('users.index');
     }
 
-    public function updateBankAccount(Request $request, User $user)
+    public function updateBankAccount(Request $request)
     {
         $request->validate([
             'bank_account' => 'required',
         ]);
+
+        $user = User::where('id', Auth::user()->id)->first();
 
         $user->bank_account = $request->bank_account;
         $user->save();
