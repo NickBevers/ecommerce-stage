@@ -10,29 +10,24 @@ const props = defineProps({
 });
 
 const roles = reactive(
-    ["customer", "admin"]
+    ["user", "admin"]
 );
 
 function changeRole(customer) {
-    if (customer.user_type === "customer") {
-        customer.user_type = "admin";
-    } else {
-        customer.user_type = "customer";
-    }
 
     fetch('/admin/users/' + customer.id, {
         method: 'PATCH',
         headers: {
             'Content-Type': 'application/json',
         },
-        body: JSON.stringify({
-            user_type: customer.user_type
-        })
+        body: JSON.stringify(
+            {
+                user_id: customer.id,
+                user_type: customer.user_type
+            }
+        )
     })
-        .then(response => response.json())
-        .then(data => {
-            console.log('Success:', data);
-        })
+        .then(response => console.log(response))
         .catch((error) => {
             console.error('Error:', error);
         });
