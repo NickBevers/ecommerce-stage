@@ -10,7 +10,7 @@ class UserController extends Controller
 {
     public function index()
     {
-        $customers = User::all('id', 'firstname', 'lastname', 'email')->toArray();
+        $customers = User::all('id', 'firstname', 'lastname', 'email', 'user_type')->toArray();
 
         return Inertia::render('Admin/Customers/Index', [
             'customers' => $customers,

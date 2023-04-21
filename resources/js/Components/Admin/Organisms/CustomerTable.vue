@@ -1,6 +1,6 @@
 <script setup>
-import { Pagination, Alert, Toggle } from '@/Components/Admin'
-import { onMounted, ref } from 'vue';
+import { Pagination, Alert, Dropdown } from '@/Components/Admin'
+import { onMounted, ref, reactive } from 'vue';
 import moment from 'moment';
 import { Link, router } from '@inertiajs/vue3';
 import { PencilIcon, EyeIcon, TrashIcon } from '@heroicons/vue/20/solid'
@@ -9,14 +9,43 @@ const props = defineProps({
     customers: Object,
 });
 
+const roles = reactive(
+    ["customer", "admin"]
+);
+
+function changeRole(customer) {
+    if (customer.user_type === "customer") {
+        customer.user_type = "admin";
+    } else {
+        customer.user_type = "customer";
+    }
+
+    fetch('/admin/users/' + customer.id, {
+        method: 'PATCH',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            user_type: customer.user_type
+        })
+    })
+        .then(response => response.json())
+        .then(data => {
+            console.log('Success:', data);
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+        });
+}
+
 </script>
 <template>
     <section class="my-8">
-        <div class="overflow-hidden px-4 py-5 rounded-lg bg-white shadow">
+        <div class="px-4 py-5 rounded-lg bg-white shadow">
             <div class="flow-root">
                 <div class="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8">
-                <div class="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
-                    <table class="min-w-full divide-y divide-gray-300">
+                    <div class="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
+                        <table class="min-w-full divide-y divide-gray-300 ">
                             <thead>
                                 <tr>
                                     <th scope="col" class="py-3.5 text-left text-sm font-semibold text-gray-900">
@@ -26,38 +55,37 @@ const props = defineProps({
                                     </th>
                                     <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Email
                                     </th>
-                                    <!-- <th scope="col" class="px-3 py-3.5 text-right text-sm font-semibold text-gray-900">
-                                            Action
-                                        </th> -->
+                                    <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
+                                        Roles
+                                    </th>
                                 </tr>
                             </thead>
-                            <tbody class="divide-y divide-gray-200 bg-white">
+                            <tbody class="divide-y divide-gray-200 bg-white ">
                                 <tr v-for="customer in props.customers" :key="customer.id">
                                     <td class="whitespace-nowrap py-4 text-sm text-gray-500 ">
                                         <div class="font-medium text-gray-900">{{ customer.firstname }} {{ customer.lastname
                                         }}</div>
-                                </td>
-                                <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                                    <div class="font-medium text-gray-900" v-if="customer.phone">{{
-                                        customer.phone }}
-                                    </div>
-                                    <div class="font-medium text-gray-300" v-else>Not provided</div>
-                                </td>
-                                <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                                    {{
-                                        customer.email }}
                                     </td>
-                                    <!-- <td
-                                                class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right justify-end text-sm font-medium sm:pr-0 flex gap-2">
-                                                <Link href="/admin/customers"
-                                                    class="rounded-full bg-indigo-600 p-2 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
-                                                <EyeIcon class="h-3 w-3" aria-hidden="true" />
-                                                </Link>
-                                                <button type="button" @click="open = true;"
-                                                    class="rounded-full bg-red-600 p-2 text-white shadow-sm hover:bg-red-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
-                                                    <TrashIcon class="h-3 w-3" aria-hidden="true" />
-                                                </button>
-                                            </td> -->
+                                    <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                                        <div class="font-medium text-gray-900" v-if="customer.phone">{{
+                                            customer.phone }}
+                                        </div>
+                                        <div class="font-medium text-gray-300" v-else>Not provided</div>
+                                    </td>
+                                    <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                                        {{
+                                            customer.email }}
+                                    </td>
+                                    <td class="whitespace-nowrap text-sm text-gray-500">
+                                        <select
+                                            class="w-full rounded-md shadow border-none ring-1 ring-gray-200 focus:ring-gray-300"
+                                            v-model="customer.user_type" @change="changeRole(customer)">
+                                            <option v-for="role in roles" :key="role" :value="role">
+                                                {{ role }}
+                                            </option>
+                                        </select>
+
+                                    </td>
                                 </tr>
                             </tbody>
                         </table>

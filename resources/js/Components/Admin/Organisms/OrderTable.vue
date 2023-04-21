@@ -1,19 +1,22 @@
 <script setup>
 import { Pagination, Alert, Toggle } from '@/Components/Admin'
-import { onMounted, ref } from 'vue';
-import moment from 'moment';
-import { Link, router } from '@inertiajs/vue3';
+import { onMounted, ref } from 'vue'
+import moment from 'moment'
+import { Link, router } from '@inertiajs/vue3'
 import { PencilIcon, EyeIcon, TrashIcon } from '@heroicons/vue/20/solid'
 
 const props = defineProps({
     orders: Object,
-});
+})
+console.log(props.orders)
 
 onMounted(() => {
-    props.orders.forEach((order) => {
-        order.order_date = moment(order.order_date).format('MMMM Do YYYY, h:mm:ss a');
-    });
-});
+    if (props.orders.data) {
+        props.orders.data.forEach((order) => {
+            order.order_date = moment(order.order_date).format('MMMM Do YYYY, h:mm:ss a')
+        })
+    }
+})
 
 </script>
 <template>
@@ -43,30 +46,30 @@ onMounted(() => {
                                     </th>
                                 </tr>
                             </thead>
-                            <tbody class="divide-y divide-gray-200 bg-white">
-                                <tr v-for="order in orders" :key="order.id">
+                            <tbody class="divide-y divide-gray-200 bg-white" v-if="props.orders">
+                                <tr v-for="order in props.orders.data" :key="order.id">
                                     <td class="whitespace-nowrap py-2 pr-3 text-sm sm:pl-0t">
                                         <div class="flex items-left">
-                                            <div class="font-medium text-gray-900">#{{ order.order.id }}</div>
+                                            <div class="font-medium text-gray-900">#{{ order.id }}</div>
                                         </div>
                                     </td>
                                     <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500 ">
-                                        <div class="font-medium text-gray-900">{{ order.order.order_date }}</div>
+                                        <div class="font-medium text-gray-900">{{ order.order_date }}</div>
                                     </td>
                                     <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
                                         <div class="font-medium text-gray-900" v-if="order.billing_address">{{
-                                            order.order.firstname }}
-                                            {{ order.order.lastname }}
-                                            {{ order.lastname }}{{ order.billing_address.address_line1 }}
+                                            order.firstname }}
+                                            {{ order.lastname }}
+                                            {{ order.billing_address.address_line1 }}
                                             {{ order.billing_address.address_line2 }}, {{
                                                 order.billing_address.city }} {{
         order.billing_address.country }}, {{
         order.billing_address.postal_code }}
                                         </div>
                                         <div class="font-medium text-gray-900" v-else> {{
-                                            order.order.firstname }}
-                                            {{ order.order.lastname }}
-                                            {{ order.lastname }}{{ order.shipping_address.address_line1 }} {{
+                                            order.firstname }}
+                                            {{ order.lastname }}
+                                            {{ order.shipping_address.address_line1 }} {{
                                                 order.shipping_address.address_line2 }},
                                             {{ order.shipping_address.city }} {{
                                                 order.shipping_address.country }}, {{
@@ -75,20 +78,20 @@ onMounted(() => {
                                     </td>
                                     <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
                                         €{{
-                                            order.order.total_price.toFixed(2) }}
+                                            order.total_price.toFixed(2) }}
                                     </td>
                                     <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500 text-left">
                                         <span
                                             class="inline-flex items-left rounded-full bg-gray-100 px-3 py-0.5 text-sm font-medium text-gray-800">{{
-                                                order.order.order_status }}</span>
+                                                order.order_status }}</span>
                                     </td>
                                     <td
                                         class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right justify-end text-sm font-medium sm:pr-0 flex gap-2">
-                                        <Link :href="route('admin.orders.show', order.order.id)"
+                                        <Link :href="route('admin.orders.show', order.id)"
                                             class="rounded-full bg-indigo-600 p-2 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
                                         <EyeIcon class="h-3 w-3" aria-hidden="true" />
                                         </Link>
-                                        <button type="button" @click="open = true;"
+                                        <button type="button" @click="open = true"
                                             class="rounded-full bg-red-600 p-2 text-white shadow-sm hover:bg-red-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
                                             <TrashIcon class="h-3 w-3" aria-hidden="true" />
                                         </button>
@@ -97,7 +100,7 @@ onMounted(() => {
                             </tbody>
                         </table>
                         <div class="border-t border-gray-200  flex sm:justify-end">
-                            <!-- <Pagination :links="props.links" /> -->
+                            <Pagination :links="props.orders.links" />
                         </div>
                     </div>
                 </div>
