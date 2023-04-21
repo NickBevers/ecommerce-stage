@@ -4,35 +4,9 @@ import { StarIcon } from '@heroicons/vue/20/solid'
 const props = defineProps({
   reviews: Object,
 })
-
-console.log(props.reviews)
-
-const reviews = {
-  average: 4,
-  totalCount: 1624,
-  counts: [
-    { rating: 5, count: 1019 },
-    { rating: 4, count: 162 },
-    { rating: 3, count: 97 },
-    { rating: 2, count: 199 },
-    { rating: 1, count: 147 },
-  ],
-  featured: [
-  {
-      id: 1,
-      rating: 5,
-      content: `
-        <p>This is the bag of my dreams. I took it on my last vacation and was able to fit an absurd amount of snacks for the many long and hungry flights.</p>
-      `,
-      author: 'Emily Selman',
-      avatarSrc:
-        'https://images.unsplash.com/photo-1502685104226-ee32379fefbe?ixlib=rb-=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=8&w=256&h=256&q=80',
-    },
-  ],
-}
 </script>
 <template>
- <div class="bg-white">
+ <div class="bg-white" v-if="props.reviews">
     <div class="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:grid lg:max-w-7xl lg:grid-cols-12 lg:gap-x-8 lg:px-8 lg:py-32">
       <div class="lg:col-span-4">
         <h2 class="text-2xl font-bold tracking-tight text-gray-900">Customer Reviews</h2>
