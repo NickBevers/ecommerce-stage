@@ -50,7 +50,10 @@ class ProfileController extends Controller
         $user->user_type = $request->user_type;
         $user->save();
 
-        return Redirect::route('profile.edit');
+        return Inertia::render('Customer/Profile/Index', [
+            'mustVerifyEmail' => $request->user() instanceof MustVerifyEmail,
+            'status' => session('status'),
+        ]);
     }
 
     /**
