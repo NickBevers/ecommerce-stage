@@ -46,15 +46,13 @@ function checkout() {
                 <WishlistButton :product="props.sku" />
               </div>
             </div>
-
           </form>
           <!-- Product details -->
           <ProductDetails :sku="props.sku" />
           <Policies />
         </div>
       </div>
-      <ProductReviews />
+      <ProductReviews :reviews="props.sku.reviews"/>
     </main>
-
   </GuestLayout>
 </template>

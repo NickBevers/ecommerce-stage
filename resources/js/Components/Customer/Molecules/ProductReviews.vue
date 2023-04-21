@@ -1,74 +1,91 @@
+<script setup>
+import { StarIcon } from '@heroicons/vue/20/solid'
+
+const props = defineProps({
+  reviews: Object,
+})
+
+console.log(props.reviews)
+
+const reviews = {
+  average: 4,
+  totalCount: 1624,
+  counts: [
+    { rating: 5, count: 1019 },
+    { rating: 4, count: 162 },
+    { rating: 3, count: 97 },
+    { rating: 2, count: 199 },
+    { rating: 1, count: 147 },
+  ],
+  featured: [
+  {
+      id: 1,
+      rating: 5,
+      content: `
+        <p>This is the bag of my dreams. I took it on my last vacation and was able to fit an absurd amount of snacks for the many long and hungry flights.</p>
+      `,
+      author: 'Emily Selman',
+      avatarSrc:
+        'https://images.unsplash.com/photo-1502685104226-ee32379fefbe?ixlib=rb-=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=8&w=256&h=256&q=80',
+    },
+  ],
+}
+</script>
 <template>
-  <!-- Reviews -->
-  <section aria-labelledby="reviews-heading" class="mt-16 sm:mt-24">
-    <h2 id="reviews-heading" class="text-lg font-medium text-gray-900">Recent reviews</h2>
+ <div class="bg-white">
+    <div class="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:grid lg:max-w-7xl lg:grid-cols-12 lg:gap-x-8 lg:px-8 lg:py-32">
+      <div class="lg:col-span-4">
+        <h2 class="text-2xl font-bold tracking-tight text-gray-900">Customer Reviews</h2>
 
-    <div class="mt-6 space-y-10 divide-y divide-gray-200 border-t border-b border-gray-200 pb-10">
-      <div class="pt-10 lg:grid lg:grid-cols-12 lg:gap-x-8">
-        <div
-          class="lg:col-span-8 lg:col-start-5 xl:col-span-9 xl:col-start-4 xl:grid xl:grid-cols-3 xl:items-start xl:gap-x-8">
-          <div class="flex items-center xl:col-span-1">
-            <div class="flex items-center">
-              <!-- Active: "text-yellow-400", Inactive: "text-gray-200" -->
-              <svg class="text-yellow-400 h-5 w-5 flex-shrink-0" viewBox="0 0 20 20" fill="currentColor"
-                aria-hidden="true">
-                <path fill-rule="evenodd"
-                  d="M10.868 2.884c-.321-.772-1.415-.772-1.736 0l-1.83 4.401-4.753.381c-.833.067-1.171 1.107-.536 1.651l3.62 3.102-1.106 4.637c-.194.813.691 1.456 1.405 1.02L10 15.591l4.069 2.485c.713.436 1.598-.207 1.404-1.02l-1.106-4.637 3.62-3.102c.635-.544.297-1.584-.536-1.65l-4.752-.382-1.831-4.401z"
-                  clip-rule="evenodd" />
-              </svg>
+        <!-- <div class="mt-6">
+          <h3 class="sr-only">Review data</h3>
 
-              <svg class="text-yellow-400 h-5 w-5 flex-shrink-0" viewBox="0 0 20 20" fill="currentColor"
-                aria-hidden="true">
-                <path fill-rule="evenodd"
-                  d="M10.868 2.884c-.321-.772-1.415-.772-1.736 0l-1.83 4.401-4.753.381c-.833.067-1.171 1.107-.536 1.651l3.62 3.102-1.106 4.637c-.194.813.691 1.456 1.405 1.02L10 15.591l4.069 2.485c.713.436 1.598-.207 1.404-1.02l-1.106-4.637 3.62-3.102c.635-.544.297-1.584-.536-1.65l-4.752-.382-1.831-4.401z"
-                  clip-rule="evenodd" />
-              </svg>
+          <dl class="space-y-3">
+            <div v-for="count in reviews.counts" :key="count.rating" class="flex items-center text-sm">
+              <dt class="flex flex-1 items-center">
+                <p class="w-3 font-medium text-gray-900">{{ count.rating }}<span class="sr-only">star reviews</span></p>
+                <div aria-hidden="true" class="ml-1 flex flex-1 items-center">
+                  <StarIcon :class="[count.count > 0 ? 'text-yellow-400' : 'text-gray-300', 'h-5 w-5 flex-shrink-0']" aria-hidden="true" />
 
-              <svg class="text-yellow-400 h-5 w-5 flex-shrink-0" viewBox="0 0 20 20" fill="currentColor"
-                aria-hidden="true">
-                <path fill-rule="evenodd"
-                  d="M10.868 2.884c-.321-.772-1.415-.772-1.736 0l-1.83 4.401-4.753.381c-.833.067-1.171 1.107-.536 1.651l3.62 3.102-1.106 4.637c-.194.813.691 1.456 1.405 1.02L10 15.591l4.069 2.485c.713.436 1.598-.207 1.404-1.02l-1.106-4.637 3.62-3.102c.635-.544.297-1.584-.536-1.65l-4.752-.382-1.831-4.401z"
-                  clip-rule="evenodd" />
-              </svg>
-
-              <svg class="text-yellow-400 h-5 w-5 flex-shrink-0" viewBox="0 0 20 20" fill="currentColor"
-                aria-hidden="true">
-                <path fill-rule="evenodd"
-                  d="M10.868 2.884c-.321-.772-1.415-.772-1.736 0l-1.83 4.401-4.753.381c-.833.067-1.171 1.107-.536 1.651l3.62 3.102-1.106 4.637c-.194.813.691 1.456 1.405 1.02L10 15.591l4.069 2.485c.713.436 1.598-.207 1.404-1.02l-1.106-4.637 3.62-3.102c.635-.544.297-1.584-.536-1.65l-4.752-.382-1.831-4.401z"
-                  clip-rule="evenodd" />
-              </svg>
-
-              <svg class="text-yellow-400 h-5 w-5 flex-shrink-0" viewBox="0 0 20 20" fill="currentColor"
-                aria-hidden="true">
-                <path fill-rule="evenodd"
-                  d="M10.868 2.884c-.321-.772-1.415-.772-1.736 0l-1.83 4.401-4.753.381c-.833.067-1.171 1.107-.536 1.651l3.62 3.102-1.106 4.637c-.194.813.691 1.456 1.405 1.02L10 15.591l4.069 2.485c.713.436 1.598-.207 1.404-1.02l-1.106-4.637 3.62-3.102c.635-.544.297-1.584-.536-1.65l-4.752-.382-1.831-4.401z"
-                  clip-rule="evenodd" />
-              </svg>
+                  <div class="relative ml-3 flex-1">
+                    <div class="h-3 rounded-full border border-gray-200 bg-gray-100" />
+                    <div v-if="count.count > 0" class="absolute inset-y-0 rounded-full border border-yellow-400 bg-yellow-400" :style="{ width: `calc(${count.count} / ${reviews.totalCount} * 100%)` }" />
+                  </div>
+                </div>
+              </dt>
+              <dd class="ml-3 w-10 text-right text-sm tabular-nums text-gray-900">{{ Math.round((count.count / reviews.totalCount) * 100) }}%</dd>
             </div>
-            <p class="ml-3 text-sm text-gray-700">5<span class="sr-only"> out of 5 stars</span></p>
-          </div>
+          </dl>
+        </div> -->
 
-          <div class="mt-4 lg:mt-6 xl:col-span-2 xl:mt-0">
-            <h3 class="text-sm font-medium text-gray-900">Can&#039;t say enough good things</h3>
+        <div class="mt-10">
+          <h3 class="text-lg font-medium text-gray-900">Share your thoughts</h3>
+          <p class="mt-1 text-sm text-gray-600">If you’ve used this product, share your thoughts with other customers</p>
 
-            <div class="mt-3 space-y-6 text-sm text-gray-500">
-              <p>I was really pleased with the overall shopping experience. My order even included a little personal,
-                handwritten note, which delighted me!</p>
-              <p>The product quality is amazing, it looks and feel even better than I had anticipated. Brilliant stuff! I
-                would gladly recommend this store to my friends. And, now that I think of it... I actually have, many
-                times!</p>
-            </div>
-          </div>
+          <a href="#" class="mt-6 inline-flex w-full items-center justify-center rounded-md border border-gray-300 bg-white px-8 py-2 text-sm font-medium text-gray-900 hover:bg-gray-50 sm:w-auto lg:w-full">Write a review</a>
         </div>
+      </div>
 
-        <div
-          class="mt-6 flex items-center text-sm lg:col-span-4 lg:col-start-1 lg:row-start-1 lg:mt-0 lg:flex-col lg:items-start xl:col-span-3">
-          <p class="font-medium text-gray-900">Risako M</p>
-          <time datetime="2021-01-06"
-            class="ml-4 border-l border-gray-200 pl-4 text-gray-500 lg:ml-0 lg:mt-2 lg:border-0 lg:pl-0">May 16,
-            2021</time>
+      <div class="mt-16 lg:col-span-7 lg:col-start-6 lg:mt-0">
+        <h3 class="sr-only">Recent reviews</h3>
+
+        <div class="flow-root">
+          <div class="-my-12 divide-y divide-gray-200">
+            <div v-for="review in props.reviews" :key="review.id" class="py-12">
+              <div class="flex items-center">
+                <div class="flex gap-2">
+                  <h4 class="text-sm font-bold text-gray-900">{{ review.title }}</h4>
+                  <div class="flex items-center">
+                    <StarIcon v-for="rating in [0, 1, 2, 3, 4]" :key="rating" :class="[review.score > rating ? 'text-yellow-400' : 'text-gray-300', 'h-5 w-5 flex-shrink-0']" aria-hidden="true" />
+                  </div>
+                  <p class="sr-only">{{ review.score }} out of 5 stars</p>
+                </div>
+              </div>
+              <div class="mt-4 space-y-6 text-base italic text-gray-600" v-html="review.body" />
+            </div>
+          </div>
         </div>
       </div>
     </div>
-  </section>
+  </div>
 </template>
