@@ -10,7 +10,7 @@ const props = defineProps({
 });
 
 onMounted(() => {
-    props.orders.forEach((order) => {
+    props.orders.data.forEach((order) => {
         order.order_date = moment(order.order_date).format('MMMM Do YYYY, h:mm:ss a');
     });
 });
@@ -44,7 +44,7 @@ onMounted(() => {
                                 </tr>
                             </thead>
                             <tbody class="divide-y divide-gray-200 bg-white">
-                                <tr v-for="order in orders" :key="order.id">
+                                <tr v-for="order in props.orders.data" :key="order.id">
                                     <td class="whitespace-nowrap py-2 pr-3 text-sm sm:pl-0t">
                                         <div class="flex items-left">
                                             <div class="font-medium text-gray-900">#{{ order.order.id }}</div>

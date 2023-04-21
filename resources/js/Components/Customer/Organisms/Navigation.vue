@@ -211,6 +211,15 @@ function selectCategory(category_id) {
                                                         aria-hidden="true" />
                                                 </PopoverButton>
 
+                                                <Link @click="selectCategory(category.id)" v-else-if="category.name === 'Promo'"
+                                                      :href="'/products/promos'"
+                                                      :class="[open ? 'text-indigo-600' : 'text-gray-700 hover:text-gray-800', 'relative flex items-center justify-center text-sm font-medium transition-colors duration-200 ease-out']">
+                                                    {{ category.name }}
+                                                    <span
+                                                            :class="[open ? 'bg-indigo-600' : '', 'absolute inset-x-0 -bottom-px z-20 h-0.5 transition duration-200 ease-out']"
+                                                            aria-hidden="true" />
+                                                </Link>
+
                                                 <Link @click="selectCategory(category.id)" v-else
                                                     :href="`/${category.name.toLowerCase()}`"
                                                     :class="[open ? 'text-indigo-600' : 'text-gray-700 hover:text-gray-800', 'relative flex items-center justify-center text-sm font-medium transition-colors duration-200 ease-out']">

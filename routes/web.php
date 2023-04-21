@@ -93,6 +93,9 @@ Route::middleware(['auth', 'admin'])->group(function () {
 
     // Admin Country Routes
     Route::get('/admin/getVats/{code}', [VatService::class, 'getVatsByCountryCode'])->name('admin.countries.getVats');
+
+    Route::patch('/admin/bank', [UserController::class, 'updateBankAccount'])->name('users.updateBankAccount');
+
 });
 
 // All routes where user has to be logged in
@@ -152,7 +155,6 @@ Route::middleware('auth')->group(function () {
     Route::get('/returns/{return}', [CustomerProductReturnController::class, 'show'])->name('returns.show');
 
     // User Routes
-    Route::patch('/users/{user}/bank', [UserController::class, 'updateBankAccount'])->name('users.updateBankAccount');
     Route::patch('/users/{user}', [UserController::class, 'update'])->name('users.update');
     Route::delete('/users/{user}', [UserController::class, 'destroy'])->name('users.destroy');
 
