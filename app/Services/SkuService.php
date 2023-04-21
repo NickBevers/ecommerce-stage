@@ -16,7 +16,7 @@ class SkuService
         $promo = $request->input('promo', false);
         $attributes = $request->input('attributes', false);
         $price = $request->input('price', false);
-        $brand = $request->input('brand', false);
+        $brands = $request->input('brand', false);
         $sort = $request->input('sort', 'created_at');
         $order = $request->input('order', 'asc');
 
@@ -40,17 +40,22 @@ class SkuService
                     });
                 })
                 ->when($attributes, function ($query) use ($attributes){
-                    $query->whereHas('attributeValues', function ($query) use ($attributes) {
-                        $query->whereIn('name', $attributes);
-                    });
+                    for ($i = 0; $i < count($attributes); $i++) {
+                        $query->whereHas('attributeValues.attributeType', function ($query) use ($attributes, $i) {
+                            $query->where('name', array_keys($attributes)[$i]);
+                        })
+                            ->whereHas('attributeValues', function ($query) use ($attributes, $i) {
+                                $query->whereIn('name', $attributes[array_keys($attributes)[$i]]);
+                            });
+                    }
                 })
                 ->when($price, function ($query) use ($price){
                     $query->where('price', '>=', $price[0])
                         ->where('price', '<=', $price[1]);
                 })
-                ->when($brand, function ($query) use ($brand){
-                    $query->whereHas('product.brand', function ($query) use ($brand) {
-                        $query->where('slug', $brand);
+                ->when($brands, function ($query) use ($brands){
+                    $query->whereHas('product.brand', function ($query) use ($brands) {
+                        $query->whereIn('slug', $brands);
                     });
                 })
                 ->when($sort && $order, function ($query) use ($sort, $order){

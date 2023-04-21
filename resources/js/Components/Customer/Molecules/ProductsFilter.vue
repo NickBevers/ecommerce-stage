@@ -31,13 +31,7 @@ const sortOptions = [
 const emit = defineEmits(['updateSkus'])
 
 let selectedFilters = {
-  attributes: {
-      "size": [
-          "small",
-          "medium",
-          "large",
-      ],
-  },
+  attributes: {},
 }
 
 const open = ref(false)
@@ -58,52 +52,53 @@ const props = defineProps({
 })
 
 function isChecked(attribute, value) {
-  // if (props.attributeTypes.includes(attribute)) {
-  //   return props.attributes.includes(value)
-  // } else {
-  //   // check if the value is in the checkedFilters object and if the attribute is in the object
-  //   let values = selectedFilters.attributes
-  //   if (values) {
-  //     return values.includes(value)
-  //   } else {
-  //     return false
-  //   }
-  // }
+  if (isAttribute(attribute)){
+    let values = selectedFilters.attributes[attribute]
+    if (values) {
+      return values.includes(value)
+    } else {
+      return false
+    }
+  } else {
+    return selectedFilters[attribute] && selectedFilters[attribute].includes(value)
+  }
+}
+
+function isAttribute(attribute) {
+  let isAttribute = false;
+  for (let i = 0; i < props.attributeTypes.length; i++) {
+    if(props.attributeTypes[i].name === attribute){
+      isAttribute = true;
+    }
+  }
+  return isAttribute;
 }
 
 function addFilters(filterName, value) {
-  // loop through the attributeTypes array and check if the filterName is in any of the objects.name
-  let isAttribute = false;
-
-
-
-  // for (let i = 0; i < props.attributeTypes.length; i++) {
-  //   if (props.attributeTypes[i].name === filterName.toLowerCase()) {
-  //       isAttribute = true;
-  //   }
-  // }
-  //
-  // if (isAttribute) {
-  //   if (selectedFilters.attributes.includes(value)) {
-  //     selectedFilters.attributes.splice(selectedFilters.attributes.indexOf(value), 1)
-  //   } else {
-  //     selectedFilters.attributes.push(value)
-  //   }
-  // } else {
-  //   // check if the filter is in the checkedFilters object
-  //   let values = selectedFilters[filterName.toLowerCase()]
-  //   if (values) {
-  //     // check if the value is in the array
-  //     if (values.includes(value)) {
-  //       values.splice(values.indexOf(value), 1)
-  //     } else {
-  //       values.push(value)
-  //     }
-  //   } else {
-  //     // add the value to the array
-  //     selectedFilters[filterName] = [value]
-  //   }
-  // }
+  filterName = filterName.toLowerCase();
+  let attr = isAttribute(filterName);
+  if (attr) {
+    let values = selectedFilters.attributes[filterName]
+    if (values) {
+      if (values.includes(value)) {
+        values.splice(values.indexOf(value), 1)
+      } else {
+        values.push(value)
+      }
+    } else {
+      selectedFilters.attributes[filterName] = [value]
+    }
+  } else {
+    if (Object.keys(selectedFilters).includes(filterName)) {
+      if (selectedFilters[filterName].includes(value)) {
+        selectedFilters[filterName].splice(selectedFilters[filterName].indexOf(value), 1)
+      } else {
+        selectedFilters[filterName].push(value)
+      }
+    } else {
+      selectedFilters[filterName] = [value]
+    }
+  }
 
 
   fetch(route('products.filter'), {
