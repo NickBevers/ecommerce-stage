@@ -32,10 +32,6 @@ class OrderController extends Controller
             ]);
         }
 
-        // return Inertia::render('Customer/Checkout/Detail', [
-        //     'order' => $order,
-        //     'skus' => $order->skus->load('productImages', 'product'),
-        // ]);
         return Inertia::render('Customer/Checkout/Detail', [
             'order' => $order,
             'shipping_address' => Address::where('id', $order->shipping_address_id)->first(),
