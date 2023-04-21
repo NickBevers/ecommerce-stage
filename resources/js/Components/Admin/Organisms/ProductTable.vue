@@ -118,7 +118,7 @@ function toggleActive() {
                 </tr>
               </tbody>
             </table>
-            <div class="border-t border-gray-200  flex sm:justify-end">
+            <div class="border-t border-gray-200  flex sm:justify-end" v-if="props.links && props.links.length > 0">
               <Pagination :links="props.links" />
             </div>
           </div>

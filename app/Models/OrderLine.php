@@ -7,7 +7,9 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class OrderLine extends Model
 {
-protected $fillable = [
+    protected $table = 'order_lines';
+
+    protected $fillable = [
         'product_id',
         'order_id',
         'quantity',
@@ -27,13 +29,34 @@ protected $fillable = [
     |--------------------------------------------------------------------------
     */
 
-    public function product(): BelongsTo
+    public function sku(): BelongsTo
     {
-        return $this->BelongsTo(Product::class);
+        return $this->BelongsTo(Sku::class);
     }
 
     public function order(): BelongsTo
     {
         return $this->BelongsTo(Order::class);
+    }
+
+    /*
+     * |--------------------------------------------------------------------------
+     * | SCOPES
+     * |--------------------------------------------------------------------------
+     */
+
+    public function scopeWithAllRelations($query)
+    {
+        return $query->with([
+            'sku',
+            'sku.product',
+            'sku.product.brand',
+            'sku.product.subCategory',
+            'sku.product.subCategory.category',
+            'sku.attributeValues',
+            'sku.attributeValues.attributeType',
+            'sku.promos',
+            'sku.productImages',
+        ]);
     }
 }

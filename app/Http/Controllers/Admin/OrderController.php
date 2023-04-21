@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Order;
 use App\Models\Address;
+use App\Models\OrderLine;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -56,13 +57,24 @@ class OrderController extends Controller
         $request->validate([
             'order_status' => 'required',
         ]);
-
         $order->update([
             'order_status' => $request->order_status,
         ]);
 
-      
         return redirect()->route('admin.orders.index');
+    }
+
+    function getSalesToday()
+    {
+        $salesToday = Order::all()->sum('total_price');
+        return response()->json([
+            'amount' => $salesToday,
+            'orderAmount' => Order::all()->count(),
+            'skusSold' =>  OrderLine::whereIn('order_id', Order::where('created_at', '>=', now()->startOfDay())
+                ->where('created_at', '<=', now()->endOfDay())->pluck('id'))->get()->sum('amount'),
+            'skus' => OrderLine::whereIn('order_id', Order::where('created_at', '>=', now()->startOfDay())
+                ->where('created_at', '<=', now()->endOfDay())->pluck('id'))->withAllRelations()->get(),
+        ]);
     }
 
     public function updateTracking(Request $request, Order $order)
