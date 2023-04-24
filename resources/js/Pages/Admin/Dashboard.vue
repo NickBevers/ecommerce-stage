@@ -18,6 +18,7 @@ const skus = ref([])
 fetch('/admin/sales-today')
     .then((response) => response.json())
     .then((data) => {
+        console.log(data.skus)
         skus.value = data.skus
         Object.keys(data).forEach((key) => {
             if (! stats.value[key]) return
@@ -59,7 +60,7 @@ fetch('/admin/sales-today')
                                             </div>
                                         </td>
                                         <td class="whitespace-nowrap px-3 py-4text-sm text-gray-500 w-1/6 text-right">
-                                            <span class="inline-flex rounded-full px-2 text-xs font-medium leading-5 text-gray-900">{{ sku.sku.amount }}</span>
+                                            <span class="inline-flex rounded-full px-2 text-xs font-medium leading-5 text-gray-900">{{ sku.amount }}</span>
                                         </td>
                                     </tr>
                                     </tbody>

@@ -70,10 +70,10 @@ class OrderController extends Controller
         return response()->json([
             'amount' => $salesToday,
             'orderAmount' => Order::all()->count(),
-            'skusSold' =>  OrderLine::whereIn('order_id', Order::where('created_at', '>=', now()->startOfDay())
-                ->where('created_at', '<=', now()->endOfDay())->pluck('id'))->get()->sum('amount'),
-            'skus' => OrderLine::whereIn('order_id', Order::where('created_at', '>=', now()->startOfDay())
-                ->where('created_at', '<=', now()->endOfDay())->pluck('id'))->withAllRelations()->get(),
+            'skusSold' =>  OrderLine::whereIn('order_id', Order::where('order_date', '>=', now()->startOfDay())
+                ->where('order_date', '<=', now()->endOfDay())->pluck('id'))->get()->sum('amount'),
+            'skus' => OrderLine::whereIn('order_id', Order::where('order_date', '>=', now()->startOfDay())
+                ->where('order_date', '<=', now()->endOfDay())->pluck('id'))->withAllRelations()->get(),
         ]);
     }
 

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Customer;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\OrderValidationRequest;
 use App\Models\Address;
+use App\Models\Cart;
 use App\Models\Order;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -28,9 +29,11 @@ class OrderController extends Controller
             $order->skus()->attach($sku['id'], [
                 'amount' => $sku['amount'],
                 'product_name' => $product_name,
-//                'price' => $sku['price'],
             ]);
         }
+
+        Cart::where('user_id', auth()->user()->id)->delete();
+
 
         return Inertia::render('Customer/Checkout/Detail', [
             'order' => $order,
