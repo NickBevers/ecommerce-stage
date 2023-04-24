@@ -60,12 +60,14 @@ async function updateSkus(skus) {
 </script>
 <template>
   <GuestLayout v-if="props.subCategory">
-    <ProductsFilter :title="props.subCategory.name" :filters="filters" :attributeTypes="props.attributeTypes" @update-skus="updateSkus"/>
-    <ProductsList :skus="skuRef.data" :links="skuRef.links"/>
+    <ProductsFilter :title="props.subCategory.name" :filters="filters" :attributeTypes="props.attributeTypes"
+      @update-skus="updateSkus" />
+    <ProductsList :skus="skuRef.data" :links="skuRef.links" />
   </GuestLayout>
 
-    <GuestLayout v-else>
-        <ProductsFilter :title="'Promotions'" :filters="filters" :attributeTypes="props.attributeTypes" @update-skus="updateSkus"/>
-        <ProductsList :skus="skuRef.data" :links="skuRef.links"/>
-    </GuestLayout>
+  <GuestLayout v-else>
+    <ProductsFilter :title="'Promotions'" :filters="filters" :attributeTypes="props.attributeTypes"
+      @update-skus="updateSkus" />
+    <ProductsList :skus="skuRef.data" :links="skuRef.links" />
+  </GuestLayout>
 </template>

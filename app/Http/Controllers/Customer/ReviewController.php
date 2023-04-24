@@ -13,7 +13,9 @@ class ReviewController extends Controller
     public function store(Request $request)
     {
         $review = Review::create($request->all());
-        return redirect()->route('products.index')->with('success', 'Review created successfully');
+        return response()->json([
+            'review' => $review,
+        ]);
     }
 
     public function markAsUseful(Review $review)

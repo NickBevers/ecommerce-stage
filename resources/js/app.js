@@ -4,6 +4,7 @@ import "../css/app.css";
 import { createApp, h } from "vue";
 import { createInertiaApp } from "@inertiajs/vue3";
 import { resolvePageComponent } from "laravel-vite-plugin/inertia-helpers";
+import vue3StarRatings from "vue3-star-ratings";
 import { createPinia } from "pinia";
 import { ZiggyVue } from "../../vendor/tightenco/ziggy/dist/vue.m";
 
@@ -22,6 +23,7 @@ createInertiaApp({
       .use(plugin)
       .use(ZiggyVue, Ziggy)
       .use(createPinia())
+      .component("vue3-star-ratings", vue3StarRatings)
       .mount(el);
   },
   progress: {

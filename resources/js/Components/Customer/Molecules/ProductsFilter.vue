@@ -1,4 +1,3 @@
-//TODO - Add filters from backend 
 <script setup>
 import { ref } from 'vue'
 import {

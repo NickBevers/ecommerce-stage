@@ -13,7 +13,8 @@ let showAll = ref(false);
 
 </script>
 <template>
-  <div class="flex flex-wrap justify-between">
+  <h3 class="text-sm">Variations:</h3>
+  <div class="flex flex-wrap justify-start">
     <div v-for="variation, index in props.variations" :key="variation.id" class="m-1 overflow-hidden rounded-md"
       :class="{ 'hidden': !showAll && index > 3 }">
       <div v-if="!showAll" class="overflow-hidden">

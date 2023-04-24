@@ -26,6 +26,8 @@
         "@tailwindcss/aspect-ratio": "^0.4.2",
         "moment": "^2.29.4",
         "pinia": "^2.0.33",
-        "search-dropdown-vue": "^1.0.3"
+        "search-dropdown-vue": "^1.0.3",
+        "vue-star-rating": "^2.1.0",
+        "vue3-star-ratings": "^1.1.0"
     }
 }
