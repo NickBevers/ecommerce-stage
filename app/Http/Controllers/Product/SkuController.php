@@ -110,12 +110,19 @@ class SkuController extends Controller
             $review->userLikes = $review->upvotes()->where('user_id', Auth::id())->exists();
         }
 
+        $hasBought = false;
+
+        if (Auth::check()) {
+            $hasBought = $tempSku->orders()->where('user_id', Auth::id())->exists();
+        }
+
         return Inertia::render('Customer/Product/Index', [
             'sku' => $tempSku,
             'variations' => $variations,
             'sizes' => $sizes,
             'colors' => $colors,
             'material' => $material?->name,
+            'userHasBought' => $hasBought,
         ]);
     }
 }

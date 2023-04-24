@@ -10,12 +10,11 @@ const props = defineProps({
   sizes: Object,
   colors: Object,
   material: String,
+  userHasBought: Boolean,
 });
 
 let checked = ref(false)
 
-console.log(props.sku);
-console.log(props)
 
 function checkout() {
   checked.value = true
