@@ -14,9 +14,6 @@ const props = defineProps({
 
 let checked = ref(false)
 
-console.log(props.sku);
-console.log(props)
-
 function checkout() {
   checked.value = true
 }
@@ -29,18 +26,20 @@ function checkout() {
         <div class="lg:col-span-5 lg:col-start-8">
           <div class="flex justify-between">
             <h1 class="text-xl font-medium text-gray-900">{{ props.sku.product.title }}</h1>
-            <p class="text-xl font-medium text-red-500"  v-if="props.sku.promos.length > 0
-                  && new Date(props.sku.promos[0].start_date.split(' ')[0]) < new Date()
-                  && new Date(props.sku.promos[0].end_date.split(' ')[0]) > new Date()">
-                <span class="text-gray-900 no-underline mr-3">€{{ props.sku.promos[0].new_price_incl_vat }}</span>
-              <span class="line-through">€{{ props.sku.price_incl_vat }}</span>
+            <p class="text-xl font-medium text-red-500" v-if="props.sku.promos.length > 0
+              && new Date(props.sku.promos[0].start_date.split(' ')[0]) < new Date()
+              && new Date(props.sku.promos[0].end_date.split(' ')[0]) > new Date()">
+              <span class="text-gray-900 no-underline mr-3">€{{ props.sku.promos[0].new_price_incl_vat.toFixed(2)
+              }}</span>
+              <span class="line-through">€{{ props.sku.price_incl_vat.toFixed(2) }}</span>
             </p>
-
             <p class="relative text-xl font-medium text-gray-900" v-else>
-              €{{ props.sku.price_incl_vat }}
+              €{{ props.sku.price_incl_vat.toFixed(2) }}
             </p>
           </div>
-          <ProductStars />
+          <div class="flex m-0 p-0">
+            <ProductStars />
+          </div>
         </div>
 
         <ImageGallery :sku="props.sku" />
@@ -64,7 +63,7 @@ function checkout() {
           <Policies />
         </div>
       </div>
-      <ProductReviews :reviews="props.sku.reviews"/>
+      <ProductReviews :reviews="props.sku.reviews" />
     </main>
   </GuestLayout>
 </template>
