@@ -194,4 +194,8 @@ Route::get('/subcategories/{category}', [SubCategoryService::class, 'getSubCateg
 Route::get('/brands', [CustomerBrandController::class, 'index'])->name('brands.index');
 Route::get('/brands/{brand:slug}', [CustomerBrandController::class, 'show'])->name('brands.show');
 
+Route::get('/contact', function () {
+    return Inertia::render('Customer/Contact/Index');
+})->name('contact.index');
+
 require __DIR__.'/auth.php';
