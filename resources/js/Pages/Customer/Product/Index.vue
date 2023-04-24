@@ -15,7 +15,6 @@ const props = defineProps({
 
 let checked = ref(false)
 
-
 function checkout() {
   checked.value = true
 }
@@ -65,7 +64,7 @@ function checkout() {
           <Policies />
         </div>
       </div>
-      <ProductReviews :reviews="props.sku.reviews" />
+      <ProductReviews :reviews="props.sku.reviews" :sku="props.sku.id" :userHasBought="props.userHasBought" />
     </main>
   </GuestLayout>
 </template>

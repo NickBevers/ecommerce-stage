@@ -5,31 +5,33 @@ import { ref } from 'vue'
 
 const props = defineProps({
   reviews: Object,
+  sku: String,
+  userHasBought: Boolean,
 })
 let openReview = ref(false)
 
 function updateReviews(data) {
-
   props.reviews.push(data.review)
 }
+
+
 </script>
 <template>
   <AddReviewModal v-if="openReview" :open="openReview" @close="openReview = false" @closed="openReview = false"
-  :sku="props.reviews[0].sku_id" class="absolute top-0 left-0 z-20" @submitted="updateReviews" />
+  :sku="props.sku" class="absolute top-0 left-0 z-20" @submitted="updateReviews" />
 <div class="bg-white">
   <div
     class="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:grid lg:max-w-7xl lg:grid-cols-12 lg:gap-x-8 lg:px-8 lg:py-32">
     <div class="lg:col-span-4">
       <h2 class="text-2xl font-bold tracking-tight text-gray-900">Customer Reviews</h2>
-
       <div class="mt-6">
         <h3 class="sr-only">Review data</h3>
-        <!-- 
-          <dl class="space-y-3">
+
+        <!-- <dl class="space-y-3">
             <div v-for="count in reviews.counts" :key="count.rating" class="flex items-center text-sm">
-              <dt class="flex flex-1 items-center">
-                <p class="w-3 font-medium text-gray-900">{{ count.rating }}<span class="sr-only">star reviews</span></p>
-                <div aria-hidden="true" class="ml-1 flex flex-1 items-center">
+                  <dt class="flex flex-1 items-center">
+                    <p class="w-3 font-medium text-gray-900">{{ count.rating }}<span class="sr-only">star reviews</span></p>
+                    <div aria-hidden="true" class="ml-1 flex flex-1 items-center">
                       <StarIcon :class="[count.count > 0 ? 'text-yellow-400' : 'text-gray-300', 'h-5 w-5 flex-shrink-0']"
                         aria-hidden="true" />
 
@@ -46,7 +48,7 @@ function updateReviews(data) {
                 </div>
               </dl> -->
         </div>
-        <div class="mt-10">
+        <div class="mt-10" v-if="props.userHasBought">
           <h3 class="text-lg font-medium text-gray-900">Share your thoughts</h3>
           <p class="mt-1 text-sm text-gray-600">If you’ve used this product, share your thoughts with other customers</p>
 
