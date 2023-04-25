@@ -21,7 +21,6 @@ const subNavigation = [
 const currentPath = window.location.pathname;
 
 subNavigation.forEach((item) => {
-    console.log(item.href, currentPath)
     if (item.href === currentPath) {
         item.current = true
     }

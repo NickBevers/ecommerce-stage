@@ -14,7 +14,6 @@ const props = defineProps({
 });
 
 let checked = ref(false)
-console.log(props.userHasBought);
 
 function checkout() {
   checked.value = true
