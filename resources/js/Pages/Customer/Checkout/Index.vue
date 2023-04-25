@@ -191,7 +191,7 @@ function submit() {
                                 </div>
                                 <div class="mt-4">
                                     <label for="email-address" class="block text-sm font-medium text-gray-700">Email
-                                        address</label>
+                                        address*</label>
                                     <div class="mt-1">
                                         <input type="email" id="email-address" name="email-address" autocomplete="email"
                                             required v-model="form.email"
@@ -199,7 +199,7 @@ function submit() {
                                     </div>
                                 </div>
                                 <div class="sm:col-span-2 mt-4">
-                                    <label for="phone" class="block text-sm font-medium text-gray-700">Phone</label>
+                                    <label for="phone" class="block text-sm font-medium text-gray-700">Phone*</label>
                                     <div class="mt-1">
                                         <input type="text" name="phone" id="phone" autocomplete="tel" required
                                             v-model="form.phone_number" pattern="\d{2,4}[\s-]?\d{6,8}"
