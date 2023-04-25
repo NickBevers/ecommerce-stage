@@ -19,10 +19,9 @@ import {
 } from '@headlessui/vue'
 import {
     Bars3Icon,
-    QuestionMarkCircleIcon,
-    XMarkIcon,
     HeartIcon,
 } from '@heroicons/vue/24/outline'
+import {XMarkIcon} from "@heroicons/vue/20/solid";
 
 
 const open = ref(false)
