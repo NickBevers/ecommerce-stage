@@ -19,7 +19,6 @@ console.log(props.userHasBought);
 function checkout() {
   checked.value = true
 }
-
 </script>
 <template>
   <GuestLayout>
