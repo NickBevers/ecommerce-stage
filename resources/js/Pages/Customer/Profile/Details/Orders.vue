@@ -12,7 +12,7 @@ import {
     PopoverPanel,
 } from '@headlessui/vue'
 import { EllipsisVerticalIcon, MagnifyingGlassIcon, ShoppingBagIcon } from '@heroicons/vue/24/outline'
-import { CheckCircleIcon } from '@heroicons/vue/20/solid'
+import { CheckCircleIcon, ChevronDownIcon, ChevronUpIcon } from '@heroicons/vue/20/solid'
 import { Link } from '@inertiajs/vue3'
 
 const props = defineProps({
@@ -25,8 +25,22 @@ const props = defineProps({
 console.log(props.orders)
 
 function showProducts(orderId) {
-    console.log(orderId)
+    let div = document.getElementById(orderId)
+    if (div.classList.contains('hidden')) {
+        div.classList.remove('hidden')
+    } else {
+        div.classList.add('hidden')
+    }
 
+    //add isClicked to order
+    let order = props.orders.find((order) => order.id === orderId)
+    order.isClicked = !order.isClicked
+
+}
+
+function isClicked(orderId) {
+    let order = props.orders.find((order) => order.id === orderId)
+    return order.isClicked
 }
 
 </script>
@@ -44,13 +58,14 @@ function showProducts(orderId) {
                 <h2 id="recent-heading" class="sr-only">Recent orders</h2>
                 <div class="mx-auto max-w-7xl">
                     <div class="mx-auto space-y-8 sm:px-4 lg:px-0 w-full">
-                        <div v-for="order in props.orders" :key="order.id" @click="showProducts(order.id)"
-                            class="border-b border-t border-gray-200 bg-white shadow-sm sm:rounded-lg sm:border cursor-pointer">
+                        <div v-for="order in props.orders" :key="order.id"
+                            class="border-b border-t border-gray-200 bg-white shadow-sm sm:rounded-lg sm:border">
                             <h3 class="sr-only">
                                 Order placed on <time :datetime="order.order_date">{{ order.order_date }}</time>
                             </h3>
-                            <div class="flex items-center border-b border-gray-200 p-4  sm:p-6 flex-row ">
-                                <dl class="grid flex-1 grid-cols-2 gap-x-6 text-sm sm:grid-cols-5">
+                            <div class="flex items-center border-b border-gray-200 p-4  sm:p-6 flex-row  cursor-pointer"
+                                @click="showProducts(order.id)">
+                                <dl class="grid flex-1 grid-cols-4 gap-x-6 text-sm sm:grid-cols-6">
                                     <div>
                                         <dt class="font-medium text-gray-900">Order number</dt>
                                         <dd class="mt-1 text-gray-500">#{{ order.id }}</dd>
@@ -83,6 +98,15 @@ function showProducts(orderId) {
                                                 order.billing_address.postal_code }} {{ order.billing_address.country }}
                                         </dd>
                                     </div>
+                                    <div v-else>
+
+                                    </div>
+                                    <div class="flex justify-end items-center">
+                                        <ChevronDownIcon class="h-5 w-5 text-gray-400" aria-hidden="true"
+                                            v-if="!isClicked(order.id)" />
+                                        <ChevronUpIcon class="h-5 w-5 text-gray-400" aria-hidden="true" v-else />
+                                    </div>
+
                                 </dl>
 
 
@@ -90,7 +114,7 @@ function showProducts(orderId) {
 
                             <!-- Products -->
                             <h4 class="sr-only">Items</h4>
-                            <ul role="list" class="divide-y divide-gray-200">
+                            <ul role="list" class="divide-y divide-gray-200 hidden" :id="order.id">
                                 <li v-for="product in order.skus" :key="product.id" class="p-4 sm:p-6">
                                     <div class="flex items-center sm:items-start">
                                         <div
@@ -112,8 +136,9 @@ function showProducts(orderId) {
                                         <div class="flex items-center" v-if="order.order_status === 'delivered'">
                                             <CheckCircleIcon class="h-5 w-5 text-green-500" aria-hidden="true" />
                                             <p class="ml-2 text-sm font-medium text-gray-500">
-                                                Delivered<time :datetime="order.deliveredDatetime" v-if="order.delivery_date"> on {{
-                                                    order.deliveredDate }}</time>
+                                                Delivered<time :datetime="order.deliveredDatetime"
+                                                    v-if="order.delivery_date"> on {{
+                                                        order.deliveredDate }}</time>
                                             </p>
                                         </div>
                                         <div class="flex items-center" v-else>
