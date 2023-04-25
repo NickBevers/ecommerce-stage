@@ -81,6 +81,9 @@ function addFilters(filterName, value) {
     if (values) {
       if (values.includes(value)) {
         values.splice(values.indexOf(value), 1)
+        if (values.length === 0) {
+          delete selectedFilters.attributes[filterName]
+        }
       } else {
         values.push(value)
       }
