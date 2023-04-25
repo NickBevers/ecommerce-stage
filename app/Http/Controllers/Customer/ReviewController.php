@@ -31,7 +31,7 @@ class ReviewController extends Controller
     public function markAsUseful(Review $review)
     {
         Upvote::create([
-            'user_id' => $this->user_id,
+            'user_id' => Auth::user()->id,
             'review_id' => $review->id,
         ]);
 
@@ -40,10 +40,8 @@ class ReviewController extends Controller
 
     public function markAsNotUseful(Review $review)
     {
-        $upvote = $review->upvotes->where('user_id', $this->user_id)->first();
-        if ($upvote) {
-            $upvote->delete();
-        }
+        $upvote = $review->upvotes->where('user_id', Auth::user()->id)->first();
+        $upvote?->delete();
 
         return count($review->upvotes);
     }
