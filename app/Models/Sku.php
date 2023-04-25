@@ -127,7 +127,6 @@ class Sku extends Model
             ->with('wishlists', function ($query) {
                 $query->where('user_id', Auth::id());
             })
-            ->with('orders')
             ->with('productReturns');
     }
 }

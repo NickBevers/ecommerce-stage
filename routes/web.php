@@ -95,6 +95,7 @@ Route::middleware(['auth', 'admin'])->group(function () {
     // Admin Country Routes
     Route::get('/admin/getVats/{code}', [VatService::class, 'getVatsByCountryCode'])->name('admin.countries.getVats');
 
+    Route::post('/admin/validatePassword', [UserController::class, 'validatePassword'])->name('profile.validatePassword');
     Route::patch('/admin/bank', [UserController::class, 'updateBankAccount'])->name('users.updateBankAccount');
 
 });

@@ -255,7 +255,7 @@ function selectCategory(category_id) {
                                                                 :key="index" class="group relative">
                                                                 <div v-if="item.preview"
                                                                     class="aspect-w-1 aspect-h-1 overflow-hidden rounded-md bg-gray-100 group-hover:opacity-75">
-                                                                    <img src="https://tailwindui.com/img/ecommerce-images/mega-menu-category-02.jpg"
+                                                                    <img :src="item.image_link"
                                                                         alt="placeholder"
                                                                         class="object-cover object-center" />
                                                                 </div>

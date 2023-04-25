@@ -95,7 +95,7 @@ function showProducts(orderId) {
                                     <div class="flex items-center sm:items-start">
                                         <div
                                             class="h-20 w-20 flex-shrink-0 overflow-hidden rounded-lg bg-gray-200 sm:h-20 sm:w-20">
-                                            <img :src="product.imageSrc" :alt="product.imageAlt"
+                                            <img :src="product.product_images[0].image_link" :alt="product.imageAlt"
                                                 class="h-full w-full object-cover object-center" />
                                         </div>
                                         <div class="ml-6 flex-1 text-sm">
@@ -109,11 +109,17 @@ function showProducts(orderId) {
                                     </div>
 
                                     <div class="mt-6 sm:flex sm:justify-between">
-                                        <div class="flex items-center">
+                                        <div class="flex items-center" v-if="order.order_status === 'delivered'">
                                             <CheckCircleIcon class="h-5 w-5 text-green-500" aria-hidden="true" />
                                             <p class="ml-2 text-sm font-medium text-gray-500">
-                                                Delivered on <time :datetime="order.deliveredDatetime">{{
+                                                Delivered<time :datetime="order.deliveredDatetime" v-if="order.delivery_date"> on {{
                                                     order.deliveredDate }}</time>
+                                            </p>
+                                        </div>
+                                        <div class="flex items-center" v-else>
+                                            <CheckCircleIcon class="h-5 w-5 text-gray-300" aria-hidden="true" />
+                                            <p class="ml-2 text-sm font-medium text-gray-500">
+                                                {{ order.order_status }}
                                             </p>
                                         </div>
 

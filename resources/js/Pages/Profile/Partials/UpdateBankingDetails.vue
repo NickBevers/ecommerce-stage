@@ -7,22 +7,52 @@ import { ref, onMounted } from 'vue';
 const user = usePage().props.auth.user;
 
 const bankInput = ref(null);
+const passwordInput = ref(null);
+
+const passwordError = ref('');
 
 const form = useForm({
     bank_account: '',
+    password_confirm: '',
 });
 
 const updateBank = () => {
-    form.put(route('user.bankaccount'), {
-        preserveScroll: true,
-        onSuccess: () => form.reset(),
-        onError: () => {
-            if (form.errors.bank_account) {
-                form.reset('bank_account');
-                bankInput.value.focus();
-            }
+    // check if the password is correct with a fetch request
+    // if it is, then update the bank account
+
+    fetch('/admin/validatePassword', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
         },
-    });
+        body: JSON.stringify({
+            password: form.password_confirm,
+        }),
+    })
+        .then((response) => response.json())
+        .then((data) => {
+            if (data.status === 'success') {
+                console.log('success');
+                form.patch(route('users.updateBankAccount'), {
+                    preserveScroll: true,
+                    onSuccess: () => { form.reset(); passwordError.value = ''; },
+                    onError: () => {
+                        if (form.errors.bank_account) {
+                            form.reset('bank_account');
+                            bankInput.value.focus();
+                        }
+                    },
+                });
+            } else if (data.status === 'error') {
+                passwordError.value = data.message;
+                setTimeout(() => {
+                    passwordError.value = '';
+                }, 5000);
+            } else {
+                form.reset('password_confirm');
+                passwordInput.value.focus();
+            }
+        });
 };
 </script>
 
@@ -44,6 +74,15 @@ const updateBank = () => {
 
                 <InputError :message="form.errors.bank_account" class="mt-2" />
             </div>
+
+            <div>
+                <InputLabel for="password_confirm" value="Password for confirmation" />
+                <TextInput id="password_confirm" ref="passwordInput" v-model="form.password_confirm" type="password"
+                           class="mt-1 block w-full" />
+
+                <InputError :message="passwordError" class="mt-2" v-if="passwordError.length > 0"/>
+            </div>
+
             <div class="flex items-center gap-4">
                 <PrimaryButton :disabled="form.processing">Save</PrimaryButton>
 

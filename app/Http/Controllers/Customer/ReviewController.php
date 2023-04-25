@@ -6,12 +6,22 @@ use App\Http\Controllers\Controller;
 use App\Models\Review;
 use App\Models\Upvote;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ReviewController extends Controller
 {
     private Int $user_id = 3;
     public function store(Request $request)
     {
+        $request->validate([
+            'sku_id' => 'required',
+            'title' => 'required',
+            'body' => 'required',
+            'score' => 'required',
+        ]);
+
+        $request->merge(['user_id' => Auth::user()->id]);
+
         $review = Review::create($request->all());
         return response()->json([
             'review' => $review,
