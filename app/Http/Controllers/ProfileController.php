@@ -103,6 +103,7 @@ class ProfileController extends Controller
         return Inertia::render('Customer/Profile/Index', [
             'mustVerifyEmail' => $request->user() instanceof MustVerifyEmail,
             'status' => session('status'),
+            'addresses' => $request->user()->addresses,
         ]);
     }
 

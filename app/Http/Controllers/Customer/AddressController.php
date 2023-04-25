@@ -7,6 +7,7 @@ use App\Http\Requests\AddressValidationRequest;
 use App\Models\Address;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 
 class AddressController extends Controller
@@ -18,10 +19,14 @@ class AddressController extends Controller
 
     public function store(AddressValidationRequest $request)
     {
-        $request->merge(['user_id' => auth()->user()->id]);
+        $request->merge(['user_id' => Auth::user()->id]);
         $address = Address::create($request->all());
 
-        return response()->json($address);
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Address created successfully',
+            'address' => $address,
+        ]);
     }
 
     public function update(AddressValidationRequest $request, Address $shippingAddress)
@@ -31,12 +36,15 @@ class AddressController extends Controller
         return response()->json($shippingAddress);
     }
 
-    public function destroy(Address $shippingAddress): RedirectResponse
+    public function destroy(Address $address)
     {
-        $shippingAddress->delete();
+        ray($address);
+        Address::where('id', $address->id)->delete();
+        $address->delete();
 
-        return redirect()
-            ->back()
-            ->with('success', 'Shipping Address deleted successfully');
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Address deleted successfully',
+        ]);
     }
 }
