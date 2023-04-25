@@ -218,8 +218,7 @@ function submit() {
                                             <RadioGroupOption as="template" v-for="deliveryMethod in props.addresses"
                                                 :key="deliveryMethod.id" :value="deliveryMethod.id.toString()"
                                                 v-if="props.addresses.length > 0" v-slot="{ checked, active }">
-                                                <div
-                                                    :class="[checked ? 'border-transparent' : 'border-gray-300', active ? 'ring-2 ring-indigo-500' : '', 'relative flex cursor-pointer rounded-lg border bg-white p-4 shadow-sm focus:outline-none']">
+                                                <div :class="[checked ? 'border-transparent' : 'border-gray-300', active ? 'ring-2 ring-indigo-500' : '', 'relative flex cursor-pointer rounded-lg border bg-white p-4 shadow-sm focus:outline-none']">
                                                     <span class="flex flex-1">
                                                         <span class="flex flex-col">
                                                             <RadioGroupLabel as="span"
