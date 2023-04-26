@@ -12,8 +12,10 @@ import {
     PopoverPanel,
 } from '@headlessui/vue'
 import {EllipsisVerticalIcon, HomeIcon, MagnifyingGlassIcon, ShoppingBagIcon} from '@heroicons/vue/24/outline'
-import { CheckCircleIcon } from '@heroicons/vue/20/solid'
+import { CheckCircleIcon, ChevronDownIcon, ChevronUpIcon } from '@heroicons/vue/20/solid'
 import { Link } from '@inertiajs/vue3'
+import { ref } from 'vue'
+import { AddReturnModal } from '@/Components/Customer'
 
 const props = defineProps({
     orders: {
@@ -24,14 +26,33 @@ const props = defineProps({
 
 console.log(props.orders)
 
-function showProducts(orderId) {
-    console.log(orderId)
+let openReturn = ref(false)
+let selectedProduct = ref('')
+let selectedOrder = ref('')
 
+function showProducts(orderId) {
+    let div = document.getElementById(orderId)
+    if (div.classList.contains('hidden')) {
+        div.classList.remove('hidden')
+    } else {
+        div.classList.add('hidden')
+    }
+
+    let order = props.orders.find((order) => order.id === orderId)
+    order.isClicked = !order.isClicked
+
+}
+
+function isClicked(orderId) {
+    let order = props.orders.find((order) => order.id === orderId)
+    return order.isClicked
 }
 
 </script>
 <template>
     <Index>
+        <AddReturnModal v-if="openReturn" :open="openReturn" @close="openReturn = false" @closed="openReturn = false"
+            :sku="selectedProduct" :order="selectedOrder" class="absolute top-0 left-0 z-20" />
         <main class="py-24 lg:py-0 w-full">
             <div class="mx-auto w-full">
                 <div class="mx-auto px-4  lg:px-0">
@@ -49,8 +70,9 @@ function showProducts(orderId) {
                             <h3 class="sr-only">
                                 Order placed on <time :datetime="order.order_date">{{ order.order_date }}</time>
                             </h3>
-                            <div class="flex items-center border-b border-gray-200 p-4  sm:p-6 flex-row ">
-                                <dl class="grid flex-1 grid-cols-2 gap-x-6 text-sm sm:grid-cols-5">
+                            <div class="flex items-center border-b border-gray-200 p-4  sm:p-6 flex-row  cursor-pointer"
+                                @click="showProducts(order.id)">
+                                <dl class="grid flex-1 grid-cols-4 gap-x-6 text-sm sm:grid-cols-6">
                                     <div>
                                         <dt class="font-medium text-gray-900">Order number</dt>
                                         <dd class="mt-1 text-gray-500">#{{ order.id }}</dd>
@@ -83,6 +105,15 @@ function showProducts(orderId) {
                                                 order.billing_address.postal_code }} {{ order.billing_address.country }}
                                         </dd>
                                     </div>
+                                    <div v-else>
+
+                                    </div>
+                                    <div class="flex justify-end items-center">
+                                        <ChevronDownIcon class="h-5 w-5 text-gray-400" aria-hidden="true"
+                                            v-if="!isClicked(order.id)" />
+                                        <ChevronUpIcon class="h-5 w-5 text-gray-400" aria-hidden="true" v-else />
+                                    </div>
+
                                 </dl>
 
 
@@ -90,7 +121,7 @@ function showProducts(orderId) {
 
                             <!-- Products -->
                             <h4 class="sr-only">Items</h4>
-                            <ul role="list" class="divide-y divide-gray-200">
+                            <ul role="list" class="divide-y divide-gray-200 hidden" :id="order.id">
                                 <li v-for="product in order.skus" :key="product.id" class="p-4 sm:p-6">
                                     <div class="flex items-center sm:items-start">
                                         <div
@@ -112,8 +143,9 @@ function showProducts(orderId) {
                                         <div class="flex items-center" v-if="order.order_status === 'delivered'">
                                             <CheckCircleIcon class="h-5 w-5 text-green-500" aria-hidden="true" />
                                             <p class="ml-2 text-sm font-medium text-gray-500">
-                                                Delivered<time :datetime="order.deliveredDatetime" v-if="order.delivery_date"> on {{
-                                                    order.deliveredDate }}</time>
+                                                Delivered<time :datetime="order.deliveredDatetime"
+                                                    v-if="order.delivery_date"> on {{
+                                                        order.deliveredDate }}</time>
                                             </p>
                                         </div>
                                         <div class="flex items-center" v-else>
@@ -122,10 +154,13 @@ function showProducts(orderId) {
                                                 {{ order.order_status }}
                                             </p>
                                         </div>
-
                                         <div
                                             class="mt-6 flex items-center space-x-4 divide-x divide-gray-200 border-t border-gray-200 pt-4 text-sm font-medium sm:ml-4 sm:mt-0 sm:border-none sm:pt-0">
-                                            <div class="flex flex-1 justify-center">
+                                            <div class="flex flex-1 justify-center gap-4">
+                                                <button
+                                                    @click="openReturn = true; selectedProduct = product; selectedOrder = order"
+                                                    class="whitespace-nowrap text-indigo-600 hover:text-indigo-500">Return
+                                                    the item</button>
                                                 <Link :href="`/product/${product.sku}`"
                                                     class="whitespace-nowrap text-indigo-600 hover:text-indigo-500">View
                                                 product</Link>

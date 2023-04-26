@@ -33,7 +33,6 @@ const currentPath = window.location.pathname;
 const showAddressModal = ref(false)
 
 subNavigation.forEach((item) => {
-    console.log(item.href, currentPath)
     if (item.href === currentPath) {
         item.current = true
     }
