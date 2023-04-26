@@ -33,6 +33,9 @@ const selectedSize = ref("")
 const amount = ref(1)
 
 function submit() {
+  let quantity = amount.value
+  console.log(quantity)
+
   if (props.product.attribute_values.length === 0) {
     fetch('/cart', {
       method: 'POST',
@@ -45,7 +48,7 @@ function submit() {
       })
     })
       .then(response => {
-        if (response.status == 200) {
+        if (response.status === 200) {
           console.log("success")
           checkout.value = true
           emit('checkout')
@@ -74,7 +77,7 @@ function submit() {
       })
     })
       .then(response => {
-        if (response.status == 200) {
+        if (response.status === 200) {
           console.log("success")
           checkout.value = true
           emit('checkout')

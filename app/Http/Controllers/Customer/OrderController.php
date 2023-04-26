@@ -9,6 +9,7 @@ use App\Mail\OrderShipped;
 use App\Models\Address;
 use App\Models\Cart;
 use App\Models\Order;
+use App\Models\Sku;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use Inertia\Inertia;
@@ -28,18 +29,19 @@ class OrderController extends Controller
         $order = Order::create($request->validated());
 
         foreach ($request->skus as $sku) {
-            ray($sku);
             $product_name = $sku['sku']['product']['title'];
-            $order->skus()->attach($sku['id'], [
+            $order->skus()->attach($sku['sku_id'], [
                 'amount' => $sku['amount'],
                 'product_name' => $product_name,
                 'price' => $sku['sku']['price_incl_vat'],
             ]);
+
+            Sku::where('id', $sku['sku_id'])->decrement('amount', $sku['amount']);
         }
 
         Cart::where('user_id', auth()->user()->id)->delete();
 
-        Mail::to($order->user->email)->send(new OrderPlaced($order));
+//        Mail::to($order->user->email)->send(new OrderPlaced($order));
 
         return Inertia::render('Customer/Checkout/Detail', [
             'order' => $order,

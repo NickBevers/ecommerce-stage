@@ -38,19 +38,13 @@ class CartController extends Controller
         if ($cart) {
             $cart->amount = $cart->amount + $request->amount;
             $cart->save();
-
-            return response()->json([
-                'status' => 'success',
-                'message' => 'Product added to cart',
-                'count' => $this->getAmountOfItemsInCart(),
+        } else {
+            Cart::create([
+                'user_id' => auth()->user()->id,
+                'sku_id' => $request->sku_id,
+                'amount' => $request->amount,
             ]);
         }
-
-        Cart::create([
-            'user_id' => auth()->user()->id,
-            'sku_id' => $request->sku_id,
-            'amount' => $request->amount,
-        ]);
 
         return response()->json([
             'status' => 'success',
