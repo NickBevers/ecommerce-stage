@@ -1,7 +1,7 @@
 <script setup>
 import { StarIcon, ChevronUpIcon } from '@heroicons/vue/20/solid'
 import { HeartIcon } from '@heroicons/vue/24/outline'
-import { router } from '@inertiajs/vue3'
+import { router, usePage } from '@inertiajs/vue3'
 import { AddReviewModal } from '@/Components/Customer';
 import { ref } from 'vue'
 
@@ -10,6 +10,9 @@ const props = defineProps({
   sku: String,
   userHasBought: Boolean,
 })
+
+const user = usePage().props.auth.user.id
+
 let openReview = ref(false)
 
 function updateReviews(data) {
@@ -81,7 +84,8 @@ function downvote(review) {
                 </div>
                 <div class="mt-4 space-y-6 text-base italic text-gray-600" v-html="review.body" />
               </div>
-              <div class="flex items-center gap-4">
+
+              <div class="flex items-center gap-4" v-if="user != review.user_id">
                 <button type="button" @click="upvote(review)" v-if="!review.userLikes"
                   class="rounded-full bg-indigo-400 p-1 px-4 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
                   {{ review.upvotes }}
