@@ -21,8 +21,6 @@ class ProductReturnController extends Controller
 
     public function store(ProductReturnRequest $request)
     {
-        ray($request->all());
-        ray($request->amount);
         $return = ProductReturn::create([
             'user_id' => Auth::user()->id,
             'order_id' => $request->order_id,
@@ -30,8 +28,6 @@ class ProductReturnController extends Controller
             'amount' => $request->amount,
             'reason' => $request->reason,
         ]);
-        ray($return);
-
 
         return redirect()->route('returns.show', $return->id);
     }
