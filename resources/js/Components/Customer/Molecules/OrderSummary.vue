@@ -9,7 +9,6 @@ const props = defineProps({
   },
 })
 
-console.log(props.total)
 </script>
 <template>
   <section aria-labelledby="summary-heading"

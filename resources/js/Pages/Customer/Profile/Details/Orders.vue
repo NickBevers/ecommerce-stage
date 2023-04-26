@@ -11,7 +11,7 @@ import {
     PopoverGroup,
     PopoverPanel,
 } from '@headlessui/vue'
-import {EllipsisVerticalIcon, HomeIcon, MagnifyingGlassIcon, ShoppingBagIcon} from '@heroicons/vue/24/outline'
+import { EllipsisVerticalIcon, HomeIcon, MagnifyingGlassIcon, ShoppingBagIcon } from '@heroicons/vue/24/outline'
 import { CheckCircleIcon, ChevronDownIcon, ChevronUpIcon } from '@heroicons/vue/20/solid'
 import { Link } from '@inertiajs/vue3'
 import { ref } from 'vue'
@@ -65,7 +65,7 @@ function isClicked(orderId) {
                 <h2 id="recent-heading" class="sr-only">Recent orders</h2>
                 <div class="mx-auto max-w-7xl">
                     <div class="mx-auto space-y-8 sm:px-4 lg:px-0 w-full" v-if="props.orders.length > 0">
-                        <div v-for="order in props.orders" :key="order.id" @click="showProducts(order.id)"
+                        <div v-for="order in props.orders" :key="order.id"
                             class="border-b border-t border-gray-200 bg-white shadow-sm sm:rounded-lg sm:border cursor-pointer">
                             <h3 class="sr-only">
                                 Order placed on <time :datetime="order.order_date">{{ order.order_date }}</time>
@@ -173,11 +173,14 @@ function isClicked(orderId) {
                     </div>
 
                     <div v-else>
-                        <div class="flex flex-col items-center justify-center h-64 p-4 sm:p-8 bg-white shadow sm:rounded-lg">
+                        <div
+                            class="flex flex-col items-center justify-center h-64 p-4 sm:p-8 bg-white shadow sm:rounded-lg">
                             <div class="flex flex-col items-center justify-center">
                                 <HomeIcon class="h-20 w-20 text-gray-500" aria-hidden="true" />
-                                <h1 class="text-xl font-bold text-gray-500 mt-4">You have no orders yet. <br> Make your first one now!</h1>
-                                <button  class="mt-4 px-4 py-2 bg-indigo-500 text-white rounded-md hover:bg-indigo-600">Take me there!</button>
+                                <h1 class="text-xl font-bold text-gray-500 mt-4">You have no orders yet. <br> Make your
+                                    first one now!</h1>
+                                <button class="mt-4 px-4 py-2 bg-indigo-500 text-white rounded-md hover:bg-indigo-600">Take
+                                    me there!</button>
                             </div>
                         </div>
                     </div>
