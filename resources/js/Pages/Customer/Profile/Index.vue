@@ -9,6 +9,7 @@ import {
     ShoppingBagIcon,
     UserCircleIcon,
     CogIcon,
+    HomeIcon,
 } from '@heroicons/vue/24/outline'
 import {XMarkIcon} from "@heroicons/vue/20/solid";
 import { ref } from "vue";
@@ -66,15 +67,21 @@ function handleNewAddress(address) {
                 <aside class="px-2 py-6 sm:px-6 lg:col-span-3 lg:px-0 lg:py-0 w-40">
                     <nav class="space-y-1">
                         <Link v-for="item in subNavigation" :key="item.name" :href="item.href"
-                            :class="[item.current ? 'bg-gray-50 text-indigo-600' : 'text-gray-900 hover:bg-gray-50 hover:text-gray-900', 'group flex items-center rounded-md px-3 py-2 text-sm font-medium']"
-                            :aria-current="item.current ? 'page' : undefined">
-                        <component :is="item.icon"
-                            :class="[item.current ? 'text-indigo-500' : 'text-gray-400 group-hover:text-gray-500', '-ml-1 mr-3 h-6 w-6 flex-shrink-0']"
-                            aria-hidden="true" />
-                        <span class="truncate">{{ item.name }}</span>
+                              :class="[item.current ? 'bg-gray-50 text-indigo-600' : 'text-gray-900 hover:bg-gray-50 hover:text-gray-900', 'group flex items-center rounded-md px-3 py-2 text-sm font-medium']"
+                              :aria-current="item.current ? 'page' : undefined">
+                            <component :is="item.icon"
+                                       :class="[item.current ? 'text-indigo-500' : 'text-gray-400 group-hover:text-gray-500', '-ml-1 mr-3 h-6 w-6 flex-shrink-0']"
+                                       aria-hidden="true" />
+                            <span class="truncate">{{ item.name }}</span>
                         </Link>
                     </nav>
                 </aside>
+<!--                <div v-if="currentPath === '/profile'" class="px-2 py-6 sm:px-6 lg:col-span-6 lg:px-0 lg:py-0">-->
+<!--                    <UpdateProfileInformationForm user_type="customer" />-->
+<!--                </div>-->
+<!--                <slot v-else>-->
+
+<!--                </slot>-->
                 <div v-if="currentPath === '/profile'" class="px-2 py-6 sm:px-6 lg:col-span-6 lg:px-0 lg:py-0">
                     <div class="p-4 sm:p-8 bg-white shadow sm:rounded-lg w-full">
                         <UpdateProfileInformationForm user_type="customer" />
@@ -86,7 +93,7 @@ function handleNewAddress(address) {
                             <h1 class="text-2xl font-bold tracking-tight text-gray-900 sm:text-3xl">Your addresses</h1>
                             <p class="mt-2 text-sm text-gray-500"> add or remove addresses.</p>
                         </div>
-                        <div class="mt-4 grid grid-cols-1 gap-y-6 sm:grid-cols-2 sm:gap-x-4">
+                        <div class="mt-4 grid grid-cols-1 gap-y-6 sm:grid-cols-2 sm:gap-x-4" v-if="props.addresses && props.addresses.length > 0">
                             <div v-for="(address, index) in props.addresses">
                                 <div class="relative flex rounded-lg border bg-white p-4 shadow-sm focus:outline-none">
                                     <span class="flex flex-1">
@@ -103,6 +110,16 @@ function handleNewAddress(address) {
                                 </div>
                             </div>
                         </div>
+
+                        <div v-else>
+                            <div class="flex flex-col items-center justify-center h-96">
+                                <div class="flex flex-col items-center justify-center">
+                                    <HomeIcon class="h-20 w-20 text-gray-500" aria-hidden="true" />
+                                    <h1 class="text-xl font-bold text-gray-500 mt-8">Add your first address now!</h1>
+                                </div>
+                            </div>
+                        </div>
+
                         <div @click="showAddressModal = true"
                              class="relative flex cursor-pointer rounded-lg border border-indigo-200 bg-indigo-50 p-4 focus:outline-none text-indigo-700 mt-8">
                                 <span class="flex flex-1 self-center">
@@ -114,9 +131,9 @@ function handleNewAddress(address) {
                         </div>
                     </div>
                 </div>
-                <div v-else>
 
-                </div>
+                <slot v-else>
+                </slot>
             </div>
         </main>
     </GuestLayout>

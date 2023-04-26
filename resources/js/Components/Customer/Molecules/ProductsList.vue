@@ -14,7 +14,7 @@ console.log(props.skus);
 </script>
 <template>
   <div class="bg-white">
-    <div class="mx-auto max-w-2xl py-6 px-4 sm:py-6 sm:px-6 lg:max-w-7xl lg:px-8">
+    <div class="mx-auto max-w-2xl py-6 px-4 sm:py-6 sm:px-6 lg:max-w-7xl lg:px-8" v-if="props.skus.length > 0">
       <div class="grid grid-cols-1 gap-y-12 sm:grid-cols-2 sm:gap-x-6 lg:grid-cols-4 xl:gap-x-8">
         <div v-for="product in props.skus" :key="product.id" class="mt-8" :id="product.id">
           <Link :to="'/product/' + product.sku" :href="'/product/' + product.sku">
@@ -54,6 +54,17 @@ console.log(props.skus);
       <div class="mt-4 flex sm:justify-center" v-if="props.links.length > 3">
         <Pagination :links="props.links" />
       </div>
+    </div>
+    <div v-else>
+        <div class="flex flex-col items-center justify-center h-96">
+            <div class="flex flex-col items-center justify-center">
+              <img src="/assets/search.svg" alt="empty" class="w-1/3" />
+              <h1 class="text-2xl font-bold text-gray-500">Sorry, no products were found</h1>
+                <Link href="/">
+                  <button class="mt-4 px-4 py-2 bg-indigo-500 text-white rounded-md hover:bg-indigo-600">Take me home!</button>
+                </Link>
+            </div>
+        </div>
     </div>
   </div>
 </template>

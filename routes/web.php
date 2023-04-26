@@ -52,6 +52,9 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::patch('/admin/users/{user}', [ProfileController::class, 'updateUserLevel'])->name('profile.updateUserLevel');
 
     // Admin Order Routes
+    Route::get('/admin/orders', [AdminOrderController::class, 'index'])->name('admin.orders.index');
+    Route::get('/admin/orders/{order}', [AdminOrderController::class, 'show'])->name('admin.orders.show');
+    Route::get('/admin/sales-today', [AdminOrderController::class, 'getSalesToday'])->name('admin.sales-today');
     Route::post('/admin/orders/{order}', [AdminOrderController::class, 'update'])->name('admin.orders.update');
     Route::patch('/admin/orders/product/{order}', [AdminOrderController::class, 'updateOrderLine'])->name('admin.orders.updateOrderLine');
     Route::delete('/admin/orders/product/{order}', [AdminOrderController::class, 'deleteOrderLine'])->name('admin.orders.deleteOrderLine');
@@ -79,10 +82,6 @@ Route::middleware(['auth', 'admin'])->group(function () {
     // Admin User Routes
     Route::get('/admin/customers', [AdminUserController::class, 'index'])->name('admin.customers.index');
 
-    // Admin Order Routes
-    Route::get('/admin/orders', [AdminOrderController::class, 'index'])->name('admin.orders.index');
-    Route::get('/admin/orders/{order}', [AdminOrderController::class, 'show'])->name('admin.orders.show');
-    Route::get('/admin/sales-today', [AdminOrderController::class, 'getSalesToday'])->name('admin.sales-today');
 
     // Admin Promo Routes
     Route::get('/promos/create', [PromoController::class, 'create'])->name('promos.create');

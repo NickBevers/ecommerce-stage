@@ -123,8 +123,7 @@ function submit() {
         <RadioGroup v-model="selectedSize" class="mt-2">
           <RadioGroupLabel class="sr-only"> Choose a size </RadioGroupLabel>
           <div class="grid grid-cols-7 gap-2">
-            <RadioGroupOption as="template" v-for="size in props.product.attribute_values" :key="size.name" :value="size"
-              v-slot="{ active, checked }">
+            <RadioGroupOption as="template" v-for="size in props.product.attribute_values" :key="size.name" :value="size" v-slot="{ active, checked }" class="cursor-pointer">
               <div
                 :class="[active ? 'ring-2 ring-indigo-500 ring-offset-2' : '', checked ? 'border-transparent bg-indigo-600 text-white hover:bg-indigo-700' : 'border-gray-200 bg-white text-gray-900 hover:bg-gray-50', 'flex items-center justify-center rounded-md border py-3 px-3 text-sm font-medium uppercase sm:flex-1', size.attribute_type_id !== 1 ? 'hidden' : '']">
                 <RadioGroupLabel as="span">

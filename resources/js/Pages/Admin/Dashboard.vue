@@ -1,6 +1,6 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
-import {CurrencyEuroIcon, ShoppingBagIcon, ShoppingCartIcon} from "@heroicons/vue/24/outline";
+import {CurrencyEuroIcon, HomeIcon, ShoppingBagIcon, ShoppingCartIcon} from "@heroicons/vue/24/outline";
 import {Pagination, ProductTable, Stats, Toggle} from '@/Components/Admin';
 import {Head, Link} from '@inertiajs/vue3';
 import { ref } from "vue";
@@ -18,12 +18,24 @@ const skus = ref([])
 fetch('/admin/sales-today')
     .then((response) => response.json())
     .then((data) => {
-        console.log(data.skus)
+        console.log(data)
         skus.value = data.skus
         Object.keys(data).forEach((key) => {
             if (! stats.value[key]) return
             stats.value[key].stat = data[key]
         })
+
+        // calculate difference in orderAmount in %
+        stats.value.orderAmount.change = ((data.orderAmount - data.orderAmountYesterday) / data.orderAmountYesterday * 100).toFixed(1) + '%' || '';
+        stats.value.orderAmount.changeType = stats.value.orderAmount.change > 0 ? 'increase' : 'decrease';
+
+        // calculate difference in skusSold in %
+        stats.value.skusSold.change = ((data.skusSold - data.skusSoldYesterday) / data.skusSoldYesterday * 100).toFixed(1) + '%' || '';
+        stats.value.skusSold.changeType = stats.value.skusSold.change > 0 ? 'increase' : 'decrease';
+
+        // calculate difference in amount in %
+        stats.value.amount.change = ((data.amount - data.amountYesterday) / data.amountYesterday * 100).toFixed(1) + '%' || '';
+        stats.value.amount.changeType = stats.value.amount.change > 0 ? 'increase' : 'decrease';
     })
 
 </script>
@@ -34,10 +46,10 @@ fetch('/admin/sales-today')
         <div class="py-2">
             <div class="max-w-7xl mx-auto sm:px-6 px-4 lg:px-8">
                 <Stats class="py-12" :stats="stats"/>
-                <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg" v-if="skus.length > 0">
                     <div class="p-6 pb-0 text-gray-900">Products sold today!</div>
                     <div class="overflow-hidden px-4 py-5 rounded-lg bg-white shadow">
-                        <div class="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8">
+                        <div class="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8" >
                             <div class="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
                                 <table class="min-w-full divide-y divide-gray-300">
                                     <thead>
@@ -66,6 +78,15 @@ fetch('/admin/sales-today')
                                     </tbody>
                                 </table>
                             </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div v-else>
+                    <div class="flex flex-col items-center justify-center h-64 p-4 sm:p-8 bg-white shadow sm:rounded-lg">
+                        <div class="flex flex-col items-center justify-center">
+                            <ShoppingBagIcon class="h-20 w-20 text-gray-500" aria-hidden="true" />
+                            <h1 class="text-xl font-bold text-gray-500 mt-4">There haven't been any orders today (yet)</h1>
                         </div>
                     </div>
                 </div>

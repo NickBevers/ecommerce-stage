@@ -324,13 +324,8 @@ function selectCategory(category_id) {
                             </div>
 
                             <div class="flex flex-1 items-center justify-end">
-                                <a href="#"
-                                    class="hidden text-sm font-medium text-gray-700 hover:text-gray-800 lg:block">Search</a>
-
+<!--                                <a href="#" class="hidden text-sm font-medium text-gray-700 hover:text-gray-800 lg:block">Search</a>-->
                                 <div class="flex items-center lg:ml-8">
-
-
-
                                     <div class="flow-root lg:ml-8">
                                         <UserIconModal class="group -m-2 flex items-center" :user="$page.props.auth.user" />
                                     </div>
