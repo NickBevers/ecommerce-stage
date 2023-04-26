@@ -177,22 +177,43 @@ class SkuController extends Controller
 
     public function update(SkuValidationRequest $request, Sku $sku)
     {
-        $productData = new ProductValidationRequest($request->only(['title', 'description', 'audience', 'brand_id', 'sub_category_id', 'product_type', 'extra_info']));
-        $product = $this->productService->update($productData, $sku->product_id);
-
-        $sku->productImages()->delete();
-        $this->uploadSkuImageService->upload($request->input('images'), $sku->id);
-
-        $vat = Vat::where('id', $request->input('vat_id'))->first();
-        $sku->update([ 'sku' => $request->input('sku'), 'price_excl_vat' => $request->input('price'), 'price_incl_vat' => $request->input('price') * (1 + $vat->vat_percentage / 100) , 'amount' => $request->input('amount')]);
-
-        $sku->attributeValues()->detach();
-        foreach ($request->input('attributes') as $attribute) {
-            $attributeValue = AttributeValue::where('name', $attribute)->first();
-            $sku->attributeValues()->attach($attributeValue);
+        if ($request->has('product')) {
+            $product = $request->input('product');
+            $productData = new ProductValidationRequest($product->only(['title', 'description', 'audience', 'brand_id', 'sub_category_id', 'product_type', 'extra_info']));
+            $this->productService->update($productData, $sku->product_id);
         }
 
-        return redirect()->route('admin.products.index')->with('success', 'Product updated successfully');
+        if ($request->has('images')) {
+            $sku->productImages()->delete();
+            $this->uploadSkuImageService->upload($request->input('images'), $sku->id);
+        }
+
+        if ($request->has('attributes')) {
+            $sku->attributeValues()->detach();
+            foreach ($request->input('attributes') as $attribute) {
+                $attributeValue = AttributeValue::where('name', $attribute)->first();
+                $sku->attributeValues()->attach($attributeValue);
+            }
+        }
+
+        $sku->sku = $request->input('sku');
+        $vat = Vat::where('id', $sku->vat_id)->first();
+        $sku->price_excl_vat = $request->input('price');
+        $sku->price_incl_vat = $request->input('price') * (1 + floatval($vat->vat_rate) / 100);
+        $sku->amount = $request->input('amount');
+        $sku->is_active = $request->input('is_active');
+        $sku->save();
+
+
+
+        return Inertia::render('Admin/Products/Index', [
+            'skus' => Sku::withAllRelations()
+                ->orderBy('created_at', 'desc')
+                ->paginate(10),
+            'attributeValues' => AttributeValue::all(),
+            'minPrice' => Sku::min('price_incl_vat'),
+            'maxPrice' => Sku::max('price_incl_vat'),
+        ]);
     }
 
     public function destroy(Sku $sku)
