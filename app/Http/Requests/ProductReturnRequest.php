@@ -16,7 +16,7 @@ class ProductReturnRequest extends FormRequest
         return [
             'order_id' => 'required',
             'sku_id' => 'required',
-            'amount' => 'required',
+            'amount' => 'numeric',
             'reason' => 'required',
         ];
     }

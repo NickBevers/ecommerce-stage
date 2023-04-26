@@ -21,11 +21,17 @@ class ProductReturnController extends Controller
 
     public function store(ProductReturnRequest $request)
     {
-        $request->merge([
+        ray($request->all());
+        ray($request->amount);
+        $return = ProductReturn::create([
             'user_id' => Auth::user()->id,
+            'order_id' => $request->order_id,
+            'sku_id' => $request->sku_id,
+            'amount' => $request->amount,
+            'reason' => $request->reason,
         ]);
+        ray($return);
 
-        $return = ProductReturn::create($request->all());
 
         return redirect()->route('returns.show', $return->id);
     }

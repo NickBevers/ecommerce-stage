@@ -12,7 +12,7 @@ return new class extends Migration {
             $table->foreignId('user_id')->nullable()->constrained()->onDelete('set null');
             $table->foreignId('order_id')->constrained();
             $table->foreignId('sku_id')->nullable()->constrained()->onDelete('set null');
-            $table->integer('amount');
+            $table->integer('amount')->default(1);
             $table->String('reason');
             $table->String('status')->default('awaiting shipment');
             $table->String('tracking_number')->nullable();

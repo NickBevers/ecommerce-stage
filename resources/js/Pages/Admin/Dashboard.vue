@@ -28,14 +28,18 @@ fetch('/admin/sales-today')
         // calculate difference in orderAmount in %
         stats.value.orderAmount.change = ((data.orderAmount - data.orderAmountYesterday) / data.orderAmountYesterday * 100).toFixed(1) + '%' || '';
         stats.value.orderAmount.changeType = stats.value.orderAmount.change > 0 ? 'increase' : 'decrease';
+        if (stats.value.orderAmount.change === 'NaN%') stats.value.orderAmount.change = '0%'
+        if (stats.value.orderAmount.change === 'Infinity%') stats.value.orderAmount.change = `${data.orderAmount * 100}%`; stats.value.orderAmount.changeType = 'increase'
 
         // calculate difference in skusSold in %
         stats.value.skusSold.change = ((data.skusSold - data.skusSoldYesterday) / data.skusSoldYesterday * 100).toFixed(1) + '%' || '';
+        if (stats.value.skusSold.change === 'NaN%') stats.value.skusSold.change = '0%'; stats.value.skusSold.changeType = 'neutral'
         stats.value.skusSold.changeType = stats.value.skusSold.change > 0 ? 'increase' : 'decrease';
 
         // calculate difference in amount in %
         stats.value.amount.change = ((data.amount - data.amountYesterday) / data.amountYesterday * 100).toFixed(1) + '%' || '';
         stats.value.amount.changeType = stats.value.amount.change > 0 ? 'increase' : 'decrease';
+        if (stats.value.amount.change === 'Infinity%') stats.value.amount.change = `${data.amount * 100}%`; stats.value.amount.changeType = 'increase'
     })
 
 </script>
