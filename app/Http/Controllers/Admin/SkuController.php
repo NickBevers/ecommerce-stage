@@ -164,10 +164,15 @@ class SkuController extends Controller
             ->withAllRelations()
             ->first();
 
+            $categories = Category::all();
+            foreach ($categories as $category) {
+                $category->subCategories = $this->subCategoryService->getSubCategoriesByCategory($category);
+            }
+
         return Inertia::render('Admin/Products/Edit', [
             'skus' => $sku,
             'brands' => $this->brandService->getBrands(),
-            'categories' => Category::all(),
+            'categories' => $categories,
             'attributeTypes' => AttributeType::all(),
             'sizes' => $this->attributeValueService->getValuesByType("size"),
             'colors' => $this->attributeValueService->getValuesByType("color"),
