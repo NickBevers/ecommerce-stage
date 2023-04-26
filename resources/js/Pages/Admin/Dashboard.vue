@@ -39,7 +39,7 @@ fetch('/admin/sales-today')
         // calculate difference in amount in %
         stats.value.amount.change = ((data.amount - data.amountYesterday) / data.amountYesterday * 100).toFixed(1) + '%' || '';
         stats.value.amount.changeType = stats.value.amount.change > 0 ? 'increase' : 'decrease';
-        if (stats.value.amount.change === 'Infinity%') stats.value.amount.change = `${data.amount * 100}%`; stats.value.amount.changeType = 'increase'
+        if (stats.value.amount.change === 'Infinity%') stats.value.amount.change = `${(data.amount * 100).toFixed(2)}%`; stats.value.amount.changeType = 'increase'
     })
 
 </script>
