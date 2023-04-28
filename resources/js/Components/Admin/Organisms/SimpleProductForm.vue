@@ -39,6 +39,7 @@ let selectedHeadCategory = ref(0);
 let selectedSubCategory = ref(null);
 let attributeError = ref("");
 let imageError = ref("");
+let skuError = ref("");
 
 function updateImages(images) {
     form.variations[0].images = images
@@ -110,7 +111,21 @@ function submit() {
         return;
     }
 
-    form.post(route('admin.products.store'))
+    form.post(route('admin.products.store'), {
+        onSuccess: () => {
+            // show success message
+            console.log("success");
+        },
+        onError: (errors) => {
+            // show error message
+            console.log(errors);
+            console.log(errors[Object.keys(errors)[0]]);
+            skuError.value = errors[Object.keys(errors)[0]];
+            setTimeout(() => {
+                skuError.value = "";
+            }, 3000);
+        }
+    });
 }
 </script>
 <template>
@@ -169,10 +184,10 @@ function submit() {
                             </div>
                             <div class="col-span-2 sm:col-span-2">
                                 <InputLabel for="sku" value="SKU" />
-                                <div class="mt-1 flex rounded-md shadow-sm">
+                                <div class="mt-1 flex flex-col rounded-md shadow-sm">
                                     <TextInput id="sku" type="text" class="mt-1 block w-full pl-3" name="SKU"
                                         v-model="form.variations[0].sku" required autocomplete="SKU" placeholder="SKU" />
-                                    <InputError class="mt-2" :message="form.variations.error" />
+                                    <InputError class="mt-2" :message="skuError" />
                                 </div>
                             </div>
 
@@ -191,9 +206,9 @@ function submit() {
                                 <InputLabel for="stock" value="Stock" />
                                 <div class="mt-2 flex rounded-md shadow-sm">
                                     <TextInput id="stock" type="number" class="mt-1 block w-full pl-3" name="amount"
-                                        pattern="^\d*(\.\d{0,2})?$" step="0.01" v-model="form.variations[0].amount" required
+                                        pattern="^\d*(\.\d{0,2})?$" step="1" v-model="form.variations[0].amount" required
                                         autocomplete="title" placeholder="100" />
-                                    <InputError class="mt-2" :message="form.variations.error" />
+                                    <span v-if="skuError.length > 0" class="text-red-500 -mt-4"> {{ attributeError }} </span>
                                 </div>
                             </div>
                         </div>

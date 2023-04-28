@@ -94,7 +94,18 @@ class SkuController extends Controller
         $product = $this->productService->store($productRequest);
 
         foreach ($request->input('variations') as $variation) {
-            $skuTemp = Sku::where('sku', $request->input('sku'))->first();
+            ray($variation['sku']);
+            $skuTemp = Sku::where('sku', $variation['sku'])->first();
+            if ($skuTemp) {
+                return $request->validate([
+                    'variations.*.sku' => 'unique:skus,sku',
+                ],
+                [
+                    'variations.*.sku.unique' => 'The sku has already been taken.',
+                ]);
+            }
+
+            ray($skuTemp);
 
             $vat = Vat::where('id', $request->input('vat_id'))->first();
             $sku = Sku::create([
