@@ -38,6 +38,7 @@ let form = useForm({
         attributes: [
          
         ],
+        images: props.skus.product_images,
     }
 });
 
@@ -227,7 +228,7 @@ console.log(props.skus);
 
                 </div>
             </form>
-            <form class="max-w-7xl mx-auto sm:px-6 lg:px-8 my-5">
+            <form class="max-w-7xl mx-auto sm:px-6 lg:px-8 my-5" v-if="props.skus.attribute_values.length > 0">
                 <div class="bg-white px-4 py-5 shadow sm:rounded-lg mb-4 sm:p-6 ">
                     <div class="md:grid md:grid-cols-3 md:gap-6">
                         <div class="md:col-span-1">
@@ -264,6 +265,44 @@ console.log(props.skus);
                                         :selected="props.skus.attribute_values[2].name"
                                         />
                                 </div>
+                            </div>
+                        </div>
+                        
+                           
+                     
+                    
+                         
+                        </div>
+                    </div>
+   
+                </div>
+            </form>
+            <form class="max-w-7xl mx-auto sm:px-6 lg:px-8 my-5">
+                <div class="bg-white px-4 py-5 shadow sm:rounded-lg mb-4 sm:p-6 ">
+                    <div class="md:grid md:grid-cols-3 md:gap-6">
+                        <div class="md:col-span-1">
+                            <h3 class="text-base font-semibold leading-6 text-gray-900">Images
+                            </h3>
+                            <p class="mt-1 text-sm text-gray-500">This information will be displayed publicly so be careful
+                                what you share.</p>
+                        </div>
+                        <div class="mt-5 space-y-6 md:col-span-2 md:mt-0">
+                    
+                        
+                       
+                            <div class="col-span-6 sm:col-span-6">
+                       
+                            <div class="flex flex-row gap-6 flex-wrap">
+                              <!-- <UploadFile :images="form.variations[0].images" :index="0" /> -->
+                                   <!-- <div class="flex gap-6 flex-wrap">
+                                        <div v-for="(preview, imageIndex) in form.variations[0].images" :key="imageIndex" class="relative">
+                                            <div class="bg-indigo-600 p-0.5 cursor-pointer absolute right-0 top-0 rounded-bl-md rounded-tr-md"
+                                                @click="removeImage(imageIndex)">
+                                                <XMarkIcon class="h-6 w-6 text-white" />
+                                            </div>
+                                            <img :src="preview.url" alt="Uploaded Image" class="mx-auto h-24 rounded-md w-24 object-cover" />
+                                        </div>
+                                    </div> -->
                             </div>
                         </div>
                         
