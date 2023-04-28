@@ -1,5 +1,5 @@
 <script setup>
-import {ref, reactive, watch, onMounted, capitalize} from 'vue'
+import { ref, reactive, watch, onMounted, capitalize } from 'vue'
 import { InputLabel, TextInput, Dropdown, PrimaryButton, UploadFile, InputError, SearchDropdown } from '@/Components/Admin'
 import { Link, useForm } from '@inertiajs/vue3';
 import {
@@ -9,7 +9,7 @@ import {
     PopoverPanel,
 } from '@headlessui/vue'
 import { ChevronDownIcon, XMarkIcon } from '@heroicons/vue/20/solid'
-import {string} from "postcss-selector-parser";
+import { string } from "postcss-selector-parser";
 function onSelectedOption(option) {
     form.brand_id = option.id
 }
@@ -22,6 +22,8 @@ const props = defineProps({
     colorVar: Boolean,
     materialVar: Boolean,
 });
+
+console.log(props.categories)
 
 let checkedFilters = reactive([])
 let submitImage = ref(false)
@@ -118,7 +120,7 @@ function updateSubCategories() {
     selectedHeadCategory.value = selectedHeadCategoryIndex.value.id - 1
 }
 
-function handleVariationCreation(){
+function handleVariationCreation() {
     if (generated) {
         return
     }
@@ -137,7 +139,7 @@ function handleVariationCreation(){
         variation.attributes = [];
         props.attributeTypes.forEach((attribute) => {
             if (variation[attribute.name]) {
-                variation.attributes.push({[attribute.name]: variation[attribute.name]})
+                variation.attributes.push({ [attribute.name]: variation[attribute.name] })
                 variation[attribute.name] = undefined
             }
         })
@@ -146,7 +148,7 @@ function handleVariationCreation(){
 
 function generateVariations(currentCombination, index) {
     const valueArray = checkedFilters.map((filter) => Object.values(filter)[0]);
-    if (index !== valueArray.length){
+    if (index !== valueArray.length) {
         for (let i = 0; i < valueArray[index].length; i++) {
             const newCombination = { ...currentCombination };
             newCombination[Object.keys(checkedFilters[index])[0]] = valueArray[index][i];
@@ -206,19 +208,19 @@ function updateVariationAttribute(attribute) {
     }
 }
 
-function applyAttribute(type, value){
+function applyAttribute(type, value) {
     variations.value.forEach((variation) => {
         const index = variation.attributes.findIndex(item => Object.keys(item)[0] === type)
         if (index !== -1) {
             variation.attributes[index][type] = value
         } else {
             // if it doesn't exist add it
-            variation.attributes.push({[type]: value})
+            variation.attributes.push({ [type]: value })
         }
     })
 }
 
-function getAttribute(variation, attributeType){
+function getAttribute(variation, attributeType) {
     const index = variation.attributes.findIndex(item => Object.keys(item)[0] === Object.keys(attributeType)[0])
     if (index !== -1) {
         return Object.values(variation.attributes[index])[0]
@@ -226,14 +228,14 @@ function getAttribute(variation, attributeType){
     return null
 }
 
-function handlePrice(e){
+function handlePrice(e) {
     if (e.target.value === "" || e.target.value === null || e.target.value === undefined || e.target.value === " ") {
         e.target.value = 0.00
     }
 
     isNaN(e.target.value)
-    ?e.target.value = 0.00
-    :e.target.value = parseFloat(e.target.value).toFixed(2)
+        ? e.target.value = 0.00
+        : e.target.value = parseFloat(e.target.value).toFixed(2)
 }
 
 function submit() {
@@ -315,15 +317,18 @@ function submit() {
                                 <InputLabel for="variation">Make variations based on</InputLabel>
                                 <div class="flex flex-row">
                                     <div v-for="attribute in props.attributeTypes" class="mr-6">
-                                        <input type="checkbox" class="mr-1" :value="attribute.name" @click="updateVariationAttribute(attribute.name)">
+                                        <input type="checkbox" class="mr-1" :value="attribute.name"
+                                            @click="updateVariationAttribute(attribute.name)">
                                         <label>{{ attribute.name }}</label>
                                     </div>
                                 </div>
                             </div>
 
-                            <div class="flex mt-auto mb-auto rounded-md bg-indigo-600 py-2 px-3 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
-                                <p @click="() => { variations.value = []; handleVariationCreation() }" class="cursor-pointer">Make my variations</p>
-<!--                                <p @click="generateVariations({}, 0)">Make my variations</p>-->
+                            <div
+                                class="flex mt-auto mb-auto rounded-md bg-indigo-600 py-2 px-3 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+                                <p @click="() => { variations.value = []; handleVariationCreation() }"
+                                    class="cursor-pointer">Make my variations</p>
+                                <!--                                <p @click="generateVariations({}, 0)">Make my variations</p>-->
                             </div>
                         </div>
                         <div class="flex flex-row gap-3 no-spacing">
@@ -350,15 +355,15 @@ function submit() {
                                                 leave-active-class="transition ease-in duration-75"
                                                 leave-from-class="transform opacity-100 scale-100"
                                                 leave-to-class="transform opacity-0 scale-95">
-                                                <PopoverPanel class="absolute right-0 z-10 mt-2 origin-top-right rounded-md bg-white p-4 shadow-2xl ring-1 ring-black ring-opacity-5 focus:outline-none max-h-60 overflow-y-auto">
+                                                <PopoverPanel
+                                                    class="absolute right-0 z-10 mt-2 origin-top-right rounded-md bg-white p-4 shadow-2xl ring-1 ring-black ring-opacity-5 focus:outline-none max-h-60 overflow-y-auto">
                                                     <div class="space-y-4">
                                                         <div v-for="item in attribute.attributeValues" :key="item.id"
                                                             class="flex items-center">
                                                             <input :id="`filter-${item.id}`" :name="`${item.id}`"
                                                                 :value="item.name" type="checkbox"
                                                                 @click.self="addCheckedFilter(attribute.name, item.name)"
-                                                                required
-                                                                :checked="isChecked(attribute.name, item.name)"
+                                                                required :checked="isChecked(attribute.name, item.name)"
                                                                 class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500" />
                                                             <label
                                                                 class="ml-3 whitespace-nowrap pr-6 text-sm font-medium text-gray-900">{{
@@ -376,26 +381,29 @@ function submit() {
                         <div class="">
                             <div class="sm:mt-0">
                                 <div class="-m-1 flex flex-wrap items-center">
-                                        <span v-for="(select, key) in checkedFilters" :key="key"
-                                              class="m-1 inline-flex items-center rounded-lg border border-gray-200 bg-gray-50 py-1.5 pl-3 pr-2 text-sm font-medium text-gray-900">
-                                            <span v-if="select.size !== undefined">Size: {{ select.size.join(', ')
-                                                }}</span>
-                                            <span v-if="select.color !== undefined">Color: {{
-                                                    select.color.join(',') }}</span>
-                                            <span v-if="select.material !== undefined">Material: {{
-                                                    select.material.join(',') }}</span>
-                                        </span>
+                                    <span v-for="(select, key) in checkedFilters" :key="key"
+                                        class="m-1 inline-flex items-center rounded-lg border border-gray-200 bg-gray-50 py-1.5 pl-3 pr-2 text-sm font-medium text-gray-900">
+                                        <span v-if="select.size !== undefined">Size: {{ select.size.join(', ')
+                                        }}</span>
+                                        <span v-if="select.color !== undefined">Color: {{
+                                            select.color.join(',') }}</span>
+                                        <span v-if="select.material !== undefined">Material: {{
+                                            select.material.join(',') }}</span>
+                                    </span>
                                 </div>
                             </div>
                         </div>
 
                         <div class="mt-6" v-if="variationsMade">
-                            <div v-for="(type, index) in attributeTypes" class="flex flex-row"  :class="variationAttribute.includes(type.name) ? 'hidden' : 'block'">
-                                <div v-if="variationAttribute.includes(type.name) === false" class="max-w-[23.5rem] w-[23.5rem]">
+                            <div v-for="(type, index) in attributeTypes" class="flex flex-row"
+                                :class="variationAttribute.includes(type.name) ? 'hidden' : 'block'">
+                                <div v-if="variationAttribute.includes(type.name) === false"
+                                    class="max-w-[23.5rem] w-[23.5rem]">
                                     <div>
                                         <p class="text-sm font-medium mb-2">{{ capitalize(type.name) }}</p>
                                         <div class="flex rounded-md shadow-sm">
-                                            <Dropdown class="w-full" :type="type.name" :items="type.attributeValues" @change-value="applyAttribute"></Dropdown>
+                                            <Dropdown class="w-full" :type="type.name" :items="type.attributeValues"
+                                                @change-value="applyAttribute"></Dropdown>
                                         </div>
                                     </div>
                                 </div>
@@ -424,61 +432,61 @@ function submit() {
                 </div>
             </div>
 
-<!--            <div class="bg-white px-4 py-5 shadow  mb-4 sm:rounded-lg sm:p-6">-->
-<!--                <form @submit.prevent="addVariation">-->
-<!--                    <div class="md:grid md:grid-cols-3 md:gap-6">-->
-<!--                        <div class="md:col-span-1">-->
-<!--                            <h3 class="text-base font-semibold leading-6 text-gray-900">Variations</h3>-->
-<!--                            <p class="mt-1 text-sm text-gray-500">This information will be displayed publicly so be-->
-<!--                                careful-->
-<!--                                what you share.</p>-->
-<!--                        </div>-->
-<!--                        <div class="mt-5 md:col-span-2 md:mt-0">-->
-<!--                            <InputError class="mt-2" v-if="formVariationError"-->
-<!--                                message="Please create at least one variation" />-->
-<!--                            <div class="grid grid-cols-6 gap-6">-->
-<!--                                <div class="col-span-6 sm:col-span-3">-->
-<!--                                    <InputLabel for="sku" value="SKU" />-->
-<!--                                    <div class="mt-2 flex rounded-md shadow-sm">-->
-<!--                                        <TextInput id="sku" type="text" class="mt-1 block w-full pl-3" name="SKU"-->
-<!--                                            v-model="variationForm.sku" required autocomplete="SKU" placeholder="SKU" />-->
-<!--                                        <InputError class="mt-2" :message="variationForm.errors.sku" />-->
-<!--                                    </div>-->
-<!--                                </div>-->
+            <!--            <div class="bg-white px-4 py-5 shadow  mb-4 sm:rounded-lg sm:p-6">-->
+            <!--                <form @submit.prevent="addVariation">-->
+            <!--                    <div class="md:grid md:grid-cols-3 md:gap-6">-->
+            <!--                        <div class="md:col-span-1">-->
+            <!--                            <h3 class="text-base font-semibold leading-6 text-gray-900">Variations</h3>-->
+            <!--                            <p class="mt-1 text-sm text-gray-500">This information will be displayed publicly so be-->
+            <!--                                careful-->
+            <!--                                what you share.</p>-->
+            <!--                        </div>-->
+            <!--                        <div class="mt-5 md:col-span-2 md:mt-0">-->
+            <!--                            <InputError class="mt-2" v-if="formVariationError"-->
+            <!--                                message="Please create at least one variation" />-->
+            <!--                            <div class="grid grid-cols-6 gap-6">-->
+            <!--                                <div class="col-span-6 sm:col-span-3">-->
+            <!--                                    <InputLabel for="sku" value="SKU" />-->
+            <!--                                    <div class="mt-2 flex rounded-md shadow-sm">-->
+            <!--                                        <TextInput id="sku" type="text" class="mt-1 block w-full pl-3" name="SKU"-->
+            <!--                                            v-model="variationForm.sku" required autocomplete="SKU" placeholder="SKU" />-->
+            <!--                                        <InputError class="mt-2" :message="variationForm.errors.sku" />-->
+            <!--                                    </div>-->
+            <!--                                </div>-->
 
-<!--                                <div class="col-span-6 sm:col-span-3">-->
-<!--                                    <InputLabel for="stock" value="Stock" />-->
-<!--                                    <div class="mt-2 flex rounded-md shadow-sm">-->
-<!--                                        <TextInput id="stock" type="number" class="mt-1 block w-full pl-3" name="stock"-->
-<!--                                            v-model="variationForm.amount" required autocomplete="title"-->
-<!--                                            placeholder="50" />-->
-<!--                                        <InputError class="mt-2" :message="variationForm.errors.amount" />-->
-<!--                                    </div>-->
-<!--                                </div>-->
-<!--                                <div class="col-span-6 sm:col-span-3">-->
-<!--                                    <InputLabel for="stock" value="Price" />-->
-<!--                                    <div class="mt-2 flex rounded-md shadow-sm">-->
-<!--                                        <TextInput id="stock" type="number" class="mt-1 block w-full pl-3" name="price"-->
-<!--                                            pattern="^\d*(\.\d{0,2})?$" step="0.01" v-model="variationForm.price"-->
-<!--                                            required autocomplete="title" placeholder="19.99" />-->
-<!--                                        <InputError class="mt-2" :message="variationForm.errors.price" />-->
-<!--                                    </div>-->
-<!--                                </div>-->
-<!--                                <div class="col-span-6 sm:col-span-6">-->
-<!--                                    <InputLabel for="variation" value="Add-ons" />-->
+            <!--                                <div class="col-span-6 sm:col-span-3">-->
+            <!--                                    <InputLabel for="stock" value="Stock" />-->
+            <!--                                    <div class="mt-2 flex rounded-md shadow-sm">-->
+            <!--                                        <TextInput id="stock" type="number" class="mt-1 block w-full pl-3" name="stock"-->
+            <!--                                            v-model="variationForm.amount" required autocomplete="title"-->
+            <!--                                            placeholder="50" />-->
+            <!--                                        <InputError class="mt-2" :message="variationForm.errors.amount" />-->
+            <!--                                    </div>-->
+            <!--                                </div>-->
+            <!--                                <div class="col-span-6 sm:col-span-3">-->
+            <!--                                    <InputLabel for="stock" value="Price" />-->
+            <!--                                    <div class="mt-2 flex rounded-md shadow-sm">-->
+            <!--                                        <TextInput id="stock" type="number" class="mt-1 block w-full pl-3" name="price"-->
+            <!--                                            pattern="^\d*(\.\d{0,2})?$" step="0.01" v-model="variationForm.price"-->
+            <!--                                            required autocomplete="title" placeholder="19.99" />-->
+            <!--                                        <InputError class="mt-2" :message="variationForm.errors.price" />-->
+            <!--                                    </div>-->
+            <!--                                </div>-->
+            <!--                                <div class="col-span-6 sm:col-span-6">-->
+            <!--                                    <InputLabel for="variation" value="Add-ons" />-->
 
-<!--                                    <InputError class="mt-2" v-if="variationError" message="Please select add-ons" />-->
-<!--                                </div>-->
-<!--                            </div>-->
+            <!--                                    <InputError class="mt-2" v-if="variationError" message="Please select add-ons" />-->
+            <!--                                </div>-->
+            <!--                            </div>-->
 
-<!--                        </div>-->
+            <!--                        </div>-->
 
-<!--                    </div>-->
-<!--                    <div class="flex justify-end">-->
-<!--                        <PrimaryButton type="submit" class="mt-4">Add variation</PrimaryButton>-->
-<!--                    </div>-->
-<!--                </form>-->
-<!--            </div>-->
+            <!--                    </div>-->
+            <!--                    <div class="flex justify-end">-->
+            <!--                        <PrimaryButton type="submit" class="mt-4">Add variation</PrimaryButton>-->
+            <!--                    </div>-->
+            <!--                </form>-->
+            <!--            </div>-->
             <div class="max-w-7xl mx-auto sm:py-6" v-if="variations.length">
                 <div class="sm:flex sm:items-center">
                     <div class="sm:flex-auto">
@@ -496,38 +504,49 @@ function submit() {
                     enter-to-class="translate-y-0 opacity-100 sm:translate-x-0"
                     leave-active-class="transition ease-in duration-100" leave-from-class="opacity-100"
                     leave-to-class="opacity-0">
-                    <div class="pointer-events-auto relative flex flex-row flex-wrap justify-between rounded-lg bg-white shadow-lg ring-1 ring-black ring-opacity-5 p-4 items-center">
+                    <div
+                        class="pointer-events-auto relative flex flex-row flex-wrap justify-between rounded-lg bg-white shadow-lg ring-1 ring-black ring-opacity-5 p-4 items-center">
                         <div>
                             <div class="flex flex-row space-x-4 mb-2">
                                 <p class="text-base font-large text-gray-900 mr-3 items-end">Variation {{ index + 1 }}:</p>
                                 <div class="bg-gray-100 flex flex-row shadow">
-                                    <p v-for="(type, index) in checkedFilters" class="text-base font-large text-gray-900 mx-2 items-end">{{ getAttribute(variation, type) }}</p>
+                                    <p v-for="(type, index) in checkedFilters"
+                                        class="text-base font-large text-gray-900 mx-2 items-end">{{ getAttribute(variation,
+                                            type) }}</p>
                                 </div>
                             </div>
                             <div class="flex flex-row gap-6 flex-wrap overflow-hidden items-end">
                                 <div>
                                     <InputLabel for="skuInput" value="sku" />
-                                    <TextInput id="skuInput" type="text" class="mt-2 flex rounded-md shadow-sm mt-1 block w-full pl-3" name="title" v-model="variations[index]['sku']" required placeholder="SKU" />
+                                    <TextInput id="skuInput" type="text"
+                                        class="mt-2 flex rounded-md shadow-sm mt-1 block w-full pl-3" name="title"
+                                        v-model="variations[index]['sku']" required placeholder="SKU" />
                                 </div>
                                 <div>
                                     <InputLabel for="stockInput" value="stock" />
-                                    <TextInput id="stockInput" type="number" class="mt-2 flex rounded-md shadow-sm mt-1 block w-full pl-3" name="title" v-model="variations[index]['amount']" required placeholder="50" />
+                                    <TextInput id="stockInput" type="number"
+                                        class="mt-2 flex rounded-md shadow-sm mt-1 block w-full pl-3" name="title"
+                                        v-model="variations[index]['amount']" required placeholder="50" />
                                 </div>
                                 <div>
                                     <InputLabel for="priceInput" value="price" />
-                                    <TextInput id="priceInput" pattern="^\d*(\.\d{0,2})?$" @blur="handlePrice" type="float" class="mt-2 flex rounded-md shadow-sm mt-1 block w-full pl-3" name="title" v-model="variations[index]['price']" required placeholder="19.99" />
+                                    <TextInput id="priceInput" pattern="^\d*(\.\d{0,2})?$" @blur="handlePrice" type="float"
+                                        class="mt-2 flex rounded-md shadow-sm mt-1 block w-full pl-3" name="title"
+                                        v-model="variations[index]['price']" required placeholder="19.99" />
                                 </div>
                             </div>
 
                             <div class="flex flex-row gap-6 overflow-hidden pt-4">
                                 <UploadFile @image-previews="updateImages" :images="variation.images" :index="index" />
                                 <div class="mt-6 flex gap-6 flex-wrap">
-                                    <div v-for="(preview, imageIndex) in variation.images" :key="imageIndex" class="relative">
+                                    <div v-for="(preview, imageIndex) in variation.images" :key="imageIndex"
+                                        class="relative">
                                         <div class="bg-indigo-600 p-0.5 cursor-pointer absolute right-0 top-0 rounded-bl-md rounded-tr-md"
-                                             @click="removeImage(index, imageIndex)">
+                                            @click="removeImage(index, imageIndex)">
                                             <XMarkIcon class="h-6 w-6 text-white" />
                                         </div>
-                                        <img :src="preview.url" alt="Uploaded Image" class="mx-auto h-24 rounded-md w-24 object-cover" />
+                                        <img :src="preview.url" alt="Uploaded Image"
+                                            class="mx-auto h-24 rounded-md w-24 object-cover" />
                                     </div>
                                 </div>
                             </div>
@@ -539,7 +558,7 @@ function submit() {
             <div class="flex justify-end px-4 sm:px-0">
                 <Link href="/admin/products" to="/admin/products"
                     class="rounded-md bg-white py-2 px-3 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">
-                    Cancel
+                Cancel
                 </Link>
                 <button type="submit"
                     class="ml-3 inline-flex justify-center rounded-md bg-indigo-600 py-2 px-3 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500">
@@ -547,4 +566,5 @@ function submit() {
                 </button>
             </div>
         </form>
-</div></template>
+    </div>
+</template>
