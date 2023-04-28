@@ -79,7 +79,7 @@ class ProfileController extends Controller
 
     public function orders(Request $request): Response
     {
-        $orders = Order::orderBy('created_at', 'desc')->withRelations()->get();
+        $orders = Order::where('user_id', Auth::user()->id)->orderBy('created_at', 'desc')->withRelations()->get();
         $ordersWithAddresses = $orders->map(function ($order) {
             $order->shipping_address = Address::where('id', $order->shipping_address_id)->first();
             $order->billing_address = Address::where('id', $order->billing_address_id)->first();
@@ -103,6 +103,7 @@ class ProfileController extends Controller
         return Inertia::render('Customer/Profile/Index', [
             'mustVerifyEmail' => $request->user() instanceof MustVerifyEmail,
             'status' => session('status'),
+            'addresses' => $request->user()->addresses,
         ]);
     }
 

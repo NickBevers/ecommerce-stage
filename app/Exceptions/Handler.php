@@ -3,6 +3,7 @@
 namespace App\Exceptions;
 
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Inertia\Inertia;
 use Throwable;
 
 class Handler extends ExceptionHandler
@@ -44,5 +45,17 @@ class Handler extends ExceptionHandler
         $this->reportable(function (Throwable $e) {
             //
         });
+    }
+
+//    inertia 404 error
+    public function render($request, Throwable $e)
+    {
+        if ($e instanceof \Illuminate\Database\Eloquent\ModelNotFoundException) {
+            return Inertia::render('Error/404');
+        } else if ($e instanceof \Symfony\Component\HttpKernel\Exception\NotFoundHttpException) {
+            return Inertia::render('Error/404');
+        }
+
+        return parent::render($request, $e);
     }
 }

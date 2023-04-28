@@ -18,6 +18,8 @@ export { default as ProductVariationList } from "./Molecules/ProductVariationLis
 export { default as WishList } from "./Molecules/WishList.vue";
 export { default as ProductCartModal } from "./Molecules/ProductCartModal.vue";
 export { default as AddProductCart } from "./Molecules/AddProductCart.vue";
+export { default as AddReviewModal } from "./Molecules/AddReviewModal.vue";
+export { default as AddReturnModal } from "./Molecules/AddReturnModal.vue";
 export { default as DetailCart } from "./Molecules/DetailCart.vue";
 export { default as AddAddressModal } from "./Molecules/AddAddressModal.vue";
 export { default as AddBillingModal } from "./Molecules/AddBillingModal.vue";

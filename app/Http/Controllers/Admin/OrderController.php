@@ -5,7 +5,9 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Order;
 use App\Models\Address;
+use App\Models\OrderLine;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use Inertia\Inertia;
 
 class OrderController extends Controller
@@ -56,13 +58,40 @@ class OrderController extends Controller
         $request->validate([
             'order_status' => 'required',
         ]);
-
         $order->update([
             'order_status' => $request->order_status,
         ]);
 
-      
         return redirect()->route('admin.orders.index');
+    }
+
+    function getSalesToday()
+    {
+        $salesToday = Order::where('order_date', '>=', now()->startOfDay())
+            ->where('order_date', '<=', now()->endOfDay())
+            ->sum('total_price');
+//        Carbon::today()->toDateString()
+        $salesYesterday = Order::where('order_date', '>=', Carbon::yesterday()->setTime(00, 00, 00)->toDateTimeString())
+            ->where('order_date', '<=', Carbon::yesterday()->setTime(23, 59, 59)->toDateTimeString())
+            ->sum('total_price');
+
+        return response()->json([
+            'amount' => $salesToday,
+            'orderAmount' => Order::where('order_date', '>=', now()->startOfDay())
+                ->where('order_date', '<=', now()->endOfDay())
+                ->count(),
+            'skusSold' =>  OrderLine::whereIn('order_id', Order::where('order_date', '>=', now()->startOfDay())
+                ->where('order_date', '<=', now()->endOfDay())->pluck('id'))->get()->sum('amount'),
+            'skus' => OrderLine::whereIn('order_id', Order::where('order_date', '>=', now()->startOfDay())
+                ->where('order_date', '<=', now()->endOfDay())->pluck('id'))->withAllRelations()->get(),
+            'amountYesterday' => $salesYesterday,
+            'orderAmountYesterday' => Order::where('order_date', '>=', Carbon::yesterday()->setTime(00, 00, 00)->toDateTimeString())
+                ->where('order_date', '<=', Carbon::yesterday()->setTime(23, 59, 59)->toDateTimeString())
+                ->count(),
+            'skusSoldYesterday' =>  OrderLine::whereIn('order_id', Order::where('order_date', '>', Carbon::yesterday()->setTime(00, 00, 00)->toDateTimeString())
+                ->where('order_date', '>', Carbon::yesterday()->setTime(23, 59, 59)->toDateTimeString())
+                ->pluck('id'))->get()->sum('amount'),
+        ]);
     }
 
     public function updateTracking(Request $request, Order $order)

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\ProductReturnRequest;
 use App\Models\ProductReturn;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 
 class ProductReturnController extends Controller
@@ -20,7 +21,13 @@ class ProductReturnController extends Controller
 
     public function store(ProductReturnRequest $request)
     {
-        $return = ProductReturn::create($request->all());
+        $return = ProductReturn::create([
+            'user_id' => Auth::user()->id,
+            'order_id' => $request->order_id,
+            'sku_id' => $request->sku_id,
+            'amount' => $request->amount,
+            'reason' => $request->reason,
+        ]);
 
         return redirect()->route('returns.show', $return->id);
     }

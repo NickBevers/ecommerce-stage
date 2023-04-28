@@ -40,9 +40,9 @@
         </svg>
       </div>
       <div aria-hidden="true" class="ml-4 text-sm text-gray-300">·</div>
-      <div class="ml-4 flex">
+      <!-- <div class="ml-4 flex">
         <a href="#" class="text-sm font-medium text-indigo-600 hover:text-indigo-500">See all 512 reviews</a>
-      </div>
+      </div> -->
     </div>
   </div>
 </template>

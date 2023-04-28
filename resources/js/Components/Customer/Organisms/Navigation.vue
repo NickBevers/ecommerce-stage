@@ -19,10 +19,9 @@ import {
 } from '@headlessui/vue'
 import {
     Bars3Icon,
-    QuestionMarkCircleIcon,
-    XMarkIcon,
     HeartIcon,
 } from '@heroicons/vue/24/outline'
+import {XMarkIcon} from "@heroicons/vue/20/solid";
 
 
 const open = ref(false)
@@ -255,7 +254,7 @@ function selectCategory(category_id) {
                                                                 :key="index" class="group relative">
                                                                 <div v-if="item.preview"
                                                                     class="aspect-w-1 aspect-h-1 overflow-hidden rounded-md bg-gray-100 group-hover:opacity-75">
-                                                                    <img src="https://tailwindui.com/img/ecommerce-images/mega-menu-category-02.jpg"
+                                                                    <img :src="item.image_link"
                                                                         alt="placeholder"
                                                                         class="object-cover object-center" />
                                                                 </div>
@@ -325,13 +324,8 @@ function selectCategory(category_id) {
                             </div>
 
                             <div class="flex flex-1 items-center justify-end">
-                                <a href="#"
-                                    class="hidden text-sm font-medium text-gray-700 hover:text-gray-800 lg:block">Search</a>
-
+<!--                                <a href="#" class="hidden text-sm font-medium text-gray-700 hover:text-gray-800 lg:block">Search</a>-->
                                 <div class="flex items-center lg:ml-8">
-
-
-
                                     <div class="flow-root lg:ml-8">
                                         <UserIconModal class="group -m-2 flex items-center" :user="$page.props.auth.user" />
                                     </div>

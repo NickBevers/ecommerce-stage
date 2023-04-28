@@ -87,13 +87,11 @@ function removeFromCart(id, product) {
         });
 }
 
-function handleNewAdress(address) {
-    console.log('new adress' + address)
-    props.addresses.push(address)
+function handleNewAddress(address) {
+    props.addresses.push(address.address)
 }
 
-function handleBillingAdress(address) {
-    console.log('new billing ' + address)
+function handleBillingAddress(address) {
     form.billing_address_id = address.id.toString()
     billing.value = address.address_line1 + ' ' + address.address_line2 + ', ' + address.city + ', ' + address.country
 }
@@ -140,9 +138,9 @@ function submit() {
 <template>
     <GuestLayout>
         <AddAddressModal class="z-20" v-if="showAddressModal" @closed="showAddressModal = false"
-            @submitted="handleNewAdress" />
+            @submitted="handleNewAddress" />
         <AddBillingModal class="z-20" v-if="showBillingModal" @closed="showBillingModal = false"
-            @submitted="handleBillingAdress" :addresses="props.addresses" />
+            @submitted="handleBillingAddress" :addresses="props.addresses" />
         <div class=" bg-gray-50 pt-24">
             <main class="mx-auto max-w-7xl px-4 pb-24 pt-16 sm:px-6 lg:px-8">
                 <div class="mx-auto max-w-2xl lg:max-w-none">
@@ -191,7 +189,7 @@ function submit() {
                                 </div>
                                 <div class="mt-4">
                                     <label for="email-address" class="block text-sm font-medium text-gray-700">Email
-                                        address</label>
+                                        address*</label>
                                     <div class="mt-1">
                                         <input type="email" id="email-address" name="email-address" autocomplete="email"
                                             required v-model="form.email"
@@ -199,7 +197,7 @@ function submit() {
                                     </div>
                                 </div>
                                 <div class="sm:col-span-2 mt-4">
-                                    <label for="phone" class="block text-sm font-medium text-gray-700">Phone</label>
+                                    <label for="phone" class="block text-sm font-medium text-gray-700">Phone*</label>
                                     <div class="mt-1">
                                         <input type="text" name="phone" id="phone" autocomplete="tel" required
                                             v-model="form.phone_number" pattern="\d{2,4}[\s-]?\d{6,8}"
@@ -218,8 +216,7 @@ function submit() {
                                             <RadioGroupOption as="template" v-for="deliveryMethod in props.addresses"
                                                 :key="deliveryMethod.id" :value="deliveryMethod.id.toString()"
                                                 v-if="props.addresses.length > 0" v-slot="{ checked, active }">
-                                                <div
-                                                    :class="[checked ? 'border-transparent' : 'border-gray-300', active ? 'ring-2 ring-indigo-500' : '', 'relative flex cursor-pointer rounded-lg border bg-white p-4 shadow-sm focus:outline-none']">
+                                                <div :class="[checked ? 'border-transparent' : 'border-gray-300', active ? 'ring-2 ring-indigo-500' : '', 'relative flex cursor-pointer rounded-lg border bg-white p-4 shadow-sm focus:outline-none']">
                                                     <span class="flex flex-1">
                                                         <span class="flex flex-col">
                                                             <RadioGroupLabel as="span"

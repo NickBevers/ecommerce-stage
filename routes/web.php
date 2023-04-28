@@ -52,6 +52,9 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::patch('/admin/users/{user}', [ProfileController::class, 'updateUserLevel'])->name('profile.updateUserLevel');
 
     // Admin Order Routes
+    Route::get('/admin/orders', [AdminOrderController::class, 'index'])->name('admin.orders.index');
+    Route::get('/admin/orders/{order}', [AdminOrderController::class, 'show'])->name('admin.orders.show');
+    Route::get('/admin/sales-today', [AdminOrderController::class, 'getSalesToday'])->name('admin.sales-today');
     Route::post('/admin/orders/{order}', [AdminOrderController::class, 'update'])->name('admin.orders.update');
     Route::patch('/admin/orders/product/{order}', [AdminOrderController::class, 'updateOrderLine'])->name('admin.orders.updateOrderLine');
     Route::delete('/admin/orders/product/{order}', [AdminOrderController::class, 'deleteOrderLine'])->name('admin.orders.deleteOrderLine');
@@ -79,9 +82,6 @@ Route::middleware(['auth', 'admin'])->group(function () {
     // Admin User Routes
     Route::get('/admin/customers', [AdminUserController::class, 'index'])->name('admin.customers.index');
 
-    // Admin Order Routes
-    Route::get('/admin/orders', [AdminOrderController::class, 'index'])->name('admin.orders.index');
-    Route::get('/admin/orders/{order}', [AdminOrderController::class, 'show'])->name('admin.orders.show');
 
     // Admin Promo Routes
     Route::get('/promos/create', [PromoController::class, 'create'])->name('promos.create');
@@ -94,6 +94,7 @@ Route::middleware(['auth', 'admin'])->group(function () {
     // Admin Country Routes
     Route::get('/admin/getVats/{code}', [VatService::class, 'getVatsByCountryCode'])->name('admin.countries.getVats');
 
+    Route::post('/admin/validatePassword', [UserController::class, 'validatePassword'])->name('profile.validatePassword');
     Route::patch('/admin/bank', [UserController::class, 'updateBankAccount'])->name('users.updateBankAccount');
 
 });
@@ -119,7 +120,6 @@ Route::middleware('auth')->group(function () {
     // Cart Routes
     Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
     // TODO: check route below (gives error on product overview page)
-    Route::get('/cart/products', [CartController::class, 'getProductsPerUser'])->name('cart.getProductsPerUser');
     Route::post('/cart', [CartController::class, 'store'])->name('cart.store');
     Route::patch('/cart/{sku}', [CartController::class, 'update'])->name('cart.update');
     Route::delete('/cart/{sku}', [CartController::class, 'destroy'])->name('cart.destroy');
@@ -169,13 +169,14 @@ Route::middleware('auth')->group(function () {
 Route::get('/wishlist/count', [WishlistController::class, 'getAmountOfItemsInWishlist'])->name('wishlist.getCount');
 
 // Cart Routes
+Route::get('/cart/products', [CartController::class, 'getProductsPerUser'])->name('cart.getProductsPerUser');
 Route::get('/cart/count', [CartController::class, 'getAmountOfItemsInCart'])->name('cart.getCount');
 
 // Product Routes
 Route::get('/product/{sku:sku}',  [ProductSkuController::class, 'show'])->name('product.show');
 Route::get('/products/category/{categoryName}', [ProductSkuController::class, 'showByCategory'])->name('products.showByCategory');
-Route::get('/products/{subCategory}', [ProductSkuController::class, 'showBySubCategory'])->name('products.showBySubCategory');
 Route::get('/products/promos', [ProductSkuController::class, 'showPromos'])->name('promos');
+Route::get('/products/{subCategory}', [ProductSkuController::class, 'showBySubCategory'])->name('products.showBySubCategory');
 
 // Filter Routes
 Route::post('/filter', [ProductSkuController::class, 'filter'])->name('products.filter');
@@ -192,5 +193,9 @@ Route::get('/subcategories/{category}', [SubCategoryService::class, 'getSubCateg
 // Brand Routes
 Route::get('/brands', [CustomerBrandController::class, 'index'])->name('brands.index');
 Route::get('/brands/{brand:slug}', [CustomerBrandController::class, 'show'])->name('brands.show');
+
+Route::get('/contact', function () {
+    return Inertia::render('Customer/Contact/Index');
+})->name('contact.index');
 
 require __DIR__.'/auth.php';

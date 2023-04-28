@@ -12,7 +12,7 @@ return new class extends Migration {
             $table->foreignId('sku_id')->nullable()->constrained()->onDelete('set null');
             $table->foreignId('order_id')->constrained()->onDelete('cascade');
             $table->integer('amount')->default(1);
-            $table->integer('price')->nullable();
+            $table->float('price')->nullable();
             $table->integer('discount')->nullable();
             $table->string('product_name');
             $table->json('attributes')->nullable();

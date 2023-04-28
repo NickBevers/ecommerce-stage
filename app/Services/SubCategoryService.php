@@ -25,6 +25,7 @@ class SubCategoryService
                 'id' => $subCategory->id,
                 'name' => $subCategory->name,
                 'slug' => $subCategory->slug,
+                'image_link' => $subCategory->image_link,
                 'category_id' => $subCategory->category_id,
             ];
         });

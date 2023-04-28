@@ -6,6 +6,7 @@ import { ProductCartModal } from '@/Components/Customer';
 import {
   PlusIcon,
 } from '@heroicons/vue/24/solid'
+import {CheckIcon, ClockIcon} from "@heroicons/vue/20/solid";
 
 const props = defineProps({
   products: Object,
@@ -39,7 +40,7 @@ function removeFromWishlist(id) {
       <h1 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Wishlist</h1>
       <ProductCartModal :product="selectedProduct" v-if="openCart" :open="openCart" @close="openCart = false"
         @closed="openCart = false" />
-      <div class="grid grid-cols-1 gap-y-12 sm:grid-cols-2 sm:gap-x-6 lg:grid-cols-4 xl:gap-x-8">
+      <div class="grid grid-cols-1 gap-y-12 sm:grid-cols-2 sm:gap-x-6 lg:grid-cols-4 xl:gap-x-8" v-if="props.products.length > 0">
         <div v-for="product in props.products" :key="product.id" class="mt-8" :id="product.sku.id">
           <Link :to="'/product/' + product.sku.sku" :href="'/product/' + product.sku.sku">
           <div class="relative group">
@@ -70,6 +71,18 @@ function removeFromWishlist(id) {
             <a href="#" @click.prevent="selectedProduct = product; openCart = true"
               class="relative flex items-center justify-center rounded-md border border-transparent bg-gray-100 py-2 px-8 text-sm font-medium text-gray-900 hover:bg-gray-200">Add
               to bag<span class="sr-only">, {{ product.sku.product.title }}</span></a>
+          </div>
+        </div>
+      </div>
+
+      <div v-else>
+        <div class="flex flex-col items-center justify-center h-96">
+          <div class="flex flex-col items-center justify-center">
+            <img src="/assets/wishlist.svg" alt="empty" class="w-1/4" />
+            <h1 class="text-2xl font-bold text-gray-500 mt-8">You have no wishlist items yet, add your favourites now!</h1>
+            <Link href="/">
+              <button class="mt-4 px-4 py-2 bg-indigo-500 text-white rounded-md hover:bg-indigo-600">Take me home!</button>
+            </Link>
           </div>
         </div>
       </div>

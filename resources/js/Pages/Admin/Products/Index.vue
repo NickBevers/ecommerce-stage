@@ -2,6 +2,7 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { ProductTable } from '@/Components/Admin';
 import { Head, Link } from '@inertiajs/vue3';
+import {HomeIcon, ShoppingBagIcon} from "@heroicons/vue/24/outline";
 
 const props = defineProps({
     skus: Object,
@@ -27,7 +28,15 @@ const props = defineProps({
                         </Link>
                     </div>
                 </div>
-                <ProductTable :skus="skus.data" :links="skus.links" />
+                <ProductTable :skus="skus.data" :links="skus.links" v-if="props.skus.data.length > 0"/>
+                <div v-else>
+                    <div class="flex flex-col items-center justify-center h-64 mt-16 p-4 sm:p-8 bg-white shadow sm:rounded-lg">
+                        <div class="flex flex-col items-center justify-center">
+                            <ShoppingBagIcon class="h-20 w-20 text-gray-500" aria-hidden="true" />
+                            <h1 class="text-xl font-bold text-gray-500 mt-4">There are no products yet!</h1>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </AuthenticatedLayout>

@@ -10,7 +10,7 @@ return new class extends Migration {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained();
-            $table->integer('total_price');
+            $table->float('total_price');
             $table->foreignId('shipping_address_id')->nullable()->constrained('addresses')->onDelete('set null');
             $table->foreignId('billing_address_id')->nullable()->constrained('addresses')->onDelete('set null');
             $table->timestamp('order_date')->default(now());

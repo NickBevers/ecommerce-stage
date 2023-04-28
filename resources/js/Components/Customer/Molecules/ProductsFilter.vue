@@ -1,4 +1,3 @@
-//TODO - Add filters from backend 
 <script setup>
 import { ref } from 'vue'
 import {
@@ -23,9 +22,11 @@ import { ChevronDownIcon } from '@heroicons/vue/20/solid'
 import {router} from "@inertiajs/vue3";
 
 const sortOptions = [
-  { name: 'Most Popular', href: '#' },
-  { name: 'Best Rating', href: '#' },
-  { name: 'Newest', href: '#' },
+  { name: 'Most Popular', sort: 'rating', order: 'desc', href: '#' },
+  { name: 'Newest', sort: 'created_at', order: 'desc', href: '#' },
+  { name: 'Oldest', sort: 'created_at', order: 'asc', href: '#'},
+  { name: 'Price: Low to High', sort: 'price_incl_vat', order: 'asc', href: '#' },
+  { name: 'Price: High to Low', sort: 'price_incl_vat', order: 'desc', href: '#' },
 ]
 
 const emit = defineEmits(['updateSkus'])
@@ -50,6 +51,12 @@ const props = defineProps({
     required: true,
   },
 })
+
+function handleSort(option) {
+  selectedFilters.sort = option.sort
+  selectedFilters.order = option.order
+  fetchSkus();
+}
 
 function isChecked(attribute, value) {
   if (isAttribute(attribute)){
@@ -82,6 +89,9 @@ function addFilters(filterName, value) {
     if (values) {
       if (values.includes(value)) {
         values.splice(values.indexOf(value), 1)
+        if (values.length === 0) {
+          delete selectedFilters.attributes[filterName]
+        }
       } else {
         values.push(value)
       }
@@ -99,8 +109,10 @@ function addFilters(filterName, value) {
       selectedFilters[filterName] = [value]
     }
   }
+  fetchSkus();
+}
 
-
+function fetchSkus() {
   fetch(route('products.filter'), {
     method: 'POST',
     headers: {
@@ -108,11 +120,11 @@ function addFilters(filterName, value) {
     },
     body: JSON.stringify({...selectedFilters}),
   })
-    .then((response) => response.json())
-    .then((data) => {
-      console.log(data);
-      emit('updateSkus', data.skus)
-    });
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+        emit('updateSkus', data.skus)
+      });
 }
 
 </script>
@@ -202,8 +214,8 @@ function addFilters(filterName, value) {
                 <div class="py-1">
                   <MenuItem v-for="option in sortOptions" :key="option" v-slot="{ active }">
                   <a :href="option.href"
-                    :class="[active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm font-medium text-gray-900']">{{
-                      option.name }}</a>
+                    :class="[active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm font-medium text-gray-900']"
+                  @click="handleSort(option)" >{{ option.name }}</a>
                   </MenuItem>
                 </div>
               </MenuItems>

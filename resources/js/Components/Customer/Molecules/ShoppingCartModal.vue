@@ -122,7 +122,7 @@ function removeFromCart(id, product) {
                                 </ul>
 
                                 <Link type="submit" href="/checkout"
-                                    class="w-full mt-8 rounded-md border text-center border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-50">
+                                    class="w-full mt-8 rounded-md border block text-center border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-50">
                                 Checkout</Link>
 
                                 <p class="mt-6 text-center">

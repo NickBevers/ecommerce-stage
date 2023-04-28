@@ -14,12 +14,10 @@ class ProductReturnRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'user_id' => 'required',
             'order_id' => 'required',
             'sku_id' => 'required',
-            'quantity' => 'required',
+            'amount' => 'numeric',
             'reason' => 'required',
-            'status' => 'required',
         ];
     }
 }
