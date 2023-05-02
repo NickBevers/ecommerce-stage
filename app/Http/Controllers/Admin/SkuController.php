@@ -233,14 +233,7 @@ class SkuController extends Controller
         $sku->amount = $request->input('variations')['amount'];
         $sku->save();
 
-        return Inertia::render('Admin/Products/Index', [
-            'skus' => Sku::withAllRelations()
-                ->orderBy('created_at', 'desc')
-                ->paginate(10),
-            'attributeValues' => AttributeValue::all(),
-            'minPrice' => Sku::min('price_incl_vat'),
-            'maxPrice' => Sku::max('price_incl_vat'),
-        ]);
+        return redirect()->route('admin.products.index')->with('success', 'Product updated successfully');
     }
 
     public function destroy(Sku $sku)
