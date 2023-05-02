@@ -41,7 +41,7 @@ class OrderController extends Controller
 
         Cart::where('user_id', auth()->user()->id)->delete();
 
-//        Mail::to($order->user->email)->send(new OrderPlaced($order));
+        Mail::to($order->user->email)->send(new OrderPlaced($order));
 
         return Inertia::render('Customer/Checkout/Detail', [
             'order' => $order,
