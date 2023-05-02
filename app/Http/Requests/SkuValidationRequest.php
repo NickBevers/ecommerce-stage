@@ -22,11 +22,8 @@ class SkuValidationRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'sku' => 'required|alpha_num',
             'product_id' => 'required|integer',
-            'amount' => 'required|integer',
-            'price' => 'required|numeric',
-            'vat_id' => 'integer',
+            'brand_id' => 'required|integer',
         ];
     }
 }

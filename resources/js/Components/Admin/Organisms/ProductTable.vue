@@ -74,12 +74,15 @@ function toggleActive() {
                 </tr>
               </thead>
               <tbody class="divide-y divide-gray-200 bg-white">
-                <tr v-for="product in skus" :key="product.id">
+                <tr v-for="         product          in          skus         " :key=" product.id ">
                   <td class="whitespace-nowrap py-2 pl-4 pr-3 text-sm sm:pl-0  w-2/6">
                     <div class="flex items-center">
                       <div class="h-10 w-10 flex-shrink-0">
-                        <img :src="product.product_images[0].image_link" alt="iMac Front Image"
-                          class="h-10 w-10 rounded-m object-cover object-center">
+                        <img :src=" product.product_images[0].image_link " v-if=" product.product_images[0] "
+                          alt="iMac Front Image" class="h-10 w-10 rounded-m object-cover object-center">
+                        <div class="h-10 w-10 rounded-m object-cover object-center bg-red-300" v-else>
+
+                        </div>
                       </div>
                       <div class="ml-4">
                         <div class="font-medium text-gray-900">{{ product.product.title }}</div>
@@ -93,24 +96,24 @@ function toggleActive() {
                   </td>
                   <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500 w-1/6">
                     <span class="inline-flex rounded-full px-2 text-xs font-semibold leading-5 text-white"
-                      :class="getBgClass(product.amount)">{{ product.amount }}</span>
+                      :class=" getBgClass(product.amount) ">{{ product.amount }}</span>
                   </td>
                   <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500 w-1/6">€{{
                     product.price_incl_vat.toFixed(2) }}</td>
                   <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500 w-1/6">
-                    <Toggle :on="product.is_active" @click="selectedProduct = product.id; toggleActive();" />
+                    <Toggle :on=" product.is_active " @click=" selectedProduct = product.id; toggleActive(); " />
                   </td>
                   <td
                     class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right justify-end text-sm font-medium sm:pr-0 flex gap-2 w-fill">
-                    <Link :to="`/admin/products/${product.sku}/edit`" :href="`/admin/products/${product.sku}/edit`"
+                    <Link :to=" `/admin/products/${product.sku}/edit` " :href=" `/admin/products/${product.sku}/edit` "
                       class="rounded-full bg-indigo-600 p-2 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
                     <PencilIcon class="h-3 w-3" aria-hidden="true" />
                     </Link>
-                    <Link :to="`/product/${product.sku}`" :href="`/product/${product.sku}`"
+                    <Link :to=" `/product/${product.sku}` " :href=" `/product/${product.sku}` "
                       class="rounded-full bg-indigo-600 p-2 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
                     <EyeIcon class="h-3 w-3" aria-hidden="true" />
                     </Link>
-                    <button type="button" @click="open = true; selectedProduct = product.id;"
+                    <button type="button" @click=" open = true; selectedProduct = product.id; "
                       class="rounded-full bg-red-600 p-2 text-white shadow-sm hover:bg-red-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
                       <TrashIcon class="h-3 w-3" aria-hidden="true" />
                     </button>
@@ -118,8 +121,8 @@ function toggleActive() {
                 </tr>
               </tbody>
             </table>
-            <div class="border-t border-gray-200  flex sm:justify-end" v-if="props.links && props.links.length > 0">
-              <Pagination :links="props.links" />
+            <div class="border-t border-gray-200  flex sm:justify-end" v-if=" props.links && props.links.length > 0 ">
+              <Pagination :links=" props.links " />
             </div>
           </div>
         </div>

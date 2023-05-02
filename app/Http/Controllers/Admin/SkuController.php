@@ -160,7 +160,12 @@ class SkuController extends Controller
 
     public function deleteVariationImage(Request $request)
     {
-        return $this->uploadSkuImageService->deleteVariationImage($request->input('public_id'));
+        $this->uploadSkuImageService->deleteVariationImage($request->input('public_id'));
+        ProductImage::where('image_public_id', $request->input('public_id'))->delete();
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Image deleted',
+        ]);
     }
 
     public function sortClothing(Array $data): array
@@ -200,15 +205,24 @@ class SkuController extends Controller
 
     public function update(SkuValidationRequest $request, Sku $sku)
     {
+
+
         if ($request->has('product')) {
             $product = $request->input('product');
-            $productData = new ProductValidationRequest($product->only(['title', 'description', 'audience', 'brand_id', 'sub_category_id', 'product_type', 'extra_info']));
+            $productData = new ProductValidationRequest($product->only(['title', 'description', 'audience', 'brand_id', 'sub_category_id', 'extra_info']));
             $this->productService->update($productData, $sku->product_id);
         }
 
-        if ($request->has('images')) {
-            $sku->productImages()->delete();
-            $this->uploadSkuImageService->upload($request->input('images'), $sku->id);
+        if ($request->has('newImages')) {
+            foreach ($request->input('newImages') as $image) {
+                ProductImage::create([
+                    'image_type' => explode('/', $image['public_id'])[0],
+                    'image_link' => $image['url'],
+                    'image_public_id' => $image['public_id'],
+                    'sku_id' => $sku->id,
+                    'alt' => $sku->sku.'-'.$image['public_id'],
+                ]);
+            }
         }
 
         if ($request->has('attributes')) {
@@ -229,7 +243,7 @@ class SkuController extends Controller
 
 
 
-        return Inertia::render('Admin/Products/Index', [
+        return Inertia::render('/', [
             'skus' => Sku::withAllRelations()
                 ->orderBy('created_at', 'desc')
                 ->paginate(10),

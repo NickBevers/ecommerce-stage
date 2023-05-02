@@ -1,8 +1,8 @@
 <script setup>
-import {ref, reactive, watch, capitalize} from 'vue'
+import { ref, reactive, watch, capitalize } from 'vue'
 import { Head, Link, useForm } from '@inertiajs/vue3';
 import { InputLabel, TextInput, UploadFile, InputError, Dropdown, SearchDropdown } from '@/Components/Admin';
-import {XMarkIcon} from "@heroicons/vue/20/solid";
+import { XMarkIcon } from "@heroicons/vue/20/solid";
 
 const props = defineProps({
     brands: Array,
@@ -66,14 +66,14 @@ function onSelectedOption(option) {
     form.brand_id = option.id
 }
 
-function handlePrice(e){
+function handlePrice(e) {
     if (e.target.value === "" || e.target.value === null || e.target.value === undefined || e.target.value === " ") {
         e.target.value = 0.00
     }
 
     isNaN(e.target.value)
-        ?e.target.value = 0.00
-        :e.target.value = parseFloat(e.target.value).toFixed(2)
+        ? e.target.value = 0.00
+        : e.target.value = parseFloat(e.target.value).toFixed(2)
 }
 
 watch(attributeError, (value) => {
@@ -196,9 +196,7 @@ function submit() {
                                 <div class="mt-2 flex rounded-md shadow-sm">
                                     <TextInput id="price" type="number" class="mt-1 block w-full pl-3" name="price"
                                         pattern="^\d*(\.\d{0,2})?$" step="0.01" v-model="form.variations[0].price" required
-                                        placeholder="19.99"
-                                        @blur="handlePrice"
-                                    />
+                                        placeholder="19.99" @blur="handlePrice" />
                                     <InputError class="mt-2" :message="form.variations.error" />
                                 </div>
                             </div>
@@ -208,18 +206,22 @@ function submit() {
                                     <TextInput id="stock" type="number" class="mt-1 block w-full pl-3" name="amount"
                                         pattern="^\d*(\.\d{0,2})?$" step="1" v-model="form.variations[0].amount" required
                                         autocomplete="title" placeholder="100" />
-                                    <span v-if="skuError.length > 0" class="text-red-500 -mt-4"> {{ attributeError }} </span>
+                                    <span v-if="skuError.length > 0" class="text-red-500 -mt-4"> {{ attributeError }}
+                                    </span>
                                 </div>
                             </div>
                         </div>
                         <div class="col-span-6 sm:col-span-6">
                             <InputLabel for="attributes" value="Attributes" />
                             <div class="flex flex-row gap-6 flex-wrap">
-                                <div class="mt-1 flex rounded-md shadow-sm"  v-for="attribute in props.attributeTypes">
+                                <div class="mt-1 flex rounded-md shadow-sm" v-for="attribute in props.attributeTypes">
                                     <Dropdown :items="attribute.attributeValues" class="min-w-[150px]"
-                                        v-model="form.variations[0].attributes[attribute]" @click="e => updateVariation(e, attribute.name)" :place="capitalize(attribute.name)" />
+                                        v-model="form.variations[0].attributes[attribute]"
+                                        @click="e => updateVariation(e, attribute.name)"
+                                        :place="capitalize(attribute.name)" />
                                 </div>
-                                <span v-if="attributeError.length > 0" class="text-red-500 -mt-4"> {{ attributeError }} </span>
+                                <span v-if="attributeError.length > 0" class="text-red-500 -mt-4"> {{ attributeError }}
+                                </span>
                             </div>
                         </div>
                         <div>
@@ -241,14 +243,17 @@ function submit() {
                             </div>
                         </div>
                         <div class="flex flex-row overflow-hidden">
-                            <UploadFile @image-previews="updateImages" :images="form.variations[0].images" :index="0" />
+                            <UploadFile @image-previews="updateImages" :images="form.variations[0].images" :index="0"
+                                :req="true" />
                             <div class="flex gap-6 flex-wrap">
-                                <div v-for="(preview, imageIndex) in form.variations[0].images" :key="imageIndex" class="relative">
+                                <div v-for="(preview, imageIndex) in form.variations[0].images" :key="imageIndex"
+                                    class="relative">
                                     <div class="bg-indigo-600 p-0.5 cursor-pointer absolute right-0 top-0 rounded-bl-md rounded-tr-md"
-                                         @click="removeImage(imageIndex)">
+                                        @click="removeImage(imageIndex)">
                                         <XMarkIcon class="h-6 w-6 text-white" />
                                     </div>
-                                    <img :src="preview.url" alt="Uploaded Image" class="mx-auto h-24 rounded-md w-24 object-cover" />
+                                    <img :src="preview.url" alt="Uploaded Image"
+                                        class="mx-auto h-24 rounded-md w-24 object-cover" />
                                 </div>
                             </div>
                         </div>
@@ -264,7 +269,6 @@ function submit() {
                 </Link>
                 <button type="submit"
                     class="ml-3 inline-flex justify-center rounded-md bg-indigo-600 py-2 px-3 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500">Save</button>
-            </div>
-        </form>
-    </div>
-</template>
+        </div>
+    </form>
+</div></template>

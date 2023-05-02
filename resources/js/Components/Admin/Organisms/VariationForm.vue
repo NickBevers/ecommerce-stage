@@ -537,7 +537,8 @@ function submit() {
                             </div>
 
                             <div class="flex flex-row gap-6 overflow-hidden pt-4">
-                                <UploadFile @image-previews="updateImages" :images="variation.images" :index="index" />
+                                <UploadFile @image-previews="updateImages" :images="variation.images" :index="index"
+                                    :req="true" />
                                 <div class="mt-6 flex gap-6 flex-wrap">
                                     <div v-for="(preview, imageIndex) in variation.images" :key="imageIndex"
                                         class="relative">
