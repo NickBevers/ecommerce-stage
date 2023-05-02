@@ -146,7 +146,7 @@ function update() {
 
 
 
-    form.post('/admin/products/' + props.skus.id), {
+    form.patch('/admin/products/' + props.skus.id), {
         onSuccess: () => {
             console.log('success')
         },
@@ -245,7 +245,7 @@ function update() {
                     </div>
 
                 </div>
-
+                {{ form }}
                 <div class="bg-white px-4 py-5 shadow sm:rounded-lg mb-4 sm:p-6 ">
                     <div class="md:grid md:grid-cols-3 md:gap-6">
                         <div class="md:col-span-1">
@@ -261,7 +261,7 @@ function update() {
                                     <div class="mt-1 flex rounded-md shadow-sm">
                                         <TextInput id="skuInput" type="text"
                                             class="mt-2 flex rounded-md shadow-sm mt-1 block w-full pl-3" name="title"
-                                            v-model="props.skus.sku" required placeholder="SKU" />
+                                            v-model="form.variations.sku" required placeholder="SKU" />
                                     </div>
                                 </div>
                                 <div class="col-span-2 sm:col-span-2">
@@ -269,7 +269,7 @@ function update() {
                                     <div class="mt-1 flex rounded-md shadow-sm">
                                         <TextInput id="stockInput" type="number"
                                             class="mt-2 flex rounded-md shadow-sm mt-1 block w-full pl-3" name="title"
-                                            v-model="props.skus.amount" required placeholder="50" />
+                                            v-model="form.variations.amount" required placeholder="50" />
                                     </div>
                                 </div>
 
@@ -279,7 +279,7 @@ function update() {
                                     <div class="mt-1 flex rounded-md shadow-sm">
                                         <TextInput id="priceInput" pattern="^\d*(\.\d{0,2})?$" @blur="handlePrice"
                                             type="float" class="mt-2 flex rounded-md shadow-sm mt-1 block w-full pl-3"
-                                            name="title" v-model="props.skus.price_excl_vat" required placeholder="19.99" />
+                                            name="title" v-model="form.variations.price" required placeholder="19.99" />
 
                                     </div>
                                 </div>

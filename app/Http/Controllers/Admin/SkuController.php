@@ -202,16 +202,14 @@ class SkuController extends Controller
 
     public function update(SkuValidationRequest $request, Sku $sku)
     {
-
-
         if ($request->has('product')) {
             $product = $request->input('product');
-            $productData = new ProductValidationRequest($product->only(['title', 'description', 'audience', 'brand_id', 'sub_category_id', 'extra_info']));
+            $productData = new ProductValidationRequest($product->only(['title', 'description', 'audience', 'brand_id', 'sub_category_id', 'product_type', 'extra_info']));
             $this->productService->update($productData, $sku->product_id);
         }
 
-        if ($request->has('newImages')) {
-            foreach ($request->input('newImages') as $image) {
+        if (sizeof($request->input('variations')['newImages']) > 0) {
+            foreach ($request->input('variations')['newImages'] as $image) {
                 ProductImage::create([
                     'image_type' => explode('/', $image['public_id'])[0],
                     'image_link' => $image['url'],
@@ -222,25 +220,20 @@ class SkuController extends Controller
             }
         }
 
-        if ($request->has('attributes')) {
-            $sku->attributeValues()->detach();
-            foreach ($request->input('attributes') as $attribute) {
-                $attributeValue = AttributeValue::where('name', $attribute)->first();
-                $sku->attributeValues()->attach($attributeValue);
-            }
+        $sku->attributeValues()->detach();
+        foreach ($request->input('variations')['attributes'] as $attribute) {
+            $attributeValue = AttributeValue::where('name', $attribute)->first();
+            $sku->attributeValues()->attach($attributeValue);
         }
 
-        $sku->sku = $request->input('sku');
-        $vat = Vat::where('id', $sku->vat_id)->first();
-        $sku->price_excl_vat = $request->input('price');
-        $sku->price_incl_vat = $request->input('price') * (1 + floatval($vat->vat_rate) / 100);
-        $sku->amount = $request->input('amount');
-        $sku->is_active = $request->input('is_active');
+        $vat = Vat::where('id', 27)->first();
+        $sku->sku = $request->input('variations')['sku'];
+        $sku->price_excl_vat = $request->input('variations')['price'];
+        $sku->price_incl_vat = $request->input('variations')['price'] * (1 + floatval($vat->vat_rate) / 100);
+        $sku->amount = $request->input('variations')['amount'];
         $sku->save();
 
-
-
-        return Inertia::render('/', [
+        return Inertia::render('Admin/Products/Index', [
             'skus' => Sku::withAllRelations()
                 ->orderBy('created_at', 'desc')
                 ->paginate(10),

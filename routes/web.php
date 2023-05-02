@@ -64,7 +64,7 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::post('/admin/products/search', [AdminSkuController::class, 'search'])->name('admin.products.search');
     Route::get('/admin/products/create', [AdminSkuController::class, 'create'])->name('admin.products.create');
     Route::get('/admin/products/{sku}/edit', [AdminSkuController::class, 'edit'])->name('admin.products.edit');
-    Route::post('/admin/products/{sku}', [AdminSkuController::class, 'update'])->name('admin.products.update');
+    Route::patch('/admin/products/{sku}', [AdminSkuController::class, 'update'])->name('admin.products.update');
     Route::delete('/admin/products/{sku}', [AdminSkuController::class, 'destroy'])->name('admin.products.destroy');
 
     // Admin ProductReturn Routes
