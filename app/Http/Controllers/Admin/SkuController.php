@@ -94,6 +94,16 @@ class SkuController extends Controller
         $product = $this->productService->store($productRequest);
 
         foreach ($request->input('variations') as $variation) {
+            $skuTemp = Sku::where('sku', $variation['sku'])->first();
+            if ($skuTemp) {
+                return $request->validate([
+                    'variations.*.sku' => 'unique:skus,sku',
+                ],
+                [
+                    'variations.*.sku.unique' => 'The sku has already been taken.',
+                ]);
+            }
+
             $vat = Vat::where('id', $request->input('vat_id'))->first();
             $sku = Sku::create([
                 'sku' => $variation['sku'],
@@ -164,11 +174,21 @@ class SkuController extends Controller
             ->withAllRelations()
             ->first();
 
+            $attributeTypes = AttributeType::all();
+            foreach ($attributeTypes as $attributeType) {
+                $attributeType->attributeValues = $this->attributeValueService->getValuesByTypeId($attributeType->id);
+            }
+
+            $categories = Category::all();
+            foreach ($categories as $category) {
+                $category->subCategories = $this->subCategoryService->getSubCategoriesByCategory($category);
+            }
+
         return Inertia::render('Admin/Products/Edit', [
             'skus' => $sku,
             'brands' => $this->brandService->getBrands(),
-            'categories' => Category::all(),
-            'attributeTypes' => AttributeType::all(),
+            'categories' => $categories,
+            'attributeTypes' => $attributeTypes,
             'sizes' => $this->attributeValueService->getValuesByType("size"),
             'colors' => $this->attributeValueService->getValuesByType("color"),
             'materials' => $this->attributeValueService->getValuesByType("material"),

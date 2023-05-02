@@ -23,7 +23,6 @@ class ProductValidationRequest extends FormRequest
     {
         return [
             'title' => 'required',
-            'description' => 'required',
             'audience' => 'required',
             'product_type' => 'required',
             'brand_id' => 'required',

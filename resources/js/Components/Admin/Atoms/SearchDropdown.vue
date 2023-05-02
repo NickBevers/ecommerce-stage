@@ -94,7 +94,7 @@ export default {
 </script>
 <template>
   <div class="dropdown" v-if="options">
-    <div class="dropdown-toggle shadow-sm ring-1">
+    <div class="dropdown-toggle shadow-sm">
       <input :name="name" @focus="showOptions()" @blur="exit()" @keyup="keyMonitor" v-model="searchFilter"
         :disabled="disabled" :placeholder="placeholder" required />
     </div>

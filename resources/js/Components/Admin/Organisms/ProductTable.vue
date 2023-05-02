@@ -102,11 +102,11 @@ function toggleActive() {
                   </td>
                   <td
                     class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right justify-end text-sm font-medium sm:pr-0 flex gap-2 w-fill">
-                    <button type="button"
+                    <Link :to="`/admin/products/${product.sku}/edit`" :href="`/admin/products/${product.sku}/edit`"
                       class="rounded-full bg-indigo-600 p-2 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
-                      <PencilIcon class="h-3 w-3" aria-hidden="true" />
-                    </button>
-                    <Link :to="`/product/${product.id}`" :href="`/product/${product.id}`"
+                    <PencilIcon class="h-3 w-3" aria-hidden="true" />
+                    </Link>
+                    <Link :to="`/product/${product.sku}`" :href="`/product/${product.sku}`"
                       class="rounded-full bg-indigo-600 p-2 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
                     <EyeIcon class="h-3 w-3" aria-hidden="true" />
                     </Link>
