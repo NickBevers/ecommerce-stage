@@ -94,7 +94,6 @@ class SkuController extends Controller
         $product = $this->productService->store($productRequest);
 
         foreach ($request->input('variations') as $variation) {
-            ray($variation['sku']);
             $skuTemp = Sku::where('sku', $variation['sku'])->first();
             if ($skuTemp) {
                 return $request->validate([
@@ -104,8 +103,6 @@ class SkuController extends Controller
                     'variations.*.sku.unique' => 'The sku has already been taken.',
                 ]);
             }
-
-            ray($skuTemp);
 
             $vat = Vat::where('id', $request->input('vat_id'))->first();
             $sku = Sku::create([
