@@ -6,8 +6,6 @@ const props = defineProps({
     recentOrderedProducts: Array,
     recentProducts: Array,
 });
-
-console.log(props.recentOrderedProducts, props.recentProducts)
 </script>
 <template>
     <div class="bg-white">
