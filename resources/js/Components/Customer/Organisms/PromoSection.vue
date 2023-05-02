@@ -1,3 +1,7 @@
+<script setup>
+import { Link } from '@inertiajs/vue3';
+</script>
+
 <template>
   <div class="bg-gray-50">
     <div class="overflow-hidden pt-32 sm:pt-14">
@@ -11,10 +15,10 @@
                 Up to 50% off.
               </h2>
               <div class="mt-6 text-base">
-                <a href="#" class="font-semibold text-white">
-                  Shop the sale
-                  <span aria-hidden="true"> &rarr;</span>
-                </a>
+                <Link href="/products/promos" class="font-semibold text-white">
+                Shop the sale
+                <span aria-hidden="true"> &rarr;</span>
+                </Link>
               </div>
             </div>
 
@@ -56,7 +60,8 @@
               </div>
             </div>
           </div>
+        </div>
       </div>
     </div>
   </div>
-</div></template>  
+</template>  
