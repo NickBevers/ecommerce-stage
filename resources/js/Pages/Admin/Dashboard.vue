@@ -25,6 +25,8 @@ fetch('/admin/sales-today')
             stats.value[key].stat = data[key]
         })
 
+        data.amount = data.amount.toFixed(2)
+
         // calculate difference in orderAmount in %
         stats.value.orderAmount.change = ((data.orderAmount - data.orderAmountYesterday) / data.orderAmountYesterday * 100).toFixed(1) + '%' || '';
         stats.value.orderAmount.changeType = stats.value.orderAmount.change > 0 ? 'increase' : 'decrease';

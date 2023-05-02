@@ -67,29 +67,32 @@ class OrderController extends Controller
 
     function getSalesToday()
     {
-        $salesToday = Order::where('order_date', '>=', now()->startOfDay())
-            ->where('order_date', '<=', now()->endOfDay())
+        $salesToday = Order::where('created_at', '>=', now()->startOfDay())
+            ->where('created_at', '<=', now()->endOfDay())
             ->sum('total_price');
+
+        $salesToday = floatval(number_format((float)$salesToday, 2, '.', ''));
+
 //        Carbon::today()->toDateString()
-        $salesYesterday = Order::where('order_date', '>=', Carbon::yesterday()->setTime(00, 00, 00)->toDateTimeString())
-            ->where('order_date', '<=', Carbon::yesterday()->setTime(23, 59, 59)->toDateTimeString())
+        $salesYesterday = Order::where('created_at', '>=', Carbon::yesterday()->setTime(00, 00, 00)->toDateTimeString())
+            ->where('created_at', '<=', Carbon::yesterday()->setTime(23, 59, 59)->toDateTimeString())
             ->sum('total_price');
 
         return response()->json([
             'amount' => $salesToday,
-            'orderAmount' => Order::where('order_date', '>=', now()->startOfDay())
-                ->where('order_date', '<=', now()->endOfDay())
+            'orderAmount' => Order::where('created_at', '>=', now()->startOfDay())
+                ->where('created_at', '<=', now()->endOfDay())
                 ->count(),
-            'skusSold' =>  OrderLine::whereIn('order_id', Order::where('order_date', '>=', now()->startOfDay())
-                ->where('order_date', '<=', now()->endOfDay())->pluck('id'))->get()->sum('amount'),
-            'skus' => OrderLine::whereIn('order_id', Order::where('order_date', '>=', now()->startOfDay())
-                ->where('order_date', '<=', now()->endOfDay())->pluck('id'))->withAllRelations()->get(),
+            'skusSold' =>  OrderLine::whereIn('order_id', Order::where('created_at', '>=', now()->startOfDay())
+                ->where('created_at', '<=', now()->endOfDay())->pluck('id'))->get()->sum('amount'),
+            'skus' => OrderLine::whereIn('order_id', Order::where('created_at', '>=', now()->startOfDay())
+                ->where('created_at', '<=', now()->endOfDay())->pluck('id'))->withAllRelations()->get(),
             'amountYesterday' => $salesYesterday,
-            'orderAmountYesterday' => Order::where('order_date', '>=', Carbon::yesterday()->setTime(00, 00, 00)->toDateTimeString())
-                ->where('order_date', '<=', Carbon::yesterday()->setTime(23, 59, 59)->toDateTimeString())
+            'orderAmountYesterday' => Order::where('created_at', '>=', Carbon::yesterday()->setTime(00, 00, 00)->toDateTimeString())
+                ->where('created_at', '<=', Carbon::yesterday()->setTime(23, 59, 59)->toDateTimeString())
                 ->count(),
-            'skusSoldYesterday' =>  OrderLine::whereIn('order_id', Order::where('order_date', '>', Carbon::yesterday()->setTime(00, 00, 00)->toDateTimeString())
-                ->where('order_date', '>', Carbon::yesterday()->setTime(23, 59, 59)->toDateTimeString())
+            'skusSoldYesterday' =>  OrderLine::whereIn('order_id', Order::where('created_at', '>', Carbon::yesterday()->setTime(00, 00, 00)->toDateTimeString())
+                ->where('created_at', '>', Carbon::yesterday()->setTime(23, 59, 59)->toDateTimeString())
                 ->pluck('id'))->get()->sum('amount'),
         ]);
     }
