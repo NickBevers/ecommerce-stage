@@ -1,5 +1,6 @@
   
 <script setup>
+import { Link } from '@inertiajs/vue3';
 import { defineComponent, h } from 'vue'
 
 const navigation = {
@@ -26,6 +27,7 @@ const navigation = {
     { name: 'Claim', href: '#' },
     { name: 'Privacy', href: '#' },
     { name: 'Terms', href: '#' },
+    { name: 'Contact', href: '/contact' },
   ],
   social: [
     {
@@ -110,7 +112,8 @@ const navigation = {
               <h3 class="text-sm font-semibold leading-6 text-gray-900">Solutions</h3>
               <ul role="list" class="mt-6 space-y-4">
                 <li v-for="item in navigation.solutions" :key="item.name">
-                  <a :href="item.href" class="text-sm leading-6 text-gray-600 hover:text-gray-900">{{ item.name }}</a>
+                  <Link :href="item.href" class="text-sm leading-6 text-gray-600 hover:text-gray-900">{{ item.name }}
+                  </Link>
                 </li>
               </ul>
             </div>
@@ -118,7 +121,8 @@ const navigation = {
               <h3 class="text-sm font-semibold leading-6 text-gray-900">Support</h3>
               <ul role="list" class="mt-6 space-y-4">
                 <li v-for="item in navigation.support" :key="item.name">
-                  <a :href="item.href" class="text-sm leading-6 text-gray-600 hover:text-gray-900">{{ item.name }}</a>
+                  <Link :href="item.href" class="text-sm leading-6 text-gray-600 hover:text-gray-900">{{ item.name }}
+                  </Link>
                 </li>
               </ul>
             </div>
@@ -128,7 +132,8 @@ const navigation = {
               <h3 class="text-sm font-semibold leading-6 text-gray-900">Company</h3>
               <ul role="list" class="mt-6 space-y-4">
                 <li v-for="item in navigation.company" :key="item.name">
-                  <a :href="item.href" class="text-sm leading-6 text-gray-600 hover:text-gray-900">{{ item.name }}</a>
+                  <Link :href="item.href" class="text-sm leading-6 text-gray-600 hover:text-gray-900">{{ item.name }}
+                  </Link>
                 </li>
               </ul>
             </div>
@@ -136,7 +141,8 @@ const navigation = {
               <h3 class="text-sm font-semibold leading-6 text-gray-900">Legal</h3>
               <ul role="list" class="mt-6 space-y-4">
                 <li v-for="item in navigation.legal" :key="item.name">
-                  <a :href="item.href" class="text-sm leading-6 text-gray-600 hover:text-gray-900">{{ item.name }}</a>
+                  <Link :href="item.href" class="text-sm leading-6 text-gray-600 hover:text-gray-900">{{ item.name }}
+                  </Link>
                 </li>
               </ul>
             </div>
@@ -145,11 +151,11 @@ const navigation = {
       </div>
       <div class="mt-16 border-t border-gray-900/10 pt-8 sm:mt-20 md:flex md:items-center md:justify-between lg:mt-24">
         <div class="flex space-x-6 md:order-2">
-          <a v-for="item in navigation.social" :key="item.name" :href="item.href"
+          <Link v-for="item in navigation.social" :key="item.name" :href="item.href"
             class="text-gray-400 hover:text-gray-500">
-            <span class="sr-only">{{ item.name }}</span>
-            <component :is="item.icon" class="h-6 w-6" aria-hidden="true" />
-          </a>
+          <span class="sr-only">{{ item.name }}</span>
+          <component :is="item.icon" class="h-6 w-6" aria-hidden="true" />
+          </Link>
         </div>
         <p class="mt-8 text-xs leading-5 text-gray-500 md:order-1 md:mt-0">&copy; 2020 Your Company, Inc. All rights
           reserved.</p>

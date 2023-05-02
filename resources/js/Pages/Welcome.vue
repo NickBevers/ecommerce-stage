@@ -1,6 +1,7 @@
 <script setup>
 import GuestLayout from '@/Layouts/GuestLayout.vue';
 import { CategoryPreview, Trending, Hero, PromoSection, Incentive } from '@/Components/Customer';
+import { Head } from '@inertiajs/vue3';
 
 const props = defineProps({
     canLogin: Boolean,
@@ -13,11 +14,12 @@ const props = defineProps({
 </script>
 
 <template>
+    <Head title="Home" />
     <GuestLayout>
         <div>
             <Hero />
             <CategoryPreview />
-            <Trending :recent-ordered-products="props.recentOrderedProducts" :recent-products="props.recentProducts"/>
+            <Trending :recent-ordered-products="props.recentOrderedProducts" :recent-products="props.recentProducts" />
             <Incentive />
             <PromoSection />
         </div>
