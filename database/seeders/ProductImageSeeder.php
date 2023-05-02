@@ -7,6 +7,16 @@ use Illuminate\Database\Seeder;
 
 class ProductImageSeeder extends Seeder
 {
+    private function generateRandomString($length = 16) {
+        $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        $charactersLength = strlen($characters);
+        $randomString = '';
+        for ($i = 0; $i < $length; $i++) {
+            $randomString .= $characters[random_int(0, $charactersLength - 1)];
+        }
+        return $randomString;
+    }
+
     public function run(): void
     {
         $images = [
@@ -30,7 +40,7 @@ class ProductImageSeeder extends Seeder
                 $sku->productImages()->create([
                     'image_type' => $i === 0 ? 'thumbnail' : 'product',
                     'image_link' => $images[array_rand($images)],
-                    'image_public_id' => 'public_id',
+                    'image_public_id' => $this->generateRandomString(),
                     'alt' => $alt[array_rand($alt)],
                 ]);
             }

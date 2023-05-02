@@ -2,11 +2,13 @@
 import GuestLayout from '@/Layouts/GuestLayout.vue';
 import { CategoryPreview, Trending, Hero, PromoSection, Incentive } from '@/Components/Customer';
 
-defineProps({
+const props = defineProps({
     canLogin: Boolean,
     canRegister: Boolean,
     laravelVersion: String,
     phpVersion: String,
+    recentOrderedProducts: Array,
+    recentProducts: Array,
 });
 </script>
 
@@ -15,7 +17,7 @@ defineProps({
         <div>
             <Hero />
             <CategoryPreview />
-            <Trending />
+            <Trending :recent-ordered-products="props.recentOrderedProducts" :recent-products="props.recentProducts"/>
             <Incentive />
             <PromoSection />
         </div>

@@ -1,6 +1,13 @@
 
 <script setup>
 
+const props = defineProps({
+    recentOrderedProducts: Array,
+    recentProducts: Array,
+});
+
+console.log(props);
+
 const products = [
     {
         id: 1,
