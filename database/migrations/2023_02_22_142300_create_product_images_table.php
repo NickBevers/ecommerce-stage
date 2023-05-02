@@ -12,7 +12,7 @@ return new class extends Migration {
             $table->foreignId('sku_id')->nullable()->constrained()->onDelete('set null');
             $table->string('image_type');
             $table->string('image_link');
-            $table->string('image_public_id');
+            $table->string('image_public_id')->unique();
             $table->string('alt');
             $table->timestamps();
         });

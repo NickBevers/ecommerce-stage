@@ -17,7 +17,10 @@ use App\Http\Controllers\Product\SkuController as ProductSkuController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\Admin\UserController as AdminUserController;
+use App\Http\Controllers\WelcomeController;
+use App\Models\Order;
 use App\Models\PaymentType;
+use App\Models\Product;
 use App\Services\SubCategoryService;
 use App\Services\VatService;
 use Illuminate\Foundation\Application;
@@ -36,14 +39,7 @@ use Inertia\Inertia;
 */
 
 // Root Route
-Route::get('/', function () {
-    return Inertia::render('Welcome', [
-        'canLogin' => Route::has('login'),
-        'canRegister' => Route::has('register'),
-        'laravelVersion' => Application::VERSION,
-        'phpVersion' => PHP_VERSION,
-    ]);
-});
+Route::get('/', [WelcomeController::class, 'index'])->name('welcome');
 
 // All Admin Routes with middleware
 Route::middleware(['auth', 'admin'])->group(function () {
