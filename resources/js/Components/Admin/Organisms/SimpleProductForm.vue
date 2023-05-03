@@ -40,6 +40,8 @@ let selectedSubCategory = ref(null);
 let attributeError = ref("");
 let imageError = ref("");
 let skuError = ref("");
+let selectedImageIndex = ref(0);
+let newIndex = ref(0);
 
 function updateImages(images) {
     form.variations[0].images = images
@@ -92,6 +94,14 @@ watch(imageError, (value) => {
     }
 })
 
+watch(selectedImageIndex, (index) => {
+    const images = [...form.variations[0].images];
+    const selectedImage = images[index];
+    images.splice(index, 1); // remove the selected image from its current position
+    images.splice(newIndex, 0, selectedImage); // insert the selected image at the new position
+    form.variations[0].images = images;
+    selectedImageIndex.value = newIndex.value;
+});
 
 function updateVariation(event, attribute) {
     const obj = {}
@@ -242,18 +252,20 @@ function submit() {
                                     v-model="form.extra_info">  </textarea>
                             </div>
                         </div>
-                        <div class="flex flex-row overflow-hidden">
+                        <div class="flex flex-row">
                             <UploadFile @image-previews="updateImages" :images="form.variations[0].images" :index="0"
                                 :req="true" />
-                            <div class="flex gap-6 flex-wrap">
+                            <div class="flex gap-x-6 flex-wrap items-end ml-4 text-center">
                                 <div v-for="(preview, imageIndex) in form.variations[0].images" :key="imageIndex"
-                                    class="relative">
+                                    class="relative cursor-pointer" @click="selectedImageIndex = imageIndex">
                                     <div class="bg-indigo-600 p-0.5 cursor-pointer absolute right-0 top-0 rounded-bl-md rounded-tr-md"
                                         @click="removeImage(imageIndex)">
                                         <XMarkIcon class="h-6 w-6 text-white" />
                                     </div>
                                     <img :src="preview.url" alt="Uploaded Image"
+                                        :class="{ 'ring-2 rounded-md ring-indigo-600': imageIndex === selectedImageIndex }"
                                         class="mx-auto h-24 rounded-md w-24 object-cover" />
+                                    <p :class="{ 'invisible': imageIndex != selectedImageIndex }">thumbnail</p>
                                 </div>
                             </div>
                         </div>
@@ -269,6 +281,7 @@ function submit() {
                 </Link>
                 <button type="submit"
                     class="ml-3 inline-flex justify-center rounded-md bg-indigo-600 py-2 px-3 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500">Save</button>
-        </div>
-    </form>
-</div></template>
+            </div>
+        </form>
+    </div>
+</template>

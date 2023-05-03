@@ -116,6 +116,9 @@ let material = ref("");
 let attributes = ref([]);
 let variationsMade = ref(false);
 
+let selectedImageIndex = ref(0);
+let newIndex = ref(0);
+
 function updateSubCategories() {
     selectedHeadCategory.value = selectedHeadCategoryIndex.value.id - 1
 }
@@ -175,6 +178,16 @@ watch(() => {
     }
     form.variations = variations.value
 })
+
+
+watch(selectedImageIndex, (index) => {
+    const images = [...form.variations[0].images];
+    const selectedImage = images[index];
+    images.splice(index, 1); // remove the selected image from its current position
+    images.splice(newIndex, 0, selectedImage); // insert the selected image at the new position
+    form.variations[0].images = images;
+    selectedImageIndex.value = newIndex.value;
+});
 
 
 function updateImages(images, index) {
@@ -431,62 +444,6 @@ function submit() {
                     </div>
                 </div>
             </div>
-
-            <!--            <div class="bg-white px-4 py-5 shadow  mb-4 sm:rounded-lg sm:p-6">-->
-            <!--                <form @submit.prevent="addVariation">-->
-            <!--                    <div class="md:grid md:grid-cols-3 md:gap-6">-->
-            <!--                        <div class="md:col-span-1">-->
-            <!--                            <h3 class="text-base font-semibold leading-6 text-gray-900">Variations</h3>-->
-            <!--                            <p class="mt-1 text-sm text-gray-500">This information will be displayed publicly so be-->
-            <!--                                careful-->
-            <!--                                what you share.</p>-->
-            <!--                        </div>-->
-            <!--                        <div class="mt-5 md:col-span-2 md:mt-0">-->
-            <!--                            <InputError class="mt-2" v-if="formVariationError"-->
-            <!--                                message="Please create at least one variation" />-->
-            <!--                            <div class="grid grid-cols-6 gap-6">-->
-            <!--                                <div class="col-span-6 sm:col-span-3">-->
-            <!--                                    <InputLabel for="sku" value="SKU" />-->
-            <!--                                    <div class="mt-2 flex rounded-md shadow-sm">-->
-            <!--                                        <TextInput id="sku" type="text" class="mt-1 block w-full pl-3" name="SKU"-->
-            <!--                                            v-model="variationForm.sku" required autocomplete="SKU" placeholder="SKU" />-->
-            <!--                                        <InputError class="mt-2" :message="variationForm.errors.sku" />-->
-            <!--                                    </div>-->
-            <!--                                </div>-->
-
-            <!--                                <div class="col-span-6 sm:col-span-3">-->
-            <!--                                    <InputLabel for="stock" value="Stock" />-->
-            <!--                                    <div class="mt-2 flex rounded-md shadow-sm">-->
-            <!--                                        <TextInput id="stock" type="number" class="mt-1 block w-full pl-3" name="stock"-->
-            <!--                                            v-model="variationForm.amount" required autocomplete="title"-->
-            <!--                                            placeholder="50" />-->
-            <!--                                        <InputError class="mt-2" :message="variationForm.errors.amount" />-->
-            <!--                                    </div>-->
-            <!--                                </div>-->
-            <!--                                <div class="col-span-6 sm:col-span-3">-->
-            <!--                                    <InputLabel for="stock" value="Price" />-->
-            <!--                                    <div class="mt-2 flex rounded-md shadow-sm">-->
-            <!--                                        <TextInput id="stock" type="number" class="mt-1 block w-full pl-3" name="price"-->
-            <!--                                            pattern="^\d*(\.\d{0,2})?$" step="0.01" v-model="variationForm.price"-->
-            <!--                                            required autocomplete="title" placeholder="19.99" />-->
-            <!--                                        <InputError class="mt-2" :message="variationForm.errors.price" />-->
-            <!--                                    </div>-->
-            <!--                                </div>-->
-            <!--                                <div class="col-span-6 sm:col-span-6">-->
-            <!--                                    <InputLabel for="variation" value="Add-ons" />-->
-
-            <!--                                    <InputError class="mt-2" v-if="variationError" message="Please select add-ons" />-->
-            <!--                                </div>-->
-            <!--                            </div>-->
-
-            <!--                        </div>-->
-
-            <!--                    </div>-->
-            <!--                    <div class="flex justify-end">-->
-            <!--                        <PrimaryButton type="submit" class="mt-4">Add variation</PrimaryButton>-->
-            <!--                    </div>-->
-            <!--                </form>-->
-            <!--            </div>-->
             <div class="max-w-7xl mx-auto sm:py-6" v-if="variations.length">
                 <div class="sm:flex sm:items-center">
                     <div class="sm:flex-auto">
@@ -539,15 +496,17 @@ function submit() {
                             <div class="flex flex-row gap-6 overflow-hidden pt-4">
                                 <UploadFile @image-previews="updateImages" :images="variation.images" :index="index"
                                     :req="true" />
-                                <div class="mt-6 flex gap-6 flex-wrap">
+                                <div class="mt-6 flex gap-6 flex-wrap text-center">
                                     <div v-for="(preview, imageIndex) in variation.images" :key="imageIndex"
-                                        class="relative">
+                                        class="relative cursor-pointer" @click="selectedImageIndex = imageIndex">
                                         <div class="bg-indigo-600 p-0.5 cursor-pointer absolute right-0 top-0 rounded-bl-md rounded-tr-md"
                                             @click="removeImage(index, imageIndex)">
                                             <XMarkIcon class="h-6 w-6 text-white" />
                                         </div>
                                         <img :src="preview.url" alt="Uploaded Image"
+                                            :class="{ 'ring-2 rounded-md ring-indigo-600': imageIndex === selectedImageIndex }"
                                             class="mx-auto h-24 rounded-md w-24 object-cover" />
+                                        <p :class="{ 'invisible': imageIndex != selectedImageIndex }">thumbnail</p>
                                     </div>
                                 </div>
                             </div>
