@@ -76,7 +76,7 @@ class SkuService
     }
 
 
-    public function getUniqueAttributeValues($skus, $attributeType): Array
+    public function getUniqueAttributeValues($skus, $attributeType): array
     {
         $tempArr = [];
         foreach ($skus as $sku => $value) {
@@ -90,7 +90,7 @@ class SkuService
         return collect($tempArr)->sortBy('id')->unique('id')->values()->all();
     }
 
-    public function getUniqueBrands($skus): Array
+    public function getUniqueBrands($skus): array
     {
         $tempArr = [];
         foreach ($skus as $sku => $value) {

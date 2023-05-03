@@ -18,25 +18,17 @@ const form = useForm({
   firstname: user.firstname,
   lastname: user.lastname,
   email: user.email,
-  password: "",
+  phone: user.phone,
 });
 
 onMounted(() => {
-  form.reset("firstname", "lastname", "email", "password");
+  form.reset("firstname", "lastname", "email", "password", "phone");
 });
 
 const updateProfile = () => {
   form.patch(route(`users.update`, user.id), {
     preserveScroll: true,
     onSuccess: () => {
-      form.update({
-        firstname: user.firstname,
-        lastname: user.lastname,
-        email: user.email,
-        password: "",
-      });
-
-      form.reset();
     },
     onError: () => {
       form.reset();
@@ -47,7 +39,7 @@ const updateProfile = () => {
 
 <template>
   <section>
-    <header v-if="props.user_type != 'customer'">
+    <header v-if="props.user_type !== 'customer'">
       <h2 class="text-lg font-medium text-gray-900">Profile Information</h2>
 
       <p class="mt-1 text-sm text-gray-600">
@@ -91,12 +83,12 @@ const updateProfile = () => {
       </div>
 
       <div>
-        <InputLabel for="password_check" value="Password" />
+        <InputLabel for="phone" value="Phone" />
 
-        <TextInput id="password_check" type="password" class="mt-1 block w-full" v-model="form.password"
-          autocomplete="new-password" required />
+        <TextInput id="phone" type="phone" class="mt-1 block w-full" v-model="form.phone" required
+                   autocomplete="phone" />
 
-        <InputError class="mt-2" :message="form.errors.password" />
+        <InputError class="mt-2" :message="form.errors.phone" />
       </div>
 
       <div v-if="props.mustVerifyEmail && user.email_verified_at === null">

@@ -9,13 +9,15 @@ const props = defineProps({
   }
 })
 
+console.log(props.variations);
+
 let showAll = ref(false);
 
 </script>
 <template>
   <h3 class="text-sm">Variations:</h3>
   <div class="flex flex-wrap justify-start">
-    <div v-for="variation, index in props.variations" :key="variation.id" class="m-1 overflow-hidden rounded-md"
+    <div v-for="(variation, index) in props.variations" :key="variation.id" class="m-1 overflow-hidden rounded-md"
       :class="{ 'hidden': !showAll && index > 3 }">
       <div v-if="!showAll" class="overflow-hidden">
         <div class="h-32 w-20 inline hover:scale-125 duration-500 col-span-4 transition-all rounded-md object-cover">

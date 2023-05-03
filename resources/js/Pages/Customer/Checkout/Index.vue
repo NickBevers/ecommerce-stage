@@ -45,6 +45,12 @@ const form = useForm({
     email: '',
 })
 
+// get user info
+form.first_name = page.props.auth.user.firstname
+form.last_name = page.props.auth.user.lastname
+form.email = page.props.auth.user.email
+form.phone_number = page.props.auth.user.phone
+
 const cartStore = useCartStore()
 
 let subTotal = ref(0)

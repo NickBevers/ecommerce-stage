@@ -7,11 +7,14 @@ import { ProductReviews, WishlistButton, DetailCart, ProductVariationList, Produ
 const props = defineProps({
   sku: Object,
   variations: Object,
+  sizeVariations: Object,
   sizes: Object,
   colors: Object,
   material: String,
   userHasBought: Boolean,
 });
+
+console.log('Index', props.sizeVariations);
 
 let checked = ref(false)
 
@@ -43,14 +46,13 @@ function checkout() {
         </div>
 
         <ImageGallery :sku="props.sku" />
-
-        <div class="mt-8 lg:col-span-5">
+        <div class="mt-8 lg:col-span-5" v-if="props.sku.is_active !== false">
           <form>
             <div class="mb-6">
               <ProductVariationList :variations="props.variations" />
             </div>
             <div class="mt-10 flex">
-              <DetailCart :product="props.sku" @checkout="checkout" class="w-full" />
+              <DetailCart :product="props.sku" :size-variations="props.sizeVariations" @checkout="checkout" class="w-full" />
               <div
                 class="ml-4 flex self-end h-fit items-center justify-center rounded-md py-3 px-3 text-gray-400 hover:bg-gray-100 hover:text-gray-500"
                 :class="checked ? 'mb-16' : ''">
@@ -61,6 +63,10 @@ function checkout() {
           <!-- Product details -->
           <ProductDetails :sku="props.sku" />
           <Policies />
+        </div>
+
+        <div class="mt-8 lg:col-span-5" v-else>
+          <p class="text-lg font-medium text-gray-900">This product is currently unavailable.</p>
         </div>
       </div>
       <ProductReviews :reviews="props.sku.reviews" :sku="props.sku.id.toString()" :userHasBought="props.userHasBought" />
