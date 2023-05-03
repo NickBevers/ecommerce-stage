@@ -45,7 +45,7 @@ function submit() {
             })
         })
             .then(response => {
-                if (response.status == 200) {
+                if (response.status === 200) {
                     let cart = cartStore.getCount
                     cart = parseInt(cart)
                     cartStore.setCount(cart + amount.value)

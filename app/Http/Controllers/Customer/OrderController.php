@@ -29,6 +29,10 @@ class OrderController extends Controller
         $order = Order::create($request->validated());
 
         foreach ($request->skus as $sku) {
+            if ($sku['amount'] > $sku['sku']['amount']) {
+                return redirect()->back()->with('error', 'There is not enough stock for this product' . $sku['sku']['product']['title']);
+            }
+
             $product_name = $sku['sku']['product']['title'];
             $order->skus()->attach($sku['sku_id'], [
                 'amount' => $sku['amount'],

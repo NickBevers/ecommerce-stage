@@ -34,21 +34,22 @@ class UserController extends Controller
         return User::findOrFail($user->id);
     }
 
-    public function update(UserValidationRequest $request, User $user)
+    public function update(Request $request, User $user)
     {
-        $hashedPassword = User::where('id', $user->id)->first()->password;
-
-        if (!password_verify($request->password, $hashedPassword)) {
-            return redirect()->back()->with('error', 'Password is incorrect');
-        }
+        $request->validate([
+            'firstname' => 'required',
+            'lastname' => 'required',
+            'email' => 'required',
+            'phone' => 'required',
+        ]);
 
         $user->firstname = $request->firstname;
         $user->lastname = $request->lastname;
         $user->email = $request->email;
-        $user->password = $request->password;
+        $user->phone = $request->phone;
         $user->save();
 
-        return redirect()->route('users.index');
+        return redirect()->route('profile.userEdit');
     }
 
     public function updateBankAccount(Request $request)

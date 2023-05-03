@@ -35,7 +35,7 @@ console.log(props.skus);
                   && new Date(product.promos[0].start_date.split(' ')[0]) < new Date()
                   && new Date(product.promos[0].end_date.split(' ')[0]) > new Date()">
                 <span class="text-white no-underline mr-3">
-                  €{{ product.promos[0].id }}
+                  €{{ product.promos[0].new_price_incl_vat.toFixed(2) }}
                 </span>
                 <span class="line-through">€{{ product.price_incl_vat.toFixed(2) }}</span>
               </p>
