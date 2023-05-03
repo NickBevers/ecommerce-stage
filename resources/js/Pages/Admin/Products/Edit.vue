@@ -21,6 +21,9 @@ let selectedHeadCategoryIndex = ref(0);
 let selectedHeadCategory = ref(0);
 let selectedSubCategory = ref(0);
 
+let selectedImageIndex = ref(0);
+let newIndex = ref(0);
+
 // let color = ref("");
 // let size = ref("");
 // let material = ref("");
@@ -110,6 +113,7 @@ function removeImage(imageIndex) {
         })
     })
     form.variations.images.splice(imageIndex, 1)
+    selectedImageIndex.value = 0
 }
 function removeNewImage(imageIndex) {
     fetch('/admin/products/removeVariationImage', {
@@ -122,6 +126,7 @@ function removeNewImage(imageIndex) {
         })
     })
     form.variations.newImages.splice(imageIndex, 1)
+    selectedImageIndex.value = 0
 }
 
 
@@ -133,19 +138,6 @@ function updateImages(images) {
 }
 
 function update() {
-    // console.log(form)
-    // fetch('/admin/products/' + props.skus.id, {
-    //     method: 'PATCH',
-    //     headers: {
-    //         'Content-Type': 'application/json',
-    //     },
-    //     body: JSON.stringify({
-    //         form
-    //     })
-    // })
-
-
-
     form.patch('/admin/products/' + props.skus.id), {
         onSuccess: () => {
             console.log('success')
@@ -155,6 +147,15 @@ function update() {
         }
     }
 }
+
+watch(selectedImageIndex, (index) => {
+    const images = [...form.variations.images];
+    const selectedImage = images[index];
+    images.splice(index, 1); // remove the selected image from its current position
+    images.splice(newIndex, 0, selectedImage); // insert the selected image at the new position
+    form.variations.images = images;
+    selectedImageIndex.value = newIndex.value;
+});
 
 </script>
 <template>
@@ -357,16 +358,27 @@ function update() {
                                 <div class="flex flex-row gap-6 flex-wrap">
                                     <UploadFile :images="form.variations.images" @image-previews="updateImages"
                                         class="col-span-6 sm:col-span-6" :index="0" />
-                                    <div class="flex gap-6 flex-wrap items-center">
+                                    <div class="flex gap-6 flex-wrap items-center text-center">
                                         <div v-for="(preview, imageIndex) in form.variations.images" :key="imageIndex"
-                                            class="relative">
+                                            class="relative cursor-pointer text-white hover:text-gray-400"
+                                            @click="selectedImageIndex = imageIndex">
                                             <div class="bg-indigo-600 p-0.5 cursor-pointer absolute right-0 top-0 rounded-bl-md rounded-tr-md"
                                                 @click="removeImage(imageIndex)"
                                                 v-if="(form.variations.images.length + form.variations.newImages.length) > 1">
                                                 <XMarkIcon class="h-6 w-6 text-white" />
                                             </div>
                                             <img :src="preview.image_link || preview.url" alt="Uploaded Image"
+                                                :class="{ 'rounded-md ring-2 ring-indigo-600 ': imageIndex === selectedImageIndex }"
                                                 class="mx-auto h-24 rounded-md w-24 object-cover" />
+                                            <p :class="{ 'text-black': imageIndex == selectedImageIndex }"
+                                                v-if="imageIndex == selectedImageIndex" class="select-none">
+                                                thumbnail
+                                            </p>
+
+                                            <p :class="{ 'text-black': imageIndex == selectedImageIndex }" v-else
+                                                class="select-none">
+                                                &lt;
+                                            </p>
 
                                         </div>
                                         <div v-for="(preview, imageIndex) in form.variations.newImages" :key="imageIndex"
