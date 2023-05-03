@@ -2,17 +2,38 @@
 import { Pagination } from '@/Components/Admin'
 import { WishlistButton } from '@/Components/Customer'
 import { Link } from '@inertiajs/vue3';
-import moment from "moment";
+import { CheckCircleIcon, XMarkIcon } from '@heroicons/vue/20/solid'
+
+import { ref } from "vue";
+import { ConfirmationMessage } from "@/Components/Customer";
 
 const props = defineProps({
   skus: Object,
   links: Object,
 })
 
+const wishlistMsg = ref('');
 console.log(props.skus);
+
+function handleAdd(sku) {
+  wishlistMsg.value = sku.product.title + ' has been added to your wishlist';
+  setTimeout(() => {
+    wishlistMsg.value = '';
+  }, 3000);
+}
+
+function handleRemove(sku) {
+  wishlistMsg.value = sku.product.title + ' has been removed from your wishlist';
+  setTimeout(() => {
+    wishlistMsg.value = '';
+  }, 3000);
+}
 
 </script>
 <template>
+  <div v-if="wishlistMsg.length > 0">
+    <ConfirmationMessage :wishlistMsg="wishlistMsg" />
+  </div>
   <div class="bg-white">
     <div class="mx-auto max-w-2xl py-6 px-4 sm:py-6 sm:px-6 lg:max-w-7xl lg:px-8" v-if="props.skus.length > 0">
       <div class="grid grid-cols-1 gap-y-12 sm:grid-cols-2 sm:gap-x-6 lg:grid-cols-4 xl:gap-x-8">
@@ -45,7 +66,7 @@ console.log(props.skus);
                 </p>
             </div>
             <div>
-              <WishlistButton :product="product" class="absolute top-0 right-0 p-2 m-2 bg-white rounded-md group-odd" />
+              <WishlistButton :product="product" class="absolute top-0 right-0 p-2 m-2 bg-white rounded-md group-odd" @added-to-wishlist="handleAdd" @removed-from-wishlist="handleRemove"/>
             </div>
           </div>
           </Link>

@@ -89,57 +89,50 @@ class SkuController extends Controller
 
     public function show(Sku $sku)
     {
-        $tempSku = Sku::where('sku', $sku->sku)->withAllRelations()->first();
-        $attributeValues = $tempSku->attributeValues;
-        $material = $attributeValues->where('attribute_type_id', AttributeType::where('name', 'material')->first()->id)->first();
-        $sizes = [];
-        $colors = [];
-        foreach ($attributeValues as $attributeValue) {
-            if ($attributeValue->attribute_type_id == AttributeType::where('name', 'size')->first()->id) {
-                $sizes[] = $attributeValue->name;
-            }
-            if ($attributeValue->attribute_type_id == AttributeType::where('name', 'color')->first()->id) {
-                $colors[] = [
-                    "name" => $attributeValue->name, 
-                    "hex" => $attributeValue->color_value];
-            }
+        $attributes = $sku->attributeValues->toArray();
+        $sku = Sku::where('sku', $sku->sku)->withAllRelations()->first();
+//        $material = $attributeValues->where('attribute_type_id', AttributeType::where('name', 'material')->first()->id)->first();
+//        $sizes = [];
+//        $colors = [];
+//        foreach ($attributeValues as $attributeValue) {
+//            if ($attributeValue->attribute_type_id == AttributeType::where('name', 'size')->first()->id) {
+//                $sizes[] = $attributeValue->name;
+//            }
+//            if ($attributeValue->attribute_type_id == AttributeType::where('name', 'color')->first()->id) {
+//                $colors[] = [
+//                    "name" => $attributeValue->name,
+//                    "hex" => $attributeValue->color_value];
+//            }
+//        }
+
+        $temp = $sku->attributeValues->where('attribute_type_id', '!=',AttributeType::where('name', 'size')->first()->id)->pluck('id')->toArray();
+        ray($temp);
+
+        $sizeVariations = Sku::where('product_id', $sku->product_id)
+            ->where('is_active', true)
+            ->whereHas('attributeValues', function ($query) use ($temp) {
+                $query->whereIn('attribute_value_id', $temp);
+            })
+            ->with('productImages', function ($query) {
+                $query->where('image_type', 'thumbnails');
+            })
+            ->get();
+
+        foreach ($sizeVariations as $sizeVariation) {
+            $sizeVariation->size = $sizeVariation->attributeValues->where('attribute_type_id', AttributeType::where('name', 'size')->first()->id)->first()->name;
         }
 
-        $variations = Sku::where('product_id', $tempSku->product_id)
-            ->whereNotIn('sku', [$tempSku->sku])
+        $variations = Sku::where('product_id', $sku->product_id)
+            ->whereNotIn('sku', [$sku->sku])
             ->where('is_active', true)
+            ->whereNotIn('id', $sizeVariations->pluck('id')->toArray())
             ->with('productImages', function ($query) {
                 $query->where('image_type', 'thumbnails');
             })
             ->get();
 
 
-        $tempVars = Sku::where('product_id', $tempSku->product_id)
-            ->where('is_active', true)
-            ->with('productImages', function ($query) {
-                $query->where('image_type', 'thumbnails');
-            })
-            ->get();
-
-        $sizeVariations = [];
-        foreach ($tempVars as $variation) {
-            $sizeVariations[$variation->id] = [
-                'id' => $variation->id,
-                'sku' => $variation->sku,
-                'price' => $variation->price_incl_vat,
-                'image' => $variation->productImages->first()->image,
-                'size' => $variation->attributeValues->where('attribute_type_id', AttributeType::where('name', 'size')->first()->id)->first()?->name,
-            ];
-        }
-
-        // filter the sizeVariations array to only contain unique sizes
-        $sizeVariations = array_filter($sizeVariations, function ($variation) {
-            return $variation['size'] != null;
-        });
-        $sortedSizes = $this->sortSizes(array_column($sizeVariations, 'size'));
-
-
-        $reviews = $tempSku->reviews;
+        $reviews = $sku->reviews;
         foreach ($reviews as $review) {
             $review->upvotes = $review->upvotes()->count();
             $review->userLikes = $review->upvotes()->where('user_id', Auth::id())->exists();
@@ -148,16 +141,16 @@ class SkuController extends Controller
         $hasBought = false;
 
         if (Auth::check()) {
-            $hasBought = $tempSku->orders()->where('user_id', Auth::id())->exists();
+            $hasBought = $sku->orders()->where('user_id', Auth::id())->exists();
         }
 
 
         return Inertia::render('Customer/Product/Index', [
-            'sku' => $tempSku,
+            'sku' => $sku,
             'variations' => $variations,
-            'sizes' => $sizes,
-            'colors' => $colors,
-            'material' => $material?->name,
+//            'sizes' => $sizes,
+//            'colors' => $colors,
+//            'material' => $material?->name,
             'userHasBought' => $hasBought,
             'sizeVariations' => $sizeVariations,
         ]);

@@ -8,9 +8,6 @@ const props = defineProps({
   sku: Object,
   variations: Object,
   sizeVariations: Object,
-  sizes: Object,
-  colors: Object,
-  material: String,
   userHasBought: Boolean,
 });
 
