@@ -18,12 +18,8 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\Admin\UserController as AdminUserController;
 use App\Http\Controllers\WelcomeController;
-use App\Models\Order;
-use App\Models\PaymentType;
-use App\Models\Product;
 use App\Services\SubCategoryService;
 use App\Services\VatService;
-use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -169,7 +165,8 @@ Route::get('/cart/products', [CartController::class, 'getProductsPerUser'])->nam
 Route::get('/cart/count', [CartController::class, 'getAmountOfItemsInCart'])->name('cart.getCount');
 
 // Product Routes
-Route::get('/product/{sku:sku}',  [ProductSkuController::class, 'show'])->name('product.show');
+//Route::get('/product/{sku:sku}',  [ProductSkuController::class, 'show'])->name('product.show');
+Route::get('/product/{sku:sku}/{product:slug}',  [ProductSkuController::class, 'show'])->name('product.show');
 Route::get('/products/category/{categoryName}', [ProductSkuController::class, 'showByCategory'])->name('products.showByCategory');
 Route::get('/products/promos', [ProductSkuController::class, 'showPromos'])->name('promos');
 Route::get('/products/{subCategory}', [ProductSkuController::class, 'showBySubCategory'])->name('products.showBySubCategory');

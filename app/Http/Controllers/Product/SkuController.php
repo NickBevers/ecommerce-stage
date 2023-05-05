@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Product;
 use App\Http\Controllers\Controller;
 use App\Models\AttributeType;
 use App\Models\AttributeValue;
+use App\Models\Product;
 use App\Models\Sku;
 use App\Services\GetAttributeValuesService;
 use App\Services\SkuService;
@@ -87,31 +88,23 @@ class SkuController extends Controller
         return array_values($res);
     }
 
-    public function show(Sku $sku)
-    {
-        $attributes = $sku->attributeValues->toArray();
-        $sku = Sku::where('sku', $sku->sku)->withAllRelations()->first();
-//        $material = $attributeValues->where('attribute_type_id', AttributeType::where('name', 'material')->first()->id)->first();
-//        $sizes = [];
-//        $colors = [];
-//        foreach ($attributeValues as $attributeValue) {
-//            if ($attributeValue->attribute_type_id == AttributeType::where('name', 'size')->first()->id) {
-//                $sizes[] = $attributeValue->name;
-//            }
-//            if ($attributeValue->attribute_type_id == AttributeType::where('name', 'color')->first()->id) {
-//                $colors[] = [
-//                    "name" => $attributeValue->name,
-//                    "hex" => $attributeValue->color_value];
-//            }
-//        }
 
-        $temp = $sku->attributeValues->where('attribute_type_id', '!=',AttributeType::where('name', 'size')->first()->id)->pluck('id')->toArray();
-        ray($temp);
+    public function show(Sku $sku, $slug)
+    {
+        $sku = Sku::where('sku', $sku->sku)->withAllRelations()->first();
+
+        if ($sku->product->slug != $slug) {
+//            return redirect()->route('welcome');
+            abort(404);
+        }
+
+        $activeSkuAttributes = $sku->attributeValues->where('attribute_type_id', '!=',AttributeType::where('name', 'size')->first()->id)->pluck('id')->toArray();
+        ray($activeSkuAttributes);
 
         $sizeVariations = Sku::where('product_id', $sku->product_id)
             ->where('is_active', true)
-            ->whereHas('attributeValues', function ($query) use ($temp) {
-                $query->whereIn('attribute_value_id', $temp);
+            ->whereHas('attributeValues', function ($query) use ($activeSkuAttributes) {
+                $query->whereIn('attribute_value_id', $activeSkuAttributes);
             })
             ->with('attributeValues', function ($query) {
                 $query->where('attribute_type_id', '!=', AttributeType::where('name', 'size')->first()->id);
@@ -125,7 +118,7 @@ class SkuController extends Controller
 
         foreach ($sizeVariations as $sizeVariation) {
             $attributeArray = $sizeVariation->attributeValues->pluck('id')->toArray();
-            if (array_intersect($temp, $attributeArray) != $temp) {
+            if (array_intersect($activeSkuAttributes, $attributeArray) != $activeSkuAttributes) {
                 $sizeVariations = $sizeVariations->where('id', '!=', $sizeVariation->id);
             } else {
                 $sizeVariation->size = Sku::where('id', $sizeVariation->id)->with('attributeValues', function ($query) {
