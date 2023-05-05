@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Product;
 use App\Http\Controllers\Controller;
 use App\Models\AttributeType;
 use App\Models\AttributeValue;
+use App\Models\Product;
 use App\Models\Sku;
 use App\Services\GetAttributeValuesService;
 use App\Services\SkuService;
@@ -85,6 +86,17 @@ class SkuController extends Controller
         $sizes = $this->attributeValueService->getValuesByType("size")->pluck('name')->toArray();
         $res = array_intersect($sizes, $data);
         return array_values($res);
+    }
+
+    public function tempShow(Sku $sku, $slug){
+        ray($slug);
+        ray($sku);
+
+//        $selectedSku = Sku::where('product_id', Product::where('slug', $slug->slug)->first()->id)
+//            ->where('sku', $sku->sku)->withAllRelations()->first();
+//        ray($selectedSku);
+
+
     }
 
     public function show(Sku $sku)

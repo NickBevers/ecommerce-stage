@@ -12,33 +12,16 @@ class ProductFactory extends Factory
 {
     protected $model = Product::class;
 
-    protected array $titles= [
-        "Soft Joggers",
-        "Cozy Hoodie",
-        "Vibrant Leggings",
-        "Dapper Blazer",
-        "Comfy Sweater",
-        "Sleek Jacket",
-        "Playful Romper",
-        "Chic Skirt",
-        "Sporty Shorts",
-        "Elegant Dress",
-        "Bold Tunic",
-        "Relaxed Tank",
-        "Classic Cardigan",
-        "Modern Jumpsuit",
-        "Fluffy Robe",
-        "Flowy Maxi Dress",
-        "Fuzzy Socks",
-        "Quirky Overalls",
-        "Rugged Cargo Pants",
-        "Timeless Peacoat"
-    ];
+    private function slugify($string): string
+    {
+        return strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', '-', $string)));
+    }
 
     public function definition(): array
     {
         return [
-            'title' => $this->faker->randomElement($this->titles),
+            'title' => $title = $this->faker->unique()->words(2, true),
+            'slug' => $this->slugify($title),
             'description' => "This is a product description where we provide the information required for the customer to make a decision on whether to purchase the product or not. A customer can decide to purchase the product based on the information provided in this description.",
             'audience' => $this->faker->randomElement(['Men', 'Women', 'Kids', 'Unisex']),
             'sub_category_id' => SubCategory::all()->random()->id,
