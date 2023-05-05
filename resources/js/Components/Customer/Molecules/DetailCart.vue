@@ -25,20 +25,18 @@ const props = defineProps({
   },
 })
 
-console.log('DetailCart', props.sizeVariations)
-console.log('DetailCart', Object.keys(props.sizeVariations).length)
-
 const cartStore = useCartStore()
 const productStore = useProductStore()
+
+let selectedProduct = ref('')
 
 let showError = ref(false)
 const error = {
   title: "There were errors with your submission",
   errors: [{
-    message: "Select attributes"
+    message: "Select a size"
   }]
 }
-const selectedColor = ref("")
 const selectedSize = ref("")
 const amount = ref(1)
 
@@ -58,39 +56,44 @@ function submit() {
     })
       .then(response => {
         if (response.status === 200) {
-          console.log("success")
           checkout.value = true
           emit('checkout')
           let cart = cartStore.getCount
           cart = parseInt(cart)
           cartStore.setCount(cart + amount.value)
+          setTimeout(() => {
+            checkout.value = false
+          }, 3000)
         }
       })
       .catch(error => {
         console.log(error);
       });
   }
-  else if (selectedColor.value === "" || selectedSize.value === "") {
+  else if (selectedSize.value === "") {
     showError.value = true
-    console.log("error")
   }
   else {
+    showError.value = false
+
     fetch('/cart', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        sku_id: props.product.id,
+        sku_id: selectedProduct.value,
         amount: amount.value,
       })
     })
       .then(response => {
         if (response.status === 200) {
-          console.log("success")
           checkout.value = true
           emit('checkout')
           cartStore.increment()
+          setTimeout(() => {
+            checkout.value = false
+          }, 3000)
         }
       })
       .catch(error => {
@@ -99,34 +102,21 @@ function submit() {
   }
 }
 
-console.log(typeof props.sizeVariations)
-
+function changeProduct(sku) {
+  selectedProduct.value = sku.id
+}
 </script>
 <template>
   <section>
     <h3 class="sr-only">Product options</h3>
-
+    <div v-if="props.product.attribute_values.length > 0">
+        <template v-for="attributeValue in props.product.attribute_values">
+          <h4 v-if="attributeValue.attribute_type_id === 2" class="text-md font-medium text-gray-900">Color: {{ attributeValue.name }}</h4>
+          <h4 v-if="attributeValue.attribute_type_id === 3" class="text-md font-medium text-gray-900">Material: {{ attributeValue.name }}</h4>
+        </template>
+      </div>  
     <form>
-      <!-- Color picker -->
-      <div v-if="props.product.attribute_values.length > 0">
-        <h4 class="text-sm font-medium text-gray-900">Color</h4>
 
-        <RadioGroup v-model="selectedColor" class="mt-2">
-          <RadioGroupLabel class="sr-only"> Choose a color </RadioGroupLabel>
-          <div class="flex items-center space-x-3">
-            <RadioGroupOption as="template" v-for="color in props.product.attribute_values" :key="color.name"
-              :value="color" v-slot="{ active, checked }">
-              <div class="-ml-4"
-                :class="[active && checked ? 'ring ring-offset-1' : '', !active && checked ? 'ring-2' : '', 'relative -m-0.5 flex cursor-pointer items-center justify-center rounded-full p-0.5 focus:outline-none']">
-                <RadioGroupLabel as="span" class="sr-only"> {{ color.name }} </RadioGroupLabel>
-                <span aria-hidden="true"
-                  :class="['h-8 w-8 rounded-full border border-black border-opacity-10', color.attribute_type_id !== 2 ? 'hidden' : '']"
-                  :style="{ backgroundColor: color.color_value }" />
-              </div>
-            </RadioGroupOption>
-          </div>
-        </RadioGroup>
-      </div>
 
       <!-- Size picker -->
       <div class="mt-8" v-if="Object.keys(props.sizeVariations).length >= 1">
@@ -137,7 +127,7 @@ console.log(typeof props.sizeVariations)
         <RadioGroup v-model="selectedSize" class="mt-2">
           <RadioGroupLabel class="sr-only"> Choose a size </RadioGroupLabel>
           <div class="grid grid-cols-7 gap-2">
-            <RadioGroupOption as="template" v-for="size in props.sizeVariations" :key="size" :value="size" v-slot="{ active, checked }" class="cursor-pointer">
+            <RadioGroupOption as="template" v-for="size in props.sizeVariations" :key="size" :value="size" v-slot="{ active, checked }" class="cursor-pointer" @click="changeProduct(size)">
               <div :class="[active ? 'ring-2 ring-indigo-500 ring-offset-2' : '', checked ? 'border-transparent bg-indigo-600 text-white hover:bg-indigo-700' : 'border-gray-200 bg-white text-gray-900 hover:bg-gray-50', 'flex items-center justify-center rounded-md border py-3 px-3 text-sm font-medium uppercase sm:flex-1']">
                 <RadioGroupLabel as="span">
                   {{ size.size }}
