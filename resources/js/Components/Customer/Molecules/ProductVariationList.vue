@@ -9,7 +9,7 @@ const props = defineProps({
   }
 })
 
-console.log(props.variations);
+// console.log(props.variations);
 
 let showAll = ref(false);
 

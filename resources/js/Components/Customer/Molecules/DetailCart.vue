@@ -25,7 +25,8 @@ const props = defineProps({
   },
 })
 
-console.log(props.sizeVariations)
+console.log('DetailCart', props.sizeVariations)
+console.log('DetailCart', Object.keys(props.sizeVariations).length)
 
 const cartStore = useCartStore()
 const productStore = useProductStore()
@@ -98,6 +99,8 @@ function submit() {
   }
 }
 
+console.log(typeof props.sizeVariations)
+
 </script>
 <template>
   <section>
@@ -126,7 +129,7 @@ function submit() {
       </div>
 
       <!-- Size picker -->
-      <div class="mt-8" v-if="Object.keys(props.sizeVariations).length > 1">
+      <div class="mt-8" v-if="Object.keys(props.sizeVariations).length >= 1">
         <div class="flex items-center justify-between">
           <h4 class="text-sm font-medium text-gray-900">Size</h4>
         </div>

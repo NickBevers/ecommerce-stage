@@ -113,13 +113,25 @@ class SkuController extends Controller
             ->whereHas('attributeValues', function ($query) use ($temp) {
                 $query->whereIn('attribute_value_id', $temp);
             })
+            ->with('attributeValues', function ($query) {
+                $query->where('attribute_type_id', '!=', AttributeType::where('name', 'size')->first()->id);
+            })
             ->with('productImages', function ($query) {
                 $query->where('image_type', 'thumbnails');
             })
             ->get();
 
+        ray($sizeVariations);
+
         foreach ($sizeVariations as $sizeVariation) {
-            $sizeVariation->size = $sizeVariation->attributeValues->where('attribute_type_id', AttributeType::where('name', 'size')->first()->id)->first()->name;
+            $attributeArray = $sizeVariation->attributeValues->pluck('id')->toArray();
+            if (array_intersect($temp, $attributeArray) != $temp) {
+                $sizeVariations = $sizeVariations->where('id', '!=', $sizeVariation->id);
+            } else {
+                $sizeVariation->size = Sku::where('id', $sizeVariation->id)->with('attributeValues', function ($query) {
+                    $query->where('attribute_type_id', AttributeType::where('name', 'size')->first()->id);
+                })->first()->attributeValues->first()->name;
+            }
         }
 
         $variations = Sku::where('product_id', $sku->product_id)
@@ -130,6 +142,8 @@ class SkuController extends Controller
                 $query->where('image_type', 'thumbnails');
             })
             ->get();
+
+        $sizeVariations = array_values($sizeVariations->toArray());
 
 
         $reviews = $sku->reviews;
