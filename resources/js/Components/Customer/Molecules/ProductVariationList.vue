@@ -29,7 +29,6 @@ onMounted(() => {
     })
   }
 })
-  console.log(props.sku)
 
   function changeAttributes(sku){
     if(sku.attribute_values.length > 0){
