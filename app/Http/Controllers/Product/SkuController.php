@@ -138,6 +138,7 @@ class SkuController extends Controller
             ->whereNotIn('sku', [$sku->sku])
             ->where('is_active', true)
             ->whereNotIn('id', $sizeVariations->pluck('id')->toArray())
+            ->with('attributeValues')
             ->with('productImages', function ($query) {
                 $query->where('image_type', 'thumbnails');
             })
