@@ -11,8 +11,6 @@ const props = defineProps({
   userHasBought: Boolean,
 });
 
-console.log('Index', props.sizeVariations);
-
 let checked = ref(false)
 
 function checkout() {
@@ -45,13 +43,13 @@ function checkout() {
         <ImageGallery :sku="props.sku" />
         <div class="mt-8 lg:col-span-5" v-if="props.sku.is_active !== false">
           <form>
-            <div class="mb-6">
-              <ProductVariationList :variations="props.variations" />
+            <div class="mb-2">
+              <ProductVariationList :variations="props.variations" :sku="props.sku" />
             </div>
-            <div class="mt-10 flex">
+            <div class="mt-2 flex">
               <DetailCart :product="props.sku" :size-variations="props.sizeVariations" @checkout="checkout" class="w-full" />
               <div
-                class="ml-4 flex self-end h-fit items-center justify-center rounded-md py-3 px-3 text-gray-400 hover:bg-gray-100 hover:text-gray-500"
+                class="ml-2 flex self-end h-fit items-center justify-center rounded-md py-3 px-3 text-gray-400 hover:bg-gray-100 hover:text-gray-500"
                 :class="checked ? 'mb-16' : ''">
                 <WishlistButton :product="props.sku" />
               </div>

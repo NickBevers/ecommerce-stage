@@ -1,24 +1,68 @@
 <script setup>
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 import { Link } from '@inertiajs/vue3';
 
 const props = defineProps({
   variations: {
     type: Object,
     required: true
+  },
+  sku: {
+    type: Object,
+    required: true
   }
 })
 
-// console.log(props.variations);
-
 let showAll = ref(false);
+let color = ref('');
+let material = ref('');
+
+onMounted(() => {
+  if (props.sku.attribute_values.length > 0) {
+    props.sku.attribute_values.forEach((attributeValue) => {
+      if (attributeValue.attribute_type_id === 2) {
+        color.value = attributeValue.name
+      }
+      if (attributeValue.attribute_type_id === 3) {
+        material.value = attributeValue.name
+      }
+    })
+  }
+})
+  console.log(props.sku)
+
+  function changeAttributes(sku){
+    if(sku.attribute_values.length > 0){
+      sku.attribute_values.forEach((attributeValue) => {
+        if (attributeValue.attribute_type_id === 2) {
+          color.value = attributeValue.name
+        }
+        if (attributeValue.attribute_type_id === 3) {
+          material.value = attributeValue.name
+        }
+      })
+    }
+  }
+
+  function resetAttributes(){
+    if(props.sku.attribute_values.length > 0){
+      props.sku.attribute_values.forEach((attributeValue) => {
+        if (attributeValue.attribute_type_id === 2) {
+          color.value = attributeValue.name
+        }
+        if (attributeValue.attribute_type_id === 3) {
+          material.value = attributeValue.name
+        }
+      })
+    }
+  }
 
 </script>
-<template>
-  <h3 class="text-sm">Variations:</h3>
-  <div class="flex flex-wrap justify-start">
+<template v-if="props.variations.length > 0">
+  <h3 class="text-sm">Variation:   {{ color }} / {{ material }}</h3>
+  <div class="flex flex-wrap justify-start" @mouseout="resetAttributes">
     <div v-for="(variation, index) in props.variations" :key="variation.id" class="m-1 overflow-hidden rounded-md"
-      :class="{ 'hidden': !showAll && index > 3 }">
+      :class="{ 'hidden': !showAll && index > 3 }"  @mouseover="changeAttributes(variation)">
       <div v-if="!showAll" class="overflow-hidden">
         <div class="h-32 w-20 inline hover:scale-125 duration-500 col-span-4 transition-all rounded-md object-cover">
           <Link :href="`/product/${variation.sku}`">
