@@ -43,8 +43,9 @@ function removeFromWishlist(id) {
       <div class="grid grid-cols-1 gap-y-12 sm:grid-cols-2 sm:gap-x-6 lg:grid-cols-4 xl:gap-x-8"
         v-if="props.products.length > 0">
         <div v-for="product in props.products" :key="product.id" class="mt-8" :id="product.sku.id">
-<!--          <Link :to="'/product/' + product.sku.sku" :href="'/product/' + product.sku.sku">-->
-            <Link :to="'/product/' + product.sku.sku  + '/' + product.sku.product.slug" :href="'/product/' + product.sku.sku + '/' + product.sku.product.slug">
+          <!--          <Link :to="'/product/' + product.sku.sku" :href="'/product/' + product.sku.sku">-->
+          <Link :to="'/product/' + product.sku.sku + '/' + product.sku.product.slug"
+            :href="'/product/' + product.sku.sku + '/' + product.sku.product.slug">
           <div class="relative group">
             <div class=" relative h-72 w-full overflow-hidden rounded-lg">
               <img :src="product.sku.product_images[0].image_link" alt="placeholder"
