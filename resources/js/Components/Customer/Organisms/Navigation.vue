@@ -1,5 +1,5 @@
 <script setup>
-import { ApplicationLogo, UserIconModal, ShoppingCartModal } from '@/Components/Customer';
+import { ApplicationLogo, UserIconModal, ShoppingCartModal, CartSlide } from '@/Components/Customer';
 import { onBeforeMount, ref, onMounted, computed } from "vue";
 import { Link, usePage } from '@inertiajs/vue3';
 import { useWishlistStore } from '@/Stores/wishlist';
@@ -21,7 +21,7 @@ import {
     Bars3Icon,
     HeartIcon,
 } from '@heroicons/vue/24/outline'
-import {XMarkIcon} from "@heroicons/vue/20/solid";
+import { XMarkIcon } from "@heroicons/vue/20/solid";
 
 
 const open = ref(false)
@@ -210,13 +210,13 @@ function selectCategory(category_id) {
                                                         aria-hidden="true" />
                                                 </PopoverButton>
 
-                                                <Link @click="selectCategory(category.id)" v-else-if="category.name === 'Promo'"
-                                                      :href="'/products/promos'"
-                                                      :class="[open ? 'text-indigo-600' : 'text-gray-700 hover:text-gray-800', 'relative flex items-center justify-center text-sm font-medium transition-colors duration-200 ease-out']">
-                                                    {{ category.name }}
-                                                    <span
-                                                            :class="[open ? 'bg-indigo-600' : '', 'absolute inset-x-0 -bottom-px z-20 h-0.5 transition duration-200 ease-out']"
-                                                            aria-hidden="true" />
+                                                <Link @click="selectCategory(category.id)"
+                                                    v-else-if="category.name === 'Promo'" :href="'/products/promos'"
+                                                    :class="[open ? 'text-indigo-600' : 'text-gray-700 hover:text-gray-800', 'relative flex items-center justify-center text-sm font-medium transition-colors duration-200 ease-out']">
+                                                {{ category.name }}
+                                                <span
+                                                    :class="[open ? 'bg-indigo-600' : '', 'absolute inset-x-0 -bottom-px z-20 h-0.5 transition duration-200 ease-out']"
+                                                    aria-hidden="true" />
                                                 </Link>
 
                                                 <Link @click="selectCategory(category.id)" v-else
@@ -254,8 +254,7 @@ function selectCategory(category_id) {
                                                                 :key="index" class="group relative">
                                                                 <div v-if="item.preview"
                                                                     class="aspect-w-1 aspect-h-1 overflow-hidden rounded-md bg-gray-100 group-hover:opacity-75">
-                                                                    <img :src="item.image_link"
-                                                                        alt="placeholder"
+                                                                    <img :src="item.image_link" alt="placeholder"
                                                                         class="object-cover object-center" />
                                                                 </div>
                                                                 <div v-if="item.preview" class="flex flex-row">
@@ -324,7 +323,7 @@ function selectCategory(category_id) {
                             </div>
 
                             <div class="flex flex-1 items-center justify-end">
-<!--                                <a href="#" class="hidden text-sm font-medium text-gray-700 hover:text-gray-800 lg:block">Search</a>-->
+                                <!--                                <a href="#" class="hidden text-sm font-medium text-gray-700 hover:text-gray-800 lg:block">Search</a>-->
                                 <div class="flex items-center lg:ml-8">
                                     <div class="flow-root lg:ml-8">
                                         <UserIconModal class="group -m-2 flex items-center" :user="$page.props.auth.user" />
@@ -339,8 +338,17 @@ function selectCategory(category_id) {
                                         </Link>
                                     </div>
                                     <!-- Cart -->
+                                    <div class="cursor-pointer flex flex-row items-center" @click="cartStore.setOpen(true)">
+                                        <ShoppingBagIcon
+                                            class="ml-4 h-6 w-6 flex-shrink-0 text-gray-400 group-hover:text-gray-500"
+                                            aria-hidden="true" />
+                                        <span class="ml-2 text-sm font-medium text-gray-700 group-hover:text-gray-800">{{
+                                            cartStore.count }}</span>
+                                        <span class="sr-only">items in cart, view bag</span>
+                                    </div>
 
-                                    <ShoppingCartModal />
+                                    <CartSlide />
+                                    <!-- <ShoppingCartModal /> -->
                                 </div>
                             </div>
                         </div>

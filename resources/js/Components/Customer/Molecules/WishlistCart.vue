@@ -18,11 +18,11 @@ const props = defineProps({
     required: true,
     default: null,
   },
-  sizeVariations: {
-    type: Object,
-    required: true,
-    default: null,
-  },
+  // sizeVariations: {
+  //   type: Object,
+  //   required: true,
+  //   default: null,
+  // },
 })
 
 const cartStore = useCartStore()
@@ -105,9 +105,11 @@ function changeProduct(sku) {
 </script>
 <template>
   <section>
+
     <h3 class="sr-only">Product options</h3>
-    <div v-if="props.product.attribute_values.length > 0">
-      <template v-for="attributeValue in props.product.attribute_values">
+
+    <div v-if="props.product.sku.attribute_values.length > 0" class="mt-8">
+      <template v-for="attributeValue in props.product.sku.attribute_values">
         <h4 v-if="attributeValue.attribute_type_id === 2" class="text-md font-medium text-gray-900">Color: {{
           attributeValue.name }}</h4>
         <h4 v-if="attributeValue.attribute_type_id === 3" class="text-md font-medium text-gray-900">Material: {{
@@ -118,7 +120,8 @@ function changeProduct(sku) {
 
 
       <!-- Size picker -->
-      <div class="mt-8" v-if="Object.keys(props.sizeVariations).length >= 1">
+      <!-- <div class="mt-8" v-if="Object.keys(props.sizeVariations).length >= 1"> -->
+      <div class="mt-8">
         <div class="flex items-center justify-between">
           <h4 class="text-sm font-medium text-gray-900">Size</h4>
         </div>

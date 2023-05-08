@@ -4,6 +4,7 @@ export const useCartStore = defineStore({
   id: "cart",
   state: () => ({
     count: 0,
+    open: false,
   }),
   actions: {
     setCount(counter) {
@@ -27,10 +28,16 @@ export const useCartStore = defineStore({
     setIncrement(counter) {
       this.count = this.count + counter;
     },
+    setOpen(open) {
+      this.open = open;
+    },
   },
   getters: {
     getCount(state) {
       return state.count;
+    },
+    getOpen(state) {
+      return state.open;
     },
   },
 });
