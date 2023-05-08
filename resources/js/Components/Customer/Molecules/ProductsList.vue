@@ -39,7 +39,6 @@ function handleRemove(sku) {
       <div class="grid grid-cols-1 gap-y-12 sm:grid-cols-2 sm:gap-x-6 lg:grid-cols-4 xl:gap-x-8">
         <div v-for="product in props.skus" :key="product.id" class="mt-8" :id="product.id">
           <Link :to="'/product/' + product.sku  + '/' + product.product.slug" :href="'/product/' + product.sku + '/' + product.product.slug">
-<!--          <Link :to="'/product/' + product.product.slug  + '/' + product.sku" :href="'/product/' + product.product.slug  + '/' + product.sku">-->
           <div class="relative group">
             <div class="relative h-72 w-full overflow-hidden rounded-lg">
               <img :src="product.product_images[0].image_link" alt="placeholder"

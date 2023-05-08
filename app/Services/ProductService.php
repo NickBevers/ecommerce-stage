@@ -8,7 +8,14 @@ class ProductService
 {
     public function store(ProductValidationRequest $request): Product
     {
-        $product = Product::create($request->all());
+        ray($request->all());
+
+        $product = new Product;
+        $product->title = $request->title;
+        $product->slug = $request->slug;
+        $product->description = $request->description;
+        $product->audience = $request->audience;
+        $product->sub_category_id = $request->sub_category_id;
         $product->save();
 
         return $product;

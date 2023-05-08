@@ -77,7 +77,7 @@ function removeFromCart(id, product) {
                                                                 <div
                                                                     class="flex justify-between text-base font-medium text-gray-900">
                                                                     <h3>
-                                                                        <Link :href="`/product/${product.sku.sku}`"
+                                                                        <Link :href="`/product/${product.sku.sku}/${product.sku.product.slug}`"
                                                                             class="break-words w-32">{{
                                                                                 product.sku.product.title
                                                                             }}

@@ -90,7 +90,16 @@ class SkuController extends Controller
 
     public function store(ProductValidationRequest $request)
     {
-        $productRequest = new ProductValidationRequest($request->only(['title', 'description', 'audience', 'brand_id', 'sub_category_id', 'product_type', 'extra_info']));
+
+        if ($request->slug === null) {
+            $request->merge([
+                'slug' => strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', '-', $request->title)))
+            ]);
+        }
+
+//        ray($request->all());
+
+        $productRequest = new ProductValidationRequest($request->only(['title', 'slug', 'description', 'audience', 'brand_id', 'sub_category_id', 'product_type', 'extra_info']));
         $product = $this->productService->store($productRequest);
 
         foreach ($request->input('variations') as $variation) {

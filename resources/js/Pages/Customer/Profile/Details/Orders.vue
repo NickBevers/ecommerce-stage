@@ -166,7 +166,7 @@ function handleReturn(product) {
                                                     @click="openReturn = true; selectedProduct = product; selectedOrder = order"
                                                     class="whitespace-nowrap text-indigo-600 hover:text-indigo-500">Return
                                                     the item</button>
-                                                <Link :href="`/product/${product.sku}`"
+                                                <Link :href="`/product/${product.sku}/${product.product.slug}`"
                                                     class="whitespace-nowrap text-indigo-600 hover:text-indigo-500">View
                                                 product</Link>
                                             </div>

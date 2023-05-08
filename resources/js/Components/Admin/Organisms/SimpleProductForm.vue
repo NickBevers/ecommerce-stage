@@ -170,7 +170,7 @@ function submit() {
                             <div class="col-span-2 sm:col-span-2">
                                 <InputLabel for="head_categories" value="Head Category" />
                                 <div class="mt-1 flex rounded-md shadow-sm">
-                                    <Dropdown class="w-full" :items="props.categories" v-model="selectedHeadCategoryIndex"
+                                    <Dropdown class="w-full" :items="props.categories.slice(0, 3)" v-model="selectedHeadCategoryIndex"
                                         @click="updateSubCategories" />
                                 </div>
                             </div>

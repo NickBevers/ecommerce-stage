@@ -99,7 +99,6 @@ class SkuController extends Controller
         }
 
         $activeSkuAttributes = $sku->attributeValues->where('attribute_type_id', '!=',AttributeType::where('name', 'size')->first()->id)->pluck('id')->toArray();
-        ray($activeSkuAttributes);
 
         $sizeVariations = Sku::where('product_id', $sku->product_id)
             ->where('is_active', true)
@@ -130,6 +129,7 @@ class SkuController extends Controller
             ->where('is_active', true)
             ->whereNotIn('id', $sizeVariations->pluck('id')->toArray())
             ->with('attributeValues')
+            ->with('product')
             ->with('productImages', function ($query) {
                 $query->where('image_type', 'thumbnails');
             })
