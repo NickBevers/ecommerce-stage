@@ -114,8 +114,6 @@ class SkuController extends Controller
             })
             ->get();
 
-        ray($sizeVariations);
-
         foreach ($sizeVariations as $sizeVariation) {
             $attributeArray = $sizeVariation->attributeValues->pluck('id')->toArray();
             if (array_intersect($activeSkuAttributes, $attributeArray) != $activeSkuAttributes) {

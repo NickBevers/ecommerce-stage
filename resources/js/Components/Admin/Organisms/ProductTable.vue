@@ -3,7 +3,9 @@ import { Pagination, Alert, Toggle } from '@/Components/Admin'
 import { onMounted, ref } from 'vue';
 import moment from 'moment';
 import { Link, router } from '@inertiajs/vue3';
-import { PencilIcon, EyeIcon, TrashIcon } from '@heroicons/vue/20/solid'
+import { PencilIcon, EyeIcon, TrashIcon, TagIcon } from '@heroicons/vue/20/solid'
+import {AddAddressModal} from "@/Components/Customer";
+import PromotionModal from "@/Components/Customer/Molecules/PromotionModal.vue";
 
 const props = defineProps({
   skus: Array,
@@ -26,9 +28,10 @@ function getBgClass(amount) {
     return 'bg-red-500';
   }
 }
-
+const activeProduct = ref(null)
 const open = ref(false)
 const selectedProduct = ref(null)
+const showPromotionModal = ref(false)
 
 function deleteProduct() {
   if (!selectedProduct.value) {
@@ -52,6 +55,23 @@ function toggleActive() {
       }
     });
 }
+
+const setProduct = (product) => {
+  activeProduct.value = product;
+
+  console.log(activeProduct.value);
+  showPromotionModal.value = true;
+};
+
+const handleClose = () => {
+  showPromotionModal.value = false;
+};
+
+const handlePromotion = (promotion) => {
+  console.log(promotion);
+  showPromotionModal.value = false;
+};
+
 </script>
 <template>
   <Alert title="Delete product"
@@ -62,6 +82,7 @@ function toggleActive() {
       <div class="flow-root">
         <div class="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8">
           <div class="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
+            <PromotionModal class="z-20" v-if="showPromotionModal" :skus="activeProduct" :sku_id="activeProduct.id" @closed="handleClose" @submitted="handlePromotion" />
             <table class="min-w-full divide-y divide-gray-300">
               <thead>
                 <tr>
@@ -74,7 +95,7 @@ function toggleActive() {
                 </tr>
               </thead>
               <tbody class="divide-y divide-gray-200 bg-white">
-                <tr v-for="         product          in          skus         " :key=" product.id ">
+                <tr v-for="product in skus" :key=" product.id ">
                   <td class="whitespace-nowrap py-2 pl-4 pr-3 text-sm sm:pl-0  w-2/6">
                     <div class="flex items-center">
                       <div class="h-10 w-10 flex-shrink-0">
@@ -103,19 +124,22 @@ function toggleActive() {
                   <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500 w-1/6">
                     <Toggle :on=" product.is_active " @click=" selectedProduct = product.id; toggleActive(); " />
                   </td>
-                  <td
-                    class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right justify-end text-sm font-medium sm:pr-0 flex gap-2 w-fill">
+                  <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right justify-end text-sm font-medium sm:pr-0 flex gap-2 w-fill">
+                    <button type="button" @click="setProduct(product);"
+                            class="rounded-full bg-indigo-600 p-2 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+                      <TagIcon class="h-4 w-4" aria-hidden="true" />
+                    </button>
                     <Link :to=" `/admin/products/${product.sku}/edit` " :href=" `/admin/products/${product.sku}/edit` "
                       class="rounded-full bg-indigo-600 p-2 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
-                    <PencilIcon class="h-3 w-3" aria-hidden="true" />
+                    <PencilIcon class="h-4 w-4" aria-hidden="true" />
                     </Link>
                     <Link :to=" `/product/${product.sku}` " :href=" `/product/${product.sku}` "
                       class="rounded-full bg-indigo-600 p-2 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
-                    <EyeIcon class="h-3 w-3" aria-hidden="true" />
+                    <EyeIcon class="h-4 w-4" aria-hidden="true" />
                     </Link>
                     <button type="button" @click=" open = true; selectedProduct = product.id; "
                       class="rounded-full bg-red-600 p-2 text-white shadow-sm hover:bg-red-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
-                      <TrashIcon class="h-3 w-3" aria-hidden="true" />
+                      <TrashIcon class="h-4 w-4" aria-hidden="true" />
                     </button>
                   </td>
                 </tr>
