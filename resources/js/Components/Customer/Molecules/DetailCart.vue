@@ -41,9 +41,8 @@ const selectedSize = ref("")
 const amount = ref(1)
 
 function submit() {
-  let quantity = amount.value
-
   if (props.product.attribute_values.length === 0) {
+    cartStore.setOpen(true)
     fetch('/cart', {
       method: 'POST',
       headers: {
@@ -61,9 +60,7 @@ function submit() {
           let cart = cartStore.getCount
           cart = parseInt(cart)
           cartStore.setCount(cart + amount.value)
-          setTimeout(() => {
-            checkout.value = false
-          }, 3000)
+
         }
       })
       .catch(error => {
@@ -75,7 +72,8 @@ function submit() {
   }
   else {
     showError.value = false
-
+    cartStore.setOpen(true)
+    productStore.fetchProducts()
     fetch('/cart', {
       method: 'POST',
       headers: {
@@ -90,10 +88,9 @@ function submit() {
         if (response.status === 200) {
           checkout.value = true
           emit('checkout')
-          cartStore.increment()
-          setTimeout(() => {
-            checkout.value = false
-          }, 3000)
+          let cart = cartStore.getCount
+          cart = parseInt(cart)
+          cartStore.setCount(cart + amount.value)
         }
       })
       .catch(error => {
@@ -110,11 +107,13 @@ function changeProduct(sku) {
   <section>
     <h3 class="sr-only">Product options</h3>
     <div v-if="props.product.attribute_values.length > 0">
-        <template v-for="attributeValue in props.product.attribute_values">
-          <h4 v-if="attributeValue.attribute_type_id === 2" class="text-md font-medium text-gray-900">Color: {{ attributeValue.name }}</h4>
-          <h4 v-if="attributeValue.attribute_type_id === 3" class="text-md font-medium text-gray-900">Material: {{ attributeValue.name }}</h4>
-        </template>
-      </div>  
+      <template v-for="attributeValue in props.product.attribute_values">
+        <h4 v-if="attributeValue.attribute_type_id === 2" class="text-md font-medium text-gray-900">Color: {{
+          attributeValue.name }}</h4>
+        <h4 v-if="attributeValue.attribute_type_id === 3" class="text-md font-medium text-gray-900">Material: {{
+          attributeValue.name }}</h4>
+      </template>
+    </div>
     <form>
 
 
@@ -127,8 +126,10 @@ function changeProduct(sku) {
         <RadioGroup v-model="selectedSize" class="mt-2">
           <RadioGroupLabel class="sr-only"> Choose a size </RadioGroupLabel>
           <div class="grid grid-cols-7 gap-2">
-            <RadioGroupOption as="template" v-for="size in props.sizeVariations" :key="size" :value="size" v-slot="{ active, checked }" class="cursor-pointer" @click="changeProduct(size)">
-              <div :class="[active ? 'ring-2 ring-indigo-500 ring-offset-2' : '', checked ? 'border-transparent bg-indigo-600 text-white hover:bg-indigo-700' : 'border-gray-200 bg-white text-gray-900 hover:bg-gray-50', 'flex items-center justify-center rounded-md border py-3 px-3 text-sm font-medium uppercase sm:flex-1']">
+            <RadioGroupOption as="template" v-for="size in props.sizeVariations" :key="size" :value="size"
+              v-slot="{ active, checked }" class="cursor-pointer" @click="changeProduct(size)">
+              <div
+                :class="[active ? 'ring-2 ring-indigo-500 ring-offset-2' : '', checked ? 'border-transparent bg-indigo-600 text-white hover:bg-indigo-700' : 'border-gray-200 bg-white text-gray-900 hover:bg-gray-50', 'flex items-center justify-center rounded-md border py-3 px-3 text-sm font-medium uppercase sm:flex-1']">
                 <RadioGroupLabel as="span">
                   {{ size.size }}
                 </RadioGroupLabel>
