@@ -4,6 +4,7 @@ export const useProductStore = defineStore({
   id: "products",
   state: () => ({
     products: [],
+    total: 0,
   }),
   actions: {
     setProducts(products) {
@@ -15,7 +16,13 @@ export const useProductStore = defineStore({
           return response.json();
         })
         .then((data) => {
+          this.total = 0;
           this.setProducts(data);
+          data.forEach((product) => {
+            console.log(product.sku.price_incl_vat)
+            console.log( product.amount)
+            this.total += (product.sku.price_incl_vat * product.amount)
+           })
         });
     },
     increment() {
@@ -27,10 +34,16 @@ export const useProductStore = defineStore({
     setIncrement(counter) {
       this.count = this.count + counter;
     },
+    setTotal(total) {
+      this.total = total;
+    },
   },
   getters: {
     getProducts() {
       return this.products;
+    },
+    getTotal() {
+      return this.total;
     },
   },
 });
