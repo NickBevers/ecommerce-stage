@@ -1,6 +1,6 @@
 <script setup>
 import { ref, onMounted } from 'vue'
-import { AddProductCart } from '@/Components/Customer'
+import { AddProductCart, WishlistCart } from '@/Components/Customer'
 import {
   Dialog,
   DialogPanel,
@@ -24,6 +24,12 @@ const props = defineProps({
 function toggleOpen() {
   open.value = !open.value
   emits('closed')
+}
+
+let checked = ref(false)
+
+function checkout() {
+  checked.value = true
 }
 
 </script>
@@ -71,7 +77,8 @@ function toggleOpen() {
                       <p class="font-medium text-gray-900">€{{ props.product.sku.price_incl_vat.toFixed(2) }}</p>
                     </section>
 
-                    <AddProductCart :product="props.product" @closed="toggleOpen" />
+                    <WishlistCart :product="props.product" @closed="toggleOpen" />
+                    <!-- <AddProductCart :product="props.product" @closed="toggleOpen" /> -->
                   </div>
                 </div>
               </div>

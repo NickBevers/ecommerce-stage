@@ -19,8 +19,6 @@ export const useProductStore = defineStore({
           this.total = 0;
           this.setProducts(data);
           data.forEach((product) => {
-            console.log(product.sku.price_incl_vat)
-            console.log( product.amount)
             this.total += (product.sku.price_incl_vat * product.amount)
            })
         });
