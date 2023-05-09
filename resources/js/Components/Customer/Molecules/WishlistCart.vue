@@ -43,6 +43,7 @@ const amount = ref(1)
 function submit() {
   if (props.product.attribute_values && props.product.attribute_values.length === 0) {
     cartStore.setOpen(true)
+    productStore.fetchProducts()
     fetch('/cart', {
       method: 'POST',
       headers: {

@@ -44,6 +44,7 @@ function submit() {
   console.log(props.sizeVariations[0].size)
   if (props.product.attribute_values.length === 0 || props.sizeVariations[0].size === null) {
     cartStore.setOpen(true)
+    productStore.fetchProducts()
     fetch('/cart', {
       method: 'POST',
       headers: {
@@ -116,10 +117,8 @@ function changeProduct(sku) {
       </template>
     </div>
     <form>
-
-      <!-- Size picker -->
       <div class="mt-8" v-if="Object.keys(props.sizeVariations).length >= 1">
-        <div class="flex items-center justify-between">
+        <div class="flex items-center justify-between" v-if="props.sizeVariations[0].size != null">
           <h4 class="text-sm font-medium text-gray-900">Size</h4>
         </div>
         <RadioGroup v-model="selectedSize" class="mt-2" v-if="props.sizeVariations[0].size != null">
