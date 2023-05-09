@@ -41,7 +41,7 @@ const selectedSize = ref("")
 const amount = ref(1)
 
 function submit() {
-  if (props.product.attribute_values.length === 0) {
+  if (props.product.attribute_values && props.product.attribute_values.length === 0) {
     cartStore.setOpen(true)
     fetch('/cart', {
       method: 'POST',
@@ -67,7 +67,7 @@ function submit() {
         console.log(error);
       });
   }
-  else if (selectedSize.value === "") {
+  else if (props.product.attribute_values && selectedSize.value === "") {
     showError.value = true
   }
   else {
@@ -80,7 +80,7 @@ function submit() {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        sku_id: selectedProduct.value,
+        sku_id: selectedProduct.value.length > 0 ? selectedProduct.value : props.product.sku.id,
         amount: amount.value,
       })
     })
@@ -121,15 +121,14 @@ function changeProduct(sku) {
 
       <!-- Size picker -->
       <!-- <div class="mt-8" v-if="Object.keys(props.sizeVariations).length >= 1"> -->
-      <div class="mt-8">
+      <div class="mt-8" v-if="props.product.sizeVariations !== null && props.product.sizeVariations.length > 0">
         <div class="flex items-center justify-between">
           <h4 class="text-sm font-medium text-gray-900">Size</h4>
         </div>
-
         <RadioGroup v-model="selectedSize" class="mt-2">
           <RadioGroupLabel class="sr-only"> Choose a size </RadioGroupLabel>
           <div class="grid grid-cols-7 gap-2">
-            <RadioGroupOption as="template" v-for="size in props.sizeVariations" :key="size" :value="size"
+            <RadioGroupOption as="template" v-for="size in props.product.sizeVariations" :key="size" :value="size"
               v-slot="{ active, checked }" class="cursor-pointer" @click="changeProduct(size)">
               <div
                 :class="[active ? 'ring-2 ring-indigo-500 ring-offset-2' : '', checked ? 'border-transparent bg-indigo-600 text-white hover:bg-indigo-700' : 'border-gray-200 bg-white text-gray-900 hover:bg-gray-50', 'flex items-center justify-center rounded-md border py-3 px-3 text-sm font-medium uppercase sm:flex-1']">

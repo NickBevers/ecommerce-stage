@@ -39,7 +39,7 @@ function removeFromWishlist(id) {
     <div class="mx-auto max-w-2xl px-4 pt-16 pb-24 sm:px-6 lg:max-w-7xl lg:px-8">
       <h1 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Wishlist</h1>
       <ProductCartModal :product="selectedProduct" v-if="openCart" :open="openCart" @close="openCart = false"
-        @closed="openCart = false" />
+        @closed="openCart = false"  />
       <div class="grid grid-cols-1 gap-y-12 sm:grid-cols-2 sm:gap-x-6 lg:grid-cols-4 xl:gap-x-8"
         v-if="props.products.length > 0">
         <div v-for="product in props.products" :key="product.id" class="mt-8" :id="product.sku.id">
