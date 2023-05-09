@@ -11,7 +11,13 @@ const props = defineProps({
   userHasBought: Boolean,
 })
 
-const user = usePage().props.auth.user.id
+let user = null
+
+if (usePage().props.auth.user) {
+  user = usePage().props.auth.user.id
+}
+
+
 
 let openReview = ref(false)
 
