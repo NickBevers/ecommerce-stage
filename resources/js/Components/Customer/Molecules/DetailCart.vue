@@ -73,8 +73,13 @@ function submit() {
   }
   else {
     showError.value = false
-    cartStore.setOpen(true)
-    productStore.fetchProducts()
+    // productStore.fetchProducts()
+    // cartStore.setOpen(true)
+
+    // fetch the products in the user's cart (with the newly added one) and set the cart count
+
+
+
     fetch('/cart', {
       method: 'POST',
       headers: {
@@ -85,15 +90,18 @@ function submit() {
         amount: amount.value,
       })
     })
-      .then(response => {
-        if (response.status === 200) {
-          checkout.value = true
-          emit('checkout')
-          let cart = cartStore.getCount
-          cart = parseInt(cart)
-          cartStore.setCount(cart + amount.value)
-        }
-      })
+        .then(response => response.json())
+        .then(data => {
+          if (data.status === 'success') {
+            checkout.value = true
+            emit('checkout')
+            let cart = cartStore.getCount
+            cart = parseInt(cart)
+            cartStore.setCount(cart + amount.value)
+            cartStore.setOpen(true)
+            productStore.setProducts(data.products)
+          }
+        })
       .catch(error => {
         console.log(error);
       });

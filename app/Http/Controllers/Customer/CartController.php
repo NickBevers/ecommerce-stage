@@ -49,6 +49,7 @@ class CartController extends Controller
         return response()->json([
             'status' => 'success',
             'message' => 'Product added to cart',
+            'products' => $this->getProductsPerUser(),
             'count' => $this->getAmountOfItemsInCart(),
         ]);
     }

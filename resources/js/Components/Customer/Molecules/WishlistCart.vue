@@ -85,18 +85,21 @@ function submit() {
         amount: amount.value,
       })
     })
-      .then(response => {
-        if (response.status === 200) {
-          checkout.value = true
-          emit('checkout')
-          let cart = cartStore.getCount
-          cart = parseInt(cart)
-          cartStore.setCount(cart + amount.value)
-        }
-      })
-      .catch(error => {
-        console.log(error);
-      });
+        .then(response => response.json())
+        .then(data => {
+          if (data.status === 'success') {
+            checkout.value = true
+            emit('checkout')
+            let cart = cartStore.getCount
+            cart = parseInt(cart)
+            cartStore.setCount(cart + amount.value)
+            cartStore.setOpen(true)
+            productStore.setProducts(data.products)
+          }
+        })
+        .catch(error => {
+          console.log(error);
+        });
   }
 }
 
