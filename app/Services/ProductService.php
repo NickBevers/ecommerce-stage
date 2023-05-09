@@ -8,8 +8,6 @@ class ProductService
 {
     public function store(ProductValidationRequest $request): Product
     {
-        ray($request->all());
-
         $product = new Product;
         $product->title = $request->title;
         $product->slug = $request->slug;

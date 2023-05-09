@@ -58,7 +58,10 @@ function handleSort(option) {
   fetchSkus();
 }
 
-function isChecked(attribute, value) {
+function isChecked(attribute, value, slug = false) {
+  if(slug){
+    value = slug
+  }
   if (isAttribute(attribute)){
     let values = selectedFilters.attributes[attribute]
     if (values) {
@@ -67,12 +70,14 @@ function isChecked(attribute, value) {
       return false
     }
   } else {
+    console.log(selectedFilters, value)
     return selectedFilters[attribute] && selectedFilters[attribute].includes(value)
   }
 }
 
 function isAttribute(attribute) {
   let isAttribute = false;
+  console.log(props.attributeTypes)
   for (let i = 0; i < props.attributeTypes.length; i++) {
     if(props.attributeTypes[i].name === attribute){
       isAttribute = true;
@@ -247,7 +252,8 @@ function fetchSkus() {
                       <input :id="`filter-${section.id}-${optionIdx}`" :name="`${section.id}[]`"
                         :value="option.label.name" type="checkbox"
                         class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
-                        :checked="isChecked(section.id, option.label.name)" @change="() => {
+                        :checked="isChecked(section.id, option.label.name, option.label.slug)"
+                        @change="() => {
                           if (option.label.slug) {
                             addFilters(section.name, option.label.slug)
                           } else { addFilters(section.name, option.label.name) }

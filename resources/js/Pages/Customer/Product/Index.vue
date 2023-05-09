@@ -2,7 +2,17 @@
 import GuestLayout from '@/Layouts/GuestLayout.vue'
 import { ref } from 'vue'
 import { Link } from '@inertiajs/vue3';
-import { ProductReviews, WishlistButton, DetailCart, ProductVariationList, ProductStars, ImageGallery, ProductDetails, Policies } from '@/Components/Customer';
+import {
+  ProductReviews,
+  WishlistButton,
+  DetailCart,
+  ProductVariationList,
+  ProductStars,
+  ImageGallery,
+  ProductDetails,
+  Policies,
+  ConfirmationMessage
+} from '@/Components/Customer';
 
 const props = defineProps({
   sku: Object,
@@ -12,13 +22,32 @@ const props = defineProps({
 });
 
 let checked = ref(false)
+const wishlistMsg = ref('');
 
 function checkout() {
   checked.value = true
 }
+
+
+function handleAdd(sku) {
+  wishlistMsg.value = sku.product.title + ' has been added to your wishlist';
+  setTimeout(() => {
+    wishlistMsg.value = '';
+  }, 3000);
+}
+
+function handleRemove(sku) {
+  wishlistMsg.value = sku.product.title + ' has been removed from your wishlist';
+  setTimeout(() => {
+    wishlistMsg.value = '';
+  }, 3000);
+}
 </script>
 <template>
   <GuestLayout>
+    <div v-if="wishlistMsg.length > 0">
+      <ConfirmationMessage :Msg="wishlistMsg" />
+    </div>
     <main class="mx-auto mt-36 max-w-2xl px-4 pb-16 sm:px-6 sm:pb-24 lg:max-w-7xl lg:px-8">
       <div class="lg:grid lg:auto-rows-min lg:grid-cols-12 lg:gap-x-8">
         <div class="lg:col-span-5 lg:col-start-8">

@@ -100,6 +100,8 @@ const navigation = {
     },
   ],
 }
+
+const currentYear = new Date().getFullYear()
 </script>
 <template>
   <footer class="bg-white" aria-labelledby="footer-heading">
@@ -157,7 +159,7 @@ const navigation = {
           <component :is="item.icon" class="h-6 w-6" aria-hidden="true" />
           </Link>
         </div>
-        <p class="mt-8 text-xs leading-5 text-gray-500 md:order-1 md:mt-0">&copy; 2020 Your Company, Inc. All rights
+        <p class="mt-8 text-xs leading-5 text-gray-500 md:order-1 md:mt-0">&copy; {{currentYear}} Artcore-ecommerce, Inc. All rights
           reserved.</p>
       </div>
     </div>

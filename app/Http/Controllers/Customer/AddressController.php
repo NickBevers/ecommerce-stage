@@ -38,7 +38,6 @@ class AddressController extends Controller
 
     public function destroy(Address $address)
     {
-        ray($address);
         Address::where('id', $address->id)->delete();
         $address->delete();
 
