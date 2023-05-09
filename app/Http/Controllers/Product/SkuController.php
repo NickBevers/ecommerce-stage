@@ -120,7 +120,7 @@ class SkuController extends Controller
             } else {
                 $sizeVariation->size = Sku::where('id', $sizeVariation->id)->with('attributeValues', function ($query) {
                     $query->where('attribute_type_id', AttributeType::where('name', 'size')->first()->id);
-                })->first()->attributeValues->first()->name;
+                })->first()->attributeValues->first()->name ?? null;
             }
         }
 

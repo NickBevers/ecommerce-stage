@@ -133,7 +133,7 @@ const handlePromotion = (promotion) => {
                       class="rounded-full bg-indigo-600 p-2 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
                     <PencilIcon class="h-4 w-4" aria-hidden="true" />
                     </Link>
-                    <Link :to=" `/product/${product.sku}` " :href=" `/product/${product.sku}` "
+                    <Link :to="'/product/' + product.sku  + '/' + product.product.slug" :href="'/product/' + product.sku + '/' + product.product.slug"
                       class="rounded-full bg-indigo-600 p-2 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
                     <EyeIcon class="h-4 w-4" aria-hidden="true" />
                     </Link>

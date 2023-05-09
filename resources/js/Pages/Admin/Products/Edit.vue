@@ -185,7 +185,7 @@ function removePromo(id) {
                             <h3 class="text-base font-semibold leading-6 text-gray-900">Product
                             </h3>
                             <span
-                                class="inline-flex items-center rounded-full text-center bg-red-50 px-2 py-1 text-xs font-medium my-1 text-red-700 ring-1 ring-inset ring-red-600/10">Updates
+                                    class="inline-flex items-center rounded-full text-center bg-red-50 px-2 py-1 text-xs font-medium my-1 text-red-700 ring-1 ring-inset ring-red-600/10">Updates
                                 here
                                 affect all variations.</span>
                             <p class="mt-1 text-sm text-gray-500">This information will be displayed publicly so be careful
@@ -197,7 +197,7 @@ function removePromo(id) {
                                     <InputLabel for="title" value="Title" />
                                     <div class="mt-2 flex rounded-md shadow-sm">
                                         <TextInput id="title" type="text" class="mt-1 block w-full pl-3" name="title"
-                                            required autocomplete="title" placeholder="Product" v-model="form.title" />
+                                                   required autocomplete="title" placeholder="Product" v-model="form.title" />
                                         <InputError class="mt-2" />
                                     </div>
                                 </div>
@@ -205,7 +205,7 @@ function removePromo(id) {
                                     <InputLabel for="audience" value="Audience" />
                                     <div class="mt-1 flex rounded-md shadow-sm">
                                         <Dropdown class="w-full" :items="audience" v-model="form.audience"
-                                            :selected="form.audience">
+                                                  :selected="form.audience">
                                         </Dropdown>
                                         <InputError class="mt-2" :message="form.errors.audience" />
                                     </div>
@@ -214,8 +214,8 @@ function removePromo(id) {
                                     <InputLabel for="head_categories" value="Head Category" />
                                     <div class="mt-1 flex rounded-md shadow-sm">
                                         <Dropdown class="w-full" :items="props.categories"
-                                            :selected="props.skus.product.sub_category.category.name"
-                                            v-model="selectedHeadCategoryIndex" @click="updateSubCategories" />
+                                                  :selected="props.skus.product.sub_category.category.name"
+                                                  v-model="selectedHeadCategoryIndex" @click="updateSubCategories" />
                                     </div>
                                 </div>
 
@@ -223,15 +223,15 @@ function removePromo(id) {
                                     <InputLabel for="sub_category" value="Sub Category" />
                                     <div class="mt-1 flex rounded-md shadow-sm">
                                         <Dropdown class="w-full" v-model="selectedSubCategory"
-                                            :selected="props.skus.product.sub_category.name"
-                                            :items="selectedHeadCategory >= 0 ? props.categories[selectedHeadCategory].subCategories : []" />
+                                                  :selected="props.skus.product.sub_category.name"
+                                                  :items="selectedHeadCategory >= 0 ? props.categories[selectedHeadCategory].subCategories : []" />
                                     </div>
                                 </div>
                                 <div class="col-span-2 sm:col-span-2">
                                     <InputLabel for="brands" value="Brand" />
                                     <div class="flex">
                                         <SearchDropdown :options="props.brands" v-on:selected="onSelectedOption"
-                                            :placeholder="props.skus.product.brand.name">
+                                                        :placeholder="props.skus.product.brand.name">
                                         </SearchDropdown>
                                         <InputError class="mt-2" :message="form.errors.title" />
                                     </div>
@@ -241,18 +241,18 @@ function removePromo(id) {
                                 <InputLabel for="description">Description</InputLabel>
                                 <div class="mt-2">
                                     <textarea id="description" name="description" maxlength="400" rows="3"
-                                        class="block h-32 w-full rounded-md border-0 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:py-1.5 sm:text-sm sm:leading-6 resize-none"
-                                        placeholder="Brief description for your product."
-                                        v-model="form.description">  </textarea>
+                                              class="block h-32 w-full rounded-md border-0 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:py-1.5 sm:text-sm sm:leading-6 resize-none"
+                                              placeholder="Brief description for your product."
+                                              v-model="form.description">  </textarea>
                                 </div>
                             </div>
                             <div>
                                 <InputLabel for="description">Extra Info</InputLabel>
                                 <div class="mt-2">
                                     <textarea id="description" name="description" maxlength="400" rows="3"
-                                        class="block h-32 w-full rounded-md border-0 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:py-1.5 sm:text-sm sm:leading-6 resize-none"
-                                        placeholder="Brief description for your product."
-                                        v-model="form.extra_info">  </textarea>
+                                              class="block h-32 w-full rounded-md border-0 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:py-1.5 sm:text-sm sm:leading-6 resize-none"
+                                              placeholder="Brief description for your product."
+                                              v-model="form.extra_info">  </textarea>
                                 </div>
                             </div>
                         </div>
@@ -273,39 +273,36 @@ function removePromo(id) {
                                     <InputLabel for="stockInput" value="SKU" />
                                     <div class="mt-1 flex rounded-md shadow-sm">
                                         <TextInput id="skuInput" type="text"
-                                            class="mt-2 flex rounded-md shadow-sm mt-1 block w-full pl-3" name="title"
-                                            v-model="form.variations.sku" required placeholder="SKU" />
+                                                   class="mt-2 flex rounded-md shadow-sm mt-1 block w-full pl-3" name="title"
+                                                   v-model="form.variations.sku" required placeholder="SKU" />
                                     </div>
                                 </div>
+
                                 <div class="col-span-2 sm:col-span-2">
                                     <InputLabel for="stockInput" value="Stock" />
                                     <div class="mt-1 flex rounded-md shadow-sm">
                                         <TextInput id="stockInput" type="number"
-                                            class="mt-2 flex rounded-md shadow-sm mt-1 block w-full pl-3" name="title"
-                                            v-model="form.variations.amount" required placeholder="50" />
+                                                   class="mt-2 flex rounded-md shadow-sm mt-1 block w-full pl-3" name="title"
+                                                   v-model="form.variations.amount" required placeholder="50" />
                                     </div>
                                 </div>
-
 
                                 <div class="col-span-2 sm:col-span-2">
                                     <InputLabel for="audience" value="Price" />
                                     <div class="mt-1 flex rounded-md shadow-sm">
                                         <TextInput id="priceInput" pattern="^\d*(\.\d{0,2})?$" @blur="handlePrice"
-                                            type="float" class="mt-2 flex rounded-md shadow-sm mt-1 block w-full pl-3"
-                                            name="title" v-model="form.variations.price" required placeholder="19.99" />
+                                                   type="float" class="mt-2 flex rounded-md shadow-sm mt-1 block w-full pl-3"
+                                                   name="title" v-model="form.variations.price" required placeholder="19.99" />
 
                                     </div>
                                 </div>
-
                             </div>
-
                         </div>
                     </div>
-
                 </div>
 
                 <div class="bg-white px-4 py-5 shadow sm:rounded-lg mb-4 sm:p-6 "
-                    v-if="props.skus.attribute_values.length > 0">
+                     v-if="props.skus.attribute_values.length > 0">
                     <div class="md:grid md:grid-cols-3 md:gap-6">
                         <div class="md:col-span-1">
                             <h3 class="text-base font-semibold leading-6 text-gray-900">Attributes
@@ -314,44 +311,34 @@ function removePromo(id) {
                                 what you share.</p>
                         </div>
                         <div class="mt-5 space-y-6 md:col-span-2 md:mt-0">
-
-
-
                             <div class="col-span-6 sm:col-span-6">
-
                                 <div class="flex flex-row gap-6 flex-wrap">
                                     <div class="mt-1 flex rounded-md shadow-sm flex-col"
-                                        v-if="props.skus.attribute_values[0]">
+                                         v-if="props.skus.attribute_values[0]">
                                         <InputLabel for="attributes" value="Size" />
                                         <Dropdown :items="props.sizes" class="min-w-[150px]" @click="updateSize($event)"
-                                            :place="capitalize(props.skus.attribute_values[0].name)"
-                                            :selected="props.skus.attribute_values[0].name" />
+                                                  :place="capitalize(props.skus.attribute_values[0].name)"
+                                                  :selected="props.skus.attribute_values[0].name" />
                                     </div>
                                     <div class="mt-1 flex rounded-md shadow-sm flex-col"
-                                        v-if="props.skus.attribute_values[1]">
+                                         v-if="props.skus.attribute_values[1]">
                                         <InputLabel for="attributes" value="Color" />
                                         <Dropdown :items="props.colors" class="min-w-[150px]" @click="updateColors($event)"
-                                            :place="capitalize(props.skus.attribute_values[1].name)"
-                                            :selected="props.skus.attribute_values[1].name" />
+                                                  :place="capitalize(props.skus.attribute_values[1].name)"
+                                                  :selected="props.skus.attribute_values[1].name" />
                                     </div>
                                     <div class="mt-1 flex rounded-md shadow-sm flex-col"
-                                        v-if="props.skus.attribute_values[2]">
+                                         v-if="props.skus.attribute_values[2]">
                                         <InputLabel for="attributes" value="Material" />
                                         <Dropdown :items="props.materials" class="min-w-[150px]"
-                                            @click="updateMaterial($event)"
-                                            :place="capitalize(props.skus.attribute_values[2].name)"
-                                            :selected="props.skus.attribute_values[2].name" />
+                                                  @click="updateMaterial($event)"
+                                                  :place="capitalize(props.skus.attribute_values[2].name)"
+                                                  :selected="props.skus.attribute_values[2].name" />
                                     </div>
                                 </div>
                             </div>
-
-
-
-
-
                         </div>
                     </div>
-
                 </div>
 
                 <div class="bg-white px-4 py-5 shadow sm:rounded-lg mb-4 sm:p-6 ">
@@ -370,48 +357,45 @@ function removePromo(id) {
 
                                 <div class="flex flex-row gap-6 flex-wrap">
                                     <UploadFile :images="form.variations.images" @image-previews="updateImages"
-                                        class="col-span-6 sm:col-span-6" :index="0" />
+                                                class="col-span-6 sm:col-span-6" :index="0" />
                                     <div class="flex gap-6 flex-wrap items-center text-center">
                                         <div v-for="(preview, imageIndex) in form.variations.images" :key="imageIndex"
-                                            class="relative cursor-pointer text-white hover:text-gray-400"
-                                            @click="selectedImageIndex = imageIndex">
+                                             class="relative cursor-pointer text-white hover:text-gray-400"
+                                             @click="selectedImageIndex = imageIndex">
                                             <div class="bg-indigo-600 p-0.5 cursor-pointer absolute right-0 top-0 rounded-bl-md rounded-tr-md"
-                                                @click="removeImage(imageIndex)"
-                                                v-if="(form.variations.images.length + form.variations.newImages.length) > 1">
+                                                 @click="removeImage(imageIndex)"
+                                                 v-if="(form.variations.images.length + form.variations.newImages.length) > 1">
                                                 <XMarkIcon class="h-6 w-6 text-white" />
                                             </div>
                                             <img :src="preview.image_link || preview.url" alt="Uploaded Image"
-                                                :class="{ 'rounded-md ring-2 ring-indigo-600 ': imageIndex === selectedImageIndex }"
-                                                class="mx-auto h-24 rounded-md w-24 object-cover" />
+                                                 :class="{ 'rounded-md ring-2 ring-indigo-600 ': imageIndex === selectedImageIndex }"
+                                                 class="mx-auto h-24 rounded-md w-24 object-cover" />
                                             <p :class="{ 'text-black': imageIndex == selectedImageIndex }"
-                                                v-if="imageIndex == selectedImageIndex" class="select-none">
+                                               v-if="imageIndex == selectedImageIndex" class="select-none">
                                                 thumbnail
                                             </p>
 
                                             <p :class="{ 'text-black': imageIndex == selectedImageIndex }" v-else
-                                                class="select-none">
+                                               class="select-none">
                                                 &lt;
                                             </p>
 
                                         </div>
                                         <div v-for="(preview, imageIndex) in form.variations.newImages" :key="imageIndex"
-                                            class="relative">
+                                             class="relative">
                                             <div class="bg-indigo-600 p-0.5 cursor-pointer absolute right-0 top-0 rounded-bl-md rounded-tr-md"
-                                                @click="removeNewImage(imageIndex)"
-                                                v-if="(form.variations.images.length + form.variations.newImages.length) > 1">
+                                                 @click="removeNewImage(imageIndex)"
+                                                 v-if="(form.variations.images.length + form.variations.newImages.length) > 1">
                                                 <XMarkIcon class="h-6 w-6 text-white" />
                                             </div>
                                             <img :src="preview.image_link || preview.url" alt="Uploaded Image"
-                                                class="mx-auto h-24 rounded-md w-24 object-cover" />
-
+                                                 class="mx-auto h-24 rounded-md w-24 object-cover" />
                                         </div>
-
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-
                 </div>
 
                 <div class="bg-white px-4 py-5 shadow sm:rounded-lg mb-4 sm:p-6 " v-if="props.skus.promos.length > 0">
@@ -425,13 +409,13 @@ function removePromo(id) {
                         <div class="mt-5 space-y-6 md:col-span-2 md:mt-0">
                             <div class="col-span-6 sm:col-span-6">
                                 <div v-for="promo in props.skus.promos" :key="promo.id"
-                                    class="relative flex items-center justify-between space-x-3 rounded-lg border border-gray-300 bg-white px-6 py-5 shadow-sm focus-within:ring-2 focus-within:ring-indigo-500 focus-within:ring-offset-2 hover:border-gray-400">
+                                     class="relative flex items-center justify-between space-x-3 rounded-lg border border-gray-300 bg-white px-6 py-5 shadow-sm focus-within:ring-2 focus-within:ring-indigo-500 focus-within:ring-offset-2 hover:border-indigo-400 mb-4">
                                     <span> #{{ promo.id }}</span>
                                     <span>new price: €{{ promo.new_price_incl_vat.toFixed(2) }}</span>
                                     <span v-if="promo.extra_info != null">{{ promo.extra_info }}</span>
                                     <span>ends: {{ moment(promo.end_date).format("MMM Do YY") }}</span>
                                     <button type="button" @click="removePromo(promo.id)"
-                                        class="inline-flex h-8 w-8 items-center justify-center rounded-full bg-transparent bg-white text-red-400 hover:text-red-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+                                            class="inline-flex h-8 w-8 items-center justify-center rounded-full bg-transparent bg-white text-red-400 hover:text-red-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
                                         <span class="sr-only">Open options</span>
                                         <XMarkIcon class="h-5 w-5" aria-hidden="true" />
                                     </button>
@@ -442,15 +426,13 @@ function removePromo(id) {
                     </div>
                 </div>
 
-
-
                 <div class=" flex justify-end px-4 mt-4 sm:px-0">
                     <Link href="/admin/products" to="/admin/products"
-                        class="rounded-md bg-white py-2 px-3 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">
-                    Cancel
+                          class="rounded-md bg-white py-2 px-3 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">
+                        Cancel
                     </Link>
                     <button type="submit"
-                        class="ml-3 inline-flex justify-center rounded-md bg-indigo-600 py-2 px-3 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500">Save</button>
+                            class="ml-3 inline-flex justify-center rounded-md bg-indigo-600 py-2 px-3 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500">Save</button>
                 </div>
             </form>
 
