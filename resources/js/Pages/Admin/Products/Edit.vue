@@ -413,38 +413,7 @@ function removePromo(id) {
                     </div>
 
                 </div>
-
-                <div class="bg-white px-4 py-5 shadow sm:rounded-lg mb-4 sm:p-6 " v-if="props.skus.promos.length > 0">
-                    <div class="md:grid md:grid-cols-3 md:gap-6">
-                        <div class="md:col-span-1">
-                            <h3 class="text-base font-semibold leading-6 text-gray-900">Promotions
-                            </h3>
-                            <p class="mt-1 text-sm text-gray-500">This information will be displayed publicly so be careful
-                                what you share.</p>
-                        </div>
-                        <div class="mt-5 space-y-6 md:col-span-2 md:mt-0">
-                            <div class="col-span-6 sm:col-span-6">
-                                <div v-for="promo in props.skus.promos" :key="promo.id"
-                                    class="relative flex items-center justify-between space-x-3 rounded-lg border border-gray-300 bg-white px-6 py-5 shadow-sm focus-within:ring-2 focus-within:ring-indigo-500 focus-within:ring-offset-2 hover:border-gray-400">
-                                    <span> #{{ promo.id }}</span>
-                                    <span>new price: €{{ promo.new_price_incl_vat.toFixed(2) }}</span>
-                                    <span v-if="promo.extra_info != null">{{ promo.extra_info }}</span>
-                                    <span>ends: {{ moment(promo.end_date).format("MMM Do YY") }}</span>
-                                    <button type="button" @click="removePromo(promo.id)"
-                                        class="inline-flex h-8 w-8 items-center justify-center rounded-full bg-transparent bg-white text-red-400 hover:text-red-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
-                                        <span class="sr-only">Open options</span>
-                                        <XMarkIcon class="h-5 w-5" aria-hidden="true" />
-                                    </button>
-                                </div>
-
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-
-
-                <div class=" flex justify-end px-4 mt-4 sm:px-0">
+                <div class="flex justify-end px-4 mt-4 sm:px-0">
                     <Link href="/admin/products" to="/admin/products"
                         class="rounded-md bg-white py-2 px-3 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">
                     Cancel

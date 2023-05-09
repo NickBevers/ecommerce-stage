@@ -111,7 +111,6 @@ Route::middleware('auth')->group(function () {
 
     // Cart Routes
     Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
-    // TODO: check route below (gives error on product overview page)
     Route::post('/cart', [CartController::class, 'store'])->name('cart.store');
     Route::patch('/cart/{sku}', [CartController::class, 'update'])->name('cart.update');
     Route::delete('/cart/{sku}', [CartController::class, 'destroy'])->name('cart.destroy');

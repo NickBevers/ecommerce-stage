@@ -10,8 +10,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 
-//TODO wishlist fix
-
 class WishlistController extends Controller
 {
     public function index()
@@ -47,7 +45,6 @@ class WishlistController extends Controller
             $sku = Sku::where('sku', $item->sku->sku)->withAllRelations()->first();
 
             $activeSkuAttributes = $sku->attributeValues->where('attribute_type_id', '!=',AttributeType::where('name', 'size')->first()->id)->pluck('id')->toArray();
-            ray($activeSkuAttributes);
 
             $sizeVariations = Sku::where('product_id', $sku->product_id)
                 ->where('is_active', true)
@@ -69,11 +66,11 @@ class WishlistController extends Controller
                 } else {
                     $sizeVariation->size = Sku::where('id', $sizeVariation->id)->with('attributeValues', function ($query) {
                         $query->where('attribute_type_id', AttributeType::where('name', 'size')->first()->id);
-                    })->first()->attributeValues->first()->name;
+                    })->first()->attributeValues->first()->name ?? null;
                 }
             }
 
-            $item->sku->sizeVariations = array_values($sizeVariations->toArray());
+            $item->sizeVariations = array_values($sizeVariations->toArray());
         }
 
         return $wishlist;
