@@ -10,6 +10,23 @@ const props = defineProps({
     attributeTypes: Array,
 });
 
+const audience = reactive(
+    ["Men", "Women", "Kids", "Unisex"]
+);
+
+let selectedHeadCategoryIndex = ref(0);
+let selectedHeadCategory = ref(0);
+let selectedSubCategory = ref(1);
+let attributeError = ref("");
+let imageError = ref("");
+let skuError = ref("");
+let selectedImageIndex = ref(0);
+let newIndex = ref(0);
+
+function updateImages(images) {
+    form.variations[0].images = images
+}
+
 const form = useForm({
     title: "",
     audience: "Men",
@@ -30,22 +47,9 @@ const form = useForm({
     ]
 });
 
-const audience = reactive(
-    ["Men", "Women", "Kids", "Unisex"]
-);
-
-let selectedHeadCategoryIndex = ref(0);
-let selectedHeadCategory = ref(0);
-let selectedSubCategory = ref(null);
-let attributeError = ref("");
-let imageError = ref("");
-let skuError = ref("");
-let selectedImageIndex = ref(0);
-let newIndex = ref(0);
-
-function updateImages(images) {
-    form.variations[0].images = images
-}
+watch(() => selectedSubCategory.value, (value) => {
+    form.sub_category_id = value.id
+})
 
 function removeImage(imageIndex) {
     fetch('/admin/products/removeVariationImage', {

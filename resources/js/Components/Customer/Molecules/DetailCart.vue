@@ -41,7 +41,6 @@ const selectedSize = ref("")
 const amount = ref(1)
 
 function submit() {
-  console.log(props.sizeVariations[0].size)
   if (props.product.attribute_values.length === 0 || props.sizeVariations[0].size === null) {
     cartStore.setOpen(true)
     productStore.fetchProducts()
@@ -69,7 +68,7 @@ function submit() {
         console.log(error);
       });
   }
-  else if (selectedSize.value === "") {
+  else if (props.product.attribute_values && selectedSize.value === "") {
     showError.value = true
   }
   else {
