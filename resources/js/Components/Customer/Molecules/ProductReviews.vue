@@ -11,7 +11,7 @@ const props = defineProps({
   userHasBought: Boolean,
 })
 
-const user = null
+let user = null
 
 if (usePage().props.auth.user) {
   user = usePage().props.auth.user.id
