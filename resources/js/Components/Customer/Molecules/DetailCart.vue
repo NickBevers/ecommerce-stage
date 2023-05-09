@@ -58,32 +58,27 @@ function submit() {
         amount: amount.value,
       })
     })
-      .then(response => {
-        if (response.status === 200) {
-          checkout.value = true
-          emit('checkout')
-          let cart = cartStore.getCount
-          cart = parseInt(cart)
-          cartStore.setCount(cart + amount.value)
-
-        }
-      })
-      .catch(error => {
-        console.log(error);
-      });
+        .then(response => response.json())
+        .then(data => {
+          if (data.status === 'success') {
+            checkout.value = true
+            emit('checkout')
+            let cart = cartStore.getCount
+            cart = parseInt(cart)
+            cartStore.setCount(cart + amount.value)
+            cartStore.setOpen(true)
+            productStore.setProducts(data.products)
+          }
+        })
+        .catch(error => {
+          console.log(error);
+        });
   }
   else if (props.product.attribute_values && selectedSize.value === "") {
     showError.value = true
   }
   else {
     showError.value = false
-    // productStore.fetchProducts()
-    // cartStore.setOpen(true)
-
-    // fetch the products in the user's cart (with the newly added one) and set the cart count
-
-
-
     fetch('/cart', {
       method: 'POST',
       headers: {
@@ -111,6 +106,7 @@ function submit() {
       });
   }
 }
+
 
 function changeProduct(sku) {
   selectedProduct.value = sku.id

@@ -81,7 +81,7 @@ function handleRemove(sku) {
               <div
                 class="ml-2 flex self-end h-fit items-center justify-center rounded-md py-3 px-3 text-gray-400 hover:bg-gray-100 hover:text-gray-500"
                 :class="checked ? 'mb-16' : ''">
-                <WishlistButton :product="props.sku" />
+                <WishlistButton :product="props.sku" @added-to-wishlist="handleAdd" @removed-from-wishlist="handleRemove"/>
               </div>
             </div>
           </form>

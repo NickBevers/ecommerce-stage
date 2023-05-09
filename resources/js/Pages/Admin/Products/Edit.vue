@@ -403,7 +403,8 @@ function removePromo(id) {
                                     <span> #{{ promo.id }}</span>
                                     <span>new price: €{{ promo.new_price_incl_vat.toFixed(2) }}</span>
                                     <span v-if="promo.extra_info != null">{{ promo.extra_info }}</span>
-                                    <span>ends: {{ moment(promo.end_date).format("MMM Do YY") }}</span>
+                                    <span>ends: {{new Date(promo.end_date).toLocaleDateString('en-US', {month:'long', day: '2-digit', year: 'numeric'})}}</span>
+<!--                                    <span>ends: {{ moment(promo.end_date).format("MMM Do YY") }}</span>-->
                                     <button type="button" @click="removePromo(promo.id)"
                                         class="inline-flex h-8 w-8 items-center justify-center rounded-full bg-transparent bg-white text-red-400 hover:text-red-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
                                         <span class="sr-only">Open options</span>

@@ -84,7 +84,7 @@ function handleNewAddress(address) {
                         <UpdateProfileInformationForm user_type="customer" />
                     </div>
 
-                    <AddAddressModal class="z-20" v-if="showAddressModal" @closed="showAddressModal = false" />
+                    <AddAddressModal class="z-20" v-if="showAddressModal" @closed="showAddressModal = false" @submitted="handleNewAddress"/>
                     <div class="mt-8 p-4 sm:p-8 bg-white shadow sm:rounded-lg">
                         <div class="mx-auto max-w-2xl px-4 lg:max-w-4xl lg:px-0">
                             <h1 class="text-2xl font-bold tracking-tight text-gray-900 sm:text-3xl">Your addresses</h1>

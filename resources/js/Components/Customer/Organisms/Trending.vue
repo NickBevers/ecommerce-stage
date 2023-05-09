@@ -21,7 +21,8 @@ const props = defineProps({
                             class="h-full w-full object-cover object-center" />
                     </div>
                     <h3 class="mt-4 text-sm text-gray-700">
-                        <Link :to="'/product/' + product.sku" :href="'/product/' + product.sku">
+                        <Link :to="'/product/' + product.sku + '/' + product.product.slug"
+                              :href="'/product/' + product.sku + '/' + product.product.slug">
                         <span class="absolute inset-0" />
                         {{ product.product.title }}
                         </Link>

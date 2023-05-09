@@ -34,7 +34,7 @@ onMounted(() => {
     <GuestLayout>
         <main class="relative lg:min-h-full mt-12">
             <div class="h-80 overflow-hidden lg:absolute lg:h-full lg:w-1/2 lg:pr-4 xl:pr-12">
-                <img src="https://images.unsplash.com/photo-1556905055-8f358a7a47b2?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format"
+                <img src="/assets/order-confirm.webp"
                     alt="TODO" class="h-full w-full object-cover object-center" />
             </div>
 
@@ -65,7 +65,7 @@ onMounted(() => {
                                                 <Link :href="'/product/' + product.sku">{{ product.product.title }}</Link>
                                             </h3>
                                             <span class="text-sm text-gray-500">{{
-                                                product.product.description.length > 30
+                                                product.product.description && product.product.description.length > 30
                                                 ? product.product.description.slice(0, 30) + "..."
                                                 : product.product.description
                                             }}</span>

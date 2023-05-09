@@ -17,6 +17,8 @@ onMounted(() => {
     }
 })
 
+console.log(props.orders)
+
 </script>
 <template>
     <section class="my-8">
@@ -60,19 +62,21 @@ onMounted(() => {
                                             order.firstname }}
                                             {{ order.lastname }}
                                             {{ order.billing_address.address_line1 }}
-                                            {{ order.billing_address.address_line2 }}, {{
-                                                order.billing_address.city }} {{
-        order.billing_address.country }}, {{
-        order.billing_address.postal_code }}
+                                            {{ order.billing_address.address_line2 }},
+                                            {{ order.billing_address.city }} {{order.billing_address.country }},
+                                            {{ order.billing_address.postal_code }}
                                         </div>
-                                        <div class="font-medium text-gray-900" v-else> {{
+                                        <div class="font-medium text-gray-900" v-else-if="order.shipping_address !== null || order.shipping_address !== 'null'"> {{
                                             order.firstname }}
                                             {{ order.lastname }}
-                                            {{ order.shipping_address.address_line1 }} {{
-                                                order.shipping_address.address_line2 }},
-                                            {{ order.shipping_address.city }} {{
-                                                order.shipping_address.country }}, {{
-        order.shipping_address.postal_code }}
+                                        </div>
+                                        <div v-else>
+                                            {{order.firstname }}
+                                            {{ order.lastname }}
+                                            {{ order.shipping_address.address_line1 }}
+                                            {{ order.shipping_address.address_line2 }},
+                                            {{ order.shipping_address.city }} {{order.shipping_address.country }},
+                                            {{ order.shipping_address.postal_code }}
                                         </div>
                                     </td>
                                     <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
