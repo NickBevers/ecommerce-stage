@@ -23,6 +23,9 @@ import {
 } from '@heroicons/vue/24/outline'
 import { XMarkIcon } from "@heroicons/vue/20/solid";
 
+const user = computed(() => {
+    return usePage().props.auth.user
+})
 
 const open = ref(false)
 
@@ -328,7 +331,7 @@ function selectCategory(category_id) {
                                     <div class="flow-root lg:ml-8">
                                         <UserIconModal class="group -m-2 flex items-center" :user="$page.props.auth.user" />
                                     </div>
-                                    <div class="flow-root ml-4 ">
+                                    <div class="flow-root ml-4" v-if="user">
                                         <Link href="/wishlist" class="group -m-2 flex items-center p-2">
                                         <HeartIcon class="h-6 w-6 flex-shrink-0 text-gray-400 group-hover:text-gray-500"
                                             aria-hidden="true" />
@@ -337,15 +340,35 @@ function selectCategory(category_id) {
                                         <span class="sr-only">items in wishlist, view wishlist</span>
                                         </Link>
                                     </div>
-                                    <!-- Cart -->
-                                    <div class="cursor-pointer flex flex-row items-center" @click="cartStore.setOpen(true)">
+                                    <div class="flow-root ml-4" v-else>
+                                        <Link href="/login" class="group -m-2 flex items-center p-2">
+                                        <HeartIcon class="h-6 w-6 flex-shrink-0 text-gray-400 group-hover:text-gray-500"
+                                            aria-hidden="true" />
+                                        <span
+                                            class="ml-2 text-sm font-medium text-gray-700 group-hover:text-gray-800">0</span>
+                                        <span class="sr-only">items in wishlist, view wishlist</span>
+                                        </Link>
+                                    </div>
+                                    <div class="cursor-pointer flex flex-row items-center" @click="cartStore.setOpen(true)"
+                                        v-if="user">
                                         <ShoppingBagIcon
-                                            class="ml-4 h-6 w-6 flex-shrink-0 text-gray-400 group-hover:text-gray-500"
+                                            class=" ml-4 h-6 w-6 flex-shrink-0 text-gray-400 group-hover:text-gray-500"
                                             aria-hidden="true" />
                                         <span class="ml-2 text-sm font-medium text-gray-700 group-hover:text-gray-800">{{
                                             cartStore.count }}</span>
                                         <span class="sr-only">items in cart, view bag</span>
                                     </div>
+                                    <div class="cursor-pointer flex flex-row items-center" v-else>
+                                        <Link href="/login" class="flex items-center">
+                                        <ShoppingBagIcon
+                                            class=" ml-4 h-6 w-6 flex-shrink-0 text-gray-400 group-hover:text-gray-500"
+                                            aria-hidden="true" />
+                                        <span
+                                            class="ml-2 text-sm font-medium text-gray-700 group-hover:text-gray-800">0</span>
+                                        <span class="sr-only">items in cart, view bag</span>
+                                        </Link>
+                                    </div>
+
 
                                     <CartSlide />
                                     <!-- <ShoppingCartModal /> -->

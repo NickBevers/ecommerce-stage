@@ -1,6 +1,6 @@
 <script setup>
-import { Link } from '@inertiajs/vue3';
-import { ref } from 'vue'
+import { Link, usePage } from '@inertiajs/vue3';
+import { ref, computed } from 'vue'
 import { Alert } from '@/Components/Customer'
 import { useCartStore } from '@/Stores/cart';
 import { useProductStore } from '@/Stores/product.js';
@@ -23,6 +23,10 @@ const props = defineProps({
     required: true,
     default: null,
   },
+})
+
+const user = computed(() => {
+  return usePage().props.auth.user
 })
 
 const cartStore = useCartStore()
@@ -90,18 +94,18 @@ function submit() {
         amount: amount.value,
       })
     })
-        .then(response => response.json())
-        .then(data => {
-          if (data.status === 'success') {
-            checkout.value = true
-            emit('checkout')
-            let cart = cartStore.getCount
-            cart = parseInt(cart)
-            cartStore.setCount(cart + amount.value)
-            cartStore.setOpen(true)
-            productStore.setProducts(data.products)
-          }
-        })
+      .then(response => response.json())
+      .then(data => {
+        if (data.status === 'success') {
+          checkout.value = true
+          emit('checkout')
+          let cart = cartStore.getCount
+          cart = parseInt(cart)
+          cartStore.setCount(cart + amount.value)
+          cartStore.setOpen(true)
+          productStore.setProducts(data.products)
+        }
+      })
       .catch(error => {
         console.log(error);
       });
@@ -145,9 +149,12 @@ function changeProduct(sku) {
       </div>
       <Alert class="mt-4" :error="error" v-if="showError" />
       <div class="flex flex-row gap-4 mt-8" v-if="!checkout">
-        <button @click.prevent="submit"
+        <button @click.prevent="submit" v-if="user"
           class="w-[90%] flex items-center justify-center rounded-md border border-transparent bg-indigo-600 py-3 px-0 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">Add
           to bag</button>
+        <Link href="/login" v-else
+          class="w-[90%] flex items-center justify-center rounded-md border border-transparent bg-indigo-600 py-3 px-0 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+        Add to bag</Link>
         <input :id="`quantity-${props.product.id}`" :name="`quantity-${props.product.id}`" type="number" min="1"
           :max="product.amount"
           class="rounded-md border border-gray-300 w-[20%] text-left text-base font-medium text-gray-700 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 sm:text-sm"

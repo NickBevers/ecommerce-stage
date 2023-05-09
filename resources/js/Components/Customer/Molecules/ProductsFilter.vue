@@ -19,12 +19,12 @@ import {
 } from '@headlessui/vue'
 import { XMarkIcon } from '@heroicons/vue/24/outline'
 import { ChevronDownIcon } from '@heroicons/vue/20/solid'
-import {router} from "@inertiajs/vue3";
+import { router } from "@inertiajs/vue3";
 
 const sortOptions = [
   { name: 'Most Popular', sort: 'rating', order: 'desc', href: '#' },
   { name: 'Newest', sort: 'created_at', order: 'desc', href: '#' },
-  { name: 'Oldest', sort: 'created_at', order: 'asc', href: '#'},
+  { name: 'Oldest', sort: 'created_at', order: 'asc', href: '#' },
   { name: 'Price: Low to High', sort: 'price_incl_vat', order: 'asc', href: '#' },
   { name: 'Price: High to Low', sort: 'price_incl_vat', order: 'desc', href: '#' },
 ]
@@ -59,10 +59,10 @@ function handleSort(option) {
 }
 
 function isChecked(attribute, value, slug = false) {
-  if(slug){
+  if (slug) {
     value = slug
   }
-  if (isAttribute(attribute)){
+  if (isAttribute(attribute)) {
     let values = selectedFilters.attributes[attribute]
     if (values) {
       return values.includes(value)
@@ -70,16 +70,14 @@ function isChecked(attribute, value, slug = false) {
       return false
     }
   } else {
-    console.log(selectedFilters, value)
     return selectedFilters[attribute] && selectedFilters[attribute].includes(value)
   }
 }
 
 function isAttribute(attribute) {
   let isAttribute = false;
-  console.log(props.attributeTypes)
   for (let i = 0; i < props.attributeTypes.length; i++) {
-    if(props.attributeTypes[i].name === attribute){
+    if (props.attributeTypes[i].name === attribute) {
       isAttribute = true;
     }
   }
@@ -123,12 +121,12 @@ function fetchSkus() {
     headers: {
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify({...selectedFilters}),
+    body: JSON.stringify({ ...selectedFilters }),
   })
-      .then((response) => response.json())
-      .then((data) => {
-        emit('updateSkus', data.skus)
-      });
+    .then((response) => response.json())
+    .then((data) => {
+      emit('updateSkus', data.skus)
+    });
 }
 
 </script>
@@ -219,7 +217,7 @@ function fetchSkus() {
                   <MenuItem v-for="option in sortOptions" :key="option" v-slot="{ active }">
                   <a :href="option.href"
                     :class="[active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm font-medium text-gray-900']"
-                  @click="handleSort(option)" >{{ option.name }}</a>
+                    @click="handleSort(option)">{{ option.name }}</a>
                   </MenuItem>
                 </div>
               </MenuItems>
@@ -252,8 +250,7 @@ function fetchSkus() {
                       <input :id="`filter-${section.id}-${optionIdx}`" :name="`${section.id}[]`"
                         :value="option.label.name" type="checkbox"
                         class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
-                        :checked="isChecked(section.id, option.label.name, option.label.slug)"
-                        @change="() => {
+                        :checked="isChecked(section.id, option.label.name, option.label.slug)" @change="() => {
                           if (option.label.slug) {
                             addFilters(section.name, option.label.slug)
                           } else { addFilters(section.name, option.label.name) }
