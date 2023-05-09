@@ -47,7 +47,8 @@ function checkout() {
               <ProductVariationList :variations="props.variations" :sku="props.sku" />
             </div>
             <div class="mt-2 flex">
-              <DetailCart :product="props.sku" :size-variations="props.sizeVariations" @checkout="checkout" class="w-full" />
+              <DetailCart :product="props.sku" :size-variations="props.sizeVariations" @checkout="checkout"
+                class="w-full" />
               <div
                 class="ml-2 flex self-end h-fit items-center justify-center rounded-md py-3 px-3 text-gray-400 hover:bg-gray-100 hover:text-gray-500"
                 :class="checked ? 'mb-16' : ''">

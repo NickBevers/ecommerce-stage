@@ -41,7 +41,8 @@ const selectedSize = ref("")
 const amount = ref(1)
 
 function submit() {
-  if (props.product.attribute_values.length === 0) {
+  console.log(props.sizeVariations[0].size)
+  if (props.product.attribute_values.length === 0 || props.sizeVariations[0].size === null) {
     cartStore.setOpen(true)
     fetch('/cart', {
       method: 'POST',
@@ -116,14 +117,12 @@ function changeProduct(sku) {
     </div>
     <form>
 
-
       <!-- Size picker -->
       <div class="mt-8" v-if="Object.keys(props.sizeVariations).length >= 1">
         <div class="flex items-center justify-between">
           <h4 class="text-sm font-medium text-gray-900">Size</h4>
         </div>
-
-        <RadioGroup v-model="selectedSize" class="mt-2">
+        <RadioGroup v-model="selectedSize" class="mt-2" v-if="props.sizeVariations[0].size != null">
           <RadioGroupLabel class="sr-only"> Choose a size </RadioGroupLabel>
           <div class="grid grid-cols-7 gap-2">
             <RadioGroupOption as="template" v-for="size in props.sizeVariations" :key="size" :value="size"
