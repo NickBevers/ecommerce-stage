@@ -87,33 +87,6 @@ function removeFromOrder(id, product) {
 }
 
 function submit() {
-    // fetch('/admin/orders/' + props.order.id, {
-    //     method: 'POST',
-    //     headers: {
-    //         'Content-Type': 'application/json',
-    //     },
-    //     body: JSON.stringify({
-    //         order_status: selectedStatus.value,
-    //     }),
-    // })
-    //     .then((response) => {
-    //         console.log(response)
-    //     })
-    //     .catch((error) => {
-    //         console.error('There has been a problem with your fetch operation:', error);
-    //     });
-
-
-    // fetch('/addresses/' + props.shipping_address.id, {
-    //     method: 'PATCH',
-    //     headers: {
-    //         'Content-Type': 'application/json',
-    //     },
-    //     body: JSON.stringify(props.shipping_address),
-    // })
-    //     .then((response) => {
-    //         console.log(response)
-    //     })
     fetch('/addresses/' + props.billing_address.id, {
         method: 'PATCH',
         headers: {

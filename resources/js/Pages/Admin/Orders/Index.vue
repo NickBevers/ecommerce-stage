@@ -8,7 +8,6 @@ const props = defineProps({
     orders: Object,
 });
 
-console.log(props.orders.data);
 </script>
 <template>
     <Head title="Products" />

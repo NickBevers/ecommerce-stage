@@ -49,8 +49,6 @@ onMounted(() => {
 
 const skuRef = ref(props.skus);
 
-console.log(skuRef.value.data);
-
 async function updateSkus(skus) {
   skuRef.value.data = skus.data
   skuRef.value.links = skus.links

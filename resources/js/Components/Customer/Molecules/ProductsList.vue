@@ -13,7 +13,6 @@ const props = defineProps({
 })
 
 const wishlistMsg = ref('');
-console.log(props.skus);
 
 function handleAdd(sku) {
   wishlistMsg.value = sku.product.title + ' has been added to your wishlist';

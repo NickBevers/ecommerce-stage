@@ -6,8 +6,6 @@ const props = defineProps({
     wishlist: Object,
 });
 
-console.log(props.wishlist);
-
 </script>
 <template>
     <GuestLayout>

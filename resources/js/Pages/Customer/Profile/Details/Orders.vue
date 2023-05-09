@@ -14,8 +14,6 @@ const props = defineProps({
     },
 })
 
-console.log(props.orders)
-
 let openReturn = ref(false)
 let selectedProduct = ref('')
 let selectedOrder = ref('')

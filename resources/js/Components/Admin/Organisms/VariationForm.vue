@@ -23,8 +23,6 @@ const props = defineProps({
     materialVar: Boolean,
 });
 
-console.log(props.categories)
-
 let checkedFilters = reactive([])
 let submitImage = ref(false)
 
@@ -191,7 +189,6 @@ watch(selectedImageIndex, (index) => {
 
 
 function updateImages(images, index) {
-    // console.log(images)
     variations.value[index].images = images;
 }
 

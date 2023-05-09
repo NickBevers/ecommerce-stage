@@ -8,7 +8,6 @@ import { PencilIcon, EyeIcon, TrashIcon } from '@heroicons/vue/20/solid'
 const props = defineProps({
     orders: Object,
 })
-console.log(props.orders)
 
 onMounted(() => {
     if (props.orders.data) {

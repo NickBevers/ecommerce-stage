@@ -30,8 +30,6 @@ const props = defineProps({
 
 const page = usePage()
 
-console.log(props.cart)
-
 const form = useForm({
     total_price: '',
     user_id: page.props.auth.user.id,
@@ -132,9 +130,6 @@ function submit() {
 
         form.post(route('orders.store'), {
             preserveScroll: true,
-            onSuccess: () => {
-                console.log('success')
-            },
         })
     }
 

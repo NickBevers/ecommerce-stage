@@ -8,10 +8,6 @@ const props = defineProps({
     skus: Object,
 })
 
-onMounted(() => {
-    console.log(props.brand)
-    console.log(props.skus)
-})
 </script>
 <template>
     <GuestLayout>

@@ -32,7 +32,6 @@ const updateBank = () => {
         .then((response) => response.json())
         .then((data) => {
             if (data.status === 'success') {
-                console.log('success');
                 form.patch(route('users.updateBankAccount'), {
                     preserveScroll: true,
                     onSuccess: () => { form.reset(); passwordError.value = ''; },
@@ -78,9 +77,9 @@ const updateBank = () => {
             <div>
                 <InputLabel for="password_confirm" value="Password for confirmation" />
                 <TextInput id="password_confirm" ref="passwordInput" v-model="form.password_confirm" type="password"
-                           class="mt-1 block w-full" />
+                    class="mt-1 block w-full" />
 
-                <InputError :message="passwordError" class="mt-2" v-if="passwordError.length > 0"/>
+                <InputError :message="passwordError" class="mt-2" v-if="passwordError.length > 0" />
             </div>
 
             <div class="flex items-center gap-4">

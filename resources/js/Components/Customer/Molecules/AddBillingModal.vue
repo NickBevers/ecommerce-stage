@@ -30,11 +30,6 @@ function submit(submitAdress) {
     emit('submitted', submitAdress)
 }
 
-onMounted(() => {
-    console.log(props.addresses)
-})
-
-
 </script>
 
 <template>

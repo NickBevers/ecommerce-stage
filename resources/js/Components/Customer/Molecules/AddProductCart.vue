@@ -74,7 +74,6 @@ function submit() {
         })
             .then(response => {
                 if (response.status == 200) {
-                    console.log("success")
                     emits('checked')
                     emits('closed')
                 }

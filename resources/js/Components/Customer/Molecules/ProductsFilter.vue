@@ -122,7 +122,6 @@ function fetchSkus() {
   })
       .then((response) => response.json())
       .then((data) => {
-        console.log(data);
         emit('updateSkus', data.skus)
       });
 }

@@ -1,7 +1,7 @@
 <script setup>
 import GuestLayout from '@/Layouts/GuestLayout.vue'
 import { EmptyState, OrderSummary, CartItem } from '@/Components/Customer'
-import { ref, onMounted} from 'vue'
+import { ref, onMounted } from 'vue'
 
 const props = defineProps({
   cart: Object,
@@ -9,9 +9,8 @@ const props = defineProps({
 
 let subtotal = ref(0);
 
-function totalPrice(total){
+function totalPrice(total) {
   subtotal.value = total;
-  console.log(subtotal.value)
 }
 
 function getTotal() {
@@ -34,9 +33,9 @@ onMounted(() => {
         <form class="mt-12 lg:grid lg:grid-cols-12 lg:items-start lg:gap-x-12 xl:gap-x-16" v-if="props.cart.length != 0">
           <section aria-labelledby="cart-heading" class="lg:col-span-7">
             <h2 id="cart-heading" class="sr-only">Items in your shopping cart</h2>
-            <CartItem :products="props.cart" @total="totalPrice"/>
+            <CartItem :products="props.cart" @total="totalPrice" />
           </section>
-          <OrderSummary class="sticky top-40 right-0" :total="subtotal"/>
+          <OrderSummary class="sticky top-40 right-0" :total="subtotal" />
         </form>
         <div v-else>
           <EmptyState title="No products" description="Get started by adding a product to your cart"
