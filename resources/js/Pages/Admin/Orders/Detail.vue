@@ -4,8 +4,8 @@ import { Dropdown, InputLabel } from '@/Components/Admin';
 import moment from 'moment';
 import { Listbox, ListboxButton, ListboxLabel, ListboxOption, ListboxOptions } from '@headlessui/vue'
 import { CheckIcon, ChevronUpDownIcon, XMarkIcon } from '@heroicons/vue/20/solid'
-import { Head, Link, useForm } from '@inertiajs/vue3';
-import { reactive, ref, onMounted, onBeforeMount } from 'vue';
+import { Head, Link, useForm, router } from '@inertiajs/vue3';
+import { reactive, ref, onMounted, computed, onBeforeMount } from 'vue';
 
 const props = defineProps({
     order: Object,
@@ -97,7 +97,30 @@ function submit() {
         .then((response) => {
             console.log(response)
         })
+    fetch('/admin/orders/' + props.order.id, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            order_status: selectedStatus.value,
+        }),
+    })
+        .then((response) => {
+            console.log(response)
+            router.visit('/admin/orders')
+        })
+
+
 }
+
+const totalPrice = computed(() => {
+    let total = 0;
+    props.order.skus.forEach((product) => {
+        total += product.pivot.amount * product.price_incl_vat;
+    });
+    return total.toFixed(2);
+});
 
 </script>
 <template>
@@ -108,7 +131,6 @@ function submit() {
                 <div class="sm:flex sm:items-center">
                     <div class="sm:flex-auto">
                         <h1 class="text-xl font-semibold leading-6 text-gray-900">Order Details</h1>
-
                     </div>
 
                 </div>
@@ -118,7 +140,8 @@ function submit() {
                             <div> <span class="text-sm">Order ID:&nbsp;</span><span class="text-sm font-bold">#{{
                                 props.order.id }}</span></div>
                             <div v-if="props.order.shipping_address_id === null && props.order.billing_address_id === null">
-                                <span class="text-sm">Delivery address:&nbsp;</span><span class="text-sm font-bold">{{ props.order.delivery_address }}</span>
+                                <span class="text-sm">Delivery address:&nbsp;</span><span class="text-sm font-bold">{{
+                                    props.order.delivery_address }}</span>
                             </div>
                             <div> <span class="text-sm">Order placed on:&nbsp;</span><span class="text-sm font-bold">{{
                                 props.order.order_date }}</span></div>
@@ -141,12 +164,19 @@ function submit() {
                                             :id="product.id">
                                             <div class="flex items-center">
                                                 <div class="flex-shrink-0">
-                                                    <!-- <img class="h-8 w-8 rounded-full" :src="person.imageUrl" alt="" /> -->
+                                                    <img class="h-14 w-14 rounded-md mr-2 object-cover object-top"
+                                                        :src="product.product_images[0].image_link"
+                                                        :alt="product.product_images[0].alt" />
                                                 </div>
                                                 <div class="min-w-0 flex-1">
                                                     <p class="truncate text-sm font-medium text-gray-900">{{
                                                         product.pivot.product_name }}</p>
                                                     <p class="truncate text-sm text-gray-500">{{ '€' +
+                                                        product.price_incl_vat }}
+                                                        {{ ' x ' + product.pivot.amount }}</p>
+                                                    <p class="truncate text-sm text-gray-500"></p>
+                                                    <p class="truncate text-sm text-gray-500">total: €{{
+                                                        product.pivot.amount *
                                                         product.price_incl_vat }}</p>
                                                 </div>
                                                 <div>
@@ -177,6 +207,10 @@ function submit() {
                                             </div>
                                         </li>
                                     </ul>
+                                </div>
+                                <div>
+                                    <p class="text-md font-medium text-gray-900">Subtotal</p>
+                                    <p class="text-md text-gray-500">€{{ totalPrice }}</p>
                                 </div>
                             </div>
                         </div>
@@ -351,12 +385,12 @@ function submit() {
                         </div>
                     </div>
 
-<!--                    <div v-else class="bg-white shadow rounded-lg mt-8 ">-->
-<!--                        <div class="px-4 sm:p-6">-->
-<!--                            <h2 class="text-lg font-medium text-gray-900">Shipping address</h2>-->
-<!--                            <p>{{ props.order.delivery_address }}</p>-->
-<!--                        </div>-->
-<!--                    </div>-->
+                    <!--                    <div v-else class="bg-white shadow rounded-lg mt-8 ">-->
+                    <!--                        <div class="px-4 sm:p-6">-->
+                    <!--                            <h2 class="text-lg font-medium text-gray-900">Shipping address</h2>-->
+                    <!--                            <p>{{ props.order.delivery_address }}</p>-->
+                    <!--                        </div>-->
+                    <!--                    </div>-->
 
                 </div>
                 <div class="flex justify-end mt-4">
