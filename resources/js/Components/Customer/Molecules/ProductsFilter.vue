@@ -36,7 +36,7 @@ let selectedFilters = {
 }
 
 const open = ref(false)
-
+let abortController = new AbortController();
 const props = defineProps({
   title: {
     type: String,
@@ -115,18 +115,34 @@ function addFilters(filterName, value) {
   fetchSkus();
 }
 
-function fetchSkus() {
-  fetch(route('products.filter'), {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({ ...selectedFilters }),
-  })
-    .then((response) => response.json())
-    .then((data) => {
-      emit('updateSkus', data.skus)
-    });
+async function fetchSkus() {
+  try {
+    abortController.abort();
+  } catch (error) {
+    // Ignore any errors that occur if there is no previous request
+  }
+
+  abortController = new AbortController();
+
+  try {
+    fetch(route('products.filter'), {
+      signal: abortController.signal,
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ ...selectedFilters }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        emit('updateSkus', data.skus)
+      })
+  } catch (error) {
+    if (error.name === 'AbortError') {
+    } else {
+      console.error(error);
+    }
+  }
 }
 
 </script>
