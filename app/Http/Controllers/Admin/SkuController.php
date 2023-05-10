@@ -205,22 +205,27 @@ class SkuController extends Controller
             $this->productService->update($productData, $sku->product_id);
         }
 
-        if (sizeof($request->input('variations')['newImages']) > 0) {
-            foreach ($request->input('variations')['newImages'] as $image) {
-                ProductImage::create([
-                    'image_type' => explode('/', $image['public_id'])[0],
-                    'image_link' => $image['url'],
-                    'image_public_id' => $image['public_id'],
-                    'sku_id' => $sku->id,
-                    'alt' => $sku->sku.'-'.$image['public_id'],
-                ]);
-            }
-        }
-
         $images = $request->input('variations')['images'];
-
         for ($i = 0; $i < sizeof($images); $i++) {
-            $productImage = ProductImage::where('image_public_id', $images[$i]['image_public_id'])->first();
+            // if the image has no image_public_id, continue
+            if (isset($images[$i]['image_public_id'])) {
+                // old image
+                $productImage = ProductImage::where('image_public_id', $images[$i]['image_public_id'])->first();
+
+            } else if (isset($images[$i]['public_id'])) {
+                // new image
+                $productImage = ProductImage::create([
+                    'image_type' => explode('/', $images[$i]['public_id'])[0],
+                    'image_link' => $images[$i]['url'],
+                    'image_public_id' => $images[$i]['public_id'],
+                    'sku_id' => $sku->id,
+                    'alt' => $sku->sku.'-'.$images[$i]['public_id'],
+                ]);
+            } else {
+                continue;
+            }
+
+
             if ($i === 0) {
                 $productImage->image_type = "thumbnails";
             } else {
