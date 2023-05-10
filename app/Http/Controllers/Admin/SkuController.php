@@ -197,7 +197,7 @@ class SkuController extends Controller
         ]);
     }
 
-    public function update(SkuValidationRequest $request, Sku $sku)
+    public function update(Request $request, Sku $sku)
     {
         if ($request->has('product')) {
             $product = $request->input('product');
@@ -217,6 +217,18 @@ class SkuController extends Controller
             }
         }
 
+        $images = $request->input('variations')['images'];
+
+        for ($i = 0; $i < sizeof($images); $i++) {
+            $productImage = ProductImage::where('image_public_id', $images[$i]['image_public_id'])->first();
+            if ($i === 0) {
+                $productImage->image_type = "thumbnails";
+            } else {
+                $productImage->image_type = "product";
+            }
+            $productImage->save();
+        }
+
         $sku->attributeValues()->detach();
         foreach ($request->input('variations')['attributes'] as $attribute) {
             $attributeValue = AttributeValue::where('name', $attribute)->first();
@@ -227,7 +239,7 @@ class SkuController extends Controller
         $sku->sku = $request->input('variations')['sku'];
         $sku->price_excl_vat = $request->input('variations')['price'];
         $sku->price_incl_vat = $request->input('variations')['price'] * (1 + floatval($vat->vat_rate) / 100);
-        $sku->amount = $request->input('variations')['amount'];
+        $sku->amount = intval( $request->input('variations')['amount']);
         $sku->save();
 
         return redirect()->route('admin.products.index')->with('success', 'Product updated successfully');

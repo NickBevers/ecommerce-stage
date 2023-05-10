@@ -116,7 +116,10 @@ class Sku extends Model
             ->with('product.subCategory')
             ->with('product.subCategory.category')
             ->with('product.brand')
-            ->with('productImages')
+            ->with('productImages', function ($query) {
+                // put the one with image_type 'thumbnails' first
+                $query->orderBy('image_type', 'desc');
+            })
             ->with('attributeValues')
             ->with('attributeValues.attributeType')
             ->with('promos')

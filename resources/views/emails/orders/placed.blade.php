@@ -12,11 +12,18 @@
     @foreach($order->skus as $sku)
         <div>
             <p>{{ $sku->pivot->product_name }}</p>
-            <p>€{{ $sku->pivot->price }}</p>
-            <p>Quantity: {{ $sku->pivot->amount }}</p>
+            <p>€{{ $sku->pivot->price }} -> {{ $sku->pivot->amount }}x</p>
+            <p>Subtotal: €{{ $sku->pivot->price * $sku->pivot->amount }}</p>
             <span>---------------------------------------------</span>
         </div>
     @endforeach
+    <div>Order total: <br>
+        <strong>€{{ $order->skus->sum(function($sku) {
+            return $sku->pivot->price * $sku->pivot->amount;
+        }) }}</strong>
+    </div>
+
+
     <br>
     <br>
     Thanks,<br>

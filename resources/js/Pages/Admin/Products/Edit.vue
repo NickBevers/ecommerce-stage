@@ -24,6 +24,7 @@ let selectedSubCategory = ref(0);
 
 let selectedImageIndex = ref(0);
 let newIndex = ref(0);
+const tempImages = ref([]);
 
 
 let form = useForm({
@@ -67,7 +68,6 @@ watch(() => {
     if (selectedSubCategory.value) {
         form.sub_category_id = selectedSubCategory.value.id
     }
-
 })
 
 function updateSize(event) {
@@ -96,6 +96,8 @@ onBeforeMount(() => {
             form.variations.attributes.push(props.skus.attribute_values[2].name)
         }
     }
+
+    tempImages.value = props.skus.product_images
 })
 
 function removeImage(imageIndex) {
@@ -127,18 +129,22 @@ function removeNewImage(imageIndex) {
 
 
 function updateImages(images) {
-
     for (let i = 0; i < images.length; i++) {
-        form.variations.newImages.push(images[i])
+        form.variations.newImages.push(images[i]);
+        tempImages.value.push(images[i]);
     }
 }
 
 function update() {
-    form.patch('/admin/products/' + props.skus.id), {
+    form.patch('/admin/products/' + props.skus.id, {
+        preserveScroll: true,
+        onSuccess: () => {
+            console.log('success')
+        },
         onError: () => {
             console.log('error')
         }
-    }
+    })
 }
 
 watch(selectedImageIndex, (index) => {
@@ -148,7 +154,23 @@ watch(selectedImageIndex, (index) => {
     images.splice(newIndex, 0, selectedImage); // insert the selected image at the new position
     form.variations.images = images;
     selectedImageIndex.value = newIndex.value;
+
+    const temp = [...tempImages.value];
+    const selectedTempImage = temp[index];
+    temp.splice(index, 1); // remove the selected image from its current position
+    temp.splice(newIndex, 0, selectedTempImage); // insert the selected image at the new position
+    tempImages.value = temp;
+    selectedImageIndex.value = newIndex.value;
 });
+
+// watch(selectedImageIndex, (index) => {
+//     const images = [...form.variations.images];
+//     const selectedImage = images[index];
+//     images.splice(index, 1); // remove the selected image from its current position
+//     images.splice(newIndex, 0, selectedImage); // insert the selected image at the new position
+//     form.variations.images = images;
+//     selectedImageIndex.value = newIndex.value;
+// });
 
 function removePromo(id) {
     fetch('/promos/' + id, {
@@ -349,12 +371,45 @@ function removePromo(id) {
                                     <UploadFile :images="form.variations.images" @image-previews="updateImages"
                                         class="col-span-6 sm:col-span-6" :index="0" />
                                     <div class="flex gap-6 flex-wrap items-center text-center">
-                                        <div v-for="(preview, imageIndex) in form.variations.images" :key="imageIndex"
+<!--                                        <div v-for="(preview, imageIndex) in form.variations.images" :key="imageIndex"-->
+<!--                                            class="relative cursor-pointer text-white hover:text-gray-400"-->
+<!--                                            @click="selectedImageIndex = imageIndex">-->
+<!--                                            <div class="bg-indigo-600 p-0.5 cursor-pointer absolute right-0 top-0 rounded-bl-md rounded-tr-md"-->
+<!--                                                @click="removeImage(imageIndex)"-->
+<!--                                                v-if="(form.variations.images.length + form.variations.newImages.length) > 1">-->
+<!--                                                <XMarkIcon class="h-6 w-6 text-white" />-->
+<!--                                            </div>-->
+<!--                                            <img :src="preview.image_link || preview.url" alt="Uploaded Image"-->
+<!--                                                :class="{ 'rounded-md ring-2 ring-indigo-600 ': imageIndex === selectedImageIndex }"-->
+<!--                                                class="mx-auto h-24 rounded-md w-24 object-cover" />-->
+<!--                                            <p :class="{ 'text-black': imageIndex === selectedImageIndex }"-->
+<!--                                                v-if="imageIndex === selectedImageIndex" class="select-none">-->
+<!--                                                thumbnail-->
+<!--                                            </p>-->
+
+<!--                                            <p :class="{ 'text-black': imageIndex === selectedImageIndex }" v-else-->
+<!--                                                class="select-none">-->
+<!--                                                &lt;-->
+<!--                                            </p>-->
+
+<!--                                        </div>-->
+<!--                                        <div v-for="(preview, imageIndex) in form.variations.newImages" :key="imageIndex"-->
+<!--                                            class="relative">-->
+<!--                                            <div class="bg-indigo-600 p-0.5 cursor-pointer absolute right-0 top-0 rounded-bl-md rounded-tr-md"-->
+<!--                                                @click="removeNewImage(imageIndex)"-->
+<!--                                                v-if="(form.variations.images.length + form.variations.newImages.length) > 1">-->
+<!--                                                <XMarkIcon class="h-6 w-6 text-white" />-->
+<!--                                            </div>-->
+<!--                                            <img :src="preview.image_link || preview.url" alt="Uploaded Image"-->
+<!--                                                class="mx-auto h-24 rounded-md w-24 object-cover" />-->
+<!--                                        </div>-->
+
+                                        <div v-for="(preview, imageIndex) in tempImages" :key="imageIndex"
                                             class="relative cursor-pointer text-white hover:text-gray-400"
                                             @click="selectedImageIndex = imageIndex">
                                             <div class="bg-indigo-600 p-0.5 cursor-pointer absolute right-0 top-0 rounded-bl-md rounded-tr-md"
-                                                @click="removeImage(imageIndex)"
-                                                v-if="(form.variations.images.length + form.variations.newImages.length) > 1">
+
+                                                v-if="(tempImages.length) > 1">
                                                 <XMarkIcon class="h-6 w-6 text-white" />
                                             </div>
                                             <img :src="preview.image_link || preview.url" alt="Uploaded Image"
@@ -370,16 +425,6 @@ function removePromo(id) {
                                                 &lt;
                                             </p>
 
-                                        </div>
-                                        <div v-for="(preview, imageIndex) in form.variations.newImages" :key="imageIndex"
-                                            class="relative">
-                                            <div class="bg-indigo-600 p-0.5 cursor-pointer absolute right-0 top-0 rounded-bl-md rounded-tr-md"
-                                                @click="removeNewImage(imageIndex)"
-                                                v-if="(form.variations.images.length + form.variations.newImages.length) > 1">
-                                                <XMarkIcon class="h-6 w-6 text-white" />
-                                            </div>
-                                            <img :src="preview.image_link || preview.url" alt="Uploaded Image"
-                                                class="mx-auto h-24 rounded-md w-24 object-cover" />
                                         </div>
                                     </div>
                                 </div>

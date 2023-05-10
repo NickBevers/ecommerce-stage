@@ -32,7 +32,7 @@ export default {
     return {
       selected: {},
       optionsShown: false,
-      searchFilter: '',
+      searchFilter: this.placeholder,
     };
   },
   created() {
@@ -61,7 +61,7 @@ export default {
     },
     showOptions() {
       if (!this.disabled) {
-        this.searchFilter = '';
+        // this.searchFilter = '';
         this.optionsShown = true;
       }
     },
