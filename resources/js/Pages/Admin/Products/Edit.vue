@@ -360,12 +360,12 @@ function removePromo(id) {
                                             <img :src="preview.image_link || preview.url" alt="Uploaded Image"
                                                 :class="{ 'rounded-md ring-2 ring-indigo-600 ': imageIndex === selectedImageIndex }"
                                                 class="mx-auto h-24 rounded-md w-24 object-cover" />
-                                            <p :class="{ 'text-black': imageIndex == selectedImageIndex }"
-                                                v-if="imageIndex == selectedImageIndex" class="select-none">
+                                            <p :class="{ 'text-black': imageIndex === selectedImageIndex }"
+                                                v-if="imageIndex === selectedImageIndex" class="select-none">
                                                 thumbnail
                                             </p>
 
-                                            <p :class="{ 'text-black': imageIndex == selectedImageIndex }" v-else
+                                            <p :class="{ 'text-black': imageIndex === selectedImageIndex }" v-else
                                                 class="select-none">
                                                 &lt;
                                             </p>

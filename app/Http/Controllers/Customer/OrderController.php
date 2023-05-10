@@ -26,7 +26,13 @@ class OrderController extends Controller
 
     public function store(OrderValidationRequest $request)
     {
-        $order = Order::create($request->validated());
+        $shipping_address = Address::where('id', $request->shipping_address_id)->first();
+        ray("$shipping_address->address_line_1, $shipping_address->postal_code $shipping_address->city");
+        $request->merge([
+            'delivery_address' => "$shipping_address->address_line1 $shipping_address->address_line2, $shipping_address->postal_code $shipping_address->city",
+        ]);
+
+        $order = Order::create($request->all());
 
         foreach ($request->skus as $sku) {
             if ($sku['amount'] > $sku['sku']['amount']) {

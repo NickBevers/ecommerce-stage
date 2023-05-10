@@ -58,7 +58,7 @@ console.log(props.orders)
                                         <div class="font-medium text-gray-900">{{ order.order_date }}</div>
                                     </td>
                                     <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                                        <div class="font-medium text-gray-900" v-if="order.billing_address">{{
+                                        <div class="font-medium text-gray-900" v-if="order.billing_address_id">{{
                                             order.firstname }}
                                             {{ order.lastname }}
                                             {{ order.billing_address.address_line1 }}
@@ -66,9 +66,14 @@ console.log(props.orders)
                                             {{ order.billing_address.city }} {{order.billing_address.country }},
                                             {{ order.billing_address.postal_code }}
                                         </div>
-                                        <div class="font-medium text-gray-900" v-else-if="order.shipping_address !== null || order.shipping_address !== 'null'"> {{
+                                        <div class="font-medium text-gray-900" v-else-if="order.shipping_address_id !== null && order.shipping_address_id !== 'null'">{{
                                             order.firstname }}
                                             {{ order.lastname }}
+                                        </div>
+                                        <div class="font-medium text-gray-900" v-else-if="order.shipping_address === null || order.shipping_address === ''">
+                                            {{order.firstname }}
+                                            {{ order.lastname }}
+                                            {{ order.delivery_address }}
                                         </div>
                                         <div v-else>
                                             {{order.firstname }}

@@ -117,6 +117,9 @@ function submit() {
                         <div class="flex justify-between w-full">
                             <div> <span class="text-sm">Order ID:&nbsp;</span><span class="text-sm font-bold">#{{
                                 props.order.id }}</span></div>
+                            <div v-if="props.order.shipping_address_id === null && props.order.billing_address_id === null">
+                                <span class="text-sm">Delivery address:&nbsp;</span><span class="text-sm font-bold">{{ props.order.delivery_address }}</span>
+                            </div>
                             <div> <span class="text-sm">Order placed on:&nbsp;</span><span class="text-sm font-bold">{{
                                 props.order.order_date }}</span></div>
                         </div>
@@ -179,7 +182,6 @@ function submit() {
                         </div>
                     </div>
                 </div>
-
                 <div class="grid grid-cols-1 space-x-0 sm:space-x-8 sm:grid-cols-2">
                     <div class="bg-white shadow rounded-lg mt-8 " v-if="props.shipping_address">
                         <div class="px-4 sm:p-6">
@@ -348,6 +350,13 @@ function submit() {
                             </div>
                         </div>
                     </div>
+
+<!--                    <div v-else class="bg-white shadow rounded-lg mt-8 ">-->
+<!--                        <div class="px-4 sm:p-6">-->
+<!--                            <h2 class="text-lg font-medium text-gray-900">Shipping address</h2>-->
+<!--                            <p>{{ props.order.delivery_address }}</p>-->
+<!--                        </div>-->
+<!--                    </div>-->
 
                 </div>
                 <div class="flex justify-end mt-4">

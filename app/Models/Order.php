@@ -24,6 +24,7 @@ class Order extends Model
         'shipped_at',
         'firstname',
         'lastname',
+        'delivery_address',
         'phone_number',
         'email',
     ];
