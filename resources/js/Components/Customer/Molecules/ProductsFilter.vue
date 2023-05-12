@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from 'vue'
+import {onBeforeMount, ref} from 'vue'
 import {
   Dialog,
   DialogPanel,
@@ -52,12 +52,6 @@ const props = defineProps({
   },
 })
 
-function handleSort(option) {
-  selectedFilters.sort = option.sort
-  selectedFilters.order = option.order
-  fetchSkus();
-}
-
 function isChecked(attribute, value, slug = false) {
   if (slug) {
     value = slug
@@ -85,9 +79,19 @@ function isAttribute(attribute) {
 }
 
 function addFilters(filterName, value) {
-  filterName = filterName.toLowerCase();
-  let attr = isAttribute(filterName);
-  if (attr) {
+  let tempParams = {};
+  filterName = typeof filterName !== "object" ?filterName.toLowerCase() :filterName;
+  let attr = typeof filterName !== "object" ?isAttribute(filterName) :false;
+  if(filterName.sort && filterName.order){
+    selectedFilters.sort = filterName.sort
+    selectedFilters.order = filterName.order
+
+    let sort = selectedFilters.sort;
+    let order = selectedFilters.order;
+
+      tempParams.sort = sort;
+      tempParams.order = order;
+  } else if (attr) {
     let values = selectedFilters.attributes[filterName]
     if (values) {
       if (values.includes(value)) {
@@ -112,8 +116,74 @@ function addFilters(filterName, value) {
       selectedFilters[filterName] = [value]
     }
   }
+
+  let url = new URL(window.location.href);
+  let params = new URLSearchParams(url.search);
+  let attributes = selectedFilters.attributes;
+  let size = attributes.size;
+  let color = attributes.color;
+  let material = attributes.material;
+  let brand = selectedFilters.brand;
+
+
+  if (size) {
+    tempParams.size = size.join(',');
+  }
+  if (color) {
+    tempParams.color = color.join(',');
+  }
+  if (material) {
+    tempParams.material = material.join(',');
+  }
+  if (brand) {
+    tempParams.brand = brand.join(',');
+  }
+
+  params.set('filters', JSON.stringify(tempParams));
+  url.search = params.toString();
+  let newUrl = url.toString();
+
+  try {
+    window.history.pushState({}, '', newUrl);
+  } catch (e) {
+    console.log(e);
+  }
   fetchSkus();
 }
+
+onBeforeMount(() => {
+  let url = new URL(window.location.href);
+  let params = new URLSearchParams(url.search);
+  let filters = params.get('filters');
+
+  if (filters) {
+    filters = JSON.parse(filters);
+    let size = filters.size;
+    let color = filters.color;
+    let material = filters.material;
+    let brand = filters.brand;
+    let sort = filters.sort;
+    let order = filters.order;
+
+    if (size) {
+      selectedFilters.attributes.size = size.split(',');
+    }
+    if (color) {
+      selectedFilters.attributes.color = color.split(',');
+    }
+    if (material) {
+      selectedFilters.attributes.material = material.split(',');
+    }
+    if (brand) {
+      selectedFilters.brand = brand.split(',');
+    }
+    if (sort) {
+      selectedFilters.sort = sort;
+      selectedFilters.order = order;
+    }
+  }
+  fetchSkus();
+})
 
 async function fetchSkus() {
   try {
@@ -233,7 +303,7 @@ async function fetchSkus() {
                   <MenuItem v-for="option in sortOptions" :key="option" v-slot="{ active }">
                   <a :href="option.href"
                     :class="[active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm font-medium text-gray-900']"
-                    @click="handleSort(option)">{{ option.name }}</a>
+                    @click="addFilters(option)">{{ option.name }}</a>
                   </MenuItem>
                 </div>
               </MenuItems>
