@@ -80,17 +80,12 @@ function isAttribute(attribute) {
 
 function addFilters(filterName, value) {
   let tempParams = {};
+  let sortParams = {};
   filterName = typeof filterName !== "object" ?filterName.toLowerCase() :filterName;
   let attr = typeof filterName !== "object" ?isAttribute(filterName) :false;
   if(filterName.sort && filterName.order){
     selectedFilters.sort = filterName.sort
     selectedFilters.order = filterName.order
-
-    let sort = selectedFilters.sort;
-    let order = selectedFilters.order;
-
-      tempParams.sort = sort;
-      tempParams.order = order;
   } else if (attr) {
     let values = selectedFilters.attributes[filterName]
     if (values) {
@@ -124,7 +119,8 @@ function addFilters(filterName, value) {
   let color = attributes.color;
   let material = attributes.material;
   let brand = selectedFilters.brand;
-
+  let sort = selectedFilters.sort;
+  let order = selectedFilters.order;
 
   if (size) {
     tempParams.size = size.join(',');
@@ -138,16 +134,19 @@ function addFilters(filterName, value) {
   if (brand) {
     tempParams.brand = brand.join(',');
   }
+  if (sort) {
+      sortParams.sort = sort;
+      sortParams.order = order;
+  }
 
   params.set('filters', JSON.stringify(tempParams));
+  params.set('sort', JSON.stringify(sortParams));
   url.search = params.toString();
-  let newUrl = url.toString();
+  console.log(params);
 
-  try {
-    window.history.pushState({}, '', newUrl);
-  } catch (e) {
-    console.log(e);
-  }
+  let newUrl = url.toString();
+  window.history.pushState({}, '', newUrl);
+
   fetchSkus();
 }
 
@@ -155,6 +154,7 @@ onBeforeMount(() => {
   let url = new URL(window.location.href);
   let params = new URLSearchParams(url.search);
   let filters = params.get('filters');
+  let sort = params.get('sort');
 
   if (filters) {
     filters = JSON.parse(filters);
@@ -162,8 +162,6 @@ onBeforeMount(() => {
     let color = filters.color;
     let material = filters.material;
     let brand = filters.brand;
-    let sort = filters.sort;
-    let order = filters.order;
 
     if (size) {
       selectedFilters.attributes.size = size.split(',');
@@ -177,10 +175,10 @@ onBeforeMount(() => {
     if (brand) {
       selectedFilters.brand = brand.split(',');
     }
-    if (sort) {
-      selectedFilters.sort = sort;
-      selectedFilters.order = order;
-    }
+  } else if (sort) {
+    sort = JSON.parse(sort);
+    selectedFilters.sort = sort.sort;
+    selectedFilters.order = sort.order;
   }
   fetchSkus();
 })
